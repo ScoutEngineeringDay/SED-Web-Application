@@ -1,1 +1,1 @@
-$( "#new-projects" ).load( "NewNavBar.html" );
+$("#new-projects").load("NewNavBar.html");
