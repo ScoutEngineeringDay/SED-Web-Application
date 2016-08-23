@@ -3,6 +3,17 @@ ol {
     padding-left: 0px;
 } 
 
+/*------------------Register-------------------*/
+input[type=text] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+.submit {
+	padding: 10px;
+}
+
 /*------------------NewNavBar-------------------*/
 .navbar-header>a {
 	width: 100%;
