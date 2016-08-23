@@ -32,10 +32,12 @@ git clone https://github.com/crabbymonkey/sed.git /c/xampp/htdocs/ScoutEngineeri
 
 ## To Do
 
-- [ ] Finish Navbar
+Gui:
+
+- [x] Finish Navbar
 - [ ] Create Home page
-- [ ] Create Login page
-- [ ] Create Register page
+- [x] Create Login page
+- [x] Create Register page
 - [ ] Create Course List page
 - [ ] Create Scout List page
 - [ ] Create Single Scout page
