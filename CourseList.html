@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Course List</title>
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+			integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+			crossorigin="anonymous">
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+			integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+			crossorigin="anonymous">
+	</head>
+	<body>
+		<!--Begin Navbar-->
+		<script src="//code.jquery.com/jquery.min.js"></script>
+		<ol id="new-projects"></ol>
+		<script src="scripts/copyNavBar.js"></script>
+		<!--End Navbar-->
+
+
+
+
+<!DOCTYPE html>
+<html>
+<body>
+		<p id="test"></p>
+
+		<script src="scripts/Course.js"></script>
+		<script>
+			// var course1 = new Course("Robotics", "Build angry robots", "James Smith", "4:00-5:00am");
+			// var course2 = new Course("Space", "sun stars and moon", "Tammy Porter", "6:00-7:00pm");
+
+			var allCourses = getAllCourses();
+			allCourses[0].setCourseName("New Name");
+			for (i in allCourses) { 
+				document.getElementById("test").innerHTML += allCourses[i].getCourseName() + "'s instructor is " + allCourses[i].getInstructor() + "<br>";
+			}
+		</script>
+		<a class="btn btn-primary btn-lg" href="createCourse.html" role="button">Create Course</a>
+
+	</body>
+</html>

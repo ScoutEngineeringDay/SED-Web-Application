@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Create Course</title>
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+			integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+			crossorigin="anonymous">
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+			integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+			crossorigin="anonymous">
+	</head>
+	<body>
+		<!--Begin Navbar-->
+		<script src="//code.jquery.com/jquery.min.js"></script>
+		<ol id="new-projects"></ol>
+		<script src="scripts/copyNavBar.js"></script>
+		<!--End Navbar-->
+
+
+		<div class="container">
+		    <div class="row">
+		        <form role="form" action="courseadded.php" method="post">
+		            <div class="col-lg-4">
+		                <div class="form-group">
+		                    <label for="InputName">Course Name</label>
+		                    <div class="input-group">
+		                        <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Course Name" required>
+		                    </div>
+		                </div>
+		                <div class="form-group">
+		                    <label for="InputEmail">Course Description</label>
+		                    <div class="input-group">
+		                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Course Description" required>
+		                    </div>
+		                </div>
+		                <div class="form-group">
+		                    <label for="InputEmail">Instructor</label>
+		                    <div class="input-group">
+		                        <input type="text" class="form-control" id="InputEmailFirst" name="InputEmail" placeholder="Instructor Name" required>
+		                    </div>
+		                </div>
+		                <div class="form-group">
+		                    <label for="InputEmail">Time</label>
+		                    <div class="input-group">
+		                        <input type="text" class="form-control" id="InputEmailSecond" name="InputEmail" placeholder="AM or PM" required>
+		                    </div>
+		                </div>
+		                <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary btn-sm">
+		            </div>
+	        	</form>
+            </div>
+		</div>
+ 					
+
+
+	</body>
+</html>
