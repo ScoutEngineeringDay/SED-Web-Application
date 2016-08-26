@@ -2,7 +2,7 @@
     <head>
         <title>Scout Registered</title>
     </head>
-    <body>
+    <body onload="redirect()">
         <?php
 
             if(isset($_POST['submit'])){
@@ -35,7 +35,7 @@
 
                 if(empty($data_missing)){
                     
-                    require_once('../mysqli_connect.php');
+                    require_once('mysqli_connect.php');
                     
                     $query = "INSERT INTO scout (first_name, last_name, date_entered, scout_id) VALUES (?, ?, NOW(), NULL)";
                     
@@ -86,7 +86,13 @@
         <p>
             <b>Thank you for registering!</b>
         </p>
-        
+
+        <SCRIPT LANGUAGE="JavaScript">
+        function redirect () {
+            window.location.href = "index.html";
+        }
+        </SCRIPT>
+                
         <button id="returnHome" class="float-left submit-button" >Return to event Home page</button>
         <script type="text/javascript">
             document.getElementById("returnHome").onclick = function () {
