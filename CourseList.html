@@ -22,26 +22,33 @@
 		<script src="scripts/copyNavBar.js"></script>
 		<!--End Navbar-->
 
-
-
-
-<!DOCTYPE html>
-<html>
-<body>
-		<p id="test"></p>
-
+		<p id="courseList"></p>
 		<script src="scripts/Course.js"></script>
 		<script>
 			// var course1 = new Course("Robotics", "Build angry robots", "James Smith", "4:00-5:00am");
 			// var course2 = new Course("Space", "sun stars and moon", "Tammy Porter", "6:00-7:00pm");
 
 			var allCourses = getAllCourses();
-			allCourses[0].setCourseName("New Name");
-			for (i in allCourses) { 
-				document.getElementById("test").innerHTML += allCourses[i].getCourseName() + "'s instructor is " + allCourses[i].getInstructor() + "<br>";
+			//allCourses[0].setCourseName("New Name");
+			for (index in allCourses) { 
+				var course = allCourses[index];
+				document.getElementById("courseList").innerHTML += 
+						'<div class="container"> ' +
+							'<div class="well well-sm">' + 
+								'<p class="courseName"><b>' + course.getCourseName() + '</b></p>' + 
+								'<p>' + course.getCourseDescription() + '</p>' + 
+								'<br>' +
+								'<p>' + 
+									'<a class="btn btn-primary btn-sm" href="#" role="button">Course Page</a>' + 
+								'</p>' + 
+							'</div>' + 
+						'</div>';
+
+
+				//allCourses[i].getCourseName() + "'s instructor is " + allCourses[i].getInstructor() + "<br>";
 			}
 		</script>
-		<a class="btn btn-primary btn-lg" href="createCourse.html" role="button">Create Course</a>
+		
 
 	</body>
 </html>

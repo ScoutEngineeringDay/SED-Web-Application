@@ -41,11 +41,6 @@ input[type=password] {
     padding-right: 10px;
 }
 
-/*------------------index-------------------*/
-.jumbotron {
-	padding: 30px;
-}
-
 /*------------------LoginOrRegister-------------------*/
 .form-signin-heading {
 	text-align: center;
@@ -89,4 +84,12 @@ input[type=password] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+
+
+
+
+.courseName{
+    font-size: 32px;
 }
