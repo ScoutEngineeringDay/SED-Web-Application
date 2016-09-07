@@ -48,6 +48,18 @@ function getAllCourses(){
 	return courses;
 }
 
-function findCourse(){
+function findCourseByCourseName(){
 	//To be implemented
+}
+
+function findCourseByEncodedCourseName(encodedCourseName){
+	var allCourses = getAllCourses();
+	for (index in allCourses) { 
+		var course = allCourses[index];
+		console.log(course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') + " ?= " + encodedCourseName)
+		if (course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') == encodedCourseName) {
+			return course;
+		}
+	}
+	return null;
 }

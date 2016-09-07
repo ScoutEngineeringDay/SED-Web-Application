@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Course List</title>
+		
+		<title id=title></title>
+		
+		<script>
+			var courseName = location.search.split('course=')[1];
+			document.getElementById("title").innerHTML += courseName;
+		</script>
+		
 		<link rel="stylesheet" type="text/css" href="styles/style.css">
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet"
@@ -22,23 +29,24 @@
 		<script src="scripts/copyNavBar.js"></script>
 		<!--End Navbar-->
 
-		<p id="courseList"></p>
+		<p id="coursePage"></p>
 		<script src="scripts/Course.js"></script>
 		<script>
-			var allCourses = getAllCourses();
-			for (index in allCourses) { 
-				var course = allCourses[index];
-				document.getElementById("courseList").innerHTML += 
-						'<div class="container"> ' +
-							'<a href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
-								'<div class="well well-sm courseInfo">' + 
-									'<p class="courseName"><b>' + course.getCourseName() + '</b></p>' + 
-										'<div class="showOnHover">' +
-												'<p>' + course.getCourseDescription() + '</p>' + 
-								 		'</div>' +
-								 '</div>' + 
-							'</a>' +
-						'</div>';
+			var courseName = location.search.split('course=')[1];
+			var course = findCourseByEncodedCourseName(courseName);
+			console.log(course.getCourseName());
+			if (course != null) {
+				document.getElementById("coursePage").innerHTML += 
+					'<div class="container"> ' +
+						'<div class="well well-sm">' + 
+							'<p class="courseName"><b>' + course.getCourseName() + '</b></p>' + 
+							'<p>' + course.getCourseDescription() + '</p>' + 
+							'<br>' +
+							'<p>' + 
+								'<a class="btn btn-primary btn-sm" href="#" role="button">Register</a>' + 
+							'</p>' + 
+						'</div>' + 
+					'</div>';
 			}
 		</script>
 		

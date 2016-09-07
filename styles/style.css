@@ -95,24 +95,24 @@ input[type=password] {
 }
 
 
-.well .showOnHover {
+.courseInfo .showOnHover {
     display: none;
 }
 
-.well:hover {
+.courseInfo:hover {
     box-shadow: 0px 0px 4px black;
     border: 1px solid #687D6D;
 }
 
-.well:hover .showOnHover {
+.courseInfo:hover .showOnHover {
     display: inline-block;
 }
 
-.well a {
+.courseInfo a {
     color: black;
 }
 
-.well a:hover {
+.courseInfo a:hover {
     color: black;
     text-decoration: none;
 }
