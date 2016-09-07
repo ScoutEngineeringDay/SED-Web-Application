@@ -86,9 +86,7 @@ input[type=password] {
     border-top-right-radius: 0;
 }
 
-
-
-
+/*------------------CourseList-------------------*/
 
 .courseName{
     font-size: 24px;
@@ -116,3 +114,12 @@ input[type=password] {
     color: black;
     text-decoration: none;
 }
+
+.carousel-inner img {
+  margin: auto;
+  width: auto;
+  min-height: 600px;
+  max-height: 600px;
+  height: 600px;
+}
+
