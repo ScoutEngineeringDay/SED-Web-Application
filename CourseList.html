@@ -36,12 +36,16 @@
 						'<div class="container"> ' +
 							'<div class="well well-sm">' + 
 								'<p class="courseName"><b>' + course.getCourseName() + '</b></p>' + 
-								'<p>' + course.getCourseDescription() + '</p>' + 
-								'<br>' +
-								'<p>' + 
-									'<a class="btn btn-primary btn-sm" href="#" role="button">Course Page</a>' + 
-								'</p>' + 
-							'</div>' + 
+									'<div class="showOnHover">' +
+										'<a href="' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
+											'<p>' + course.getCourseDescription() + '</p>' + 
+										'</a>' +
+							 		'</div>' +
+							// 	'<br>' +
+							// 	// '<p>' + 
+							// 	// 	'<a class="btn btn-primary btn-sm" href="#" role="button">Course Page</a>' + 
+							// 	// '</p>' + 
+							// '</div>' + 
 						'</div>';
 
 
@@ -52,3 +56,6 @@
 
 	</body>
 </html>
+
+
+

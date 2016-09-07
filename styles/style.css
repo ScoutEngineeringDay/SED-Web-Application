@@ -91,5 +91,28 @@ input[type=password] {
 
 
 .courseName{
-    font-size: 32px;
+    font-size: 24px;
+}
+
+
+.well .showOnHover {
+    display: none;
+}
+
+.well:hover {
+    box-shadow: 0px 0px 4px black;
+    border: 1px solid #687D6D;
+}
+
+.well:hover .showOnHover {
+    display: inline-block;
+}
+
+.well a {
+    color: black;
+}
+
+.well a:hover {
+    color: black;
+    text-decoration: none;
 }
