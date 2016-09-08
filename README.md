@@ -54,5 +54,6 @@ Gui:
 
 ## Credits
 
-* **Ryan Dufrene**: Developer - *Initial work*
-* **Edward Gedeon**: Developer - *Initial work*
+* **Ryan Dufrene**: Front-End Developer - *Initial work*
+* **Edward Gedeon**: Front-End Developer - *Initial work*
+* **Walter Hiranpat**: Database Developer - *Initial work*
