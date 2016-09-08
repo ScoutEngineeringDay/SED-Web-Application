@@ -22,28 +22,29 @@
 					<script type="text/javascript">
 						$(window).load(function(){
 						   var fileExt = ".jpg";
-						        $(document).ready(function(){
-						            $.ajax({
-						                url: 'homeImages/',
-						                success: function (data) {
-						                    
-						                   $("#fileNames").html('<div>');
-						                    $(data).find("a:contains(" + fileExt + ")").each(function () {
-							                   console.log('<div class="item">' +
-										    			'<img src="homeimages/' + $(this).text() + '">' +
-										    		'</div>');
-							                   document.getElementById("fileNames").innerHTML +=
-													'<div class="item">' +
-										    			'<img src="homeimages/' + $(this).text() + '">' +
-										    		'</div>';
-						                    });
-						                    document.getElementById("fileNames").innerHTML +=
-							                     '<div class="item active">' +
-					    							'<img class="start" src="homeImages/start.jpg">' +
-					    						'</div>';
-						                }
-						            });
-						        });
+					       $(document).ready(function(){
+					            $.ajax({
+					            	// Addes all images in directory to the carousel
+					                url: 'homeImages/',
+					                success: function (data) {
+					                   $("#fileNames").html('<div>');
+					                    $(data).find("a:contains(" + fileExt + ")").each(function () {
+						                   console.log('<div class="item">' +
+									    			'<img src="homeimages/' + $(this).text() + '">' +
+									    		'</div>');
+						                   document.getElementById("fileNames").innerHTML +=
+												'<div class="item">' +
+									    			'<img src="homeimages/' + $(this).text() + '">' +
+									    		'</div>';
+					                    });
+					                    //Addes which image should be active
+					                    document.getElementById("fileNames").innerHTML +=
+						                     '<div class="item active">' +
+				    							'<img class="start" src="homeImages/start.jpg">' +
+				    						'</div>';
+					                }
+					           });
+					        });
 						});
 					</script>
 				</div>
