@@ -54,4 +54,4 @@ Gui:
 * **Edward Gedeon**: Developer - *Initial work*
 
 
-![Alt text](ScoutEngineeringDayWebDesign.jpg?raw=true "Scout Engineering Day Web Design")
+![ScoutEngineeringDayWebDesign.png](ScoutEngineeringDayWebDesign.png?raw=true "Scout Engineering Day Web Design")
