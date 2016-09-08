@@ -52,3 +52,6 @@ Gui:
 
 * **Ryan Dufrene**: Developer - *Initial work*
 * **Edward Gedeon**: Developer - *Initial work*
+
+
+![Alt text](ScoutEngineeringDayWebDesign.jpg?raw=true "Scout Engineering Day Web Design")
