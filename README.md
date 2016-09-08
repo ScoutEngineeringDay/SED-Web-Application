@@ -30,6 +30,10 @@ git clone https://github.com/crabbymonkey/sed.git /c/xampp/htdocs/ScoutEngineeri
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
+## Design
+
+![ScoutEngineeringDayWebDesign.png](ScoutEngineeringDayWebDesign.png?raw=true "Scout Engineering Day Web Design")
+
 ## To Do
 
 Gui:
@@ -52,6 +56,3 @@ Gui:
 
 * **Ryan Dufrene**: Developer - *Initial work*
 * **Edward Gedeon**: Developer - *Initial work*
-
-
-![ScoutEngineeringDayWebDesign.png](ScoutEngineeringDayWebDesign.png?raw=true "Scout Engineering Day Web Design")
