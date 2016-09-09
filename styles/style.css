@@ -34,11 +34,20 @@ input[type=password] {
 }
 
 .banner-image2 {
-	width: 10%;
+	width: 17%;
 	float: right;
 	padding-top: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
+}
+
+.divide-nav{
+  opacity: 0;
+  height: 80px;
+}
+
+.navbar.transparent.navbar-inverse .navbar-inner {
+   background: rgba(0,0,0,0.4);
 }
 
 /*------------------LoginOrRegister-------------------*/
