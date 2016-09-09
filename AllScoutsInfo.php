@@ -34,27 +34,46 @@
 		
 			// If the query executed properly proceed
 			if($response){
-				echo '<table align="left"
-				cellspacing="5" cellpadding="8">
-		
-				<tr><td align="left"><b>First Name</b></td>
-				<td align="left"><b>Last Name</b></td>
-				<td align="left"><b>ID</b></td>
-				<td align="left"><b>Registration Date</b></td></tr>';
+				echo 
+				'<div class="container table-responsive">
+					<table class="table table-striped table-hover table-sm">
+						<thead>
+							<tr>
+								<th align="left"><b>First Name</b></th>
+								<th align="left"><b>Last Name</b></th>
+								<th align="left"><b>ID</b></th>
+								<th align="left"><b>Registration Date</b></th>
+								<th align="left"></th>
+							</tr>
+						</thead>';
 		
 				// mysqli_fetch_array will return a row of data from the query
 				// until no further data is available
 				while($row = mysqli_fetch_array($response)){
-					echo '<tr><td align="left">' . 
-					$row['first_name'] . '</td><td align="left">' . 
-					$row['last_name'] . '</td><td align="left">' .
-					$row['scout_id'] . '</td><td align="left">' .
-					$row['date_entered'] . '</td><td align="left">';
-		
-					echo '</tr>';
+					echo 
+							'<tr >
+								<td align="left" height="50px" vertical-align="bottom">' . 
+									$row['first_name'] . 
+								'</td>
+								<td align="left">' . 
+									$row['last_name'] . 
+								'</td>
+								<td align="left">' .
+										$row['scout_id'] . 
+								'</td>
+								<td align="left">' .
+									$row['date_entered'] . 
+								'</td>
+								<td align="left">
+									<a class="btn btn-primary btn-sm" href="UserPage.html?user=' .$row['first_name'].$row['last_name'] .'" role="button">User Page</a> 
+								</td>
+							</tr>
+						</a>';
 				}
 		
-				echo '</table>';
+				echo 
+					'</table>
+				</dev>';
 		
 			} 
 			else {

@@ -123,3 +123,12 @@ input[type=password] {
   height: 600px;
 }
 
+.table {
+  font-size: 18px;
+  width: auto;
+}
+
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #99ccff;
+}
