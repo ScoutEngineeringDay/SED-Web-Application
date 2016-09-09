@@ -34,11 +34,56 @@ input[type=password] {
 }
 
 .banner-image2 {
-	width: 10%;
+	width: 17%;
 	float: right;
 	padding-top: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
+}
+
+.navbar-top {
+	margin: 0 auto;
+	padding: 0;
+}
+
+.affix {
+  top: 50px;
+  width:100%;
+}
+
+body {
+	padding: 0;
+}
+
+.divide-nav{
+  opacity: 0;
+  height: 80px;
+  background-color: #428bca;
+}
+
+.divide-text{
+	opacity: 0;
+	background-color: #f8f8f8;
+    line-height: 20px;
+    font-size:20px;
+    padding: 15px 0;
+}
+
+.affix {
+  top: 50px;
+  width:100%;
+}
+
+.filler{
+  min-height: 4000px;
+}
+
+.navbar {
+    margin-bottom: 0 !important;
+}
+
+.navbar.transparent.navbar-inverse .navbar-inner {
+   background: rgba(0,0,0,0.4);
 }
 
 /*------------------LoginOrRegister-------------------*/
