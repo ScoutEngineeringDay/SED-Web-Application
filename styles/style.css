@@ -15,39 +15,56 @@ input[type=password] {
 /*------------------Register-------------------*/
 
 .submit {
-	padding: 10px;
+    padding: 10px;
 }
 
 /*------------------NewNavBar-------------------*/
 .navbar-header>a {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .banner-image1 {
-	width: 20%;
-	float: left;
-	padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
- 
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.navbar-banner {
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .banner-image2 {
-	width: 17%;
-	float: right;
-	padding-top: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
+    height: 100%;
+    vertical-align: middle;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.navbar-brand1 {
+    vertical-align: center;
+    text-align: center;
 }
 
 .navbar-top {
     margin-bottom: 0 !important;
+    height: 80px;
+    margin-right: 10px;
+    margin-left: 10px;
+    white-space: nowrap;
 }
 
 /*------------------LoginOrRegister-------------------*/
 .form-signin-heading {
-	text-align: center;
+    text-align: center;
 }
 .form-signin
 {
@@ -135,4 +152,84 @@ input[type=password] {
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: #99ccff;
+}
+
+.blueLink:link    {
+    background-color:transparent; 
+    text-decoration:none
+}
+
+.blueLink:visited {
+    background-color:transparent; 
+    text-decoration:none
+}
+
+.blueLink:hover   {
+    background-color:transparent;
+    text-decoration:underline;
+}
+
+.blueLink:active  {
+    background-color:transparent; 
+    text-decoration:none
+}
+
+
+/*------------------Contact-------------------*/
+
+.jumbotron {
+background: #358CCE;
+color: #FFF;
+border-radius: 0px;
+}
+.jumbotron-sm { padding-top: 24px;
+padding-bottom: 24px; }
+.jumbotron small {
+color: #FFF;
+}
+.h1 small {
+font-size: 24px;
+}
+
+
+/*------------------About-------------------*/
+
+
+.blackLink:link    {
+    color:black; 
+    background-color:transparent; 
+    text-decoration:none
+}
+
+.blackLink:visited {
+    color:black; 
+    background-color:transparent; 
+    text-decoration:none
+}
+
+.blackLink:hover   {
+    color:black; 
+    background-color:transparent; 
+    text-decoration:none
+}
+
+.blackLink:active  {
+    color:black; 
+    background-color:transparent; 
+    text-decoration:none
+}
+
+
+
+
+
+
+.inlineRight {
+    position: fixed;
+    float: right;
+}
+
+.inlineLeftt {
+    position: fixed;
+    float: left;
 }
