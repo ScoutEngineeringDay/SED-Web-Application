@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<title id=title></title>
+
+	
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+			integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+			crossorigin="anonymous">
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+			integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+			crossorigin="anonymous">
+	</head>
+	<body>
+		<!--Begin Navbar-->
+		<script src="//code.jquery.com/jquery.min.js"></script>
+		<ol id="new-projects"></ol>
+		<script src="scripts/copyNavBar.js"></script>
+		<!--End Navbar-->
+
+		<div class="container">
+			<div class="jumbotron">
+				<h1 style="text-align: center;">Scout Engineering Day</h1>
+				<p>MITRE Scout Engineering Day was pioneered in 2012 at the headquarters of The MITRE Corporation in the Washington, DC area. Each year since its inception, Scout Engineering Day has hosted between 300 to 400 Scouts and 70 to 100 Scouters, Merit Badge Counselors and volunteers for an exciting day of STEM activities. We look forward to welcoming your Scout to this year's event! </p>
+			</div>
+
+
+
+			<div class="jumbotron">
+				<h2 style="text-align: center; font-size: 32pt;">Courses Offered at Scout Engineering Day</h2>
+				<br>
+
+				<div class="container-fluid" style="margin: 0 auto; width: 80%">
+					<div style="float: left; padding-right: 30%;">
+						<p class="inlineLeft" id="aboutCourseListLeft"></p>
+					</div>	
+					<div style="float: left;">
+						<p class="inLineRight" id="aboutCourseListRight"></p>
+					</div>
+				</div>
+				<br>
+				<div class="container-fluid" style="margin: 0 auto; width: 80%">
+					<a class="btn btn-primary btn-lg" href="Register.html" role="button">Register Now!</a>
+				</div>
+				<script src="scripts/Course.js"></script>
+				<script>
+					var allCourses = getAllCourses();
+					for (index in allCourses) { 
+						if (index % 2 == 0) {
+							var course = allCourses[index];
+							document.getElementById("aboutCourseListLeft").innerHTML += 
+									'<ul> ' +
+										'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
+											course.getCourseName() + 
+										'</a></li>' +
+									'<ul>';
+						}
+						else {
+							var course = allCourses[index];
+							document.getElementById("aboutCourseListRight").innerHTML += 
+									'<ul> ' +
+										'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
+											course.getCourseName() + 
+										'</a></li>' +
+									'<ul>';
+						}
+					}
+				</script>
+
+
+			</div>
+		</div>
+
+
+
+
+
+
+	</body>
+</html>
+
+
+
