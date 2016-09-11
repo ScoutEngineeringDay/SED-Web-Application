@@ -20,7 +20,7 @@ git clone https://github.com/crabbymonkey/sed.git /c/xampp/htdocs/ScoutEngineeri
 2. Start Apache Service by clicking the start button.
 3. If not running a MySQL Database start the MySQL service using the start button. 
 4. Open your browser of choice.
-5. Go to the URL [http://localhost/ScoutEngineeringDay/navbar/index.html](http://localhost/ScoutEngineeringDay/navbar/index.html) (This may change)
+5. Go to the URL [http://localhost/ScoutEngineeringDay/index.html](http://localhost/ScoutEngineeringDay/index.html) (This may change)
 
 ## Contributing
 
