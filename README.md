@@ -1,6 +1,6 @@
 # SED Web Registration Application Development
 
-This program is in development and is to be used for the Mitre Scout Engineering Day as a Registration Web Service. This program is for the front end of the registration service and is written in HTML, JavaScript, PHP and CSS. Anyone who would like to make please contact Ryan Dufrene at rdufrene@mitre.org.
+This program is in development and is to be used for the Mitre Scout Engineering Day as a Registration Web Service. This program is for the front end of the registration service and is written in HTML, JavaScript, PHP and CSS. Anyone who would like to help with development please contact Ryan Dufrene at rdufrene@mitre.org.
 
 ## Installation
 
