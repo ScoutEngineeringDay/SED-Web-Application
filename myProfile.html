@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<title id=title>My Profile</title>
+	
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+			integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+			crossorigin="anonymous">
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+			integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+			crossorigin="anonymous">
+	</head>
+	<body>
+		<!--Begin Navbar-->
+		<script src="//code.jquery.com/jquery.min.js"></script>
+		<ol id="new-projects"></ol>
+		<script src="scripts/copyNavBar.js"></script>
+		<!--End Navbar-->
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+			    var panels = $('.user-infos');
+			    var panelsButton = $('.dropdown-user');
+			    panels.hide();
+
+			    //Click dropdown
+			    panelsButton.click(function() {
+			        //get data-for attribute
+			        var dataFor = $(this).attr('data-for');
+			        var idFor = $(dataFor);
+
+			        //current button
+			        var currentButton = $(this);
+			        idFor.slideToggle(400, function() {
+			            //Completed slidetoggle
+			            if(idFor.is(':visible'))
+			            {
+			                currentButton.html('<i class="glyphicon glyphicon-chevron-up text-muted"></i>');
+			            }
+			            else
+			            {
+			                currentButton.html('<i class="glyphicon glyphicon-chevron-down text-muted"></i>');
+			            }
+			        })
+			    });
+
+
+			    $('[data-toggle="tooltip"]').tooltip();
+
+			    $('button').click(function(e) {
+			        e.preventDefault();
+			        alert("This is a demo.\n :-)");
+			    });
+			});
+		</script>
+
+
+		<div class="container">
+		    <div class="row">
+		    <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+	        	<a href="#" >Edit Profile</a>
+	        	<a href="#" >Logout</a>
+		    </div>
+
+		    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+		        <div class="panel panel-info">
+		            <div class="panel-heading">
+		            	<h3 class="panel-title">Edward Gedeon</h3> 
+		            </div>
+		            <div class="panel-body">
+		                <div class="row">
+			                <div class=" col-md-9 col-lg-9 "> 
+			                    <table class="table table-user-information">
+				                    <tbody>
+					                    <tr>
+					                        <td>Level:</td>
+					                        <td>Admin</td>   
+					                    </tr>
+					                    <tr>
+					                        <td>Email:</td>
+					                        <td><a href="mailto:edward.gedeon07@gmail.com">edward.gedeon07@gmail.com</a></td>   
+					                    </tr>
+						                    <td>Phone Number</td>
+						                    <td>(703) 347-1030</td>
+					                    </tr>
+				                    </tbody>
+				                </table>
+				            </div>
+			            </div>
+		            </div>
+	                <div class="panel-footer">
+                    	<a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                    </div>
+		            </div>
+		        </div>
+		    </div>
+		    </div>
+
+
+
+
+	</body>
+</html>
+
+

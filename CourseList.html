@@ -21,25 +21,29 @@
 		<ol id="new-projects"></ol>
 		<script src="scripts/copyNavBar.js"></script>
 		<!--End Navbar-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<p id="courseList"></p>
 		<script src="scripts/Course.js"></script>
 		<script>
-			var allCourses = getAllCourses();
-			for (index in allCourses) { 
-				var course = allCourses[index];
-				document.getElementById("courseList").innerHTML += 
-						'<div class="container"> ' +
-							'<a href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
-								'<div class="well well-sm courseInfo">' + 
-									'<p class="courseName"><b>' + course.getCourseName() + '</b></p>' + 
-										'<div class="showOnHover">' +
-												'<p>' + course.getCourseDescription() + '</p>' + 
-								 		'</div>' +
-								 '</div>' + 
-							'</a>' +
-						'</div>';
-			}
+				var allCourses = [];
+				getAllCourses(function(allCourses) {
+					for (index = 0; index < allCourses.length; index++) { 
+						var course = allCourses[index];
+						document.getElementById("courseList").innerHTML += 
+								'<div class="container"> ' +
+									'<a href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
+										'<div class="well well-sm courseInfo">' + 
+											'<p class="courseName"><b>' + course.getCourseName() + '</b></p>' + 
+												'<div class="showOnHover">' +
+													'<p>' + course.getCourseDescription() + '</p>' + 
+										 		'</div>' +
+										 '</div>' + 
+									'</a>' +
+								'</div>';
+					}
+				});
 		</script>
 		
 
