@@ -51,27 +51,29 @@
 				</div>
 				<script src="scripts/Course.js"></script>
 				<script>
-					var allCourses = getAllCourses();
-					for (index in allCourses) { 
-						if (index % 2 == 0) {
-							var course = allCourses[index];
-							document.getElementById("aboutCourseListLeft").innerHTML += 
-									'<ul> ' +
-										'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
-											course.getCourseName() + 
-										'</a></li>' +
-									'<ul>';
+					var allCourses;
+					getAllCourses(function(allCourses) {
+						for (index in allCourses) { 
+							if (index % 2 == 0) {
+								var course = allCourses[index];
+								document.getElementById("aboutCourseListLeft").innerHTML += 
+										'<ul> ' +
+											'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
+												course.getCourseName() + 
+											'</a></li>' +
+										'<ul>';
+							}
+							else {
+								var course = allCourses[index];
+								document.getElementById("aboutCourseListRight").innerHTML += 
+										'<ul> ' +
+											'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
+												course.getCourseName() + 
+											'</a></li>' +
+										'<ul>';
+							}
 						}
-						else {
-							var course = allCourses[index];
-							document.getElementById("aboutCourseListRight").innerHTML += 
-									'<ul> ' +
-										'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
-											course.getCourseName() + 
-										'</a></li>' +
-									'<ul>';
-						}
-					}
+					});
 				</script>
 			</div>
 
