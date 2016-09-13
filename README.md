@@ -18,7 +18,13 @@ git clone https://github.com/crabbymonkey/sed.git /c/xampp/htdocs/ScoutEngineeri
 
 1. Open XAMPP Control Panel.
 2. Start Apache Service by clicking the start button.
-3. If not running a MySQL Database start the MySQL service using the start button. 
+3. Start MySQL Database to start the MySQL service 
+      1. Open a browser of choice.
+      2. Go to the URL: [http://localhost/phpmyadmin/import.php](http://localhost/phpmyadmin/import.php)
+      3. Under the "Import" tab and run schema.sql to generate the overall database schema
+      4. Run the following .sql scripts in order for testing purposes:
+          1. scout_script, class_script, location_script, staff_script, question_list
+          2. workshop_script, security_Question_script, health_script
 4. Open your browser of choice.
 5. Go to the URL [http://localhost/ScoutEngineeringDay/index.html](http://localhost/ScoutEngineeringDay/index.html) (This may change)
 
@@ -34,6 +40,8 @@ git clone https://github.com/crabbymonkey/sed.git /c/xampp/htdocs/ScoutEngineeri
 
 ![ScoutEngineeringDayWebDesign.png](ScoutEngineeringDayWebDesign.png?raw=true "Scout Engineering Day Web Design")
 
+Database Schema:
+![Relationship_Schema.png](Relationship_Schema.png?raw=true "Scout Engineering Day Database")
 ## To Do
 
 Gui:
