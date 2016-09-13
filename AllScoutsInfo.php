@@ -26,7 +26,7 @@
 			require_once('mysqli_connect.php');
 		
 			// Create a query for the database
-			$query = "SELECT first_name, last_name, scout_id, date_entered  FROM scout";
+			$query = "SELECT first_name, last_name, scout_id, affiliation  FROM scout";
 		
 			// Get a response from the database by sending the connection
 			// and the query
@@ -39,10 +39,10 @@
 					<table class="table table-striped table-hover table-sm">
 						<thead>
 							<tr>
+								<th align="left"><b>ID</b></th>
 								<th align="left"><b>First Name</b></th>
 								<th align="left"><b>Last Name</b></th>
-								<th align="left"><b>ID</b></th>
-								<th align="left"><b>Registration Date</b></th>
+								<th align="left"><b>Affiliation</b></th>
 								<th align="left"></th>
 							</tr>
 						</thead>';
@@ -52,6 +52,9 @@
 				while($row = mysqli_fetch_array($response)){
 					echo 
 							'<tr >
+								<td align="left">' .
+										$row['scout_id'] . 
+								'</td>
 								<td align="left" height="50px" vertical-align="bottom">' . 
 									$row['first_name'] . 
 								'</td>
@@ -59,13 +62,10 @@
 									$row['last_name'] . 
 								'</td>
 								<td align="left">' .
-										$row['scout_id'] . 
-								'</td>
-								<td align="left">' .
-									$row['date_entered'] . 
+										$row['affiliation'] . 
 								'</td>
 								<td align="left">
-									<a class="btn btn-primary btn-sm" href="UserPage.html?user=' .$row['first_name'].$row['last_name'] .'" role="button">User Page</a> 
+									<a class="btn btn-primary btn-sm" href="UserPage.html?scoutId=' .$row['scout_id'] .'" role="button">User Page</a> 
 								</td>
 							</tr>
 						</a>';

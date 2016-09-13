@@ -18,9 +18,9 @@
 	
 	// Defined as constants so that they can't be changed
 	DEFINE ('DB_USER', 'root');
-	DEFINE ('DB_PASSWORD', 'pwdtest');
+	DEFINE ('DB_PASSWORD', 'test');
 	DEFINE ('DB_HOST', 'localhost');
-	DEFINE ('DB_NAME', 'scout_reg');
+	DEFINE ('DB_NAME', 'sed_database');
 	
 	// $dbc will contain a resource link to the database
 	// @ keeps the error from showing in the browser
