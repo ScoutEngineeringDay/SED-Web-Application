@@ -34,19 +34,7 @@ CREATE TABLE sed_database.question_list(
 	question_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     question VARCHAR(100)
 );
-CREATE TABLE sed_database.security_question(
-	scout_id INT UNSIGNED NOT NULL,
-    question_id INT UNSIGNED NOT NULL,
-    answer VARCHAR(50),
-    FOREIGN KEY fk_scout(scout_id)
-    REFERENCES sed_database.scout(scout_id) 
-    ON UPDATE CASCADE 
-    ON DELETE RESTRICT,
-    FOREIGN KEY fk_question_list(question_id)
-    REFERENCES sed_database.question_list(question_id) 
-    ON UPDATE CASCADE 
-    ON DELETE RESTRICT
-);
+
 CREATE TABLE sed_database.staff(
 	staff_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50),
@@ -90,17 +78,45 @@ CREATE TABLE sed_database.workshop(
     ON UPDATE CASCADE 
     ON DELETE RESTRICT
 );
+
+
+CREATE TABLE sed_database.group_staff(
+	workshop_id INT UNSIGNED NOT NULL,
+    staff_id INT UNSIGNED NOT NULL,
+    group_name VARCHAR(50),
+    FOREIGN KEY fk_staff(staff_id)
+    REFERENCES sed_database.staff(staff_id) 
+    ON UPDATE CASCADE 
+    ON DELETE RESTRICT,
+    FOREIGN KEY fk_workshop(workshop_id)
+    REFERENCES sed_database.workshop(workshop_id) 
+    ON UPDATE CASCADE 
+    ON DELETE RESTRICT
+);
+CREATE TABLE sed_database.security_question(
+	scout_id INT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
+    answer VARCHAR(50),
+    FOREIGN KEY scout_fk(scout_id)
+    REFERENCES sed_database.scout(scout_id) 
+    ON UPDATE CASCADE 
+    ON DELETE RESTRICT,
+    FOREIGN KEY fk_question_list(question_id)
+    REFERENCES sed_database.question_list(question_id) 
+    ON UPDATE CASCADE 
+    ON DELETE RESTRICT
+);
 CREATE TABLE sed_database.registration(
 	scout_id INT UNSIGNED NOT NULL,
     workshop_id INT UNSIGNED NOT NULL,
     payment_method ENUM('CREDIT', 'DEBIT', 'CHECK', 'CASH'),
     confirmation_number char(20),					/*NOT SURE WHAT THE FORMATION FOR CONFIRMATION NUMBER IS GOING TO LOOK LIKE HERE*/
     registration_date DATE,
-	FOREIGN KEY fk_scout(scout_id)
+	FOREIGN KEY scout_fk2(scout_id)
     REFERENCES sed_database.scout(scout_id) 
     ON UPDATE CASCADE 
     ON DELETE RESTRICT,
-    FOREIGN KEY fk_workshop(workshop_id)
+    FOREIGN KEY workshop_fk2(workshop_id)
     REFERENCES sed_database.workshop(workshop_id) 
     ON UPDATE CASCADE 
     ON DELETE RESTRICT
@@ -111,24 +127,11 @@ CREATE TABLE sed_database.workshop_session(
     check_in TIMESTAMP,
     check_out TIMESTAMP,
     completion_status ENUM('COMPLETE','INCOMPLETE','HOLD'),
-    FOREIGN KEY fk_scout(scout_id)
+    FOREIGN KEY scout_fk3(scout_id)
     REFERENCES sed_database.scout(scout_id) 
     ON UPDATE CASCADE 
     ON DELETE RESTRICT,
-    FOREIGN KEY fk_workshop(workshop_id)
-    REFERENCES sed_database.workshop(workshop_id) 
-    ON UPDATE CASCADE 
-    ON DELETE RESTRICT
-);
-CREATE TABLE sed_database.group_staff(
-	workshop_id INT UNSIGNED NOT NULL,
-    staff_id INT UNSIGNED NOT NULL,
-    group_name VARCHAR(50),
-    FOREIGN KEY fk_staff(staff_id)
-    REFERENCES sed_database.staff(staff_id) 
-    ON UPDATE CASCADE 
-    ON DELETE RESTRICT,
-    FOREIGN KEY fk_workshop(workshop_id)
+    FOREIGN KEY workshop_fk3(workshop_id)
     REFERENCES sed_database.workshop(workshop_id) 
     ON UPDATE CASCADE 
     ON DELETE RESTRICT
