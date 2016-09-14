@@ -1,25 +1,27 @@
 <?php
+        // Get a connection for the database
+        require_once('mysqli_connect.php');
 
-/* set out document type to text/javascript instead of text/html */
-header("Content-type: text/javascript");
+        // Create a query for the database
+        $query = "SELECT class_name, class_id, class_description FROM class";
 
-/* our multidimentional php array to pass back to javascript via ajax */
-$arr = array(
-        array(
-                "courseName" => "Robotics",
-                "courseDescription" => "Earning the Robotics merit badge requires a Scout to understand how robots move (actuators), sense the environment (sensors), and understand what to do (programming); he should demonstrate robot design in building a robot. You should help ensure that the Scout has sufficiently explored the field of robotics to understand what it is about, and to discover whether this may be a field of interest for him as a career.",
-                "instructor" => "James Smith",
-                "time" => "4:00-5:00am"
-        ),
-        array(
-                "courseName" => "Space Exploration",
-                "courseDescription" => "Space is mysterious. We explore space for many reasons, not least because we don't know what is out there, it is vast, and humans are full of curiosity. Each time we send explorers into space, we learn something we didn't know before. We discover a little more of what is there.",
-                "instructor" => "Tammy Porter",
-                "time" => "6:00-7:00pm"
-        )
-);
+        // Get a response from the database by sending the connection
+        // and the query
+        $response = @mysqli_query($dbc, $query);
 
-/* encode the array as json. this will output [{"first_name":"Darian","last_name":"Brown","age":"28","email":"darianbr@example.com"},{"first_name":"John","last_name":"Doe","age":"47","email":"john_doe@example.com"}] */
-echo json_encode($arr);
+        $courseList = array();
+        // If the query executed properly proceed
+        if($response){
 
+                // mysqli_fetch_array will return a row of data from the query
+                // until no further data is available
+                while($row = mysqli_fetch_array($response)){
+                        $tempCourse = array("courseName" => $row['class_name'], "courseDescription" => $row['class_description'], "id" => $row['class_id']);
+                        array_push($courseList, $tempCourse);
+                } 
+        }
+
+        // Close connection to the database
+        mysqli_close($dbc);
+        echo json_encode($courseList);
 ?>

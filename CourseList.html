@@ -31,13 +31,22 @@
 				getAllCourses(function(allCourses) {
 					for (index = 0; index < allCourses.length; index++) { 
 						var course = allCourses[index];
+						var tempCourseName = course.getCourseName();
+						var tempCourseDescription;
+						if (course.getCourseDescription() == null) {
+							tempCourseDescription = "No description provided at this time."
+						}
+						else {
+							tempCourseDescription = course.getCourseDescription();
+						}
+						
 						document.getElementById("courseList").innerHTML += 
 								'<div class="container"> ' +
-									'<a href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
+									'<a href="coursePage.html?course=' + tempCourseName.replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
 										'<div class="well well-sm courseInfo">' + 
-											'<p class="courseName"><b>' + course.getCourseName() + '</b></p>' + 
+											'<p class="courseName"><b>' + tempCourseName + '</b></p>' + 
 												'<div class="showOnHover">' +
-													'<p>' + course.getCourseDescription() + '</p>' + 
+													'<p>' + tempCourseDescription + '</p>' + 
 										 		'</div>' +
 										 '</div>' + 
 									'</a>' +
