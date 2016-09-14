@@ -1,6 +1,7 @@
-function Course(courseName, courseDescription, instructor, time) {
+function Course(courseName, courseDescription, id, instructor, time) {
     this.courseName = courseName;
     this.courseDescription = courseDescription;
+    this.id = id;
     this.instructor = instructor;
     this.time = time;
 
@@ -15,6 +16,9 @@ function Course(courseName, courseDescription, instructor, time) {
 	}
 	this.getCourseDescription = function(){
 		return this.courseDescription;
+	}
+	this.getID = function(){
+		return this.id;
 	}
 	this.setInstructor = function(newInstructor){
 		this.instructor = newInstructor;
