@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>SED Home</title>
+		<title>All Scouts</title>
 		<link rel="stylesheet" type="text/css" href="styles/style.css">
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet"
