@@ -18,7 +18,7 @@
 	
 	// Defined as constants so that they can't be changed
 	DEFINE ('DB_USER', 'root');
-	DEFINE ('DB_PASSWORD', 'test');
+	DEFINE ('DB_PASSWORD', '');
 	DEFINE ('DB_HOST', 'localhost');
 	DEFINE ('DB_NAME', 'sed_database');
 	
