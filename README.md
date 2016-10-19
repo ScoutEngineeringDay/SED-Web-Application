@@ -23,11 +23,12 @@ The following tools are needed:
 
 1. Open Git Bash
 2. Install Django `pip install Django==1.10.2`
-  * if it does not recognize pip you need to add the Python bin folder to Environment Variable PATH.
+  * If it does not recognize pip you need to add the Python bin folder to Environment Variable PATH.
 3. Open location of source code `cd /locationofcode/sed`
 4. Setup the Database `python manage.py makemigrations`
 5. Apply Database `python manage.py migrate`
 6. Run the server `python manage.py runserver`
+  * Do not close the Git Bash window it is running the server.
 7. Go to [http://localhost:8000/](http://localhost:8000/) in browser
 
 
@@ -41,8 +42,8 @@ The following tools are needed:
 
 ## URLs:
 
-[http://localhost:8000/](http://localhost:8000/): Website Home Page
-[http://localhost:8000/admin/](http://localhost:8000/admin/):	Admin Page
+- [http://localhost:8000/](http://localhost:8000/): Website Home Page
+- [http://localhost:8000/admin/](http://localhost:8000/admin/):	Admin Page
 
 
 ## Design
