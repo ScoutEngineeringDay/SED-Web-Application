@@ -2,27 +2,11 @@
 
 This program is in development and is to be used for the Mitre Scout Engineering Day as a Registration Web Service. This program is for the front end of the registration service and is written in HTML, JavaScript, PHP and CSS. Anyone who would like to help with development please contact Ryan Dufrene at rdufrene@mitre.org.
 
-## Installation
+
+# Installation
 
 These instructions use [Git Bash](https://git-for-windows.github.io/):
 
-
-## Usage
-
-<<<<<<< HEAD
-1. Open XAMPP Control Panel.
-2. Start Apache Service by clicking the start button.
-3. Start MySQL Database to start the MySQL service 
-      1. Open a browser of choice.
-      2. Go to the URL: [http://localhost/phpmyadmin/import.php](http://localhost/phpmyadmin/import.php)
-      3. Under the "Import" tab and run schema.sql to generate the overall database schema
-      4. Run the following .sql scripts in order for testing purposes:
-          1. scout_script, class_script, location_script, staff_script, question_list
-          2. workshop_script, security_Question_script, health_script
-4. Open your browser of choice.
-5. Go to the URL [http://localhost/ScoutEngineeringDay/index.html](http://localhost/ScoutEngineeringDay/index.html) (This may change)
-=======
->>>>>>> 6152db7543fb8620cc7b9267a962f33aabfd9dd0
 
 ## Contributing
 
@@ -32,38 +16,41 @@ These instructions use [Git Bash](https://git-for-windows.github.io/):
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
-<<<<<<< HEAD
-=======
-## Django Commands
 
-python manage.py makemigration
-	when database have been altered
-python manage.py migrate
-	when database alter has occured and need update
-python manage.py runserver
-	to run the machine on localhost port 8000
-python manage.py createsuperuser
-	this will create you an admin level account 
+## First Time Setup
+
+1. Open Git Bash
+2. Open location of source code `cd /locationofcode/sed`
+3. Setup the Database `python manage.py makemigrations`
+4. Apply Database `python manage.py migrate`
+5. Run the server `python manage.py runserver`
+6. Go to [http://localhost:8000/](http://localhost:8000/) in browser
+
+
+## Useful Django Commands
+
+When database have been altered: `python manage.py makemigrations`
+When database alter has occured and need update: `python manage.py migrate`
+To run the machine on localhost port 8000: `python manage.py runserver`
+This will create you an admin level account: `python manage.py createsuperuser`
+
 
 ## URLs:
 
-http://localhost:8000/
-	This will take you to website page
-http://localhost:8000/admin/
-	Allow you to log in to website admin site to modify database and create user and assigned them permissions
+[http://localhost:8000/](http://localhost:8000/): Website Home Page
+[http://localhost:8000/admin/](http://localhost:8000/admin/):	Admin Page
 
->>>>>>> 6152db7543fb8620cc7b9267a962f33aabfd9dd0
+
 ## Design
 
 ![ScoutEngineeringDayWebDesign.png](ScoutEngineeringDayWebDesign.png?raw=true "Scout Engineering Day Web Design")
 
-<<<<<<< HEAD
-Database Schema:
-=======
+
 ## Database Design Schema:
 
->>>>>>> 6152db7543fb8620cc7b9267a962f33aabfd9dd0
 ![Relationship_Schema.png](Relationship_Schema.png?raw=true "Scout Engineering Day Database")
+
+
 ## To Do
 
 Gui:
@@ -87,8 +74,4 @@ Gui:
 * **Ryan Dufrene**: Front-End Developer - *Initial work*
 * **Edward Gedeon**: Front-End Developer - *Initial work*
 * **Walter Hiranpat**: Database Developer - *Initial work*
-<<<<<<< HEAD
 * **Sue Kim**: Manager - *Initial work*
-=======
-* **Sue Kim**: Manager - *Initial work*
->>>>>>> 6152db7543fb8620cc7b9267a962f33aabfd9dd0
