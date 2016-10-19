@@ -1,4 +1,4 @@
-# SED Web Registration Application Development with Django Framework
+# SED Web Registration Application Development
 
 This program is in development and is to be used for the Mitre Scout Engineering Day as a Registration Web Service. This program is for the front end of the registration service and is written in HTML, JavaScript, PHP and CSS. Anyone who would like to help with development please contact Ryan Dufrene at rdufrene@mitre.org.
 
@@ -9,6 +9,7 @@ The following tools are needed:
 - [Git Bash](https://git-for-windows.github.io/)
 - [Python](https://www.python.org/downloads/)
 - [SQLite](https://sqlite.org/)
+
 
 ## Contributing
 
@@ -23,7 +24,7 @@ The following tools are needed:
 
 1. Open Git Bash
 2. Install Django `pip install Django==1.10.2`
-  * If it does not recognize pip you need to add the Python bin folder to Environment Variable PATH.
+  * **Hint:** If it does not recognize pip you need to add the Python bin folder to Environment Variable PATH.
   * **Hint:** If you are within a company firewall you will have to use `pip install --proxy <proxy> Django==1.10.2`
 3. Open location of source code `cd /locationofcode/sed`
 4. Setup the Database `python manage.py makemigrations`
@@ -65,11 +66,11 @@ Gui:
 - [x] Create Home page
 - [x] Create Login page
 - [x] Create Register page
-- [ ] Create Course List page
-- [ ] Create Scout List page
-- [ ] Create Single Scout page
-- [ ] Create Single Course page
-- [x] Create PHP connection to the database
+- [x] Create Course List page
+- [x] Create Scout List page
+- [x] Create Single Scout page
+- [x] Create Single Course page
+- ~~[x] Create PHP connection to the database~~
 - [x] Create getScoutInfoFromDatabase()
 - [x] Create getAllScoutsFromDatabase()
 - [x] Create getCourseInfoFromDatabase()
