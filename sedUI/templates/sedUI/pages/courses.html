@@ -1,0 +1,16 @@
+{% extends "sedUI/base/header.html" %}
+{% load staticfiles %}
+{% block content %}
+	{% if all_courses %}
+		<ul>
+			{% for course in all_courses %}
+			<li>
+				<!--<a href="/course/{{course.class_id}}">{{course.class_name}} {{course.class_id}}</a>-->
+				<h4>{{course.class_name}}</h4>
+			</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<h4> You don't have any courses </h4>
+	{% endif %}
+{% endblock %}
