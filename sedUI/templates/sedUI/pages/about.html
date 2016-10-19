@@ -1,0 +1,107 @@
+{% extends "sedUI/base/header.html" %}
+{% load staticfiles %}
+{% block content %}
+		<div class="container">
+		    <div class="container">
+			<div class="jumbotron">
+				<h2 style="text-align: center; font-size: 32pt;">Scout Engineering Day</h2>
+				<p align="center" style="color:blue; font-size:200%;">
+					Save the Date!
+					<br>
+					Saturday, March 12, 2016
+					<br>
+					in 
+					<br>
+					McLean, Virginia
+				</p>
+				<p style="text-align: center;">
+					Registration opens on Wednesday, January 20, 2016 at 7:00pm
+				</p>
+ 
+			</div>
+			<div class="jumbotron">
+				<h2 style="text-align: center; font-size: 32pt;">Courses Offered at Scout Engineering Day</h2>
+				<br>
+
+				<div class="container-fluid" style="margin: 0 auto; width: 80%">
+					<div style="float: left; padding-right: 30%;">
+						<p class="inlineLeft" id="aboutCourseListLeft"></p>
+					</div>	
+					<div style="float: left;">
+						<p class="inLineRight" id="aboutCourseListRight"></p>
+					</div>
+				</div>
+				<br>
+				<div class="container-fluid" style="margin: 0 auto; width: 80%">
+					<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
+				</div>
+				<script src="scripts/Course.js"></script>
+				<script>
+					var allCourses;
+					getAllCourses(function(allCourses) {
+						for (index in allCourses) { 
+							if (index % 2 == 0) {
+								var course = allCourses[index];
+								document.getElementById("aboutCourseListLeft").innerHTML += 
+										'<ul> ' +
+											'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
+												course.getCourseName() + 
+											'</a></li>' +
+										'<ul>';
+							}
+							else {
+								var course = allCourses[index];
+								document.getElementById("aboutCourseListRight").innerHTML += 
+										'<ul> ' +
+											'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
+												course.getCourseName() + 
+											'</a></li>' +
+										'<ul>';
+							}
+						}
+					});
+				</script>
+			</div>
+
+
+			<div class="jumbotron">
+			  	<div class="container-fluid">
+				    <h2>Location of Scout Engineering Day</h2>
+				    <h4>7515 Colshire Dr, McLean, VA 22102</h4>
+				  	<style>#map {width: 60%; height: 500px; float: left; }</style>
+				  	<style>#inst {width: 35%; float: right;}</style>
+				  	<div>
+					    <div id="map"></div>
+						<div id="inst">
+						
+						<p>
+							Parking Insturctions
+							<br>
+							MITRE 2
+							<br>
+							Go to Registration
+							<br>
+							MITRE Complex Link
+							<br>
+						</p>
+
+						<a class="btn btn-primary btn-lg" href="https://www.google.com/maps/dir//7515+Colshire+Drive,+McLean,+VA+22102/@38.9226832,-77.2082459,17z/data=!3m1!4b1!4m8!4m7!1m0!1m5!1m1!1s0x89b64ac62ab07a31:0x75dcc97e7f5adaed!2m2!1d-77.2060572!2d38.922679" target="_blank" role="button">Get Directions</a>
+						</div>
+					</div>
+				</div>
+				<script>
+					function myMap() {
+						 var myCenter = new google.maps.LatLng(38.922679,-77.206057);
+						 var mapCanvas = document.getElementById("map");
+						 var mapOptions = {center: myCenter, zoom: 13, scrollwheel: false};
+						 var map = new google.maps.Map(mapCanvas, mapOptions);
+						 var marker = new google.maps.Marker({position:myCenter});
+						 marker.setMap(map);
+					}
+			    </script>
+
+			    <script async defer
+			        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXhUi4Rr6tydsw9jIbfs4k7rLOlxt4-hA&callback=myMap">
+				</script>
+		</div>
+{% endblock %}

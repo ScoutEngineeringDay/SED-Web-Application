@@ -1,0 +1,47 @@
+{% extends "sedUI/base/header.html" %}
+{% load staticfiles %}
+{% block content %}
+		<div class="container">
+		    <div class="row">
+			<div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+				<a href="#" >Edit Profile</a>
+				<a href="#" >Logout</a>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<!-- Whole Name -->
+						<h3 class="panel-title" id="userName"></h3>  
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class=" col-md-9 col-lg-9 "> 
+								<table class="table table-user-information">
+									<tbody>
+										<tr>
+											<td>Org:</td>
+											<!-- User Type -->
+											<td id="userType"></td>
+										</tr>
+										<tr>
+											<td>Email:</td>
+											<!-- User Email Format: <a href="mailto:edward.gedeon07@gmail.com">edward.gedeon07@gmail.com</a> -->
+											<td id="userEmail"></td>   
+										</tr>
+										<td>Phone Number</td>
+										<!-- User Phone Number -->
+										<td id="userPhone"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+				</div>
+			</div>
+		</div>
+		</div>
+{% endblock %}
