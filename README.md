@@ -24,6 +24,7 @@ The following tools are needed:
 1. Open Git Bash
 2. Install Django `pip install Django==1.10.2`
   * If it does not recognize pip you need to add the Python bin folder to Environment Variable PATH.
+  * **Hint:** If you are within a company firewall you will have to use `pip install --proxy <proxy> Django==1.10.2`
 3. Open location of source code `cd /locationofcode/sed`
 4. Setup the Database `python manage.py makemigrations`
 5. Apply Database `python manage.py migrate`
