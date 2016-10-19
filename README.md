@@ -18,11 +18,30 @@ These instructions use [Git Bash](https://git-for-windows.github.io/):
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
+## Django Commands
+
+python manage.py makemigration
+	when database have been altered
+python manage.py migrate
+	when database alter has occured and need update
+python manage.py runserver
+	to run the machine on localhost port 8000
+python manage.py createsuperuser
+	this will create you an admin level account 
+
+## URLs:
+
+http://localhost:8000/
+	This will take you to website page
+http://localhost:8000/admin/
+	Allow you to log in to website admin site to modify database and create user and assigned them permissions
+
 ## Design
 
 ![ScoutEngineeringDayWebDesign.png](ScoutEngineeringDayWebDesign.png?raw=true "Scout Engineering Day Web Design")
 
-Database Schema:
+## Database Design Schema:
+
 ![Relationship_Schema.png](Relationship_Schema.png?raw=true "Scout Engineering Day Database")
 ## To Do
 
