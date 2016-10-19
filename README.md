@@ -70,7 +70,7 @@ Gui:
 - [x] Create Scout List page
 - [x] Create Single Scout page
 - [x] Create Single Course page
-- ~~[x] Create PHP connection to the database~~
+- [x] ~~Create PHP connection to the database~~
 - [x] Create getScoutInfoFromDatabase()
 - [x] Create getAllScoutsFromDatabase()
 - [x] Create getCourseInfoFromDatabase()
