@@ -1,1 +1,0 @@
-$("#new-projects").load("NavBar.html");

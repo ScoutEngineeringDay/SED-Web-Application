@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Scout Engineering Day</title>
+	<meta charset="utf-8" />
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" type = "text/css"/>
+	<link rel="stylesheet" href="{% static '/css/style.css' %}" type = "text/css"/>
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+
+</head>
+
+<body class="body" style="background-color:#f6f6f6">
+	<div class="container-fluid" style="min-height:95%; ">
+		<nav class="navbar navbar-default navbar-top">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+						aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand1" href="http://www.scouting.org/"><img
+						class="banner-image1" src="{% static 'img/images/sedbanner.jpg' %}"></a> <a
+						class="navbar-brand2" href="https://www.mitre.org/">
+						<img class="banner-image2" src="{% static 'img/images/Mitre.jpg' %}"></a>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+	
+		 <nav class="navbar navbar-default navbar-lower" role="navigation">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse collapse-buttons">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about/">About</a></li>
+            {% if request.user.is_superuser %}
+            <li><a href="/courses/">Course List</a></li>
+            <li><a href="/scouts/">Scout List</a></li>
+            {% endif %}
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/profile/">My Profile</a></li>
+            <li><a href="/loginOrRegister/">Login/Register</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div>  
+			<div class='container-fluid'>
+			<br><br>
+			   {% block content %}
+			   {% endblock %}	
+			</div>
+		</div> 
+	</div>
+	<footer>
+		<div class="container-fluid" style='margin-left:15px'>
+			<p>Scout Engineering Day</p>
+		</div>
+	</footer>	
+	
+</body>
+
+</html>
