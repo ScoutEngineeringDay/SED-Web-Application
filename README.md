@@ -5,8 +5,10 @@ This program is in development and is to be used for the Mitre Scout Engineering
 
 # Installation
 
-These instructions use [Git Bash](https://git-for-windows.github.io/):
-
+The following tools are needed:
+- [Git Bash](https://git-for-windows.github.io/)
+- [Python](https://www.python.org/downloads/)
+- [SQLite](https://sqlite.org/)
 
 ## Contributing
 
@@ -20,19 +22,21 @@ These instructions use [Git Bash](https://git-for-windows.github.io/):
 ## First Time Setup
 
 1. Open Git Bash
-2. Open location of source code `cd /locationofcode/sed`
-3. Setup the Database `python manage.py makemigrations`
-4. Apply Database `python manage.py migrate`
-5. Run the server `python manage.py runserver`
-6. Go to [http://localhost:8000/](http://localhost:8000/) in browser
+2. Install Django `pip install Django==1.10.2`
+  * if it does not recognize pip you need to add the Python bin folder to Environment Variable PATH.
+3. Open location of source code `cd /locationofcode/sed`
+4. Setup the Database `python manage.py makemigrations`
+5. Apply Database `python manage.py migrate`
+6. Run the server `python manage.py runserver`
+7. Go to [http://localhost:8000/](http://localhost:8000/) in browser
 
 
 ## Useful Django Commands
 
-When database have been altered: `python manage.py makemigrations`
-When database alter has occured and need update: `python manage.py migrate`
-To run the machine on localhost port 8000: `python manage.py runserver`
-This will create you an admin level account: `python manage.py createsuperuser`
+- When database have been altered: `python manage.py makemigrations`
+- When database alter has occured and need update: `python manage.py migrate`
+- To run the machine on localhost port 8000: `python manage.py runserver`
+- This will create you an admin level account: `python manage.py createsuperuser`
 
 
 ## URLs:
