@@ -1,6 +1,6 @@
 # SED Web Registration Application Development
 
-This program is in development and is to be used for the Mitre Scout Engineering Day as a Registration Web Service. This program is for the front end of the registration service and is written in HTML, JavaScript, PHP and CSS. Anyone who would like to help with development please contact Ryan Dufrene at rdufrene@mitre.org.
+This program is in development and is to be used for the Mitre Scout Engineering Day as a Registration Web Service. The front end of the registration service and is written in HTML, JavaScript, Python and CSS; while to back end is done using MySQL. Anyone who would like to help with development please contact Ryan Dufrene at rdufrene@mitre.org.
 
 
 # Installation
@@ -8,7 +8,7 @@ This program is in development and is to be used for the Mitre Scout Engineering
 The following tools are needed:
 - [Git Bash](https://git-for-windows.github.io/)
 - [Python](https://www.python.org/downloads/)
-- [SQLite](https://sqlite.org/)
+  * **Hint:** Make sure to check add to PATH if downloading version 3.5+
 
 
 ## Contributing
@@ -60,8 +60,6 @@ The following tools are needed:
 
 ## To Do
 
-Gui:
-
 - [x] Finish Navbar
 - [x] Create Home page
 - [x] Create Login page
@@ -75,10 +73,13 @@ Gui:
 - [x] Create getAllScoutsFromDatabase()
 - [x] Create getCourseInfoFromDatabase()
 - [x] Create getAllCoursesFromDatabase()
+- [ ] Fix bugs created when switching to Django
+- [ ] Add MySQL database
+- [ ] Update Registration process
 
 ## Credits
 
-* **Ryan Dufrene**: Front-End Developer - *Initial work*
-* **Edward Gedeon**: Front-End Developer - *Initial work*
-* **Walter Hiranpat**: Database Developer - *Initial work*
 * **Sue Kim**: Manager - *Initial work*
+* **Ryan Dufrene**: Front-End Developer - *Initial work*
+* **Walter Hiranpat**: Database Developer - *Initial work*
+* **Edward Gedeon**: Front-End Developer - *Initial work*
