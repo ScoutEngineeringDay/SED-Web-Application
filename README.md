@@ -7,8 +7,7 @@ This program is in development and is to be used for the Mitre Scout Engineering
 
 The following tools are needed:
 - [Git Bash](https://git-for-windows.github.io/)
-- [Python](https://www.python.org/downloads/)
-  * **Hint:** Make sure to check add to PATH if downloading version 3.5+
+- [Python](https://www.python.org/downloads/) (**Hint:** Make sure to check add to PATH if downloading version 3.5+)
 
 
 ## Contributing
