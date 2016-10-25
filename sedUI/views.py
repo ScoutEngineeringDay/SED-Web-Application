@@ -12,8 +12,20 @@ def contact(request):
 def login(request):
     return render(request, 'sedUI/pages/basic.html')
 
-def registration(request):
-    return render(request, 'sedUI/pages/registration.html')
+def registration1(request):
+    return render(request, 'sedUI/pages/registrationCitizen.html')
+
+def registration2(request):
+    return render(request, 'sedUI/pages/registrationInfo.html')
+
+def registration3(request):
+    return render(request, 'sedUI/pages/registrationSelection.html')
+
+def registration4(request):
+    return render(request, 'sedUI/pages/registrationPayment.html')
+
+def registration5(request):
+    return render(request, 'sedUI/pages/registrationConfirmation.html')
 
 def loginOrRegister(request):
     return render(request, 'sedUI/pages/loginOrRegister.html')
@@ -40,4 +52,3 @@ def profile(request):
 
 def about(request):
     return render(request, 'sedUI/pages/about.html')
-

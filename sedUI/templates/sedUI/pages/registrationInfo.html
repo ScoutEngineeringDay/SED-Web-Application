@@ -2,8 +2,8 @@
 {% block content %}
 
 	<div class="container">
-		{% include "sedUI/includes/RegistationStatus.html" %}
-	  <form role="form" action="scoutadded.php" method="post">
+		{% include "sedUI/includes/RegistationStatus2.html" %}
+	  <form role="form" action="../registration3/" method="post">
 	    <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
 	    <div class="form-group">
 	        <label for="InputName">First Name</label>
@@ -16,13 +16,6 @@
 	        <label for="InputEmail">Last Name</label>
 	        <div class="input-group">
 	            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required>
-	            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-	        </div>
-	    </div>
-	    <div class="form-group">
-	        <label for="InputName">Username</label>
-	        <div class="input-group">
-	            <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
 	            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 	        </div>
 	    </div>
@@ -160,19 +153,6 @@
 	        </div>
 	    </div>
 	    <div class="form-group">
-	        <label for="InputEmail">Create Password</label>
-	        <div class="input-group">
-	            <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Create Password" required>
-	            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-	        </div>
-	    </div>
-	    <div class="form-group">
-	        <div class="input-group">
-	            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
-	            <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-	        </div>
-	    </div>
-	    <div class="form-group">
 	        <label for="InputName">Emergency Contact Information</label>
 	        <div class="input-group">
 	            <input type="text" class="form-control" name="Emergency Contact First Name" id="Emergency Contact First Name" placeholder="Emergency Contact First Name" required>
@@ -192,7 +172,11 @@
 	        </div>
 	    </div>
 
-	    <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary btn-sm">
+	    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary btn-sm">
+
+			<br>
+			<br>
+
 	  </form>
 	</div>
 
