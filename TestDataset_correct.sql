@@ -69,7 +69,7 @@ VALUES
 	(8,"396 Veith Avenue","Jamaica","NY",11447,"Trunyx",97,100),
 	(9,"32629 Anniversary Parkway","Atlanta","GA",30368,"Browseblab",75,64),
 	(10,"25093 Chinook Pass","Little Rock","AR",72222,"Gigabox",77,65),
-	(11,"41131 Everett Way","El Paso","TX",88546,"Riffpedia",82,98)
+	(11,"41131 Everett Way","El Paso","TX",88546,"Riffpedia",82,98);
 INSERT INTO sed_database_test.sedUI_staff
 	(staff_id,first_name,last_name,staff_type,phone_number,email,street,city,state,zip_code,activity_status)
 VALUES
