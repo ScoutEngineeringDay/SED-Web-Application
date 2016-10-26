@@ -192,6 +192,10 @@ img {
 /*END Form Wizard*/
 
 /*------------------CourseList-------------------*/
+span[role="button"] {
+    cursor: pointer;
+}
+
 .courseName{
     font-size: 24px;
 }

@@ -19,7 +19,11 @@ def registration2(request):
     return render(request, 'sedUI/pages/registrationInfo.html')
 
 def registration3(request):
-    return render(request, 'sedUI/pages/registrationSelection.html')
+    all_courses = Course.objects.all()
+    context = {
+        'all_courses' : all_courses,
+    }
+    return render(request, 'sedUI/pages/registrationSelection.html', context)
 
 def registration4(request):
     return render(request, 'sedUI/pages/registrationPayment.html')
