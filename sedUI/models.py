@@ -1,10 +1,4 @@
 from django.db import models
-<<<<<<< HEAD
-
-# Create your models here.
-class Scout(models.Model):
-	scout_id=models.AutoField(primary_key=True)
-=======
 from django.core.validators import RegexValidator
 
 US_states=(
@@ -90,7 +84,7 @@ class Scout(models.Model):
 
 	def __str__(self):
 		return self.first_name+" "+self.last_name
->>>>>>> 9ac481a003d3b9b5e650f8899651fb8571966e21
+
 
 class Health(models.Model):
 	scout_id=models.ForeignKey(Scout, on_delete=models.CASCADE)
@@ -105,15 +99,6 @@ class Course(models.Model):
 	class_description=models.CharField(max_length=500)
 
 	def __str__(self):
-<<<<<<< HEAD
-		return self.class_name + '-' +self.class_descriptionS
-
-class Staff(models.Model):
-	staff_id=models.AutoField(primary_key=True)
-
-class Location(models.Model):
-	location_id=models.AutoField(primary_key=True)
-=======
 		return self.class_name
 
 class Staff(models.Model):
@@ -154,7 +139,6 @@ class Location(models.Model):
 
 	def __str__(self):
 		return self.building
->>>>>>> 9ac481a003d3b9b5e650f8899651fb8571966e21
 
 class Workshop(models.Model):
 	workshop_id=models.AutoField(primary_key=True)

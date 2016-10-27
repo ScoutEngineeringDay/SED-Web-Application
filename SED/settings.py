@@ -76,16 +76,6 @@ WSGI_APPLICATION = 'SED.wsgi.application'
 
 DATABASES = {
     'default': {
-<<<<<<< HEAD
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'sed_database_test',
-        # 'USER': 'root',
-        # 'PASSWORD':'Corsair5',
-        # 'HOST': 'localhost',
-        # 'PORT': '3306',
-=======
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
@@ -94,7 +84,6 @@ DATABASES = {
         'PASSWORD':'Corsair5',
         'HOST': 'localhost',
         'PORT': '3306',
->>>>>>> 9ac481a003d3b9b5e650f8899651fb8571966e21
     }
 }
 

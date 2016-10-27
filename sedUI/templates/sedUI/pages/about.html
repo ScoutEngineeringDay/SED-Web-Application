@@ -10,14 +10,14 @@
 					<br>
 					Saturday, March 12, 2016
 					<br>
-					in 
+					in
 					<br>
 					McLean, Virginia
 				</p>
 				<p style="text-align: center;">
 					Registration opens on Wednesday, January 20, 2016 at 7:00pm
 				</p>
- 
+
 			</div>
 			<div class="jumbotron">
 				<h2 style="text-align: center; font-size: 32pt;">Courses Offered at Scout Engineering Day</h2>
@@ -26,39 +26,35 @@
 				<div class="container-fluid" style="margin: 0 auto; width: 80%">
 					<div style="float: left; padding-right: 30%;">
 						<p class="inlineLeft" id="aboutCourseListLeft"></p>
-					</div>	
+					</div>
 					<div style="float: left;">
 						<p class="inLineRight" id="aboutCourseListRight"></p>
 					</div>
 				</div>
 				<br>
 				<div class="container-fluid" style="margin: 0 auto; width: 80%">
-<<<<<<< HEAD
-					<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
-=======
 					<a class="btn btn-primary btn-lg" href="/registration1/" role="button">Register Now!</a>
->>>>>>> 9ac481a003d3b9b5e650f8899651fb8571966e21
 				</div>
 				<script src="scripts/Course.js"></script>
 				<script>
 					var allCourses;
 					getAllCourses(function(allCourses) {
-						for (index in allCourses) { 
+						for (index in allCourses) {
 							if (index % 2 == 0) {
 								var course = allCourses[index];
-								document.getElementById("aboutCourseListLeft").innerHTML += 
+								document.getElementById("aboutCourseListLeft").innerHTML +=
 										'<ul> ' +
 											'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
-												course.getCourseName() + 
+												course.getCourseName() +
 											'</a></li>' +
 										'<ul>';
 							}
 							else {
 								var course = allCourses[index];
-								document.getElementById("aboutCourseListRight").innerHTML += 
+								document.getElementById("aboutCourseListRight").innerHTML +=
 										'<ul> ' +
 											'<li><a class="blackLink" href="coursePage.html?course=' + course.getCourseName().replace(/[^a-zA-Z0-9-_]/g, '') +'">' +
-												course.getCourseName() + 
+												course.getCourseName() +
 											'</a></li>' +
 										'<ul>';
 							}
@@ -77,7 +73,7 @@
 				  	<div>
 					    <div id="map"></div>
 						<div id="inst">
-						
+
 						<p>
 							Parking Insturctions
 							<br>
