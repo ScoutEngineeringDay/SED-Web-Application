@@ -1,0 +1,28 @@
+{% extends "sedUI/base/header.html" %}
+{% block content %}
+
+	<div class="container">
+		{% include "sedUI/includes/RegistationStatus1.html" %}
+		<div align="center">
+		  <form action="../registration2/" style="width: 500px; margin: 0 auto">
+				<label for="InputName" style="font-size: 32px">Is a U.S. Citizen?</label>
+
+				<br>
+
+				<div class="input-group" align="center">
+						<label class="radio-inline" style="font-size: 16px"><input type="radio" name="optradio">Yes</label>
+						<label class="radio-inline" style="font-size: 16px"><input type="radio" checked="checked" name="optradio">No</label>
+				</div>
+
+				<br>
+
+		    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
+
+				<br>
+				<br>
+
+		  </form>
+		</div>
+	</div>
+
+{% endblock %}
