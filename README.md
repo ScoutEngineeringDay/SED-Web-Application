@@ -18,7 +18,6 @@ The following tools are needed:
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
-<<<<<<< HEAD
 ## Django Commands
 
 python manage.py makemigration
@@ -28,7 +27,7 @@ python manage.py migrate
 python manage.py runserver
 	to run the machine on localhost port 8000
 python manage.py createsuperuser
-	this will create you an admin level account 
+	this will create you an admin level account
 
 ## URLs:
 
@@ -36,45 +35,11 @@ http://localhost:8000/
 	This will take you to website page
 http://localhost:8000/admin/
 	Allow you to log in to website admin site to modify database and create user and assigned them permissions
-=======
-
-## First Time Setup
-
-1. Open Git Bash
-2. Install Django `pip install Django==1.10.2`
-  * **Hint:** If it does not recognize pip you need to add the Python bin folder to Environment Variable PATH.
-  * **Hint:** If you are within a company firewall you will have to use `pip install --proxy <proxy> Django==1.10.2`
-3. Open location of source code `cd /locationofcode/sed`
-4. Setup the Database `python manage.py makemigrations`
-5. Apply Database `python manage.py migrate`
-6. Run the server `python manage.py runserver`
-  * Do not close the Git Bash window it is running the server.
-7. Go to [http://localhost:8000/](http://localhost:8000/) in browser
-
-
-## Useful Django Commands
-
-- When database have been altered: `python manage.py makemigrations`
-- When database alter has occured and need update: `python manage.py migrate`
-- To run the machine on localhost port 8000: `python manage.py runserver`
-- This will create you an admin level account: `python manage.py createsuperuser`
-
-
-## URLs:
-
-- [http://localhost:8000/](http://localhost:8000/): Website Home Page
-- [http://localhost:8000/admin/](http://localhost:8000/admin/):	Admin Page
-
->>>>>>> 9ac481a003d3b9b5e650f8899651fb8571966e21
 
 ## Design
 
 ![ScoutEngineeringDayWebDesign.png](ScoutEngineeringDayWebDesign.png?raw=true "Scout Engineering Day Web Design")
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9ac481a003d3b9b5e650f8899651fb8571966e21
 ## Database Design Schema:
 
 ![Relationship_Schema.png](Relationship_Schema.png?raw=true "Scout Engineering Day Database")
