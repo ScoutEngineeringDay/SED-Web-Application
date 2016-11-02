@@ -1,7 +1,31 @@
 {% extends "sedUI/base/header.html" %}
 {% load staticfiles %}
 {% block content %}
+	{% if all_scouts %}
 		<div class="container">
-		    
+			<div class="panel-group" id="accordion">
+
+			<div class="panel panel-default">
+					<ul class="grid" style="border: solid 1px #ccc padding: 10px 10px 0 0;">
+						{% for scout in all_scouts %}
+							<li style="display: inline-block;
+    width: 100px;
+    height: 200px;
+    border: solid 1px #ccc;
+    margin: 0 0 10px 10px;
+    background: #eee;">
+									<span>{{scout.first_name}}</span>
+									<br /> <span>{{scout.last_name}}</span>
+									<br /> <span>Age: {{scout.age}}</span>
+							</li>
+							{% endfor %}
+					</ul>
+				</div>
+			</div>
+
+			</div>
 		</div>
+	{% else %}
+		<h4> You don't have any scouts </h4>
+	{% endif %}
 {% endblock %}

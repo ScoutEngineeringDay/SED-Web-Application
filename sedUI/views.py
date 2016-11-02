@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
-from .models import Course
+from .models import Course, Scout
 
 # Create your views here.
 def index(request):
@@ -41,15 +41,15 @@ def courses(request):
     }
     return render(request, 'sedUI/pages/courses.html', context)
 
-#def course_detail(request, class_id):
- #   try:
-  #      course = Course.objects.get(class_id=class_id)
-   # except Course.DoesNotExist:
-    #    raise Http404("Course does not exist")
-    #return render(request, 'sedUI/pages/course_detail.html', {'course': course})
-
 def scouts(request):
-    return render(request, 'sedUI/pages/scouts.html')
+    all_scouts = Scout.objects.all()
+    context = {
+        'all_scouts' : all_scouts,
+    }
+    return render(request, 'sedUI/pages/scouts.html', context)
+
+def reportAnalysis(request):
+    return render(request, 'sedUI/pages/reportAnalysis.html')
 
 def profile(request):
     return render(request, 'sedUI/pages/profile.html')
