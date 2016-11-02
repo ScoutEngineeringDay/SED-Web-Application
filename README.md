@@ -23,17 +23,25 @@ The following tools are needed:
 
 
 ## First Time Setup
+### Initial Setup MySQL workbench Database (**Hint:** data will be used for later step)
+1. Create a local instance of MySQL connection (**Hint:**'USER', 'PASSWORD','HOST','PORT')
+2. Once connection is created, a schema would have to be generated.(**Hint:**'Schema name')
 
+
+### Setup Local
 1. Open Git Bash
 2. Install Django `pip install Django==1.10.2`
   * **Hint:** If it does not recognize pip you need to add the Python bin folder to Environment Variable PATH.
   * **Hint:** If you are within a company firewall you will have to use `pip install --proxy <proxy> Django==1.10.2`
-3. Open location of source code `cd /locationofcode/sed`
-4. Setup the Database `python manage.py makemigrations`
-5. Apply Database `python manage.py migrate`
-6. Run the server `python manage.py runserver`
+3. Install MySQL_connector and MySQL_python (**Hint:** Windows can just run included files/ linux run pip install)
+4. Open location of source code `cd /locationofcode/sed`
+5. Open location `cd SED/settings.py` and navigate to database section and fill the data above into the corresponding location.
+6. Setup the Database `python manage.py makemigrations`
+7. Apply Database `python manage.py migrate`
+8. Return to MySQL workbench and run the current `testscript.sql` to update the database with the test dataset. Then run step 7-8 again.
+9. Run the server `python manage.py runserver`
   * Do not close the Git Bash window it is running the server.
-7. Go to [http://localhost:8000/](http://localhost:8000/) in browser
+10. Go to [http://localhost:8000/](http://localhost:8000/) in browser
 
 
 ## Useful Django Commands
