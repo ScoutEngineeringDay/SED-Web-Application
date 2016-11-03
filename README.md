@@ -14,7 +14,6 @@ The following tools are needed:
 
 
 ## Contributing
-
 1. Fork the project
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
@@ -93,3 +92,4 @@ The following tools are needed:
 * **Ryan Dufrene**: Front-End Developer - *Initial work*
 * **Walter Hiranpat**: Database Developer - *Initial work*
 * **Edward Gedeon**: Front-End Developer - *Initial work*
+test
