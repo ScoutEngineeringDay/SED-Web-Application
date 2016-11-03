@@ -92,4 +92,3 @@ The following tools are needed:
 * **Ryan Dufrene**: Front-End Developer - *Initial work*
 * **Walter Hiranpat**: Database Developer - *Initial work*
 * **Edward Gedeon**: Front-End Developer - *Initial work*
-test
