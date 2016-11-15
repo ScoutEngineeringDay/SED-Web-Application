@@ -48,7 +48,7 @@ The following tools are needed:
 - When database have been altered: `python manage.py makemigrations`
 - When database alter has occured and need update: `python manage.py migrate`
 - To run the machine on localhost port 8000: `python manage.py runserver`
-- This will create you an admin level account: `python manage.py createsuperuser`
+- This will create you an admin level account: `python manage.py createsuperuser` (**Hint:** Put `winpty` before if you get an error)
 
 
 ## URLs:
