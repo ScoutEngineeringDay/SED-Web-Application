@@ -55,4 +55,10 @@ def profile(request):
     return render(request, 'sedUI/pages/profile.html')
 
 def about(request):
+    all_courses = Course.objects.all()
+    context = {
+        'all_courses' : all_courses,
+    }
+    left_items = all_courses[:(len(all_courses)+1)/2]
+    right_items = all_courses[(len(all_courses)+1)/2:]
     return render(request, 'sedUI/pages/about.html')

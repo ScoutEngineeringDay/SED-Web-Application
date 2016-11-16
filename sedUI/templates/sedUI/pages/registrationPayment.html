@@ -3,11 +3,22 @@
 
 	<div class="container">
 		{% include "sedUI/includes/RegistationStatus4.html" %}
-	  <form role="form" action="../registration5/">
+		<div align="center">
+		  <form role="form" action="../registration5/">
+				<label for="Question" style="font-size: 32px">Select a Payment Method</label>
 
+				<br>
 
-	    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary btn-sm">
-	  </form>
+				<div class="input-group" align="center">
+						<label class="radio-inline" style="font-size: 16px"><input type="radio" checked="checked" name="optradio">Online Payment</label>
+						<label class="radio-inline" style="font-size: 16px"><input type="radio" name="optradio">Mail in Check</label>
+				</div>
+
+				<br>
+
+		    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary btn-sm">
+		  </form>
+		</div>
 	</div>
 
 {% endblock %}

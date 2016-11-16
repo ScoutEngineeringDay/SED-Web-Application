@@ -22,20 +22,43 @@
 			<div class="jumbotron">
 				<h2 style="text-align: center; font-size: 32pt;">Courses Offered at Scout Engineering Day</h2>
 				<br>
-
 				<div class="container-fluid" style="margin: 0 auto; width: 80%">
-					<div style="float: left; padding-right: 30%;">
-						<p class="inlineLeft" id="aboutCourseListLeft"></p>
-					</div>
-					<div style="float: left;">
-						<p class="inLineRight" id="aboutCourseListRight"></p>
-					</div>
+					{% if all_courses %}
+						<div style="float: left; padding-right: 30%;">
+							<p class="inlineLeft" id="aboutCourseListLeft">
+								{% if all_courses %}
+									{% for course in left_items %}
+									<ul>
+										<li><a class="blackLink" href="#"> {{course.class_name}} </a></li>
+									<ul>
+									{% endfor %}
+								{% else %}
+									<h4> You don't have any Left courses </h4>
+								{% endif %}
+							</p>
+						</div>
+						<div style="float: left;">
+							<p class="inLineRight" id="aboutCourseListRight">
+								{% if all_courses %}
+									{% for course in right_items %}
+									<ul>
+										<li><a class="blackLink" href="#"> {{course.class_name}} </a></li>
+									<ul>
+									{% endfor %}
+								{% else %}
+									<h4> You don't have any Right courses </h4>
+								{% endif %}
+							</p>
+						</div>
+					{% else %}
+						<h4> You don't have any courses </h4>
+					{% endif %}
 				</div>
 				<br>
 				<div class="container-fluid" style="margin: 0 auto; width: 80%">
 					<a class="btn btn-primary btn-lg" href="/registration1/" role="button">Register Now!</a>
 				</div>
-				<script src="scripts/Course.js"></script>
+				<!-- <script src={% static "js/app/course.js"} ></script>
 				<script>
 					var allCourses;
 					getAllCourses(function(allCourses) {
@@ -60,7 +83,7 @@
 							}
 						}
 					});
-				</script>
+				</script> -->
 			</div>
 
 

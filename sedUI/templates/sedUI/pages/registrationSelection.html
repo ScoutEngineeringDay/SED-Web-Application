@@ -3,11 +3,42 @@
 
 	<div class="container">
 		{% include "sedUI/includes/RegistationStatus3.html" %}
-	  <form role="form" action="../registration4/">
+		<div align="center">
+			<form action="../registration4/" style="width: 500px; margin: 0 auto">
+				<label for="InputName" style="font-size: 32px">Select the workshops to attend.</label>
 
+				<br>
+				<br>
 
-	    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary btn-sm">
-	  </form>
+				<div class="input-group" align="center">
+						<label class="radio-inline" style="font-size: 16px">Morning</label>
+						{% if all_courses %}
+						<select>
+									{% for course in all_courses %}
+										       <option value="volvo"> {{course.class_name}}</option>
+									{% endfor %}
+						</select>
+						{% endif %}
+
+						<label class="radio-inline" style="font-size: 16px">Evening</label>
+						{% if all_courses %}
+						<select>
+									{% for course in all_courses %}
+										       <option value="volvo"> {{course.class_name}}</option>
+									{% endfor %}
+						</select>
+						{% endif %}
+				</div>
+
+				<br>
+
+				<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
+
+				<br>
+				<br>
+
+			</form>
+		</div>
 	</div>
 
 {% endblock %}
