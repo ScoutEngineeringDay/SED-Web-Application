@@ -25,7 +25,7 @@ SECRET_KEY = 'a1u4znl-=0+!lzr=iyctr^*rxatx&6f%^60@62wtlyj+$_ea0$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','54.152.243.242', '54.236.255.148', '54.147.88.56', '54.147.95.146']
 
 
 # Application definition
@@ -74,15 +74,25 @@ WSGI_APPLICATION = 'SED.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+#DATABASES = {
+#    'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'sed_database_test',
+        # 'USER': 'root',
+        # 'PASSWORD':'test',
+        # 'HOST': 'localhost',
+        # 'PORT': '3306',
+    #}
+#}
+DATABASES = {
+   'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sed_database_test',
-        'USER': 'root',
-        'PASSWORD':'test',
-        'HOST': 'localhost',
+        'NAME': 'SED_Database',
+        'USER': 'sed',
+        'PASSWORD':'pass1234',
+        'HOST': 'sed-db.cqpg4rn4jalr.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
