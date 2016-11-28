@@ -1,4 +1,4 @@
-INSERT INTO sed_database_test.sedUI_scout
+INSERT INTO sedUI_scout
 	(scout_id, first_name, last_name, gender, age, street, city, state, zip_code, phone_number, email, emergency_first_name, emergency_last_name, emergency_phone, affiliation)
 VALUES
 	(1,"Nicole","Stevens",'F',10,"157 Mitchell Parkway","Brooksville","Fl","34605","3523337677","hmccoy0@surveymonkey.com","Heather","Mccoy","9372327522","GSA"),
@@ -31,7 +31,7 @@ VALUES
 	(28,"Joyce","Shaw",'F',10,"45 Marquette Place","Norfolk","Va","23551","7575853148","triverar@163.com","Tina","Rivera","4784326569","GSA"),
 	(29,"Michael","Mitchell",'M',11,"435 Sycamore Trail","San Diego","Ca","92127","7607570980","jadamss@reference.com","Jose","Adams","2029067625","BSA"),
 	(30,"Adam","Washington",'M',12,"45 Kinsman Center","Mobile","Al","36610","2517077494","acampbellt@google.com.au","Anthony","Campbell","2512795035","BSA");
-INSERT INTO sed_database_test.sedUI_course 
+INSERT INTO sedUI_course 
 	(class_id, class_name, class_description)
 VALUES
 	(1,"Astronomy",""),
@@ -56,7 +56,7 @@ VALUES
     (20,"Radio",""),
     (21,"Computers",""),
     (22,"Inventing","");
-INSERT INTO sed_database_test.sedUI_location
+INSERT INTO sedUI_location
 	(location_id,street,city,state,zip_code,building,room_number,capacity)
 VALUES
 	(1,"1959 Sage Trail","Ocala","FL",34474,"Aivee",96,53),
@@ -70,7 +70,7 @@ VALUES
 	(9,"32629 Anniversary Parkway","Atlanta","GA",30368,"Browseblab",75,64),
 	(10,"25093 Chinook Pass","Little Rock","AR",72222,"Gigabox",77,65),
 	(11,"41131 Everett Way","El Paso","TX",88546,"Riffpedia",82,98);
-INSERT INTO sed_database_test.sedUI_staff
+INSERT INTO sedUI_staff
 	(staff_id,first_name,last_name,staff_type,phone_number,email,street,city,state,zip_code,activity_status)
 VALUES
 	(1,"Donna","Burns",'I',"5514471666","dburns0@ifeng.com","29856 Talmadge Plaza","Young America","MN",55557,"A"),
