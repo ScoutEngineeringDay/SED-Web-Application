@@ -16,4 +16,5 @@ urlpatterns=[
 	#url(r'^course/(?P<class_id>)$', views.course_detail, name='course_detail'),
 	url(r'^profile/', views.profile, name='profiles'),
 	url(r'^loginOrRegister/', views.loginOrRegister, name='loginOrRegister'),
+	url(r'^auth/', views.auth, name='auth'),
 ]

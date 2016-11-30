@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect
+from django.contrib import auth
+from django.core.context_processors import csrf
 from django.http import Http404
 from .models import Course, Scout
 
@@ -32,7 +36,20 @@ def registration5(request):
     return render(request, 'sedUI/pages/registrationConfirmation.html')
 
 def loginOrRegister(request):
-    return render(request, 'sedUI/pages/loginOrRegister.html')
+    c = {}
+    c.update(csrf(request))
+    return render_to_response('sedUI/pages/loginOrRegister.html', c)
+
+def auth(request):
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username=username, password=password)
+
+    if user is not None:
+        auth.login(request, user)
+        return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/loginOrRegister')
 
 def courses(request):
     all_courses = Course.objects.all()
