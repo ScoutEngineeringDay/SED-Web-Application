@@ -51,6 +51,12 @@ img {
     margin-left: 10px;
     white-space: nowrap;
 }
+
+@media (max-width: 767px) {
+    .navbar-top {
+    height: 20px;
+  }
+}
 /*------------------LoginOrRegister-------------------*/
 .form-signin-heading {
     text-align: center;
