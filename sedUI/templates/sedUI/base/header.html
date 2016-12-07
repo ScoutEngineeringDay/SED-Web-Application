@@ -40,10 +40,10 @@
 				  <ul class="nav navbar-nav">
 				    <li><a href="/">Home</a></li>
 						<li><a href="/about/">About</a></li>
+            <li><a href="/courses/">Course List</a></li>
             {% if request.user.is_superuser %}
-	            <li><a href="/courses/">Course List</a></li>
 	            <li><a href="/scouts/">Scout List</a></li>
-							<li><a href="/reportAnalysis">reportAnalysis</a></li>
+							<li><a href="/reportAnalysis">Report Analysis</a></li>
             {% endif %}
             <li><a href="/contact/">Contact</a></li>
 				  </ul>
@@ -53,7 +53,6 @@
 				</div>
 			</div>
 		</nav>
-
 	</div>
 	{% block content %}
 	{% endblock %}

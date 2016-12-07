@@ -1,4 +1,4 @@
-function Course(courseName, courseDescription, id,) {
+function Course(courseName, courseDescription, id) {
     this.courseName = courseName;
     this.courseDescription = courseDescription;
     this.id = id;
@@ -37,12 +37,13 @@ function Course(courseName, courseDescription, id,) {
 }
 
 function getAllCourses(callback) {
-  var courses = []; // create array here
-  {% if all_courses %}
-    {% for course in all_courses %}
-      courses.push(new Course({{course.class_name}}, {{course.class_description}}, {{course.class_id}}));
-    {% endfor %}
-  {% endif %}
+  var courses = {{ all_courses|jsonify }}; // create array here
+  // {% if all_courses %}
+  //   console.log("GOOD!!!");
+  //   {% for course in all_courses %}
+  //     courses.push(new Course({{course.class_name}}, {{course.class_description}}, {{course.class_id}}));
+  //   {% endfor %}
+  // {% endif %}
 	callback.call(this,courses);
 }
 

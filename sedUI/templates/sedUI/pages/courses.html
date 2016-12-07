@@ -2,26 +2,18 @@
 {% load staticfiles %}
 {% block content %}
 	{% if all_courses %}
-		<div class="container">
-			<div class="panel-group" id="accordion">
-			{% for course in all_courses %}
-			<div class="panel panel-default">
-			    <div class="panel-heading">
-			       <h4 class="panel-title">
-				     <span class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-				       {{course.class_name}}
-				        </span>
-				    </h4>
-			    </div>
-			    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-				    <div class="list-group">
-				      {{course.class_description}}
-				    </div>
-				</div>
+		{% for course in all_courses %}
+			<div class="container">
+				<a href="#">
+					<div class="well well-sm courseInfo">
+						<p class="courseName"><b> {{course.class_name}} </b></p>
+							<div class="showOnHover">
+								<p> {{course.class_description}} </p>
+							</div>
+					 </div>
+				</a>
 			</div>
-			{% endfor %}
-			</div>
-		</div>
+		{% endfor %}
 	{% else %}
 		<h4> You don't have any courses </h4>
 	{% endif %}
