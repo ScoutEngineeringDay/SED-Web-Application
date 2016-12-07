@@ -14,6 +14,13 @@ input[type=password] {
 .submit {
     padding: 10px;
 }
+
+
+/*------------------Carousel-------------------*/
+.carousel {
+  
+}
+
 /*------------------NewNavBar-------------------*/
 .navbar-header>a {
     width: 100%;
@@ -254,9 +261,6 @@ span[role="button"] {
     text-decoration:none
 }
 /*------------------Contact-------------------*/
-.jumbotron {
-border-radius: 0px;
-}
 .jumbotron-sm { padding-top: 24px;
 padding-bottom: 24px; }
 .jumbotron small {

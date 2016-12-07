@@ -1,10 +1,15 @@
 from django.shortcuts import render
+from django.shortcuts import render_to_response
 from django.http import Http404
 from .models import Course, Scout
+import os
 
 # Create your views here.
 def index(request):
-    return render(request, 'sedUI/pages/index.html')
+    img_fileNames = []
+    for filename in os.listdir("sedUI/static/img/homeImages"):
+        img_fileNames.append(os.path.join('img/homeImages/', filename))
+    return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames})
 
 def contact(request):
     return render(request, 'sedUI/pages/contact.html')
