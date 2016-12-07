@@ -7,7 +7,9 @@ import os
 # Create your views here.
 def index(request):
     img_fileNames = []
-    for filename in os.listdir("sedUI/static/img/homeImages"):
+    #Add first image
+    img_fileNames.append(os.path.join('img/images/', '00001.jpg'))
+    for filename in os.listdir("sed/sedUI/static/img/homeImages"):
         img_fileNames.append(os.path.join('img/homeImages/', filename))
     return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames})
 
