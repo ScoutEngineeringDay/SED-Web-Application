@@ -69,4 +69,9 @@ def about(request):
     }
     left_items = all_courses[:(len(all_courses)+1)/2]
     right_items = all_courses[(len(all_courses)+1)/2:]
-    return render(request, 'sedUI/pages/about.html')
+    context = {
+        'all_courses' : all_courses,
+        'left_items' : left_items,
+        'right_items' : right_items,
+    }
+    return render(request, 'sedUI/pages/about.html', context)

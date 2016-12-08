@@ -31,31 +31,30 @@ VALUES
 	(28,"Joyce","Shaw",'F',10,"45 Marquette Place","Norfolk","Va","23551","7575853148","triverar@163.com","Tina","Rivera","4784326569","GSA"),
 	(29,"Michael","Mitchell",'M',11,"435 Sycamore Trail","San Diego","Ca","92127","7607570980","jadamss@reference.com","Jose","Adams","2029067625","BSA"),
 	(30,"Adam","Washington",'M',12,"45 Kinsman Center","Mobile","Al","36610","2517077494","acampbellt@google.com.au","Anthony","Campbell","2512795035","BSA");
-INSERT INTO sedUI_course 
+INSERT INTO sedUI_course
 	(class_id, class_name, class_description)
 VALUES
-	(1,"Astronomy",""),
-    (2,"Aviation",""),
-    (3,"Chemistry",""),
-    (4,"Composite Materials",""),
-    (5,"Drafting",""),
-    (6,"Electricity",""),
-    (7,"Electronics",""),
-    (8,"Energy",""),
-    (9,"Engineering",""),
-    (10,"Game Design",""),
-    (11,"model Design",""),
-    (12,"Nuclear Science",""),
-    (13,"Oceanography",""),
-    (14,"Programming",""),
-    (15,"Robotics",""),
-    (16,"Space Exploration",""),
-    (17,"Sustainability",""),
-    (18,"Weather",""),
-    (19,"Removed",""),
-    (20,"Radio",""),
-    (21,"Computers",""),
-    (22,"Inventing","");
+	(1,"Astronomy","In learning about astronomy, Scouts study how activities in space affect our own planet and bear witness to the wonders of the night sky: the nebulae, or giant clouds of gas and dust where new stars are born; old stars dying and exploding; meteor showers and shooting stars; the moon, planets, and a dazzling array of stars."),
+    (2,"Aviation","For most of history, people have dreamed of flying, imagining how it would feel to soar through the sky like an eagle or hover in midair like a hummingbird, to float on unseen currents, free of Earth's constant tug, able to travel great distances and to rise above any obstacle. Today, through aviation, we can not only join the birds but also fly farther, faster, and higher than they ever could."),
+    (3,"Chemistry","Chemistry explores how substances react with each other, how they change, how certain forces connect molecules, and how molecules are made are all parts of chemistry. Stretch your imagination to envision molecules that cannot be seen—but can be proven to exist—and you become a chemist."),
+    (4,"Composite Materials","	Composites can be found just about everywhere: in airplanes and sports cars, golf clubs and guitars, boats and baseball bats, bathtubs and circuit boards, and even bridges. Composites make bicycles and skis lighter, kayaks and canoes stronger, houses warmer, and helmets tougher."),
+    (5,"Drafting","	Drafting is a highly refined form of drawing used to communicate ideas to engineers, architects, and craftspeople. In earning this badge, Scouts learn the importance of accuracy and simplicity in developing a drawing that shows precise details in a simple format."),
+    (6,"Electricity","Electricity is a powerful and fascinating force of nature. As early as 600 BC, observers of the physical world suspected that electricity existed but did not have a name for it. In fact, real progress in unraveling the mystery of electricity has come only within the last 250 years."),
+    (7,"Electronics","Electronics is the science that controls the behavior of electrons so that some type of useful function is performed. Today, electronics is a fast-changing and exciting field.	"),
+    (8,"Energy","Saving, producing, and using energy wisely will be critical to America's future. If we are to leave future generations with a world in which they can live as well or better than we have, Scouts and other potential leaders of tomorrow must begin the hard work of understanding energy and the vital role it will play in the future."),
+    (9,"Engineering","Engineers use both science and technology to turn ideas into reality, devising all sorts of things, ranging from a tiny, low-cost battery for your cell phone to a gigantic dam across the mighty Yangtze River in China."),
+    (10,"Game Design","Scouts begin by learning gaming terminology and analyzing various types of games they’ve played. They then pick one game, tweak its rules or objectives, and track how the changes affect players’ actions and emotional experiences. After that, they design a new game, a process that includes writing rules, creating a prototype, and play-testing. "),
+    (11,"Model Design","Model making, the art of creating copies of objects that are either smaller or larger than the objects they represent, is not only an enjoyable and educational hobby: it is widely used in the professional world for such things as creating special effects for movies, developing plans for buildings, and designing automobiles and airplanes."),
+    (12,"Nuclear Science","Nuclear science gives us a simple explanation of the natural world. The ultimate goal of nuclear science is to find out if there is one fundamental rule that explains how matter and forces interact. Earning the Nuclear Science merit badge is a chance for Scouts to learn about this exciting field at the cutting edge of science today."),
+    (13,"Oceanography","The oceans cover more than 70 percent of our planet and are the dominant feature of Earth. Wherever you live, the oceans influence the weather, the soil, the air, and the geography of your community. To study the oceans is to study Earth itself."),
+    (14,"Programming","Earning the Programming merit badge will take you behind the screen for a look at the complex codes that make digital devices useful and fun. Without programs, today’s high-tech gadgets would be little more than empty shells. But given clear instructions, digital devices can do amazing things and perform operations that would have seemed like magic to people in the past."),
+    (15,"Robotics","	Earning the Robotics merit badge requires a Scout to understand how robots move (actuators), sense the environment (sensors), and understand what to do (programming); he should demonstrate robot design in building a robot. You should help ensure that the Scout has sufficiently explored the field of robotics to understand what it is about, and to discover whether this may be a field of interest for him as a career."),
+    (16,"Space Exploration","Space is mysterious. We explore space for many reasons, not least because we don't know what is out there, it is vast, and humans are full of curiosity. Each time we send explorers into space, we learn something we didn't know before. We discover a little more of what is there."),
+    (17,"Sustainability","The sustainability badge aims to teach Scouts about climate change, species extinction, resource extraction, green chemistry, recycling, and zero-waste manufacturing."),
+    (18,"Weather","Meteorology is the study of Earth's atmosphere and its weather and the ways in which temperature, wind, and moisture act together in the environment. In addition to learning how everyday weather is predicted, Scouts can learn about extreme weather such as thunderstorms, tornadoes, and hurricanes, and how to stay safe."),
+    (19,"Radio","Radio is a way to send information, or communications, from one place to another. Broadcasting includes both one-way radio (a person hears the information but can't reply) as well as two-way radio (where the same person can both receive and send messages)."),
+    (20,"Computers","Technology has come a long way since Computers merit badge was first introduced in 1967. This badge will teach Scouts about technology in the digital age."),
+    (22,"Inventing","Inventing involves finding technological solutions to real-world problems. Inventors understand the importance of inventing to society because they creatively think of ways to improve the lives of others. Explore the world of inventing through this new merit badge, and discover your inner inventiveness.");
 INSERT INTO sedUI_location
 	(location_id,street,city,state,zip_code,building,room_number,capacity)
 VALUES

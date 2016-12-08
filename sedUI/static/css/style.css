@@ -288,11 +288,22 @@ font-size: 24px;
     background-color:transparent;
     text-decoration:none
 }
-.inlineRight {
-    position: fixed;
-    float: right;
-}
-.inlineLeftt {
-    position: fixed;
+.left-couses {
     float: left;
+    width: 50%;
+}
+.right-couses {
+    float: right;
+    width: 50%;
+}
+
+@media (max-width: 767px) {
+  .left-couses {
+    float: left;
+    width: auto;
+  }
+  .right-couses {
+    float: left;
+    width: auto;
+  }
 }
