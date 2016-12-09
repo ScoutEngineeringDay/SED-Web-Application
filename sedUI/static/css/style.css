@@ -268,7 +268,9 @@ padding-bottom: 24px; }
 font-size: 24px;
 }
 /*------------------About-------------------*/
-.blackLink:link    {
+.blackLink:link {
+    white-space: nowrap;
+    font-size: 20px;
     color:black;
     background-color:transparent;
     text-decoration:none
