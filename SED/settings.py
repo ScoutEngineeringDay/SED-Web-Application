@@ -74,18 +74,18 @@ WSGI_APPLICATION = 'SED.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-#DATABASES = {
+# DATABASES = {
 #    'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'sed_database_test',
-        # 'USER': 'root',
-        # 'PASSWORD':'test',
-        # 'HOST': 'localhost',
-        # 'PORT': '3306',
-    #}
-#}
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'sed_database_test',
+#         'USER': 'root',
+#         'PASSWORD':'test',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -138,3 +138,5 @@ PROJECT_DIR = os.path.dirname(__file__)
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'staticfiles'),)
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'

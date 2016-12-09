@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Course, Scout
 import os
@@ -49,6 +49,7 @@ def courses(request):
     }
     return render(request, 'sedUI/pages/courses.html', context)
 
+@login_required
 def scouts(request):
     all_scouts = Scout.objects.all()
     context = {
@@ -56,9 +57,11 @@ def scouts(request):
     }
     return render(request, 'sedUI/pages/scouts.html', context)
 
+@login_required
 def reportAnalysis(request):
     return render(request, 'sedUI/pages/reportAnalysis.html')
 
+@login_required
 def profile(request):
     return render(request, 'sedUI/pages/profile.html')
 
