@@ -51,6 +51,11 @@ class CourseView(generic.ListView):
     def get_queryset(self):
         return Course.objects.all()
 
+class CourseDetailView(generic.ListView):
+    template_name = 'sedUI/pages/course_detail.html'
+    context_object_name='course'
+    def get_queryset(self):
+        return Course.objects.get(class_id=self.kwargs['class_id'])
 
 class ScoutView(generic.ListView):
     template_name = 'sedUI/pages/scouts.html'
@@ -59,6 +64,13 @@ class ScoutView(generic.ListView):
     def get_queryset(self):
         return Scout.objects.all()
 
+class ScoutDetailView(generic.ListView):
+    template_name = 'sedUI/pages/scout_detail.html'
+    context_object_name='scout'
+    def get_queryset(self):
+        return Scout.objects.get(scout_id=self.kwargs['scout_id'])
+# class ScoutQR1View(generic.):
+# class ScoutQR2View(generic.):
 
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
@@ -91,7 +103,7 @@ class RegistrationWizard(SessionWizardView):
     # email failing due to configuration error
         # form_data = process_send_email(form_list)
         print(form_list)
-                #return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
+        # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
         return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
 
 
