@@ -5,9 +5,13 @@ from .models import Course, Scout
 import os
 from django.views import generic
 from django.views.generic import View
-from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4
+from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm
 from formtools.wizard.views import SessionWizardView
+
+from django.conf import settings
+from django.contrib import messages
 from django.core.mail import send_mail
+
 
 FORMS = [("citizenship", RegistrationForm1), 
          ("scout_info", RegistrationForm2), 
@@ -36,8 +40,14 @@ class IndexView(generic.TemplateView):
         img_fileNames.append(os.path.join('img/homeImages/', filename))
     return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames})
 
-class ContactView(generic.TemplateView):
-    template_name='sedUI/pages/contact.html'
+class ContactView(SessionWizardView):
+    form_list=[ContactEmailForm]
+    template_name = 'sedUI/pages/contact.html'
+
+    def done(self, form_list, **kwargs):
+        print(form_list)
+        return render_to_response('sedUI/pages/contact.html', {'form_data': [form.cleaned_data for form in form_list]})
+
 
 def login(request):
     return render(request, 'sedUI/pages/basic.html')
@@ -101,11 +111,15 @@ class RegistrationWizard(SessionWizardView):
 
     def done(self, form_list, **kwargs):
     # email failing due to configuration error
-        # form_data = process_send_email(form_list)
+        form_data = process_send_email(form_list)
         print(form_list)
         # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
         return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
-
+def process_send_email(form_list):
+    form_data =[form.cleaned_data for form in form_list]
+    print("sending")
+    send_mail('test', 'test', settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
+    return form_data
 
 def registration1(request):
     return render(request, 'sedUI/pages/registrationCitizen.html')
