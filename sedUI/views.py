@@ -9,8 +9,8 @@ def index(request):
     img_fileNames = []
     #Add first image
     img_fileNames.append(os.path.join('img/images/', '00001.jpg'))
-    # for filename in os.listdir("sed/sedUI/static/img/homeImages"):    # Use if running on AWS Server
-    for filename in os.listdir("sedUI/static/img/homeImages"):          # Use if running on Local Machine
+    for filename in os.listdir("sed/sedUI/static/img/homeImages"):    # Use if running on AWS Server
+    # for filename in os.listdir("sedUI/static/img/homeImages"):          # Use if running on Local Machine
         img_fileNames.append(os.path.join('img/homeImages/', filename))
     return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames})
 
