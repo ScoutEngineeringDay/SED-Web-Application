@@ -95,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'SED_Database',
         'USER': 'sed',
-        'PASSWORD':'pass1234',
+        'PASSWORD':'Pass1234',
         'HOST': 'sed-db.cqpg4rn4jalr.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
     }
