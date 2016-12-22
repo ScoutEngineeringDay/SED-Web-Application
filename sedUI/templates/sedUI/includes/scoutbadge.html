@@ -1,0 +1,50 @@
+{% load staticfiles %}
+{% block content %}
+<div class="container-fluid scoutbadge" id="scoutbadge" style="background-color: #ffffff;">
+  <font size="6">Insert Scout Name</font>
+  <h5>ID: ##########</h5>
+  <h5>Organization</h5>
+  <!-- <h5>Medical</h5> -->
+  <div id="qrcode1" style="float:left">QR1</div>
+  <div id="qrcode2" style="float:right;">QR2</div>
+</div>
+<br>
+<button class="btn btn-primary btn-lg" id="savebadge">Download Badge</button>
+{% if request.user.is_superuser %}
+  <button class="btn btn-primary btn-lg" id="savebadge">Email Badge</button>
+{% endif %}
+
+<script type="text/javascript" src="{% static '/js/jquery.qrcode.min.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/jspdf.debug.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/html2canvas.js' %}"></script>
+<script>
+  jQuery('#qrcode1').qrcode({
+    render	: "table",
+    text	: "http://54.152.243.242:8000/scouts/",
+    width: 100,
+    height: 100
+  });
+  jQuery('#qrcode2').qrcode({
+    render	: "table",
+    text	: "http://54.152.243.242:8000/scouts/",
+    width: 100,
+    height: 100
+  });
+
+  $( document ).ready(function() {
+    $('#savebadge').click(function () {
+      html2canvas($("#scoutbadge"), {
+        background :'#FFFFFF',
+        onrendered: function(canvas) {
+            // canvas is the final rendered <canvas> element
+            var imgData = canvas.toDataURL("image/jpeg");
+            var pdf = new jsPDF();
+
+            pdf.addImage(imgData, 'JPEG', 10, 10);
+            pdf.save("scoutbadge.pdf");
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

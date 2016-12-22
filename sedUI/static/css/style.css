@@ -290,11 +290,15 @@ font-size: 24px;
     background-color:transparent;
     text-decoration:none
 }
-.left-couses {
+.left-float {
     float: left;
     width: 50%;
 }
-.right-couses {
+.center-float {
+    float: left;
+    width: 50%;
+}
+.right-float {
     float: right;
     width: 50%;
 }
@@ -308,4 +312,11 @@ font-size: 24px;
     float: left;
     width: auto;
   }
+}
+
+.scoutbadge {
+  width: 5in;
+  height: 3in;
+  border-style: solid;
+  padding: 25px;
 }
