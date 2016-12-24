@@ -18,16 +18,6 @@ FORMS = [("citizenship", RegistrationForm1),
          ("selection", RegistrationForm3), 
          ("payment", RegistrationForm4)]
 
-# TEMPLATES = {"citizenship": "sedUI/pages/registrationCitizen.html",
-#                          "scout_info": "sedUI/pages/registrationInfo.html", 
-#                          "selection": "sedUI/pages/registrationSelection.html", 
-#                          "payment": "sedUI/pages/registrationPayment.html"}
-
-TEMPLATES = {"citizenship": "sedUI/pages/registrationCitizen.html",
-                         "scout_info": "sedUI/pages/registration_form.html", 
-                         "selection": "sedUI/pages/registration_form.html", 
-                         "payment": "sedUI/pages/registration_form.html"}
-
 # Create your views here.
 class IndexView(generic.TemplateView):
   template_name='sedUI/pages/index.html'
@@ -106,36 +96,17 @@ class AboutView(generic.TemplateView):
 class RegistrationWizard(SessionWizardView):
     form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]
     template_name = 'sedUI/pages/registration_form.html'
-    # def get_template_names(self):
-    #       return [TEMPLATES[self.steps.current]]
 
     def done(self, form_list, **kwargs):
     # email failing due to configuration error
-        form_data = process_send_email(form_list)
+        # form_data = process_send_email(form_list)
         print(form_list)
         # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
         return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
-def process_send_email(form_list):
-    form_data =[form.cleaned_data for form in form_list]
-    print("sending")
-    send_mail('test', 'test', settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
-    return form_data
 
-def registration1(request):
-    return render(request, 'sedUI/pages/registrationCitizen.html')
+# def process_send_email(form_list):
+#     form_data =[form.cleaned_data for form in form_list]
+#     print("sending")
+#     send_mail('test', 'test', settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
+#     return form_data
 
-def registration2(request):
-    return render(request, 'sedUI/pages/registrationInfo.html')
-
-def registration3(request):
-    all_courses = Course.objects.all()
-    context = {
-        'all_courses' : all_courses,
-    }
-    return render(request, 'sedUI/pages/registrationSelection.html', context)
-
-def registration4(request):
-    return render(request, 'sedUI/pages/registrationPayment.html')
-
-def registration5(request):
-    return render(request, 'sedUI/pages/registrationConfirmation.html')

@@ -2,22 +2,15 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from . import views
 from django.contrib.auth.decorators import login_required, permission_required
-from sedUI.forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4
+from sedUI.forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm
 
 urlpatterns=[
 	url(r'^$', views.IndexView.as_view(), name='index'),
 	url(r'^about/?$', views.AboutView.as_view(), name='about'),
-	url(r'^contact/?$', views.ContactView.as_view(), name='contact'),
-
+	url(r'^contact/?$', views.ContactView.as_view([ContactEmailForm]), name='contact'),
 
 	url(r'^registration/?$', views.RegistrationWizard.as_view([RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]), name='registration'),
 
-	url(r'^registration1/', views.registration1, name='registration1'),
-	url(r'^registration2/', views.registration2, name='registration2'),
-	url(r'^registration3/', views.registration3, name='registration3'),
-	url(r'^registration4/', views.registration4, name='registration4'),
-	url(r'^registration5/', views.registration5, name='registration5'),
-	
 	url(r'^scouts/?$', login_required(views.ScoutView.as_view()), name='scout'),
 	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/?$', views.ScoutDetailView.as_view(), name='scout_detail'),
 

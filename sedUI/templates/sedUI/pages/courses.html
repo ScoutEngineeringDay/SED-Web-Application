@@ -4,7 +4,7 @@
 	{% if all_courses %}
 		{% for course in all_courses %}
 			<div class="container">
-				<a href="#">
+				<a href="/course_detail/{{course.class_id}}">
 					<div class="well well-sm courseInfo">
 						<p class="courseName"><b> {{course.class_name}} </b></p>
 							<div class="showOnHover">

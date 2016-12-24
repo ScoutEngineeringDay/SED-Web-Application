@@ -2,37 +2,19 @@
 {% block content %}
 <div class="container">
 <!-- <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </p> -->
-{% if wizard.steps.current == "0" %}
-  {% include "sedUI/includes/RegistationStatus1.html" %}
-{% elif wizard.steps.current == "1" %}
-  {% include "sedUI/includes/RegistationStatus2.html" %}
-{% elif wizard.steps.current == "2" %}
-  {% include "sedUI/includes/RegistationStatus3.html" %}
-{% elif wizard.steps.current == "3" %}
-  {% include "sedUI/includes/RegistationStatus4.html" %}
-{% elif wizard.steps.current == "4" %}
-  {% include "sedUI/includes/RegistationStatus5.html" %}
-{% endif %}
-{% for field in form %}
-  {{field.error}}
-{% endfor %}
+{% include "sedUI/includes/registrationStatus.html"%}
 
-<form action="/registration/" method="post"> {% csrf_token %}
-<table>
+<form action="/registration/" method="post" style="margin: 0 auto"> {% csrf_token %}
   {{ wizard.management_form }}
-  <!-- errors -->
-  {% if wizard.form.forms %}
-    {{ wizard.form.management_form }}
-    {% for form in wizard.form.forms %}
-      {{ form }}
-    {% endfor %}
-  {% else %}
-
-    <!-- display -->
-    {{ wizard.form }}
-  {% endif %}
-</table>
-<input type="submit" value="Submit" />
+    {% if wizard.steps.current == "0" %}
+        {% include "sedUI/pages/registrationCitizen.html" %}
+    {% elif wizard.steps.current == "1" %}
+        {% include "sedUI/pages/registrationInfo.html" %}
+    {% elif wizard.steps.current == "2" %}
+        {% include "sedUI/pages/registrationSelection.html" %}
+    {% elif wizard.steps.current == "3" %}
+        {% include "sedUI/pages/registrationPayment.html" %}
+    {% endif %}
 </form>
 </div>
 {% endblock %}

@@ -1,0 +1,17 @@
+{% load staticfiles %}
+{% block content %}
+{% if wizard.steps.current == "0" %}
+  {% include "sedUI/includes/RegistationStatus1.html" %}
+{% elif wizard.steps.current == "1" %}
+  {% include "sedUI/includes/RegistationStatus2.html" %}
+{% elif wizard.steps.current == "2" %}
+  {% include "sedUI/includes/RegistationStatus3.html" %}
+{% elif wizard.steps.current == "3" %}
+  {% include "sedUI/includes/RegistationStatus4.html" %}
+{% elif wizard.steps.current == "4" %}
+  {% include "sedUI/includes/RegistationStatus5.html" %}
+{% endif %}
+{% for field in form %}
+  {{field.error}}
+{% endfor %}
+{% endblock %}
