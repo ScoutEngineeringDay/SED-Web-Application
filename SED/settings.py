@@ -80,13 +80,11 @@ WSGI_APPLICATION = 'SED.wsgi.application'
 
 DATABASES = {
    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sed_database_test',
-        'USER': 'root',
-        'PASSWORD':'test',
-        'HOST': 'localhost',
+        'NAME': 'SED_Database',
+        'USER': 'sed',
+        'PASSWORD':'Pass1234',
+        'HOST': 'sed-db.cqpg4rn4jalr.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
