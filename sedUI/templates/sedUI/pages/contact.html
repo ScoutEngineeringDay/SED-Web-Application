@@ -9,17 +9,11 @@
 
   <div class="container-fluid">
     <div class="row-fluid">
-      <form>
+      <form action="/contact/" method="post" style="margin: auto"> {% csrf_token %}
         <div class="row-fluid">
           <div class="col-md-6">
             {{ wizard.management_form }}
             <!-- errors -->
-            {% if wizard.form.forms %}
-            {{ wizard.form.management_form }}
-            {% for form in wizard.form.forms %}
-            {{ form }}
-            {% endfor %}
-            {% else %}
             <div class="form-group">
               <label for="name">Name</label>
               {{ wizard.form.contact_name }}
@@ -45,10 +39,8 @@
                   {{ wizard.form.message }}
                 </div>
               </div>
-              {% endif %}
               <div class="col-md-12">
-                <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
-                  Send Message</button>
+                <input type="submit" name="submit" id="submit" value="Send Email" class="btn btn-primary">
                 </div>
               </div>
             </form>

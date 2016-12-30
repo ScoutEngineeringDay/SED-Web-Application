@@ -35,9 +35,16 @@ class ContactView(SessionWizardView):
     template_name = 'sedUI/pages/contact.html'
 
     def done(self, form_list, **kwargs):
-        print(form_list)
-        return render_to_response('sedUI/pages/contact.html', {'form_data': [form.cleaned_data for form in form_list]})
+        print("send")
+        return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
 
+def contact_send_email(form_list):
+    form_data =[form.cleaned_data for form in form_list]
+    print("sending")
+    print(str(form_data))
+    #send_mail(subject, message, from, to)
+    send_mail("Question", "message_test", settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
+    return form_data
 
 def login(request):
     return render(request, 'sedUI/pages/basic.html')
@@ -115,10 +122,3 @@ def confirmation_send_email(form_list):
     # send_mail('Confirmation', str(form_data), settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
 
-def contact_send_email(form_list):
-    form_data =[form.cleaned_data for form in form_list]
-    print("sending")
-    print(str(form_data))
-    #send_mail(subject, message, from, to)
-    send_mail("Question", "message_test", settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
-    return form_data
