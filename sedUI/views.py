@@ -10,7 +10,7 @@ from formtools.wizard.views import SessionWizardView
 
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 
 
 FORMS = [("citizenship", RegistrationForm1), 
@@ -69,8 +69,6 @@ class ScoutDetailView(generic.ListView):
     context_object_name='scout'
     def get_queryset(self):
         return Scout.objects.get(scout_id=self.kwargs['scout_id'])
-# class ScoutQR1View(generic.):
-# class ScoutQR2View(generic.):
 
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
@@ -98,15 +96,29 @@ class RegistrationWizard(SessionWizardView):
     template_name = 'sedUI/pages/registration_form.html'
 
     def done(self, form_list, **kwargs):
-    # email failing due to configuration error
-        # form_data = process_send_email(form_list)
-        print(form_list)
+        # form_data = confirmation_send_email(form_list)
         # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
         return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
 
-# def process_send_email(form_list):
-#     form_data =[form.cleaned_data for form in form_list]
-#     print("sending")
-#     send_mail('test', 'test', settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
-#     return form_data
+def confirmation_send_email(form_list):
+    form_data =[form.cleaned_data for form in form_list]
+    print("sending")
+    print(str(form_data))
+    email = EmailMessage(
+        'Confirmation',
+        str(form_data),
+        settings.EMAIL_HOST_USER,
+        [settings.EMAIL_HOST_USER],
+        )
+    email.send(fail_silently=False)
+    #send_mail(subject, message, from, to)
+    # send_mail('Confirmation', str(form_data), settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
+    return form_data
 
+def contact_send_email(form_list):
+    form_data =[form.cleaned_data for form in form_list]
+    print("sending")
+    print(str(form_data))
+    #send_mail(subject, message, from, to)
+    send_mail("Question", "message_test", settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
+    return form_data

@@ -3,7 +3,7 @@ from django import forms
 from .models import Course
 
 class RegistrationForm1(forms.Form):
-	citizenship = forms.ChoiceField(widget=forms.RadioSelect, choices=(('Yes', 'Yes'),('No','No')))
+	citizenship = forms.ChoiceField(widget=forms.RadioSelect(), choices=[('Yes', 'Yes'),('No','No')])
 
 class RegistrationForm2(forms.Form):
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name', 'size': '40'}))
@@ -27,10 +27,10 @@ class RegistrationForm3(forms.Form):
 	evening_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('class_name'))
 
 class RegistrationForm4(forms.Form):
-	payment_method = forms.ChoiceField(choices=[("Check","Mail in Check"),("OnlinePay","Online Payment")])
+	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Check","Mail in Check"),("OnlinePay","Online Payment")])
 
 class ContactEmailForm(forms.Form):
-	contact_name = forms.CharField()
-	email_address = forms.CharField()
+	contact_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
+	email_address = forms.EmailField()
 	message_subject = forms.ChoiceField([("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support")])
-	message = forms.CharField()
+	message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'message'}))

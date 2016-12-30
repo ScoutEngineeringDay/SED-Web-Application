@@ -6,57 +6,54 @@
       <h1 class="h1">Contact us</h1>
     </div>
   </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="well well-sm">
-          <form>
-            <div class="row">
-              <div class="col-md-6">
-                
-                {{ wizard.management_form }}
-                <!-- errors -->
-                {% if wizard.form.forms %}
-                  {{ wizard.form.management_form }}
-                  {% for form in wizard.form.forms %}
-                    {{ form }}
-                  {% endfor %}
-                {% else %}
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  {{ wizard.form.contact_name }}
-                </div>
-                <div class="form-group">
-                  <label for="email">Email Address</label>
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-envelope"></span>
-                    </span>
-                    {{ wizard.form.email_address}}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="subject">
-                  Subject</label>
-                  {{ wizard.form.message_subject }}
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="name">
-                    Message</label>
-                    {{ wizard.form.message }}
-                  </div>
-                </div>
-                {% endif %}
-              <div class="col-md-12">
-                <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
-                Send Message</button>
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <form>
+        <div class="row-fluid">
+          <div class="col-md-6">
+            {{ wizard.management_form }}
+            <!-- errors -->
+            {% if wizard.form.forms %}
+            {{ wizard.form.management_form }}
+            {% for form in wizard.form.forms %}
+            {{ form }}
+            {% endfor %}
+            {% else %}
+            <div class="form-group">
+              <label for="name">Name</label>
+              {{ wizard.form.contact_name }}
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-envelope"></span>
+                </span>
+                {{ wizard.form.email_address}}
               </div>
             </div>
-          </form>
+            <div class="form-group">
+              <label for="subject">
+                Subject</label>
+                {{ wizard.form.message_subject }}
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="name">Message</label>
+                  <br>
+                  {{ wizard.form.message }}
+                </div>
+              </div>
+              {% endif %}
+              <div class="col-md-12">
+                <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                  Send Message</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-{% endblock %}
+    {% endblock %}
