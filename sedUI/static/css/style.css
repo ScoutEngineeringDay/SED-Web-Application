@@ -315,8 +315,41 @@ font-size: 24px;
 }
 
 .scoutbadge {
-  width: 5in;
+  width: 4in;
   height: 3in;
   border-style: solid;
-  padding: 25px;
+  padding: 5px;
+  background-color: #ffffff;
+}
+
+.badge-center {
+  padding-top: 40px;
+  text-align: center;
+}
+
+.badge-top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+}
+
+.badge-top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 18px;
+}
+
+.badge-bottom-left {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+}
+
+.badge-bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 18px;
 }

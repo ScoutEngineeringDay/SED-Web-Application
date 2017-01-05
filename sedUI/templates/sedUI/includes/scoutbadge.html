@@ -1,12 +1,26 @@
 {% load staticfiles %}
 {% block content %}
-<div class="container-fluid scoutbadge" id="scoutbadge" style="background-color: #ffffff;">
-  <font size="6">Insert Scout Name</font>
-  <h5>ID: ##########</h5>
-  <h5>Organization</h5>
-  <!-- <h5>Medical</h5> -->
-  <div id="qrcode1" style="float:left">QR1</div>
-  <div id="qrcode2" style="float:right;">QR2</div>
+<div class="container-fluid scoutbadge" id="scoutbadge" style="position: relative">
+
+  <!-- Medical -->
+  <!-- TODO: MAKE DYNAMIC -->
+  <div class="badge-top-left" id="medical">M</div>
+  <!-- Photo -->
+  <!-- TODO: MAKE DYNAMIC -->
+  <div class="badge-top-right" id="noPhoto">P</div>
+  <div class="badge-center">
+    <!-- TODO: MAKE DYNAMIC -->
+    <font size="6">Insert Scout Name</font>
+  </div>
+  <div class="badge-bottom-left" id="qrcode"></div>
+  <div class="badge-bottom-right" id="classes">
+    <!-- TODO: MAKE DYNAMIC -->
+    <p>
+      Insert Class1
+      <br>
+      Insert Class2
+    </p>
+  </div>
 </div>
 <br>
 <button class="btn btn-primary btn-lg" id="savebadge">Download Badge</button>
@@ -18,17 +32,12 @@
 <script type="text/javascript" src="{% static '/js/jspdf.debug.js' %}"></script>
 <script type="text/javascript" src="{% static '/js/html2canvas.js' %}"></script>
 <script>
-  jQuery('#qrcode1').qrcode({
-    render	: "table",
+  jQuery('#qrcode').qrcode({
+    render	: "canvas",
+    //TODO: MAKE DYNAMIC
     text	: "http://54.152.243.242:8000/scouts/",
-    width: 100,
-    height: 100
-  });
-  jQuery('#qrcode2').qrcode({
-    render	: "table",
-    text	: "http://54.152.243.242:8000/scouts/",
-    width: 100,
-    height: 100
+    width: 85,
+    height: 85
   });
 
   $( document ).ready(function() {
