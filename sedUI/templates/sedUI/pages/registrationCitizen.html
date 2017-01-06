@@ -1,40 +1,30 @@
-{% extends "sedUI/base/header.html" %}
+
 {% block content %}
-
-	<script type="text/javascript">
-	    function get_action(form) {
-				if(document.getElementById('Cit_Yes').checked) {
-					form.action = "../registration2/";
-				}
-				if(document.getElemen1tById('Cit_No').checked) {
-					window.alert("We are sorry but due to the location only U.S. Citizens are allowed to attend. (Should Probably have someone write this better.)");
-					form.action = "..";
-				}
-	    }
-	</script>
-
-	<div class="container">
-		{% include "sedUI/includes/RegistationStatus1.html" %}
-		<div align="center">
-		  <form onsubmit="get_action(this);" style="width: 500px; margin: 0 auto">
-				<label for="InputName" style="font-size: 32px">Is a U.S. Citizen?</label>
-
-				<br>
-
-				<div class="input-group" align="center">
-						<label class="radio-inline" style="font-size: 16px"><input type="radio" name="optradio" id="Cit_Yes">Yes</label>
-						<label class="radio-inline" style="font-size: 16px"><input type="radio" checked="checked" name="optradio" id="Cit_No">No</label>
-				</div>
-
-				<br>
-
-		    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
-
-				<br>
-				<br>
-
-		  </form>
-		</div>
-	</div>
-
+<form action="/registration/" onsubmit="get_action(this)" method="post" style="margin: auto"> {% csrf_token %}
+  {{ wizard.management_form }}
+  <div align="center">
+    <label for="InputName" style="font-size: 32px">Is a U.S. Citizen?</label>
+    <br>
+    <div class="input-group">
+      <label  class="radio-inline" style="font-size: 16px">
+        <input id="yes_citizen" type="radio" name="optradio" id="Pay_Mail">{{wizard.form.citizenship.0}}
+      </label>
+      <label  class="radio-inline" style="font-size: 16px">
+        <input id="not_citizen" type="radio" name="optradio" id="Pay_Mail">{{wizard.form.citizenship.1}}
+      </label>
+    </div>
+    <br>
+    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
+    <script>
+        document.getElementById('submit').addEventListener('click', function(e) {
+          if(document.getElementById('yes_citizen').checked) {
+            
+          }
+          if(document.getElementById('not_citizen').checked){
+            window.alert("Scout must be a U.S. Citizen ");
+          }
+        });
+      </script>
+  </div>
+</form>
 {% endblock %}

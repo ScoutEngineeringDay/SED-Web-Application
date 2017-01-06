@@ -1,44 +1,26 @@
-{% extends "sedUI/base/header.html" %}
 {% block content %}
+<div align="center">
+	<form action="/registration/" method="post" style="margin: auto"> {% csrf_token %}
+  	{{ wizard.management_form }}
+		<label for="InputName" style="font-size: 32px">Select the workshops to attend.</label>
 
-	<div class="container">
-		{% include "sedUI/includes/RegistationStatus3.html" %}
-		<div align="center">
-			<form action="../registration4/" style="width: 500px; margin: 0 auto">
-				<label for="InputName" style="font-size: 32px">Select the workshops to attend.</label>
+		<br>
+		<br>
 
-				<br>
-				<br>
-
-				<div class="input-group" align="center">
-						<label class="radio-inline" style="font-size: 16px">Morning </label>
-						{% if all_courses %}
-						<select>
-									{% for course in all_courses %}
-										       <option value="volvo"> {{course.class_name}}</option>
-									{% endfor %}
-						</select>
-						{% endif %}
-
-						<label class="radio-inline" style="font-size: 16px">Evening </label>
-						{% if all_courses %}
-						<select>
-									{% for course in all_courses %}
-										       <option value="volvo"> {{course.class_name}}</option>
-									{% endfor %}
-						</select>
-						{% endif %}
-				</div>
-
-				<br>
-
-				<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
-
-				<br>
-				<br>
-
-			</form>
+		<div class="input-group" align="center">
+			<label class="radio-inline" style="font-size: 16px">Morning </label>
+			{{wizard.form.morning_subject}}
+			<label class="radio-inline" style="font-size: 16px">Evening </label>
+			{{wizard.form.evening_subject}}
 		</div>
-	</div>
 
+		<br>
+
+		<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
+
+		<br>
+		<br>
+
+	</form>
+</div>
 {% endblock %}

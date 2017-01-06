@@ -1,0 +1,22 @@
+{% extends "sedUI/base/header.html" %}
+{% block content %}
+<div class="container">
+<!-- <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </p> -->
+{% include "sedUI/includes/registrationStatus.html"%}
+
+<form action="/registration/" method="post" style="margin: 0 auto"> {% csrf_token %}
+  {{ wizard.management_form }}
+    {% if wizard.steps.current == "0" %}
+        {% include "sedUI/pages/registrationCitizen.html" %}
+    {% elif wizard.steps.current == "1" %}
+        {% include "sedUI/pages/registrationInfo.html" %}
+    {% elif wizard.steps.current == "2" %}
+        {% include "sedUI/pages/registrationSelection.html" %}
+    {% elif wizard.steps.current == "3" %}
+        {% include "sedUI/pages/registrationPayment.html" %}
+    {% else %}
+        <p>test</p>
+    {% endif %}
+</form>
+</div>
+{% endblock %}
