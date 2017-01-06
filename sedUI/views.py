@@ -6,6 +6,7 @@ import os
 from django.views import generic
 from django.views.generic import View
 from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm
+from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView
 
 from django.conf import settings
@@ -13,9 +14,9 @@ from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
 
 
-FORMS = [("citizenship", RegistrationForm1), 
-         ("scout_info", RegistrationForm2), 
-         ("selection", RegistrationForm3), 
+FORMS = [("citizenship", RegistrationForm1),
+         ("scout_info", RegistrationForm2),
+         ("selection", RegistrationForm3),
          ("payment", RegistrationForm4)]
 
 # Create your views here.
@@ -121,4 +122,3 @@ def confirmation_send_email(form_list):
     #send_mail(subject, message, from, to)
     # send_mail('Confirmation', str(form_data), settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
-

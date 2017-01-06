@@ -1,50 +1,49 @@
 
 {% block content %}
 <form action="/registration/" method="post" style="width: 500px; margin: 0 auto"> {% csrf_token %}
-	{{ wizard.management_form }}	
+	{{ wizard.management_form }}
 	<div>
 		<div class="form-group">
-			<label for="InputName">First Name</label>
-			<div class="input-group">
+			<label for="InputFirstName">First Name</label>
+			<div class="col-lg-16">
 				{{wizard.form.first_name}}
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="InputEmail">Last Name</label>
-			<div class="input-group">
+			<label for="InputLastName">Last Name</label>
+			<div class="col-lg-16">
 				{{wizard.form.last_name}}
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="state" class="col-lg-66 control-label">Affiliation</label>
+			<label for="Organization" class="col-lg-66 control-label">Organization</label>
 			<div class="col-lg-16">
 				{{wizard.form.affiliation}}
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="InputEmail">Age</label>
-			<div class="input-group">
-				{{wizard.form.age}}
+			<div class="col-lg-16">
+				{{wizard.form.troop}}
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="state" class="col-lg-66 control-label">Gender</label>
+			<label for="Gender" class="col-lg-66 control-label">Gender</label>
 			<div class="col-lg-16">
 				{{wizard.form.gender}}
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="InputEmail">Address</label>
-			<div class="input-group">
+			<label for="Address">Address</label>
+			<div class="col-lg-16">
 				{{wizard.form.street}}
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="input-group">
+			<div class="col-lg-16">
 				{{wizard.form.city}}
 			</div>
 		</div>
@@ -56,41 +55,41 @@
 		</div>
 
 		<div class="form-group">
-			<div class="input-group">
+			<div class="col-lg-16">
 				{{wizard.form.zip_code}}
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="InputEmail">Enter Email</label>
-			<div class="input-group">
+			<div class="col-lg-16">
 				{{wizard.form.email}}
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="input-group">
+			<div class="col-lg-16">
 				{{wizard.form.email_confirm}}
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="InputName">Phone</label>
-			<div class="input-group">
+			<label for="Phone">Phone</label>
+			<div class="col-lg-16">
 				{{wizard.form.phone}}
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="InputName">Emergency Contact Information</label>
-			<div class="input-group">
+			<label for="EmergencyContact">Emergency Contact Information</label>
+			<div class="col-lg-16">
 				{{wizard.form.emergency_first_name}}
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="input-group">
+			<div class="col-lg-16">
 				{{wizard.form.emergency_last_name}}
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="input-group">
+			<div class="col-lg-16">
 				{{wizard.form.emergency_phone}}
 			</div>
 		</div>
@@ -107,6 +106,6 @@
 
 		<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
 	</div>
-	
+
 </form>
 {% endblock %}
