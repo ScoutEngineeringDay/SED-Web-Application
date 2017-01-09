@@ -110,6 +110,7 @@ DATABASES = {
         'HOST': 'sed-db.cqpg4rn4jalr.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
     }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
