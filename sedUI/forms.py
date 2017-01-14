@@ -65,7 +65,7 @@ class RegistrationForm1(forms.Form):
 class RegistrationForm2(forms.Form):
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
-	affiliation = forms.ChoiceField(choices=[("GSA", "Girl Scout of America"),("BSA", "Boy Scout of America"), ("Venture Crew","Venture Crew")], widget=forms.Select(attrs={'class': 'form-control'})) #TODO: Venture Crew needs to be changed to other
+	affiliation = forms.ChoiceField(choices=[("GSA", "Girl Scout of America"),("BSA", "Boy Scout of America"), ("OTHER","Other")], widget=forms.Select(attrs={'class': 'form-control'}))
 	troop = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Troop Number', 'type': 'number'}))
 	gender = forms.ChoiceField(choices=[("F", "Female"),("M", "Male")], widget=forms.Select(attrs={'class': 'form-control'}))
 	street = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Street', 'type': 'text'}))
@@ -87,7 +87,7 @@ class RegistrationForm4(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Check","Mail in Check"),("OnlinePay","Online Payment")])
 
 class ContactEmailForm(forms.Form):
-	contact_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Contact Name'}))
-	email_address = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email', 'size': '40'}))
-	message_subject = forms.ChoiceField([("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support")])
-	message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Message'}))
+	contact_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Contact Name'}))
+	email_address = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
+	message_subject = forms.ChoiceField([("General Customer Service","General Customer Service"),("Payment","Payment"),("Suggestion","Suggestion"),("Product Support","Product Support"),("Badge Request","Badge Request")], widget=forms.Select(attrs={'class': 'form-control'}))
+	message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Message'}))

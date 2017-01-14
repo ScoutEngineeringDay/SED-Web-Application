@@ -9,7 +9,7 @@
 
   <div class="container-fluid">
     <div class="row-fluid">
-      <form action="/contact/" method="post" style="margin: auto"> {% csrf_token %}
+      <form action="/contact/" method="post"> {% csrf_token %}
         <div class="row-fluid">
           <div class="col-md-6">
             {{ wizard.management_form }}
@@ -32,9 +32,8 @@
                 Subject</label>
                 {{ wizard.form.message_subject }}
               </div>
-              <div class="col-md-6">
                 <div class="form-group">
-                  <label for="name">Message</label>
+                  <label for="messgae">Message</label>
                   <br>
                   {{ wizard.form.message }}
                 </div>
