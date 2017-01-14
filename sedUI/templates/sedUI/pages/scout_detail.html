@@ -1,6 +1,122 @@
 {% extends "sedUI/base/header.html" %}
 {% block content %}
-<div class="container">
-	<h4>{{scout.first_name}} {{scout.last_name}}</h4>
-</div>
+	<div class="container">
+			<div class="row">
+				<div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<!-- Whole Name -->
+							<h2  id="userName">{{scout.first_name}} {{scout.last_name}}</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class=" col-md-9 col-lg-9 ">
+									<table class="table table-user-information">
+										<tbody>
+											<tr>
+												<td>ID</td>
+												<!-- User Type -->
+												<td id="userType">{{scout.scout_id}}</td>
+											</tr>
+											<tr>
+												<td>Gender</td>
+												<!-- User Type -->
+												<td id="userType">{{scout.gender}}</td>
+											</tr>
+											<tr>
+												<td>Org</td>
+												<!-- User Type -->
+												<td id="userType">{{scout.affiliation}}</td>
+											</tr>
+											<tr>
+												<td>Troop</td>
+												<!-- User Type -->
+												<td id="userType">{{scout.age}}</td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="table table-user-information">
+										<thead>
+											<h3> Contact Information </h3>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Email</td>
+												<!-- User Email Format: <a href="mailto:edward.gedeon07@gmail.com">edward.gedeon07@gmail.com</a> -->
+												<td id="userEmail">{{scout.email}}</td>
+											</tr>
+											<tr>
+												<td>Phone</td>
+												<!-- User Phone Number -->
+												<td id="userPhone">{{scout.phone_number}}</td>
+											</tr>
+										</tbody>
+									</table>
+									<table class="table table-user-information">
+										<thead>
+											<h3> Address </h3>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Street</td>
+												<!-- User Type -->
+												<td id="userType">{{scout.street}}</td>
+											</tr>
+											<tr>
+												<td>City</td>
+												<!-- User Type -->
+												<td id="userType">{{scout.city}}</td>
+											</tr>
+											<tr>
+												<td>State</td>
+												<!-- User Type -->
+												<td id="userType">{{scout.state}}</td>
+											</tr>
+											<tr>
+												<td>Zip</td>
+												<!-- User Type -->
+												<td id="userType">{{scout.zip_code}}</td>
+											</tr>
+										</tbody>
+									</table>
+								<table class="table table-user-information">
+									<thead>
+										<h3> Emergency Contact </h3>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Name</td>
+											<!-- User Phone Number -->
+											<td id="userPhone">{{scout.emergency_first_name}} {{scout.emergency_last_name}}</td>
+										</tr>
+										<tr>
+											<td>Phone</td>
+											<!-- User Phone Number -->
+											<td id="userPhone">{{scout.emergency_phone}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<div class="container" align="center">
+		<a data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
+		<a data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-default btn-action">Check Out Of Event</i></a>
+	</div>
+	<br>
+	<div class="container" align="center">
+		<a data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-info btn-action">Check Into Class</i></a>
+		<a data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
+		<a data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Check Out Of Class</i></a>
+	</div>
+	<br>
+	<div class="container" align="center">
+		<a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-danger btn-action">Remove User</a>
+	</div>
 {% endblock %}

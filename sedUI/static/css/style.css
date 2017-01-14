@@ -303,6 +303,10 @@ font-size: 24px;
     width: 50%;
 }
 
+.btn-action {
+  margin: 3px;
+}
+
 @media (max-width: 767px) {
   .left-couses {
     float: left;
@@ -312,6 +316,11 @@ font-size: 24px;
     float: left;
     width: auto;
   }
+
+  .btn-action {
+    width: 100%;
+  }
+
 }
 
 .scoutbadge {

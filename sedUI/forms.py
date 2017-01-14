@@ -70,7 +70,7 @@ class RegistrationForm2(forms.Form):
 	gender = forms.ChoiceField(choices=[("F", "Female"),("M", "Male")], widget=forms.Select(attrs={'class': 'form-control'}))
 	street = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Street', 'type': 'text'}))
 	city = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City', 'type': 'text'}))
-	state = forms.ChoiceField(choices=ALL_STATES_AND_EMPTY, required=False, widget=forms.Select(attrs={'class': 'form-control', 'onchange': 'this.form.submit();'}))
+	state = forms.ChoiceField(choices=ALL_STATES_AND_EMPTY, required=False, widget=forms.Select(attrs={'class': 'form-control'}))
 	zip_code = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Zip Code', 'type': 'number'}))
 	email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
 	email_confirm = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Confirmation', 'type': 'email'}))
