@@ -1,6 +1,16 @@
 {% extends "sedUI/base/header.html" %}
 {% load staticfiles %}
 {% block content %}
-	<h4>{{course.class_name}}</h4>
-	<p>{{course.class_description}}</p>
+	<div class="container">
+		<div class="well well-sm">
+			<p class="courseName"><b>{{course.class_name}}</b></p>
+			<!-- TODO Make this Instructor -->
+			<p><i>Instructor: {{course.class_id}}</i></p>
+			<p>{{course.class_description}}</p>
+			<br>
+			<p>
+				<a class="btn btn-primary btn-sm" href="/registration/" role="button">Register</a>
+			</p>
+		</div>
+	</div>
 {% endblock %}
