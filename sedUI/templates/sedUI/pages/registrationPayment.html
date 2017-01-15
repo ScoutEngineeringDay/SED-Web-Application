@@ -7,9 +7,10 @@
 			<br>
 			<div class="input-group" align="center">
 				<label class="radio-inline" style="font-size: 16px">
-					<input type="radio" name="optradio" id="Pay_Online">{{wizard.form.payment_method.1}}
+					<input id="Pay_Online" type="radio" name="optradio">{{wizard.form.payment_method.1}}
+				</label>
 				<label class="radio-inline" style="font-size: 16px">
-					<input type="radio" name="optradio" id="Pay_Mail">{{wizard.form.payment_method.0}}
+					<input id="Pay_Mail" type="radio" name="optradio">{{wizard.form.payment_method.0}}
 				</label>
 			</div>
 			<br>
@@ -27,6 +28,7 @@
 				});
 					function get_action(form) {
 						if(document.getElementById('Pay_Online').checked) {
+
 						}
 						if(document.getElementById('Pay_Mail').checked) {
 							window.alert("Please send check to...");
@@ -34,7 +36,7 @@
 					}
 			</script>
 
-			<script>
+			<script type="text/javascript">
 				var handler = StripeCheckout.configure({
 				  key: 'pk_test_92kS90THLx5tJ1giZLy7JIcO',
 				  image: 'http://54.152.243.242:8000/static/img/images/sedLogo.jpg',

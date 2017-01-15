@@ -5,7 +5,7 @@ from .models import Course, Scout
 import os
 from django.views import generic
 from django.views.generic import View
-from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm
+from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, RegistrationForm5, ContactEmailForm
 from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView
 
@@ -100,13 +100,15 @@ class AboutView(generic.TemplateView):
     	return render(request, 'sedUI/pages/about.html', context);
 
 class RegistrationWizard(SessionWizardView):
-    form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]
+    form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, RegistrationForm5]
     template_name = 'sedUI/pages/registration_form.html'
 
     def done(self, form_list, **kwargs):
+        print(form_list[0].cleaned_data)
+        scout = Scout()
+        session = Session()
         # form_data = confirmation_send_email(form_list)
-        # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
-        return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
+        return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
 
 def confirmation_send_email(form_list):
     form_data =[form.cleaned_data for form in form_list]

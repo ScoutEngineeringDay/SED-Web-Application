@@ -80,10 +80,14 @@ class RegistrationForm2(forms.Form):
 	emergency_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Contact Phone', 'type': 'tel', 'minlength': '10', 'maxlength': '10'}))
 
 class RegistrationForm3(forms.Form):
+	medical_issues = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Medical Notes'}))
+	allergy_issues = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Allergy Notes'}))
+
+class RegistrationForm4(forms.Form):
 	morning_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('class_name'))
 	evening_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('class_name'))
 
-class RegistrationForm4(forms.Form):
+class RegistrationForm5(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Check","Mail in Check"),("OnlinePay","Online Payment")])
 
 class ContactEmailForm(forms.Form):

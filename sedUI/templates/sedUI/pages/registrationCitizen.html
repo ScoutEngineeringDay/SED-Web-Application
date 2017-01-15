@@ -14,14 +14,15 @@
       </label>
     </div>
     <br>
-    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
-    <script>
-        document.getElementById('submit').addEventListener('click', function(e) {
+    <input type="submit" name="submit" id="submit1" value="Next" class="btn btn-primary">
+    <script type="text/javascript">
+        document.getElementById('submit1').addEventListener('click', function(e) {
           if(document.getElementById('yes_citizen').checked) {
             
           }
           if(document.getElementById('not_citizen').checked){
             window.alert("Scout must be a U.S. Citizen ");
+            event.preventDefault();
           }
         });
       </script>
