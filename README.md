@@ -32,15 +32,16 @@ The following tools are needed:
 2. Install Django `pip install Django==1.10.2`
   * **Hint:** If it does not recognize pip you need to add the Python bin folder to Environment Variable PATH.
   * **Hint:** If you are within a company firewall you will have to use `pip install --proxy <proxy> Django==1.10.2`
-3. Install MySQL_connector and MySQL_python (**Hint:** Windows can just run included files/ linux run pip install)
-4. Open location of source code `cd /locationofcode/sed`
-5. Open location `cd SED/settings.py` and navigate to database section and fill the data above into the corresponding location.
-6. Setup the Database `python manage.py makemigrations`
-7. Apply Database `python manage.py migrate`
-8. Return to MySQL workbench and run the current `testscript.sql` to update the database with the test dataset. Then run step 7-8 again.
-9. Run the server `python manage.py runserver`
+3. Install Django Form Tools `pip install django-formtools`
+4. Install MySQL_connector and MySQL_python (**Hint:** Windows can just run included files/ linux run pip install)
+5. Open location of source code `cd /locationofcode/sed`
+6. Open location `cd SED/settings.py` and navigate to database section and fill the data above into the corresponding location.
+7. Setup the Database `python manage.py makemigrations`
+8. Apply Database `python manage.py migrate`
+9. Return to MySQL workbench and run the current `testscript.sql` to update the database with the test dataset. Then run step 7-8 again.
+10. Run the server `python manage.py runserver`
   * Do not close the Git Bash window it is running the server.
-10. Go to [http://localhost:8000/](http://localhost:8000/) in browser
+11. Go to [http://localhost:8000/](http://localhost:8000/) in browser
 
 
 ## Useful Django Commands
