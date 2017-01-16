@@ -29,10 +29,6 @@ class RegistrationForm2(forms.Form):
 	photo = forms.BooleanField()
 
 class RegistrationForm3(forms.Form):
-	medical_issues = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Medical Notes'}))
-	allergy_issues = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Allergy Notes'}))
-
-class RegistrationForm4(forms.Form):
 	morning_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('class_name'))
 	evening_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('class_name'))
 class RegistrationForm4(forms.Form):
