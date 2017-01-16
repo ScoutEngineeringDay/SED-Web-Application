@@ -6,7 +6,7 @@ import os
 from django.views import generic
 from django.core.urlresolvers import reverse
 from django.views.generic import View
-from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, RegistrationForm5, ContactEmailForm
+from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm
 from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView, CookieWizardView
 
@@ -43,7 +43,7 @@ class ContactView(SessionWizardView):
 def contact_send_email(form_list):
     form_data =[form.cleaned_data for form in form_list]
     message=("Contact Email: "+ form_data[0]["email_address"]+"\n\nContact name: "+form_data[0]["contact_name"]+"\n\nMessage:\n"+form_data[0]["message"])
-    #send_mail(subject, message, from, to) 
+    #send_mail(subject, message, from, to)
     send_mail(form_data[0]["message_subject"], message, form_data[0]["email_address"], [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
 
@@ -100,7 +100,7 @@ class AboutView(generic.TemplateView):
     	return render(request, 'sedUI/pages/about.html', context);
 
 class RegistrationWizard(SessionWizardView):
-    form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, RegistrationForm5]
+    form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]
     template_name = 'sedUI/pages/registration_form.html'
 
     def render_next_step(self, form, **kwargs):
@@ -114,9 +114,9 @@ class RegistrationWizard(SessionWizardView):
         # check citizen status
         if(self.steps.current=='0'):
             data=self.get_cleaned_data_for_step('0')
-            if(data["citizenship"]=='No'):            
+            if(data["citizenship"]=='No'):
                 return redirect(reverse('index'))
-                
+
         # run default render_next_step
         next_step = self.steps.next
         new_form = self.get_form(
