@@ -14,12 +14,8 @@ urlpatterns=[
 	url(r'^scouts/?$', login_required(views.ScoutView.as_view()), name='scout'),
 	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/?$', views.ScoutDetailView.as_view(), name='scout_detail'),
 
-	# url(r'^scout/(?P<scout_id>)/QR1/?$', views.ScoutQR1View.as_view(), name='scout_QR1'),
-	# url(r'^scout/(?P<scout_id>)/QR2/?$', views.ScoutQR2View.as_view(), name='scout_QR2'),
-
 	url(r'^courses/?$', views.CourseView.as_view(), name='course'),
 	url(r'^course_detail/(?P<class_id>[a-zA-Z0-9\-._]+)/?$', views.CourseDetailView.as_view(), name='course_detail'),
-	# url(r'^reportAnalysis/(?P<class_id>)/?$', login_required(views.ReportViewDetail.as_view(), name='reportAnalysisDetail'),
 	url(r'^profile/?$', login_required(views.ProfileView.as_view()), name='profiles'),
 
 
