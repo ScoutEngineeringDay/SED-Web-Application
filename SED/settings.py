@@ -29,7 +29,12 @@ SECRET_KEY = 'a1u4znl-=0+!lzr=iyctr^*rxatx&6f%^60@62wtlyj+$_ea0$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','54.152.243.242', '54.236.255.148']
+ALLOWED_HOSTS = ['www.sedteam.com','localhost','54.152.243.242', '54.236.255.148']
+
+# AWS_ACCESS_KEY_ID = 'YOUR-ACCESS-KEY-ID'
+# AWS_SECRET_ACCESS_KEY = 'YOUR-SECRET-ACCESS-KEY'
+
+# EMAIL_BACKEND = 'django_ses.SESBackend'
 
 EMAIL_HOST ='smtp.gmail.com'
 EMAIL_HOST_USER = 'scoutengineeringdaytest@gmail.com'
@@ -148,9 +153,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-PROJECT_DIR = os.path.dirname(__file__)
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'staticfiles'),)
+# PROJECT_DIR = os.path.dirname(__file__)
+# STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+STATIC_URL = '/sedUI/static/'
+# STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'staticfiles'),)
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'

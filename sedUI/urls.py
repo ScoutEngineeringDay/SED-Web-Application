@@ -19,7 +19,6 @@ urlpatterns=[
 
 	url(r'^courses/?$', views.CourseView.as_view(), name='course'),
 	url(r'^course_detail/(?P<class_id>[a-zA-Z0-9\-._]+)/?$', views.CourseDetailView.as_view(), name='course_detail'),
-	url(r'^reportAnalysis/?$', login_required(views.ReportView.as_view()), name='reportAnalysis'),
 	# url(r'^reportAnalysis/(?P<class_id>)/?$', login_required(views.ReportViewDetail.as_view(), name='reportAnalysisDetail'),
 	url(r'^profile/?$', login_required(views.ProfileView.as_view()), name='profiles'),
 

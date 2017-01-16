@@ -64,17 +64,14 @@ class Scout(models.Model):
 	clubs_choice=(
 		('BSA','Boy Scouts of America'),
 		('GSA','Girl Scouts of America'),
-		('VC','Venture Crew')
+		('Others','Others')
 		)
 	scout_id=models.AutoField(primary_key=True)
+	# CharField(max_length=6, primary_key=True, default=pkgen)
 	first_name=models.CharField(max_length=50, blank=True)
 	last_name=models.CharField(max_length=50, blank=True)
 	gender=models.CharField( max_length=1, choices=gender_choice, blank=True)
 	age=models.IntegerField(default=0, blank=True)
-	street=models.CharField(max_length=50, blank=True)
-	city=models.CharField(max_length=50, blank=True)
-	state=models.CharField( max_length=2, choices=US_states, blank=True)
-	zip_code=models.IntegerField(default=0, blank=True)
 	phone_number = models.CharField(max_length=10, blank=True)
 	email=models.CharField(max_length=50, blank=True)
 	emergency_first_name=models.CharField(max_length=50, blank=True)

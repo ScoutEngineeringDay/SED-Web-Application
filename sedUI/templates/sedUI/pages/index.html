@@ -28,6 +28,13 @@
 				</p>
 			</div>
 		</div>
-
+<script type="text/javascript">
+     $(function(){
+       {% if alert %}
+          //whatever conditions and js code
+          alert('{{alert}}');
+       {% endif %}
+     });
+    </script>
 
 		{% endblock %}

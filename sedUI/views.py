@@ -1,18 +1,18 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Course, Scout
 import os
 from django.views import generic
+from django.core.urlresolvers import reverse
 from django.views.generic import View
 from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, RegistrationForm5, ContactEmailForm
 from formtools.wizard.views import WizardView
-from formtools.wizard.views import SessionWizardView
+from formtools.wizard.views import SessionWizardView, CookieWizardView
 
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
-
 
 FORMS = [("citizenship", RegistrationForm1),
          ("scout_info", RegistrationForm2),
@@ -37,14 +37,14 @@ class ContactView(SessionWizardView):
 
     def done(self, form_list, **kwargs):
         print("send")
+        contact_send_email(form_list)
         return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
 
 def contact_send_email(form_list):
     form_data =[form.cleaned_data for form in form_list]
-    print("sending")
-    print(str(form_data))
-    #send_mail(subject, message, from, to)
-    send_mail("Question", "message_test", settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
+    message=("Contact Email: "+ form_data[0]["email_address"]+"\n\nContact name: "+form_data[0]["contact_name"]+"\n\nMessage:\n"+form_data[0]["message"])
+    #send_mail(subject, message, from, to) 
+    send_mail(form_data[0]["message_subject"], message, form_data[0]["email_address"], [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
 
 def login(request):
@@ -103,22 +103,61 @@ class RegistrationWizard(SessionWizardView):
     form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, RegistrationForm5]
     template_name = 'sedUI/pages/registration_form.html'
 
+    def render_next_step(self, form, **kwargs):
+        """
+        This method gets called when the next step/form should be rendered.
+        `form` contains the last/current form.
+        """
+        # get the form instance based on the data from the storage backend
+        # (if available).
+
+        # check citizen status
+        if(self.steps.current=='0'):
+            data=self.get_cleaned_data_for_step('0')
+            if(data["citizenship"]=='No'):            
+                return redirect(reverse('index'))
+                
+        # run default render_next_step
+        next_step = self.steps.next
+        new_form = self.get_form(
+            next_step,
+            data=self.storage.get_step_data(next_step),
+            files=self.storage.get_step_files(next_step),
+        )
+
+        # change the stored current step
+        self.storage.current_step = next_step
+        return self.render(new_form, **kwargs)
+
     def done(self, form_list, **kwargs):
-        print(form_list[0].cleaned_data)
-        scout = Scout()
-        session = Session()
-        # form_data = confirmation_send_email(form_list)
-        return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
+        form_data = confirmation_send_email(form_list)
+        return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
+# def generate_Scout():
+
+# def generate_Workshop():
+
+# def update_Course():
 
 def confirmation_send_email(form_list):
+    message = None
+    scout_info=None
+    emergency_info=None
+    payment_timestamp=None
     form_data =[form.cleaned_data for form in form_list]
     print("sending")
-    print(str(form_data))
+    #formatting data to be transmit through the message
+    scout_info = ("\n\nScout Information:\n\tScout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tOrganization: "+str(form_data[1]["affiliation"])+"\n\tTroop#:"+str(form_data[1]["troop"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
+    emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name:"+str(form_data[1]["emergency_first_name"])+" "+str(form_data[1]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[1]["emergency_phone"]))
+    # course_info=("\n\nCourses:\tClass 1:"+form_data[2]["morning_subject"]+"\tClass 2:"+form_data[2]["evening_subject"])
+    payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"])+"\n\nTimeStamp: ")
+    message = "Hello,"+scout_info+emergency_info+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n\nThank you,\n\t Scout Engineering Day Development Team"
+
+
     email = EmailMessage(
-        'Confirmation',
-        str(form_data),
+        'Confirmation Message',
+        message,
         settings.EMAIL_HOST_USER,
-        [settings.EMAIL_HOST_USER],
+        [form_data[1]["email"]],
         )
     email.send(fail_silently=False)
     #send_mail(subject, message, from, to)

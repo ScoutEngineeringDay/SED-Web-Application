@@ -7,25 +7,14 @@
     <br>
     <div class="input-group">
       <label  class="radio-inline" style="font-size: 16px">
-        <input id="yes_citizen" type="radio" name="optradio" id="Pay_Mail">{{wizard.form.citizenship.0}}
+        <input id="Yes" type="radio" name="optradio">{{wizard.form.citizenship.0}}
       </label>
       <label  class="radio-inline" style="font-size: 16px">
-        <input id="not_citizen" type="radio" name="optradio" id="Pay_Mail">{{wizard.form.citizenship.1}}
+        <input id="No" type="radio" name="optradio">{{wizard.form.citizenship.1}}
       </label>
     </div>
     <br>
-    <input type="submit" name="submit" id="submit1" value="Next" class="btn btn-primary">
-    <script type="text/javascript">
-        document.getElementById('submit1').addEventListener('click', function(e) {
-          if(document.getElementById('yes_citizen').checked) {
-            
-          }
-          if(document.getElementById('not_citizen').checked){
-            window.alert("Scout must be a U.S. Citizen ");
-            event.preventDefault();
-          }
-        });
-      </script>
+    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
   </div>
 </form>
 {% endblock %}
