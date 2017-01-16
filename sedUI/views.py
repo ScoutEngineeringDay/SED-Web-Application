@@ -130,13 +130,16 @@ class RegistrationWizard(SessionWizardView):
         return self.render(new_form, **kwargs)
 
     def done(self, form_list, **kwargs):
+        scout_data=self.get_cleaned_data_for_step('1')
+        # generate_Scout(scout_data)
+        workshop_data=self.get_cleaned_data_for_step('2')
+        # generate_Workshop(workshop_data)
         form_data = confirmation_send_email(form_list)
         return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
 # def generate_Scout():
 
 # def generate_Workshop():
 
-# def update_Course():
 
 def confirmation_send_email(form_list):
     message = None
