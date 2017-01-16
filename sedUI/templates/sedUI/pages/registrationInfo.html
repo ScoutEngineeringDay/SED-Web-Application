@@ -4,39 +4,40 @@
 	{{ wizard.management_form }}
 	<div>
 		<div class="form-group">
-			<label for="InputFirstName">First Name</label>
+			<label for="InputFirstName">Scout Information</label>
 			<div class="col-lg-16">
 				{{wizard.form.first_name}}
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="InputLastName">Last Name</label>
 			<div class="col-lg-16">
 				{{wizard.form.last_name}}
 			</div>
 		</div>
-
-		<div class="form-group">
-			<label for="Organization" class="col-lg-66 control-label">Organization</label>
-			<div class="col-lg-16">
-				{{wizard.form.affiliation}}
-			</div>
-		</div>
-
-		<div class="form-group">
-			<div class="col-lg-16">
-				{{wizard.form.troop}}
-			</div>
-		</div>
-
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="Gender" class="col-lg-66 control-label">Gender</label>
 			<div class="col-lg-16">
 				{{wizard.form.gender}}
 			</div>
+		</div> -->
+		<div class="form-group">
+			<div class="col-lg-16">
+				{{wizard.form.affiliation}}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-16">
+				{{wizard.form.unit_number}}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-16">
+				{{wizard.form.phone}}
+			</div>
 		</div>
 
-		<div class="form-group">
+
+		<!-- <div class="form-group">
 			<label for="Address">Address</label>
 			<div class="col-lg-16">
 				{{wizard.form.street}}
@@ -58,7 +59,7 @@
 			<div class="col-lg-16">
 				{{wizard.form.zip_code}}
 			</div>
-		</div>
+		</div> -->
 
 		<div class="form-group">
 			<label for="InputEmail">Enter Email</label>
@@ -69,12 +70,6 @@
 		<div class="form-group">
 			<div class="col-lg-16">
 				{{wizard.form.email_confirm}}
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="Phone">Phone</label>
-			<div class="col-lg-16">
-				{{wizard.form.phone}}
 			</div>
 		</div>
 		<div class="form-group">
@@ -91,6 +86,33 @@
 		<div class="form-group">
 			<div class="col-lg-16">
 				{{wizard.form.emergency_phone}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="Medical">Medical Information</label>
+			<div class="col-lg-16">
+				{{wizard.form.medical_notes}} Medical Issues
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-16">
+			{{wizard.form.medical_issues}}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="Allergy">Allergy Information</label>
+			<div class="col-lg-16">
+				{{wizard.form.allergy_notes}} Notable Allergies
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-16">
+			{{wizard.form.allergy_issues}}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-16">
+				{{wizard.form.photo}} I approve the use of photos taken at the event.
 			</div>
 		</div>
 	</div>

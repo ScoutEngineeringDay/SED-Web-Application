@@ -29,22 +29,21 @@
             </div>
             <div class="form-group">
               <label for="subject">
-                Subject</label>
-                {{ wizard.form.message_subject }}
-              </div>
-                <div class="form-group">
-                  <label for="messgae">Message</label>
-                  <br>
-                  {{ wizard.form.message }}
-                </div>
-              </div>
-              <div class="col-md-12">
-                <input type="submit" name="submit" id="submit" value="Send Email" class="btn btn-primary">
-                </div>
-              </div>
-            </form>
+              Subject</label>
+              {{ wizard.form.message_subject }}
+            </div>
+            <div class="form-group">
+              <label for="messgae">Message</label>
+              <br>
+              {{ wizard.form.message }}
+            </div>
+          </div>
+          <div class="col-md-12">
+            <input type="submit" name="submit" id="submit" value="Send Email" class="btn btn-primary">
           </div>
         </div>
-      </div>
+      </form>
     </div>
+  </div>
+</div>
     {% endblock %}
