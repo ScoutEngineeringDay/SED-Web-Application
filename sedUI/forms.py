@@ -25,9 +25,9 @@ class RegistrationForm2(forms.Form):
 	emergency_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Contact Phone', 'type': 'tel', 'minlength': '10', 'maxlength': '10'}))
 	medical_notes = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Medical Notes'}), required=False)
 	allergy_notes = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Allergy Notes'}), required=False)
-	medical_issues = forms.BooleanField()
-	allergy_issues = forms.BooleanField()
-	photo = forms.BooleanField()
+	medical_issues = forms.BooleanField(initial=False, required=False)
+	allergy_issues = forms.BooleanField(initial=False, required=False)
+	photo = forms.BooleanField(initial=True, required=False)
 
 class RegistrationForm3(forms.Form):
 	morning_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('class_name'))
