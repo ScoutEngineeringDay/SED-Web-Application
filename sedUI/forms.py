@@ -31,8 +31,8 @@ class RegistrationForm2(forms.Form):
 	photo = forms.BooleanField(initial=True, required=False)
 
 class RegistrationForm3(forms.Form):
-	morning_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('class_name'))
-	evening_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('class_name'))
+	morning_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('course_name'))
+	evening_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('course_name'))
 
 class RegistrationForm4(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")])

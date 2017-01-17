@@ -4,11 +4,11 @@
 	{% if all_courses %}
 		{% for course in all_courses %}
 			<div class="container">
-				<a href="/course_detail/{{course.class_id}}">
+				<a href="/course_detail/{{course.course_id}}">
 					<div class="well well-sm courseInfo">
-						<p class="courseName"><b> {{course.class_name}} </b></p>
+						<p class="courseName"><b> {{course.course_name}} </b></p>
 							<div class="showOnHover">
-								<p> {{course.class_description}} </p>
+								<p> {{course.course_description}} </p>
 							</div>
 					 </div>
 				</a>

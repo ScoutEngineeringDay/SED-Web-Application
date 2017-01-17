@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import Course, Scout
+from .models import Course, Scout, Workshop, Session
 import os
 from django.views import generic
 from django.core.urlresolvers import reverse
@@ -69,7 +69,7 @@ class CourseDetailView(generic.ListView):
     template_name = 'sedUI/pages/course_detail.html'
     context_object_name='course'
     def get_queryset(self):
-        return Course.objects.get(class_id=self.kwargs['class_id'])
+        return Course.objects.get(course_id=self.kwargs['course_id'])
 
 class ScoutView(generic.ListView):
     template_name = 'sedUI/pages/scouts.html'
@@ -137,10 +137,14 @@ class RegistrationWizard(SessionWizardView):
 
     def done(self, form_list, **kwargs):
         scout_data=self.get_cleaned_data_for_step('1')
+        workshop_data=self.get_cleaned_data_for_step('2')
+        session_data=self.get_cleaned_data_for_step('3')
+        # store into database scout table
         scout = Scout(first_name=scout_data["first_name"],
             last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
             phone=scout_data["phone"],
+            email=scout_data["email"],
             emergency_first_name=scout_data["emergency_first_name"],
             emergency_last_name=scout_data["emergency_last_name"],
             emergency_phone=scout_data["emergency_phone"],
@@ -150,7 +154,43 @@ class RegistrationWizard(SessionWizardView):
             medical_notes=scout_data["medical_notes"],
             allergy_notes=scout_data["allergy_notes"])
         scout.save()
-        workshop_data=self.get_cleaned_data_for_step('2')
+        
+        # store into database session table
+        scout_id=Scout.objects.get(first_name=scout_data["first_name"],
+            last_name=scout_data["last_name"],
+            unit_number=scout_data["unit_number"],
+            phone=scout_data["phone"],
+            email=scout_data["email"],
+            emergency_first_name=scout_data["emergency_first_name"],
+            emergency_last_name=scout_data["emergency_last_name"],
+            emergency_phone=scout_data["emergency_phone"],
+            emergency_email=scout_data["emergency_email"],
+            affiliation=scout_data["affiliation"],
+            photo=scout_data["photo"],
+            medical_notes=scout_data["medical_notes"],
+            allergy_notes=scout_data["allergy_notes"]).scout_id
+        session = Session(
+            scout_id=scout_id,
+            payment_method=session_data["payment_method"],
+            )
+        session.save()
+
+        session_id=Session.objects.get(scout_id=scout_id).session_id
+        # # store into database workshop table
+        workshop = Workshop(
+            course_name=workshop_data["morning_subject"],
+            session_id=session_id,
+            workshop_status="INCOMPLETED",
+            workshop_time="AM"
+            )
+        workshop.save()
+        workshop = Workshop(
+            course_name=workshop_data["evening_subject"],
+            session_id=session_id,
+            workshop_status="INCOMPLETED",
+            workshop_time="PM"
+            )
+        workshop.save()
         # generate_Workshop(workshop_data)
         # form_data = confirmation_send_email(form_list)
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})

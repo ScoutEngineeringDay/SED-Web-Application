@@ -21,11 +21,6 @@
 												<td id="userType">{{scout.scout_id}}</td>
 											</tr>
 											<tr>
-												<td>Gender</td>
-												<!-- User Type -->
-												<td id="userType">{{scout.gender}}</td>
-											</tr>
-											<tr>
 												<td>Org</td>
 												<!-- User Type -->
 												<td id="userType">{{scout.affiliation}}</td>
@@ -33,7 +28,7 @@
 											<tr>
 												<td>Troop</td>
 												<!-- User Type -->
-												<td id="userType">{{scout.age}}</td>
+												<td id="userType">{{scout.unit_number}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -50,34 +45,7 @@
 											<tr>
 												<td>Phone</td>
 												<!-- User Phone Number -->
-												<td id="userPhone">{{scout.phone_number}}</td>
-											</tr>
-										</tbody>
-									</table>
-									<table class="table table-user-information">
-										<thead>
-											<h3> Address </h3>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Street</td>
-												<!-- User Type -->
-												<td id="userType">{{scout.street}}</td>
-											</tr>
-											<tr>
-												<td>City</td>
-												<!-- User Type -->
-												<td id="userType">{{scout.city}}</td>
-											</tr>
-											<tr>
-												<td>State</td>
-												<!-- User Type -->
-												<td id="userType">{{scout.state}}</td>
-											</tr>
-											<tr>
-												<td>Zip</td>
-												<!-- User Type -->
-												<td id="userType">{{scout.zip_code}}</td>
+												<td id="userPhone">{{scout.phone}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -90,6 +58,12 @@
 											<td>Name</td>
 											<!-- User Phone Number -->
 											<td id="userPhone">{{scout.emergency_first_name}} {{scout.emergency_last_name}}</td>
+										</tr>
+										
+										<tr>
+											<td>Email</td>
+											<!-- User Email Address -->
+											<td id="userPhone">{{scout.emergency_email}}</td>
 										</tr>
 										<tr>
 											<td>Phone</td>
