@@ -121,7 +121,7 @@ class RegistrationWizard(SessionWizardView):
         if(self.steps.current=='0'):
             data=self.get_cleaned_data_for_step('0')
             if(data["citizenship"]=='No'):
-                return redirect(reverse('index'))
+                return redirect(reverse('registrationIssue'))
 
         # run default render_next_step
         next_step = self.steps.next
@@ -156,7 +156,8 @@ class RegistrationWizard(SessionWizardView):
         scout.save()
         
         # store into database session table
-        scout_id=Scout.objects.get(first_name=scout_data["first_name"],
+        scout_id=Scout.objects.get(
+        	first_name=scout_data["first_name"],
             last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
             phone=scout_data["phone"],
