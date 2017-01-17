@@ -31,12 +31,6 @@ class IndexView(generic.TemplateView):
         img_fileNames.append(os.path.join('img/homeImages/', filename))
     return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames})
 
-class ContactConfirmationView(generic.TemplateView):
-    template_name = 'sedUI/pages/contactConfirmation.html'
-
-class RegistrationIssueView(generic.TemplateView):
-    template_name = 'sedUI/pages/registrationIssue.html'
-
 class ContactView(SessionWizardView):
     form_list=[ContactEmailForm]
     template_name = 'sedUI/pages/contact.html'
@@ -153,7 +147,7 @@ class RegistrationWizard(SessionWizardView):
         workshop_data=self.get_cleaned_data_for_step('2')
         # generate_Workshop(workshop_data)
         # form_data = confirmation_send_email(form_list)
-        return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
+        return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
 
 
 def confirmation_send_email(form_list):
