@@ -3,6 +3,8 @@
 <div class="container-fluid scoutbadge" id="scoutbadge" style="position: relative">
   <!-- Medical -->
   <!-- TODO: MAKE DYNAMIC -->
+  {{scout.medical_note}}
+  {{scout.allergy_note}}
   {% if scout.medical_note or scout.allergy_note %}
     <div class="badge-top-left" id="medical">M</div>
   {% endif %}

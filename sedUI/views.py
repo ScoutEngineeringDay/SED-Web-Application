@@ -114,12 +114,19 @@ class BadgeView(SessionWizardView):
         confirmationNumber=form_data["confirmation_number"]
         try:
             scout_data=Scout.objects.get(scout_id=confirmationNumber)
+            session_id=Session.objects.get(scout_id=confirmationNumber).session_id
+            workshop_AM=Workshop.objects.get(session_id=session_id, workshop_time="AM")
+            workshop_PM=Workshop.objects.get(session_id=session_id, workshop_time="PM")
         except Scout.DoesNotExist:
             scout_data = None
+            workshop_AM = None
+            workshop_PM = None
         print("get")
         return render_to_response('sedUI/pages/showBadge.html',
             {'form_data': [form.cleaned_data for form in form_list],
-                'scout': scout_data
+                'scout': scout_data,
+                'workshop_AM': workshop_AM,
+                'workshop_PM': workshop_PM
             }
         )
 
