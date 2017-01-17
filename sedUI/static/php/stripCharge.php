@@ -10,9 +10,9 @@
 
   $charge = \Stripe\Charge::create(array(
       'customer' => $customer->id,
-      'amount'   => 5000,
+      'amount'   => 4000,
       'currency' => 'usd'
   ));
 
-  echo '<h1>Successfully charged $50.00!</h1>';
+  echo '<h1>Successfully charged $40.00!</h1>';
 ?>
