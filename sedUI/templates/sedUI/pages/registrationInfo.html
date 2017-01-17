@@ -64,28 +64,35 @@
 				{{wizard.form.emergency_phone}}
 			</div>
 		</div>
+
 		<div class="form-group">
 			<label for="Medical">Medical Information</label>
 			<div class="col-lg-16">
 				{{wizard.form.medical_issues}} Medical Issues or Special Needs
 			</div>
 		</div>
-		<div class="form-group">
-			<div class="col-lg-16">
-			{{wizard.form.medical_notes}}
+		{% if wizard.form.medical_issues %}
+			<div class="form-group">
+				<div class="col-lg-16">
+				{{wizard.form.medical_notes}}
+				</div>
 			</div>
-		</div>
+		{% endif %}
+
 		<div class="form-group">
 			<label for="Allergy">Allergy Information</label>
 			<div class="col-lg-16">
 				{{wizard.form.allergy_issues}} Notable Allergies
 			</div>
 		</div>
-		<div class="form-group">
-			<div class="col-lg-16">
-			{{wizard.form.allergy_notes}}
+		{% if wizard.form.allergy_issues %}
+			<div class="form-group">
+				<div class="col-lg-16">
+				{{wizard.form.allergy_notes}}
+				</div>
 			</div>
-		</div>
+		{% endif %}
+
 		<div class="form-group">
 			<div class="col-lg-16">
 				{{wizard.form.photo}} I approve the use of photos taken at the event.

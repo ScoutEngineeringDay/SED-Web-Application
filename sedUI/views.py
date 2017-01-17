@@ -31,6 +31,12 @@ class IndexView(generic.TemplateView):
         img_fileNames.append(os.path.join('img/homeImages/', filename))
     return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames})
 
+class ContactConfirmationView(generic.TemplateView):
+    template_name = 'sedUI/pages/contactConfirmation.html'
+
+class RegistrationIssueView(generic.TemplateView):
+    template_name = 'sedUI/pages/registrationIssue.html'
+
 class ContactView(SessionWizardView):
     form_list=[ContactEmailForm]
     template_name = 'sedUI/pages/contact.html'
