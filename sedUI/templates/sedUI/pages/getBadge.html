@@ -1,0 +1,28 @@
+{% extends "sedUI/base/header.html" %}
+{% block content %}
+<div align="center">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-lg-12">
+        <h1 class="h1">To recover your Badge please provide your Confirmation Number from your Confirmation Email</h1>
+        <br>
+      </div>
+    </div>
+
+    <div class="container">
+      <form action="/badge/" method="post" style="margin: auto"> {% csrf_token %}
+        <div class="row-fluid">
+          {{ wizard.management_form }}
+          <!-- errors -->
+          <div class="form-group">
+            {{ wizard.form.confirmation_number }}
+          </div>
+          <div class="col-md-12">
+            <input type="submit" name="submit" id="submit" value="Get Badge" class="btn btn-primary">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -91,3 +91,6 @@ class ContactEmailForm(forms.Form):
 	email_address = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email', 'size': '40'}))
 	message_subject = forms.ChoiceField([("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support")])
 	message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Message'}))
+
+class BadgeForm(forms.Form):
+	confirmation_number = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Confirmation Number'}))
