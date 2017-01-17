@@ -13,22 +13,24 @@ class Scout(models.Model):
 	# CharField(max_length=6, primary_key=True, default=pkgen)
 	first_name=models.CharField(max_length=50, blank=True)
 	last_name=models.CharField(max_length=50, blank=True)
-	unit_troop=models.IntegerField(default=0, blank=True)
-	phone_number = models.CharField(max_length=10, blank=True)
+	unit_number=models.IntegerField(default=0, blank=True)
+	phone = models.CharField(max_length=10, blank=True)
 	emergency_first_name=models.CharField(max_length=50, blank=True)
 	emergency_last_name=models.CharField(max_length=50, blank=True)
 	emergency_phone=models.CharField(max_length=10, blank=True)
 	emergency_email=models.CharField(max_length=50, blank=True)
 	affiliation=models.CharField( max_length=6, choices=clubs_choice, blank=True)
 	photo = models.BooleanField(default=False)
-	medical = models.CharField(max_length=5000, blank=True)
-	allergies = models.CharField(max_length=5000, blank=True)
+	medical_notes = models.CharField(max_length=500, blank=True)
+	allergy_notes = models.CharField(max_length=500, blank=True)
 	def __str__(self):
 		return self.first_name+" "+self.last_name
 
-	# def create(cls, first_name, last_name, unit_troop, phone_number, emergency_first_name, emergency_last_name, emergency_phone, emergency_email, affiliation, photo, medical, allergies):
-	# 	scout
-	# 	return scout
+	@classmethod
+	def create(first_name, last_name, unit_number, phone, emergency_first_name, emergency_last_name, emergency_phone, emergency_email, affiliation, photo, medical, allergies):
+		scout = Scout.object.create(first_name, last_name, unit_number, phone, emergency_first_name, emergency_last_name, emergency_phone, emergency_email, affiliation, photo, medical, allergies)
+		scout.save()
+		return scout
 
 class Health(models.Model):
 	scout_id=models.ForeignKey(Scout, on_delete=models.CASCADE)
@@ -64,12 +66,11 @@ class Staff(models.Model):
 	# city=models.CharField(max_length=50, blank=True)
 	# state=models.CharField( max_length=2, choices=US_states, blank=True)
 	# zip_code=models.IntegerField(default=0, blank=True)
-	phone_number=models.CharField(max_length=10, blank=True)
+	phone=models.CharField(max_length=10, blank=True)
 	activity_status=models.CharField(max_length=1, choices=activity_status_choice, blank=True)
 
 	def __str__(self):
 		return self.first_name+" "+self.last_name
-
 
 class Location(models.Model):
 	location_id=models.AutoField(primary_key=True)

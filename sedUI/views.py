@@ -137,14 +137,23 @@ class RegistrationWizard(SessionWizardView):
 
     def done(self, form_list, **kwargs):
         scout_data=self.get_cleaned_data_for_step('1')
-        # generate_Scout(scout_data)
+        scout = Scout(first_name=scout_data["first_name"],
+            last_name=scout_data["last_name"], 
+            unit_number=scout_data["unit_number"],
+            phone=scout_data["phone"], 
+            emergency_first_name=scout_data["emergency_first_name"],
+            emergency_last_name=scout_data["emergency_last_name"], 
+            emergency_phone=scout_data["emergency_phone"], 
+            emergency_email=scout_data["emergency_email"], 
+            affiliation=scout_data["affiliation"], 
+            photo=scout_data["photo"], 
+            medical_notes=scout_data["medical_notes"], 
+            allergy_notes=scout_data["allergy_notes"])
+        scout.save()
         workshop_data=self.get_cleaned_data_for_step('2')
         # generate_Workshop(workshop_data)
-        form_data = confirmation_send_email(form_list)
+        # form_data = confirmation_send_email(form_list)
         return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
-# def generate_Scout():
-
-# def generate_Workshop():
 
 
 def confirmation_send_email(form_list):
@@ -155,7 +164,7 @@ def confirmation_send_email(form_list):
     form_data =[form.cleaned_data for form in form_list]
     print("sending")
     #formatting data to be transmit through the message
-    scout_info = ("\n\nScout Information:\n\tScout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tOrganization: "+str(form_data[1]["affiliation"])+"\n\tTroop#:"+str(form_data[1]["troop"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
+    scout_info = ("\n\nScout Information:\n\tScout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tOrganization: "+str(form_data[1]["affiliation"])+"\n\tTroop#:"+str(form_data[1]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
     emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name:"+str(form_data[1]["emergency_first_name"])+" "+str(form_data[1]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[1]["emergency_phone"]))
     # course_info=("\n\nCourses:\tClass 1:"+form_data[2]["morning_subject"]+"\tClass 2:"+form_data[2]["evening_subject"])
     payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"])+"\n\nTimeStamp: ")
