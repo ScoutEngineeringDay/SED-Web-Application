@@ -31,6 +31,12 @@ class IndexView(generic.TemplateView):
         img_fileNames.append(os.path.join('img/homeImages/', filename))
     return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames})
 
+class RegistrationIssueView(generic.TemplateView):
+    template_name = 'sedUI/pages/registrationIssue.html'
+
+class ContactConfirmationView(generic.TemplateView):
+    template_name = 'sedUI/pages/contactConfirmation.html'
+
 class ContactView(SessionWizardView):
     form_list=[ContactEmailForm]
     template_name = 'sedUI/pages/contact.html'
@@ -132,16 +138,16 @@ class RegistrationWizard(SessionWizardView):
     def done(self, form_list, **kwargs):
         scout_data=self.get_cleaned_data_for_step('1')
         scout = Scout(first_name=scout_data["first_name"],
-            last_name=scout_data["last_name"], 
+            last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
-            phone=scout_data["phone"], 
+            phone=scout_data["phone"],
             emergency_first_name=scout_data["emergency_first_name"],
-            emergency_last_name=scout_data["emergency_last_name"], 
-            emergency_phone=scout_data["emergency_phone"], 
-            emergency_email=scout_data["emergency_email"], 
-            affiliation=scout_data["affiliation"], 
-            photo=scout_data["photo"], 
-            medical_notes=scout_data["medical_notes"], 
+            emergency_last_name=scout_data["emergency_last_name"],
+            emergency_phone=scout_data["emergency_phone"],
+            emergency_email=scout_data["emergency_email"],
+            affiliation=scout_data["affiliation"],
+            photo=scout_data["photo"],
+            medical_notes=scout_data["medical_notes"],
             allergy_notes=scout_data["allergy_notes"])
         scout.save()
         workshop_data=self.get_cleaned_data_for_step('2')
