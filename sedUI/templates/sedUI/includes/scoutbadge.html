@@ -1,24 +1,27 @@
 {% load staticfiles %}
 {% block content %}
 <div class="container-fluid scoutbadge" id="scoutbadge" style="position: relative">
-
   <!-- Medical -->
   <!-- TODO: MAKE DYNAMIC -->
-  <div class="badge-top-left" id="medical">M</div>
+  {% if scout.medical_note or scout.allergy_note %}
+    <div class="badge-top-left" id="medical">M</div>
+  {% endif %}
   <!-- Photo -->
   <!-- TODO: MAKE DYNAMIC -->
-  <div class="badge-top-right" id="noPhoto">P</div>
+  {% if scout.photo %}
+    <div class="badge-top-right" id="noPhoto">P</div>
+  {% endif %}
   <div class="badge-center">
     <!-- TODO: MAKE DYNAMIC -->
-    <font size="6">Insert Scout Name</font>
+    <font size="6">{{scout.first_name}} {{scout.last_name}}</font>
   </div>
   <div class="badge-bottom-left" id="qrcode"></div>
   <div class="badge-bottom-right" id="classes">
     <!-- TODO: MAKE DYNAMIC -->
     <p>
-      Insert Class1
+      {{ workshop_AM.course_name}}
       <br>
-      Insert Class2
+      {{ workshop_PM.course_name }}
     </p>
   </div>
 </div>

@@ -1,11 +1,11 @@
 {% extends "sedUI/base/header.html" %}
 {% block content %}
-
+{% csrf_token %}
 	<div class="container">
 		<!-- Create Scout from form -->
 		{% for form in form_data %}
-      {{form}}
-    {% endfor %}
+	      {{form}}
+	    {% endfor %}
 	<!-- TODO Add Scout to database if fail show fail message to contact admins else show the page -->
 		{% include "sedUI/includes/registrationStatus.html"%}
 		<div align="center">

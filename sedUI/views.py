@@ -191,9 +191,21 @@ class RegistrationWizard(SessionWizardView):
             workshop_time="PM"
             )
         workshop.save()
+        all_models_dict ={
+        	'form_data': [form.cleaned_data for form in form_list],
+    		'scout': Scout.objects.get(scout_id=scout_id),
+    		'session': Session.objects.get(session_id=session_id),
+    		'workshop_AM': Workshop.objects.get(session_id=session_id, workshop_time="AM"),
+    		'workshop_PM': Workshop.objects.get(session_id=session_id, workshop_time="PM")
+        }
         # generate_Workshop(workshop_data)
         # form_data = confirmation_send_email(form_list)
-        return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
+        # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
+        return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
+    		'scout': Scout.objects.get(scout_id=scout_id),
+    		'session': Session.objects.get(session_id=session_id),
+    		'workshop_AM': Workshop.objects.get(session_id=session_id, workshop_time="AM"),
+    		'workshop_PM': Workshop.objects.get(session_id=session_id, workshop_time="PM")})
 
 
 def confirmation_send_email(form_list):
