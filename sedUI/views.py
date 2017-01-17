@@ -6,7 +6,7 @@ import os
 from django.views import generic
 from django.core.urlresolvers import reverse
 from django.views.generic import View
-from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm
+from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm, BadgeForm
 from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView, CookieWizardView
 
@@ -104,6 +104,24 @@ class AboutView(generic.TemplateView):
             'right_items' : right_items,
         }
     	return render(request, 'sedUI/pages/about.html', context);
+
+class BadgeView(SessionWizardView):
+    form_list=[BadgeForm]
+    template_name = 'sedUI/pages/getBadge.html'
+
+    def done(self, form_list, **kwargs):
+        form_data=self.get_cleaned_data_for_step('0')
+        confirmationNumber=form_data["confirmation_number"]
+        try:
+            scout_data=Scout.objects.get(scout_id=confirmationNumber)
+        except Scout.DoesNotExist:
+            scout_data = None
+        print("get")
+        return render_to_response('sedUI/pages/showBadge.html',
+            {'form_data': [form.cleaned_data for form in form_list],
+                'scout': scout_data
+            }
+        )
 
 class RegistrationWizard(SessionWizardView):
     form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]

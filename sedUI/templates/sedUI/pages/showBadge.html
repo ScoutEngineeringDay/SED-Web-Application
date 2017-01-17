@@ -1,0 +1,17 @@
+{% extends "sedUI/base/header.html" %}
+{% block content %}
+	<div class="container">
+		<div align="center">
+      {% if scout %}
+  			<label style="margin: 0 auto; font-size: 32px">We found your badge!</label>
+  			<br>
+  			<h3>Please print this badge and bring it with you to the event</h3>
+  			{% include "sedUI/includes/scoutbadge.html" %}
+      {% else %}
+        <label style="margin: 0 auto; font-size: 32px">We could not find your badge.</label>
+  			<h3>If you have not registered please registor to get your badge. If you have registerd make sure your Confirmation number is correct or contact support.</h3>
+
+      {% endif %}
+	</div>
+
+{% endblock %}
