@@ -39,10 +39,10 @@ class RegistrationForm4(forms.Form):
 	# confirmation_timestamp = forms.DateField(auto_now=True, auto_now_add=True)
 
 class ContactEmailForm(forms.Form):
-	contact_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Contact Name'}))
-	email_address = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email', 'size': '40'}))
-	message_subject = forms.ChoiceField([("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support")])
-	message = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Message'}))
+	contact_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Contact Name'}))
+	email_address = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Email', 'size': '40'}))
+	message_subject = forms.ChoiceField([("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support")], widget=forms.Select(attrs={'class': 'form-control'}))
+	message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Message'}))
 
 class BadgeForm(forms.Form):
 	confirmation_number = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Confirmation Number'}))

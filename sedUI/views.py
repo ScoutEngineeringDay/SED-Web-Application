@@ -225,7 +225,7 @@ class RegistrationWizard(SessionWizardView):
     		'workshop_PM': Workshop.objects.get(session_id=session_id, workshop_time="PM")
         }
         # generate_Workshop(workshop_data)
-        # form_data = confirmation_send_email(form_list)
+        form_data = confirmation_send_email(form_list, scout_id)
         # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
     		'scout': Scout.objects.get(scout_id=scout_id),
@@ -234,7 +234,7 @@ class RegistrationWizard(SessionWizardView):
     		'workshop_PM': Workshop.objects.get(session_id=session_id, workshop_time="PM")})
 
 
-def confirmation_send_email(form_list):
+def confirmation_send_email(form_list, scout_id):
     message = None
     scout_info=None
     emergency_info=None
@@ -242,7 +242,7 @@ def confirmation_send_email(form_list):
     form_data =[form.cleaned_data for form in form_list]
     print("sending")
     #formatting data to be transmit through the message
-    scout_info = ("\n\nScout Information:\n\tScout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tOrganization: "+str(form_data[1]["affiliation"])+"\n\tTroop#:"+str(form_data[1]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
+    scout_info = ("\n\nScout Information:\n\t"+"\n\tScout ID: "str(scout_info)+"Scout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tOrganization: "+str(form_data[1]["affiliation"])+"\n\tTroop#:"+str(form_data[1]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
     emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name:"+str(form_data[1]["emergency_first_name"])+" "+str(form_data[1]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[1]["emergency_phone"]))
     # course_info=("\n\nCourses:\tClass 1:"+form_data[2]["morning_subject"]+"\tClass 2:"+form_data[2]["evening_subject"])
     payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"])+"\n\nTimeStamp: ")
