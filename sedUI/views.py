@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import Course, Scout, Workshop, Session
+from .models import Course2, Scout2, Workshop2, Session2, Instructor2
 import os
 from django.views import generic
 from django.core.urlresolvers import reverse
@@ -63,26 +63,32 @@ class CourseView(generic.ListView):
     template_name = 'sedUI/pages/courses.html'
     context_object_name = 'all_courses'
     def get_queryset(self):
-        return Course.objects.all()
+        return Course2.objects.all()
 
 class CourseDetailView(generic.ListView):
     template_name = 'sedUI/pages/course_detail.html'
-    context_object_name='course'
+    context_object_name = 'course'
     def get_queryset(self):
-        return Course.objects.get(course_id=self.kwargs['course_id'])
+        return Course2.objects.get(course_id=self.kwargs['course_id'])
+
+    def get_context_data(self, **kwargs):
+        ctx=super(CourseDetailView, self).get_context_data(**kwargs)
+        #ctx['instructor2']=Instructor2.objects.get(instructor_id=str(Workshop2.objects.get(course_id=str(self.get_queryset().course_id), workshop_time="AM").instructor_id))
+        ctx['instructor2']=Instructor2.objects.get(instructor_id=str(self.get_queryset().instructor_id))
+        return ctx
 
 class ScoutView(generic.ListView):
     template_name = 'sedUI/pages/scouts.html'
     context_object_name = 'all_scouts'
 
     def get_queryset(self):
-        return Scout.objects.all()
+        return Scout2.objects.all()
 
 class ScoutDetailView(generic.ListView):
     template_name = 'sedUI/pages/scout_detail.html'
     context_object_name='scout'
     def get_queryset(self):
-        return Scout.objects.get(scout_id=self.kwargs['scout_id'])
+        return Scout2.objects.get(scout_id=self.kwargs['scout_id'])
 
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
@@ -95,7 +101,7 @@ class AboutView(generic.TemplateView):
     template_name='sedUI/pages/about.html'
     # context_object_name = 'all_courses'
     def get(self, request, *args, **kwargs):
-        all_courses = Course.objects.all()
+        all_courses = Course2.objects.all()
         left_items = all_courses[:(len(all_courses)+1)/2]
         right_items = all_courses[(len(all_courses)+1)/2:]
         context = {
@@ -113,20 +119,20 @@ class BadgeView(SessionWizardView):
         form_data=self.get_cleaned_data_for_step('0')
         confirmationNumber=form_data["confirmation_number"]
         try:
-            scout_data=Scout.objects.get(scout_id=confirmationNumber)
-            session_id=Session.objects.get(scout_id=confirmationNumber).session_id
-            workshop_AM=Workshop.objects.get(session_id=session_id, workshop_time="AM")
-            workshop_PM=Workshop.objects.get(session_id=session_id, workshop_time="PM")
-        except Scout.DoesNotExist:
+            scout_data=Scout2.objects.get(scout_id=confirmationNumber)
+            session_id=Session2.objects.get(scout_id=confirmationNumber).session_id
+            AM_course=Course2.objects.get(course_id=(Workshop2.objects.get(workshop_id=Session2.objects.get(scout_id=confirmationNumber).am_workshop_id).course_id))
+            PM_course=Course2.objects.get(course_id=(Workshop2.objects.get(workshop_id=Session2.objects.get(scout_id=confirmationNumber).pm_workshop_id).course_id))
+        except Scout2.DoesNotExist:
             scout_data = None
-            workshop_AM = None
-            workshop_PM = None
+            AM_course = None
+            PM_course = None
         print("get")
         return render_to_response('sedUI/pages/showBadge.html',
             {'form_data': [form.cleaned_data for form in form_list],
                 'scout': scout_data,
-                'workshop_AM': workshop_AM,
-                'workshop_PM': workshop_PM
+                'workshop_AM': AM_course,
+                'workshop_PM': PM_course
             }
         )
 
@@ -181,7 +187,7 @@ class RegistrationWizard(SessionWizardView):
         scout.save()
         
         # store into database session table
-        scout_id=Scout.objects.get(
+        scout_id=Scout2.objects.get(
         	first_name=scout_data["first_name"],
             last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
@@ -195,7 +201,7 @@ class RegistrationWizard(SessionWizardView):
             photo=scout_data["photo"],
             medical_notes=scout_data["medical_notes"],
             allergy_notes=scout_data["allergy_notes"]).scout_id
-        session = Session(
+        session = Session2(
             scout_id=scout_id,
             payment_method=session_data["payment_method"],
             )
@@ -203,14 +209,14 @@ class RegistrationWizard(SessionWizardView):
 
         session_id=Session.objects.get(scout_id=scout_id).session_id
         # # store into database workshop table
-        workshop = Workshop(
+        workshop = Workshop2(
             course_name=workshop_data["morning_subject"],
             session_id=session_id,
             workshop_status="INCOMPLETED",
             workshop_time="AM"
             )
         workshop.save()
-        workshop = Workshop(
+        workshop = Workshop2(
             course_name=workshop_data["evening_subject"],
             session_id=session_id,
             workshop_status="INCOMPLETED",
@@ -219,19 +225,19 @@ class RegistrationWizard(SessionWizardView):
         workshop.save()
         all_models_dict ={
         	'form_data': [form.cleaned_data for form in form_list],
-    		'scout': Scout.objects.get(scout_id=scout_id),
-    		'session': Session.objects.get(session_id=session_id),
-    		'workshop_AM': Workshop.objects.get(session_id=session_id, workshop_time="AM"),
-    		'workshop_PM': Workshop.objects.get(session_id=session_id, workshop_time="PM")
+    		'scout': Scout2.objects.get(scout_id=scout_id),
+    		'session': Session2.objects.get(session_id=session_id),
+    		'workshop_AM': Workshop2.objects.get(session_id=session_id, workshop_time="AM"),
+    		'workshop_PM': Workshop2.objects.get(session_id=session_id, workshop_time="PM")
         }
         # generate_Workshop(workshop_data)
         form_data = confirmation_send_email(form_list, scout_id)
         # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
-    		'scout': Scout.objects.get(scout_id=scout_id),
-    		'session': Session.objects.get(session_id=session_id),
-    		'workshop_AM': Workshop.objects.get(session_id=session_id, workshop_time="AM"),
-    		'workshop_PM': Workshop.objects.get(session_id=session_id, workshop_time="PM")})
+    		'scout': Scout2.objects.get(scout_id=scout_id),
+    		'session': Session2.objects.get(session_id=session_id),
+    		'workshop_AM': Workshop2.objects.get(session_id=session_id, workshop_time="AM"),
+    		'workshop_PM': Workshop2.objects.get(session_id=session_id, workshop_time="PM")})
 
 
 def confirmation_send_email(form_list, scout_id):

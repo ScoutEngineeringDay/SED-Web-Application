@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 # Create your models here.
-class Scout(models.Model):
+class Scout2(models.Model):
 	scout_id=models.AutoField(primary_key=True)
 	phone_regex = RegexValidator(regex=r'^?1?\d{9,15}$', message="Phone number must be entered in the format: '999999999'. Up to 15 digits allowed.")
 	clubs_choice=(
@@ -10,80 +10,107 @@ class Scout(models.Model):
 		('GSA','Girl Scouts of America'),
 		('Others','Others')
 		)
+	food_choice=(
+		('MEAL_PLAN1','MEAL_PLAN1'),
+		('MEAL_PLAN2','MEAL_PLAN2'),
+		('PACKED','PACKED')
+		)
 	# scout_id=models.models.CharField(max_length=50, primary_key=True)
 	# CharField(max_length=6, primary_key=True, default=pkgen)
-	first_name=models.CharField(max_length=50, blank=True)
-	last_name=models.CharField(max_length=50, blank=True)
-	unit_number=models.IntegerField(default=0, blank=True)
-	phone = models.CharField(max_length=10, blank=True)
-	email=models.CharField(max_length=50, blank=True)
+	scout_first_name=models.CharField(max_length=50, blank=True)
+	scout_last_name=models.CharField(max_length=50, blank=True)
+	troop_number=models.IntegerField(default=0, blank=True)
+	scout_phone = models.CharField(max_length=10, blank=True)
+	scout_email=models.CharField(max_length=50, blank=True)
 	emergency_first_name=models.CharField(max_length=50, blank=True)
 	emergency_last_name=models.CharField(max_length=50, blank=True)
 	emergency_phone=models.CharField(max_length=10, blank=True)
 	emergency_email=models.CharField(max_length=50, blank=True)
-	affiliation=models.CharField( max_length=6, choices=clubs_choice, blank=True)
-	photo = models.BooleanField(default=False)
-	medical_notes = models.CharField(max_length=500, blank=True)
-	allergy_notes = models.CharField(max_length=500, blank=True)
+	organization=models.CharField( max_length=6, choices=clubs_choice, blank=True)
+	scout_food = models.CharField( max_length=10, choices=food_choice, blank=True)
+	scout_photo = models.BooleanField(default=False)
+	scout_medical = models.CharField(max_length=500, blank=True)
+	scout_allergy = models.CharField(max_length=500, blank=True)
 
 	def __str__(self):
-		return self.first_name+" "+self.last_name
+		return self.scout_first_name+" "+self.scout_last_name
 
 	@classmethod
-	def create(first_name, last_name, unit_number, phone, emergency_first_name, emergency_last_name, emergency_phone, emergency_email, affiliation, photo, medical, allergies):
-		scout = Scout.object.create(first_name, last_name, unit_number, phone, emergency_first_name, emergency_last_name, emergency_phone, emergency_email, affiliation, photo, medical, allergies)
+	def create(scout_first_name, scout_last_name, troop_number, scout_phone, emergency_first_name, emergency_last_name, emergency_phone, emergency_email, organization, scout_photo, scout_medical, scout_allergy):
+		scout = Scout2.object.create(scout_first_name, scout_last_name, troop_number, phone, emergency_first_name, emergency_last_name, emergency_phone, emergency_email, organization, scout_photo, scout_medical, scout_allergy)
 		scout.save()
 		return scout
 
 
 
-class Course(models.Model):
+class Course2(models.Model):
 	course_id=models.AutoField(primary_key=True)
 	course_name=models.CharField(max_length=50)
+	instructor_id=models.CharField(max_length=10)
 	course_description=models.CharField(max_length=500)
 	course_size=models.IntegerField()
 
 	def __str__(self):
 		return self.course_name
 
-class Staff(models.Model):
-	staff_id=models.AutoField(primary_key=True)
-	activity_status_choice=(
-		('I','Inactive'),
-		('A','Active')
-		)
-	staff_role=(
-		('I','Instructor'),
-		('C','Core Team'),
-		('V','Volunteer')
-		)
-	first_name=models.CharField(max_length=50, blank=True)
-	last_name=models.CharField(max_length=50, blank=True)
-	staff_type=models.CharField(max_length=1, choices=staff_role, blank=True)
-	email=models.CharField(max_length=50, blank=True)
-	phone=models.CharField(max_length=10, blank=True)
-	activity_status=models.CharField(max_length=1, choices=activity_status_choice, blank=True)
+class Instructor2(models.Model):
+	instructor_id=models.AutoField(primary_key=True)
+	instructor_first_name=models.CharField(max_length=50, blank=True)
+	instructor_last_name=models.CharField(max_length=50, blank=True)
+	instructor_email=models.CharField(max_length=50, blank=True)
+	instructor_phone=models.CharField(max_length=10, blank=True)
+	instructor_status=models.CharField(max_length=8, choices=[("ACTIVE","ACTIVE"),("INACTIVE","INACTIVE")], blank=True)
 
 	def __str__(self):
-		return self.first_name+" "+self.last_name
+		return self.instructor_first_name+" "+self.instructor_last_name
 
-class Location(models.Model):
+class Location2(models.Model):
 	location_id=models.AutoField(primary_key=True)
-	building=models.CharField(max_length=50, blank=True)
-	room_number=models.IntegerField(default=0)
-	capacity=models.IntegerField(default=0, blank=True)
+	location_building=models.CharField(max_length=50, blank=True)
+	location_room=models.CharField(max_length=10, blank=True)
+	location_capacity=models.IntegerField(default=0)
 
 	def __str__(self):
-		return self.building
+		return self.location_building+" "+self.location_room
 
-class Workshop(models.Model):
+class Workshop2(models.Model):
 	workshop_id=models.AutoField(primary_key=True)
-	course_name=models.CharField(max_length=50)
-	session_id=models.CharField(max_length=5)
-	workshop_time=models.CharField(max_length=2, choices=[("AM","AM"),("PM","PM")])
-	workshop_status=models.CharField(max_length=20, choices=[("INCOMPLETED","INCOMPLETED"),("COMPLETED","COMPLETED")])
+	course_id=models.CharField(max_length=10)
+	location_id=models.CharField(max_length=10)
+	workshop_time=models.CharField(max_length=4, choices=[("AM","AM"),("PM","PM"),("FULL","FULL")], blank=True)
+	workshop_open=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
 
-class Session(models.Model):
+	def __str__(self):
+		return str(Course2.objects.get(course_id=str(self.course_id)).course_name)+"("+str(self.workshop_open)+")"
+
+class Session2(models.Model):
 	session_id=models.AutoField(primary_key=True)
-	scout_id=models.CharField(max_length=5)
-	payment_method=models.CharField(max_length=1, choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")], blank=True)
+	scout_id=models.CharField(max_length=10)
+	payment_method=models.CharField(max_length=12, choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")], blank=True)
+	payment_amount=models.DecimalField(max_digits=6, decimal_places=2)
+	am_workshop_id=models.CharField(max_length=10)
+	am_workshop_status=models.CharField(max_length=12, choices=[("COMPLETE","COMPLETE"),("INCOMPLETE","INCOMPLETE"),("IN PROGRESS","IN PROGRESS")], blank=True)
+	pm_workshop_id=models.CharField(max_length=10)
+	pm_workshop_status=models.CharField(max_length=12, choices=[("COMPLETE","COMPLETE"),("INCOMPLETE","INCOMPLETE"),("IN PROGRESS","IN PROGRESS")], blank=True)
+	confirmation_timestamp=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	event_checkin=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	event_checkout=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	am_checkin=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	am_checkout=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	pm_checkin=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	pm_checkout=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+
+	def __str__(self):
+		return str(Scout2.objects.get(scout_id=str(self.scout_id)).scout_first_name)+" "+str(Scout2.objects.get(scout_id=str(self.scout_id)).scout_last_name)+" Session("+str(self.confirmation_timestamp)+")"
+
+class Volunteer2(models.Model):
+	volunteer_id=models.AutoField(primary_key=True)
+	volunteer_first_name=models.CharField(max_length=50, blank=True)
+	volunteer_last_name=models.CharField(max_length=50, blank=True)
+	volunteer_email=models.CharField(max_length=50, blank=True)
+	volunteer_phone=models.CharField(max_length=10, blank=True)
+	volunteer_area=models.CharField(max_length=5000, blank=True)
+	volunteer_status=models.CharField(max_length=8, choices=[("ACTIVE","ACTIVE"),("INACTIVE","INACTIVE")], blank=True)
+
+	def __str__(self):
+		return self.volunteer_first_name+" "+self.volunteer_last_name

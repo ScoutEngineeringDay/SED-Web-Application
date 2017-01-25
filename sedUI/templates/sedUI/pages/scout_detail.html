@@ -8,7 +8,7 @@
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<!-- Whole Name -->
-							<h2  id="userName">{{scout.first_name}} {{scout.last_name}}</h3>
+							<h2  id="userName">{{scout.scout_first_name}} {{scout.scout_last_name}}</h3>
 						</div>
 						<div class="panel-body">
 							<div class="row">
@@ -23,12 +23,12 @@
 											<tr>
 												<td>Org</td>
 												<!-- User Type -->
-												<td id="userType">{{scout.affiliation}}</td>
+												<td id="userType">{{scout.organization}}</td>
 											</tr>
 											<tr>
 												<td>Troop</td>
 												<!-- User Type -->
-												<td id="userType">{{scout.unit_number}}</td>
+												<td id="userType">{{scout.troop_number}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -40,12 +40,12 @@
 											<tr>
 												<td>Email</td>
 												<!-- User Email Format: <a href="mailto:edward.gedeon07@gmail.com">edward.gedeon07@gmail.com</a> -->
-												<td id="userEmail">{{scout.email}}</td>
+												<td id="userEmail">{{scout.scout_email}}</td>
 											</tr>
 											<tr>
 												<td>Phone</td>
 												<!-- User Phone Number -->
-												<td id="userPhone">{{scout.phone}}</td>
+												<td id="userPhone">{{scout.scout_phone}}</td>
 											</tr>
 										</tbody>
 									</table>

@@ -3,19 +3,19 @@
 <div class="container-fluid scoutbadge" id="scoutbadge" style="position: relative">
   <!-- Medical -->
   <!-- TODO: MAKE DYNAMIC -->
-  {{scout.medical_note}}
-  {{scout.allergy_note}}
-  {% if scout.medical_note or scout.allergy_note %}
+<!--   {{scout.scout_medical}}
+  {{scout.scout_allergy}} -->
+  {% if scout.scout_medical or scout.scout_allergy %}
     <div class="badge-top-left" id="medical">M</div>
   {% endif %}
   <!-- Photo -->
   <!-- TODO: MAKE DYNAMIC -->
-  {% if scout.photo %}
+  {% if scout.scout_photo %}
     <div class="badge-top-right" id="noPhoto">P</div>
   {% endif %}
   <div class="badge-center">
     <!-- TODO: MAKE DYNAMIC -->
-    <font size="6">{{scout.first_name}} {{scout.last_name}}</font>
+    <font size="6">{{scout.scout_first_name}} {{scout.scout_last_name}}</font>
   </div>
   <div class="badge-bottom-left" id="qrcode"></div>
   <div class="badge-bottom-right" id="classes">
