@@ -46,18 +46,26 @@ The following tools are needed:
 
 
 ## Useful Django Commands
-
-- When database have been altered: `python manage.py makemigrations`
-- When database alter has occured and need update: `python manage.py migrate`
-- To run the machine on localhost port 8000: `python manage.py runserver`
-- This will create you an admin level account: `python manage.py createsuperuser` (**Hint:** Put `winpty` before if you get an error)
-
+- inital commands:
+* When database have been altered: `python manage.py makemigrations` 
+* When database alter has occured and need update: `python manage.py migrate`
+* To run the machine on localhost port 8000: `python manage.py runserver 0.0.0.0:8000`
+* This will create you an admin level account: `python manage.py createsuperuser` (**Hint:** Put `winpty` before if you get an error)
+- commands afterwards:
+* When database have been altered: `python manage.py makemigrations sedUI`
+* When database alter has occured and need update: `python manage.py migrate sedUI`* To run the machine on localhost port 8000: `python manage.py runserver 0.0.0.0:8000`
 
 ## URLs:
 
-- [http://localhost:8000/](http://localhost:8000/): Website Home Page
-- [http://localhost:8000/admin/](http://localhost:8000/admin/):	Admin Page
+- Local host urls
+- [http://localhost:8000/](http://localhost:8000/): Local Website Home Page
+- [http://localhost:8000/admin/](http://localhost:8000/admin/): Local	Admin Page
 
+- Main Test Website url:
+- [http://www.sedteam.com:8000/](http://www.sedteam.com:8000/): Website Home Page
+- [http://www.sedteam.com:8000/admin/](http://www.sedteam.com:8000/admin/): Website Admin Page
+
+**Note: There might be some rendering issue when first running on the Mitre network. You might have to run as admin first beforehand.
 
 ## Design
 
@@ -84,13 +92,17 @@ The following tools are needed:
 - [x] Create getAllScoutsFromDatabase()
 - [x] Create getCourseInfoFromDatabase()
 - [x] Create getAllCoursesFromDatabase()
-- [ ] Fix bugs created when switching to Django
-- [ ] Add MySQL database
-- [ ] Update Registration process
+- [x] Create models to show about and home page data for admin modification 
+- [x] update the admin page to be able to view more data
+- [x] Fix bugs created when switching to Django
+- [x] Add MySQL database
+- [x] Update Registration process
+- [ ] Scout detail page button functionalities 
+- [ ] Integrate the Stripe Payment process
 
 ## Credits
 
 * **Sue Kim**: Manager - *Initial work*
 * **Ryan Dufrene**: Front-End Developer - *Initial work*
-* **Walter Hiranpat**: Database Developer - *Initial work*
+* **Walter Hiranpat**: AWS, Django Back-End Developer, Database Developer - *Initial work*
 * **Edward Gedeon**: Front-End Developer - *Initial work*
