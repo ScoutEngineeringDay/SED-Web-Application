@@ -57,13 +57,13 @@ The following tools are needed:
 
 ## URLs:
 
-- Local host urls
-- [http://localhost:8000/](http://localhost:8000/): Local Website Home Page
-- [http://localhost:8000/admin/](http://localhost:8000/admin/): Local	Admin Page
+- Local host urls:
+* [http://localhost:8000/](http://localhost:8000/): Local Website Home Page
+* [http://localhost:8000/admin/](http://localhost:8000/admin/): Local	Admin Page
 
 - Main Test Website url:
-- [http://www.sedteam.com:8000/](http://www.sedteam.com:8000/): Website Home Page
-- [http://www.sedteam.com:8000/admin/](http://www.sedteam.com:8000/admin/): Website Admin Page
+* [http://www.sedteam.com:8000/](http://www.sedteam.com:8000/): Website Home Page
+* [http://www.sedteam.com:8000/admin/](http://www.sedteam.com:8000/admin/): Website Admin Page
 
 **Note: There might be some rendering issue when first running on the Mitre network. You might have to run as admin first beforehand.
 
