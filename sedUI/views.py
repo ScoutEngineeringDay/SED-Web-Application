@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import Course2, Scout2, Workshop2, Session2, Instructor2
+from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage
 import os
 from django.views import generic
 from django.core.urlresolvers import reverse
@@ -9,7 +9,7 @@ from django.views.generic import View
 from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm, BadgeForm
 from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView, CookieWizardView
-
+import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
@@ -23,13 +23,15 @@ FORMS = [("citizenship", RegistrationForm1),
 class IndexView(generic.TemplateView):
   template_name='sedUI/pages/index.html'
   def get(self, request, *args, **kwargs):
-    img_fileNames = []
-    #Add first image
-    img_fileNames.append(os.path.join('img/images/', '00001.jpg'))
-    # for filename in os.listdir("sed/sedUI/static/img/homeImages"):    # Use if running on AWS Server
-    for filename in os.listdir("sedUI/static/img/homeImages"):          # Use if running on Local Machine
-        img_fileNames.append(os.path.join('img/homeImages/', filename))
-    return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames})
+	HomePage_object=HomePage.objects.latest('homepage_id')
+	aboutPage = AboutPage.objects.latest('aboutPage_id')
+	img_fileNames = []
+	#Add first image
+	img_fileNames.append(os.path.join('img/images/', '00001.jpg'))
+	# for filename in os.listdir("sed/sedUI/static/img/homeImages"):    # Use if running on AWS Server
+	for filename in os.listdir("sedUI/static/img/homeImages"):          # Use if running on Local Machine
+		img_fileNames.append(os.path.join('img/homeImages/', filename))
+	return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames, "HomePage": HomePage_object,'aboutPage' : aboutPage})
 
 class RegistrationIssueView(generic.TemplateView):
     template_name = 'sedUI/pages/registrationIssue.html'
@@ -63,18 +65,29 @@ class CourseView(generic.ListView):
     template_name = 'sedUI/pages/courses.html'
     context_object_name = 'all_courses'
     def get_queryset(self):
-        return Course2.objects.all()
+        return Course.objects.all()
 
 class CourseDetailView(generic.ListView):
     template_name = 'sedUI/pages/course_detail.html'
     context_object_name = 'course'
     def get_queryset(self):
-        return Course2.objects.get(course_id=self.kwargs['course_id'])
+        return Course.objects.get(course_id=self.kwargs['course_id'])
 
     def get_context_data(self, **kwargs):
         ctx=super(CourseDetailView, self).get_context_data(**kwargs)
         #ctx['instructor2']=Instructor2.objects.get(instructor_id=str(Workshop2.objects.get(course_id=str(self.get_queryset().course_id), workshop_time="AM").instructor_id))
-        ctx['instructor2']=Instructor2.objects.get(instructor_id=str(self.get_queryset().instructor_id))
+        try:
+            ctx['instructorAM']=Instructor.objects.get(instructor_id=Workshop.objects.get(course_id=self.get_queryset().course_id, workshop_time="AM").instructor_id)
+        except:
+            ctx['instructorAM']=None
+        try:
+            ctx['instructorPM']=Instructor.objects.get(instructor_id=Workshop.objects.get(course_id=self.get_queryset().course_id, workshop_time="PM").instructor_id)
+        except:
+            ctx['instructorPM']=None
+        try:
+            ctx['instructorFULL']=Instructor.objects.get(instructor_id=Workshop.objects.get(course_id=self.get_queryset().course_id, workshop_time="FULL").instructor_id)
+        except:
+            ctx['instructorFULL']=None
         return ctx
 
 class ScoutView(generic.ListView):
@@ -82,13 +95,22 @@ class ScoutView(generic.ListView):
     context_object_name = 'all_scouts'
 
     def get_queryset(self):
-        return Scout2.objects.all()
+        return Scout.objects.all()
 
 class ScoutDetailView(generic.ListView):
     template_name = 'sedUI/pages/scout_detail.html'
     context_object_name='scout'
     def get_queryset(self):
-        return Scout2.objects.get(scout_id=self.kwargs['scout_id'])
+        return Scout.objects.get(scout_id=self.kwargs['scout_id'])
+
+    def get_context_data(self, **kwargs):
+        ctx=super(ScoutDetailView, self).get_context_data(**kwargs)
+        #ctx['instructor']=Instructor2.objects.get(instructor_id=str(Workshop2.objects.get(course_id=str(self.get_queryset().course_id), workshop_time="AM").instructor_id))
+        try:
+            ctx['session']=Session.objects.get(scout_id=self.get_queryset().scout_id)
+        except:
+            ctx['session']=None
+        return ctx
 
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
@@ -101,13 +123,15 @@ class AboutView(generic.TemplateView):
     template_name='sedUI/pages/about.html'
     # context_object_name = 'all_courses'
     def get(self, request, *args, **kwargs):
-        all_courses = Course2.objects.all()
+    	aboutPage = AboutPage.objects.latest('aboutPage_id')
+        all_courses = Course.objects.all()
         left_items = all_courses[:(len(all_courses)+1)/2]
         right_items = all_courses[(len(all_courses)+1)/2:]
         context = {
             'all_courses' : all_courses,
             'left_items' : left_items,
             'right_items' : right_items,
+            'aboutPage' : aboutPage
         }
     	return render(request, 'sedUI/pages/about.html', context);
 
@@ -117,22 +141,22 @@ class BadgeView(SessionWizardView):
 
     def done(self, form_list, **kwargs):
         form_data=self.get_cleaned_data_for_step('0')
-        confirmationNumber=form_data["confirmation_number"]
+        scout_id=form_data["scout_id"]
         try:
-            scout_data=Scout2.objects.get(scout_id=confirmationNumber)
-            session_id=Session2.objects.get(scout_id=confirmationNumber).session_id
-            AM_course=Course2.objects.get(course_id=(Workshop2.objects.get(workshop_id=Session2.objects.get(scout_id=confirmationNumber).am_workshop_id).course_id))
-            PM_course=Course2.objects.get(course_id=(Workshop2.objects.get(workshop_id=Session2.objects.get(scout_id=confirmationNumber).pm_workshop_id).course_id))
-        except Scout2.DoesNotExist:
+            scout_data=Scout.objects.get(scout_id=scout_id)
+            session_id=Session.objects.get(scout_id=scout_id).session_id
+            course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_id).workshop1_id).course_id))
+            course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_id).workshop2_id).course_id))
+        except Scout.DoesNotExist:
             scout_data = None
-            AM_course = None
-            PM_course = None
+            course_1 = None
+            course_2 = None
         print("get")
         return render_to_response('sedUI/pages/showBadge.html',
             {'form_data': [form.cleaned_data for form in form_list],
                 'scout': scout_data,
-                'workshop_AM': AM_course,
-                'workshop_PM': PM_course
+                'workshop_1': course_1,
+                'workshop_2': course_2
             }
         )
 
@@ -170,74 +194,64 @@ class RegistrationWizard(SessionWizardView):
         scout_data=self.get_cleaned_data_for_step('1')
         workshop_data=self.get_cleaned_data_for_step('2')
         session_data=self.get_cleaned_data_for_step('3')
-        # store into database scout table
-        scout = Scout(first_name=scout_data["first_name"],
-            last_name=scout_data["last_name"],
+        # store into database scout table    
+
+        scout = Scout(scout_first_name=scout_data["first_name"],
+            scout_last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
-            phone=scout_data["phone"],
-            email=scout_data["email"],
+            scout_phone=scout_data["phone"],
+            scout_email=scout_data["email"],
             emergency_first_name=scout_data["emergency_first_name"],
             emergency_last_name=scout_data["emergency_last_name"],
             emergency_phone=scout_data["emergency_phone"],
             emergency_email=scout_data["emergency_email"],
-            affiliation=scout_data["affiliation"],
-            photo=scout_data["photo"],
-            medical_notes=scout_data["medical_notes"],
-            allergy_notes=scout_data["allergy_notes"])
+            scout_type=scout_data["affiliation"],
+            scout_photo=scout_data["photo"],
+            scout_medical=scout_data["medical_notes"],
+            scout_allergy=scout_data["allergy_notes"],
+            scout_food=scout_data["food"],
+            scout_status="UNDERWAY")
         scout.save()
         
-        # store into database session table
-        scout_id=Scout2.objects.get(
-        	first_name=scout_data["first_name"],
-            last_name=scout_data["last_name"],
+        # # store into database session table
+        scout_id=Scout.objects.get(
+        	scout_first_name=scout_data["first_name"],
+            scout_last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
-            phone=scout_data["phone"],
-            email=scout_data["email"],
+            scout_phone=scout_data["phone"],
+            scout_email=scout_data["email"],
             emergency_first_name=scout_data["emergency_first_name"],
             emergency_last_name=scout_data["emergency_last_name"],
             emergency_phone=scout_data["emergency_phone"],
             emergency_email=scout_data["emergency_email"],
-            affiliation=scout_data["affiliation"],
-            photo=scout_data["photo"],
-            medical_notes=scout_data["medical_notes"],
-            allergy_notes=scout_data["allergy_notes"]).scout_id
-        session = Session2(
+            scout_type=scout_data["affiliation"]).scout_id
+
+        session = Session(
             scout_id=scout_id,
             payment_method=session_data["payment_method"],
+            payment_amount="20.00",
+            workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop_data["morning_subject"]).course_id, workshop_time="AM").workshop_id,
+            workshop2_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop_data["evening_subject"]).course_id, workshop_time="PM").workshop_id,
+            confirmation_timestamp=datetime.datetime.now()
             )
         session.save()
-
+        course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_id).workshop1_id).course_id))
+        course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_id).workshop2_id).course_id))
         session_id=Session.objects.get(scout_id=scout_id).session_id
-        # # store into database workshop table
-        workshop = Workshop2(
-            course_name=workshop_data["morning_subject"],
-            session_id=session_id,
-            workshop_status="INCOMPLETED",
-            workshop_time="AM"
-            )
-        workshop.save()
-        workshop = Workshop2(
-            course_name=workshop_data["evening_subject"],
-            session_id=session_id,
-            workshop_status="INCOMPLETED",
-            workshop_time="PM"
-            )
-        workshop.save()
         all_models_dict ={
         	'form_data': [form.cleaned_data for form in form_list],
-    		'scout': Scout2.objects.get(scout_id=scout_id),
-    		'session': Session2.objects.get(session_id=session_id),
-    		'workshop_AM': Workshop2.objects.get(session_id=session_id, workshop_time="AM"),
-    		'workshop_PM': Workshop2.objects.get(session_id=session_id, workshop_time="PM")
+    		'scout': Scout.objects.get(scout_id=scout_id),
+    		'session': Session.objects.get(session_id=session_id),
+    		'workshop_1': course_1,
+            'workshop_2': course_2
         }
-        # generate_Workshop(workshop_data)
-        form_data = confirmation_send_email(form_list, scout_id)
         # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
-    		'scout': Scout2.objects.get(scout_id=scout_id),
-    		'session': Session2.objects.get(session_id=session_id),
-    		'workshop_AM': Workshop2.objects.get(session_id=session_id, workshop_time="AM"),
-    		'workshop_PM': Workshop2.objects.get(session_id=session_id, workshop_time="PM")})
+    		'scout': Scout.objects.get(scout_id=scout_id),
+    		'session': Session.objects.get(session_id=session_id),
+    		'workshop_1': course_1,
+            'workshop_2': course_2
+        	})
 
 
 def confirmation_send_email(form_list, scout_id):
@@ -248,7 +262,7 @@ def confirmation_send_email(form_list, scout_id):
     form_data =[form.cleaned_data for form in form_list]
     print("sending")
     #formatting data to be transmit through the message
-    scout_info = ("\n\nScout Information:\n\t"+"\n\tScout ID: "+str(scout_info)+"Scout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tOrganization: "+str(form_data[1]["affiliation"])+"\n\tTroop#:"+str(form_data[1]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
+    scout_info = ("\n\nScout Information:\n\t"+"\n\tScout ID: "+str(scout_id)+"Scout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tOrganization: "+str(form_data[1]["affiliation"])+"\n\tTroop#:"+str(form_data[1]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
     emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name:"+str(form_data[1]["emergency_first_name"])+" "+str(form_data[1]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[1]["emergency_phone"]))
     # course_info=("\n\nCourses:\tClass 1:"+form_data[2]["morning_subject"]+"\tClass 2:"+form_data[2]["evening_subject"])
     payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"])+"\n\nTimeStamp: ")

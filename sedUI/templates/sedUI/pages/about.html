@@ -8,14 +8,14 @@
 				<p align="center" style="color:blue; font-size:200%;">
 					Save the Date!
 					<br>
-					Saturday, March 12, 2016
+					{{aboutPage.saveDate}}
 					<br>
 					in
 					<br>
-					McLean, Virginia
+					{{aboutPage.eventLocation}}
 				</p>
 				<p style="text-align: center;">
-					Registration opens on Wednesday, January 20, 2016 at 7:00pm
+					Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}
 				</p>
 
 			</div>
@@ -47,7 +47,7 @@
 			<div class="jumbotron">
 		  	<div class="container-fluid">
 			    <h2>Location of Scout Engineering Day</h2>
-			    <h4>7515 Colshire Dr, McLean, VA 22102</h4>
+			    <h4>{{aboutPage.locationMap}}</h4>
 			  	<style>#map {width: 60%; height: 500px; float: left; }</style>
 			  	<style>#inst {width: 35%; float: right;}</style>
 			  	<div>

@@ -15,7 +15,7 @@ urlpatterns=[
 	url(r'^registrationIssue/?$', views.RegistrationIssueView.as_view(), name='registrationIssue'),
 
 	url(r'^scouts/?$', login_required(views.ScoutView.as_view()), name='scout'),
-	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/?$', views.ScoutDetailView.as_view(), name='scout_detail/'),
+	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/?$', login_required(views.ScoutDetailView.as_view()), name='scout_detail/'),
 
 	url(r'^courses/?$', views.CourseView.as_view(), name='course'),
 	url(r'^course_detail/(?P<course_id>[a-zA-Z0-9\-._]+)/?$', views.CourseDetailView.as_view(), name='course_detail/'),

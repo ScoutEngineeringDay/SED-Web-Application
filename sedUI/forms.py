@@ -1,16 +1,14 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Course2
+from .models import Course
 
 class RegistrationForm1(forms.Form):
 	citizenship = forms.ChoiceField(widget=forms.RadioSelect(), choices=[('Yes', 'Yes'),('No','No')])
 
 class RegistrationForm2(forms.Form):
-	# scout_id = forms.CharField(max_length=6, primary_key=True, default=pkgen)
-	
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
-	affiliation = forms.ChoiceField(choices=[("GSA", "Girl Scout of America"),("BSA", "Boy Scout of America"), ("Others","Other")], widget=forms.Select(attrs={'class': 'form-control'}))
+	affiliation = forms.ChoiceField(choices=[("BOY", "Boy"),("GIRL", "Girl"), ("OTHER","Other")], widget=forms.Select(attrs={'class': 'form-control'}))
 	unit_number = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Unit Number', 'type': 'number'}))
 	email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
 	email_confirm = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Confirmation', 'type': 'email'}))
@@ -19,16 +17,17 @@ class RegistrationForm2(forms.Form):
 	emergency_first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Contact First Name', 'type': 'text'}))
 	emergency_last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Contact Last Name', 'type': 'text'}))
 	emergency_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Contact Phone', 'type': 'tel', 'minlength': '10', 'maxlength': '10'}))
-	emergency_email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
+	emergency_email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Email', 'type': 'email'}))
 	medical_notes = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Medical Notes'}), required=False)
 	allergy_notes = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Allergy Notes'}), required=False)
 	medical_issues = forms.BooleanField(initial=False, required=False)
 	allergy_issues = forms.BooleanField(initial=False, required=False)
 	photo = forms.BooleanField(initial=True, required=False)
+	food=forms.ChoiceField(choices=[("MEAL_PLAN1", "MEAL_PLAN1"),("MEAL_PLAN2", "MEAL_PLAN2"), ("PACKED","PACKED")], widget=forms.Select(attrs={'class': 'form-control'}))
 
 class RegistrationForm3(forms.Form):
-	morning_subject = forms.ModelChoiceField(queryset=Course2.objects.all().order_by('course_name'))
-	evening_subject = forms.ModelChoiceField(queryset=Course2.objects.all().order_by('course_name'))
+	morning_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('course_name'))
+	evening_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('course_name'))
 
 class RegistrationForm4(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")])
@@ -41,4 +40,4 @@ class ContactEmailForm(forms.Form):
 	message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Message'}))
 
 class BadgeForm(forms.Form):
-	confirmation_number = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Confirmation Number'}))
+	scout_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Scout ID Number'}))

@@ -19,7 +19,7 @@
 	<div class="container-fluid" style="min-height:95%; padding:0">
 		<nav class="navbar navbar-default navbar-top" style="background-color:#ffffff; margin:0">
 				<div class="navbar-header">
-					<a class="navbar-brand1" href="http://www.scouting.org/"><img
+					<a class="navbar-brand1" href="/"><img
 						class="banner-image1" src="{% static 'img/images/sedbanner.png' %}"></a> <a
 						class="navbar-brand2" href="https://www.mitre.org/">
 						<img class="banner-image2" src="{% static 'img/images/Mitre.png' %}"></a>
@@ -40,13 +40,13 @@
 				  	<ul class="nav navbar-nav">
 				    	<li><a href="/">Home</a></li>
 						<li><a href="/about/">About</a></li>
-            <li><a href="/courses/">Course List</a></li>
-            {% if request.user.is_superuser %}
-	            <li><a href="/scouts/">Scout List</a></li>
-            {% endif %}
-            <li><a href="/contact/">Contact</a></li>
-				  </ul>
-				  <ul class="nav navbar-nav navbar-right">
+            			<li><a href="/courses/">Course List</a></li>
+            			{% if request.user.is_superuser %}
+	            		<li><a href="/scouts/">Scout List</a></li>
+            			{% endif %}
+            			<li><a href="/contact/">Contact</a></li>
+				  	</ul>
+				  	<ul class="nav navbar-nav navbar-right">
 						<li><a href="/badge/">Get Badge</a></li>
 						{% if user.is_authenticated %}
 				    	<li><a href="/admin/"></span> {{user.username}}</a></li>
@@ -54,7 +54,7 @@
 						{% else %}
 							<li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 						{% endif %}
-				  </ul>
+				  	</ul>
 				</div>
 			</div>
 		</nav>

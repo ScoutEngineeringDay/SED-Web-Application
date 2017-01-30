@@ -15,15 +15,16 @@
   {% endif %}
   <div class="badge-center">
     <!-- TODO: MAKE DYNAMIC -->
-    <font size="6">{{scout.scout_first_name}} {{scout.scout_last_name}}</font>
+    <font size="6">{{scout.scout_first_name}} {{scout.scout_last_name}}</font><br/>
+    <font size="5">{{scout.scout_id}}</font>
   </div>
   <div class="badge-bottom-left" id="qrcode"></div>
   <div class="badge-bottom-right" id="classes">
     <!-- TODO: MAKE DYNAMIC -->
     <p>
-      {{ workshop_AM.course_name}}
+      {{ workshop_1.course_name}}
       <br>
-      {{ workshop_PM.course_name }}
+      {{ workshop_2.course_name }}
     </p>
   </div>
 </div>
@@ -40,7 +41,8 @@
   jQuery('#qrcode').qrcode({
     render	: "canvas",
     //TODO: MAKE DYNAMIC
-    text	: "http://www.sedteam.com:8000/scout_detail/{{ scout.scout_id }}",
+    /*text	: "http://www.sedteam.com:8000/scout_detail/{{ scout.scout_id }}",*/
+    text  : "http://52.90.26.230:8000/scout_detail/{{ scout.scout_id }}",
     width: 85,
     height: 85
   });

@@ -1,10 +1,41 @@
 from django.contrib import admin
-from .models import Course2, Scout2, Instructor2, Location2, Session2, Workshop2, Volunteer2
+from .models import Course, Scout, Instructor, Location, Session, Workshop, AboutPage, HomePage
 
-admin.site.register(Course2)
-admin.site.register(Instructor2)
-admin.site.register(Scout2)
-admin.site.register(Location2)
-admin.site.register(Session2)
-admin.site.register(Workshop2)
-admin.site.register(Volunteer2)
+class CourseAdmin(admin.ModelAdmin):
+	list_display = ["course_id","__str__"]
+	class Meta:
+		model = Course
+
+class InstructorAdmin(admin.ModelAdmin):
+	list_display = ["instructor_id", "__str__", "instructor_status"]
+	class Meta:
+		model = Instructor
+		
+class ScoutAdmin(admin.ModelAdmin):
+	list_display = ["scout_id","__str__"]
+	class Meta:
+		model = Scout
+
+class LocationAdmin(admin.ModelAdmin):
+	list_display = ["location_id","__str__"]
+	class Meta:
+		model = Location
+
+class SessionAdmin(admin.ModelAdmin):
+	list_display = ["session_id","__str__"]
+	class Meta:
+		model = Session
+
+class WorkshopAdmin(admin.ModelAdmin):
+	list_display = ["workshop_id","__str__", "__instructor__", "workshop_time", "workshop_open"]
+	class Meta:
+		model = Workshop
+
+admin.site.register(Course, CourseAdmin)
+admin.site.register(Instructor, InstructorAdmin)
+admin.site.register(Scout, ScoutAdmin)
+admin.site.register(Location, LocationAdmin)
+admin.site.register(Session, SessionAdmin)
+admin.site.register(Workshop, WorkshopAdmin)
+admin.site.register(AboutPage)
+admin.site.register(HomePage)

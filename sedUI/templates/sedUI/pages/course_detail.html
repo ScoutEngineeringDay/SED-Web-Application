@@ -5,7 +5,21 @@
 		<div class="well well-sm">
 			<p class="courseName"><b>{{course.course_name}}</b></p>
 			<!-- TODO Make this Instructor -->
-			<p><i>Instructor: {{instructor2.instructor_first_name}} {{instructor2.instructor_last_name}}</i></p>
+			{% if instructorAM %}
+			<p><i>AM Course Instructor: {{instructorAM.instructor_first_name}} {{instructorAM.instructor_last_name}}</i></p>
+			{% else %}
+			<p><i>AM Course Instructor: TBA</i></p>
+			{% endif %}
+			{% if instructorPM %}
+			<p><i>PM Course Instructor: {{instructorAM.instructor_first_name}} {{instructorAM.instructor_last_name}}</i></p>
+			{% else %}
+			<p><i>PM Course Instructor: TBA</i></p>
+			{% endif %}
+			{% if instructorFULL %}
+			<p><i>Full Day Course Instructor: {{instructorAM.instructor_first_name}} {{instructorAM.instructor_last_name}}</i></p>
+			{% else %}
+			<p><i>Full Day Course Instructor: TBA</i></p>
+			{% endif %}
 			<p>{{course.course_description}}</p>
 			<br>
 			<p>
