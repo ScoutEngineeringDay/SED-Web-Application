@@ -1,4 +1,4 @@
-CREATE TABLE SED_Database.sedUI_instructor2(
+CREATE TABLE SED_Database.sedUI_instructor(
 	instructor_id INT(10) ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	instructor_first_name VARCHAR(50) NOT NULL,
 	instructor_last_name VARCHAR(50) NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE SED_Database.sedUI_instructor2(
 	instructor_email VARCHAR(50) NOT NULL,
     instructor_status ENUM('ACTIVE', 'INACTIVE') NOT NULL
 );
-INSERT INTO SED_Database.sedUI_instructor2
+INSERT INTO SED_Database.sedUI_instructor
 	(instructor_first_name, instructor_last_name, instructor_phone, instructor_email, instructor_status)
 VALUES
 	("Justin", "Doe", "9999999999", "JustDoe@gmail.com", "ACTIVE"),
