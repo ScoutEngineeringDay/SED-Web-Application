@@ -76,6 +76,30 @@
 										</tr>
 									</tbody>
 								</table>
+								{% if scout.scout_medical %}
+								<table class="table table-user-information">
+									<thead>
+										<h3> Medical Conditions</h3>
+									</thead>
+									<tbody>
+										<tr>
+											<td id="userPhone">{{scout.scout_medical}}</td>
+										</tr>
+									</tbody>
+								</table>
+								{% endif %}
+								{% if scout.scout_allergy %}
+								<table class="table table-user-information">
+									<thead>
+										<h3> Allergies </h3>
+									</thead>
+									<tbody>
+										<tr>
+											<td id="userPhone">{{scout.scout_allergy}}</td>
+										</tr>
+									</tbody>
+								</table>
+								{% endif %}
 							</div>
 						</div>
 					</div>
@@ -84,13 +108,13 @@
 	</div>
 
 	<div class="container" align="center">
-		<a data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
-		<a data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-default btn-action">Check Out Of Event</i></a>
+		<a href="{% url 'scout_event_checkin/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
+		<a href="{% url 'scout_event_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-default btn-action">Check Out Of Event</i></a>
 	</div>
 	<br>
 	<div class="container" align="center">
-		<a data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-info btn-action">Check Into Class</i></a>
-		<a data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
-		<a data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Check Out Of Class</i></a>
+		<a href="{% url 'scout_workshop_checkin/' scout.scout_id %}" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-info btn-action">Check Into Class</i></a>
+		<a href="{% url 'scout_workshop_completed/' scout.scout_id %}" data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
+		<a href="{% url 'scout_workshop_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Check Out Of Class</i></a>
 	</div>
-{% endblock %}
+{% endblock %}/

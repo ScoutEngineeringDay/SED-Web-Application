@@ -3,22 +3,21 @@
 	<form action="/registration/" method="post" style="margin: auto"> {% csrf_token %}
   	{{ wizard.management_form }}
 		<label for="InputName" style="font-size: 32px">Select the workshops to attend.</label>
-
+		<br>
+		<p>
+		Please select the courses that you wish attend. **Note: You make select either a Full day course or select two half day(AM/PM) courses. If you select an FULL day course and a PM course, the PM course will be ignored
+		</p>
 		<br>
 		<div class="input-group" align="center">
-			<label class="radio-inline" style="font-size: 16px">AM: </label>
+			<label class="radio-inline" style="font-size: 16px">AM/FULL DAY Courses: </label>
 			{{wizard.form.morning_subject}}
-			<label class="radio-inline" style="font-size: 16px">PM: </label>
+			<label class="radio-inline" style="font-size: 16px">PM Courses: </label>
 			{{wizard.form.evening_subject}}
 		</div>
 
 		<br>
 
 		<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
-
-		<br>
-		<br>
-
 	</form>
 </div>
 {% endblock %}

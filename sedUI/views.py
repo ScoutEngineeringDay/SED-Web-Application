@@ -1,4 +1,5 @@
 from django.shortcuts import render, render_to_response, redirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage
@@ -112,6 +113,77 @@ class ScoutDetailView(generic.ListView):
             ctx['session']=None
         return ctx
 
+def event_checkin(request, scout_id):
+    scout=Scout.objects.get(scout_id=scout_id)
+    scout.scout_status='EVENT_CHECKIN'
+    scout.save()
+    return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+
+def event_checkout(request, scout_id):
+    try:
+        scout=Scout.objects.get(scout_id=scout_id)
+        if(scout.scout_status=='EVENT_CHECKIN' or scout.scout_status=='WORKSHOP1_CHECKOUT' or scout.scout_status=='WORKSHOP2_CHECKOUT'):
+            scout.scout_status='EVENT_CHECKOUT'
+            scout.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        else:
+            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops yet')
+    except:
+        print("Scout doesn't exist")
+        return HttpResponse('Scout no longer exist in database')
+
+def workshop_checkin(request, scout_id):
+    try:
+        scout=Scout.objects.get(scout_id=scout_id)
+        if(scout.scout_status=='EVENT_CHECKIN'):
+            scout.scout_status='WORKSHOP1_CHECKIN'
+            scout.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        elif(scout.scout_status=='WORKSHOP1_CHECKOUT'):
+            scout.scout_status='WORKSHOP2_CHECKIN'
+            scout.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        else:
+            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops yet')
+    except:
+        print("Scout doesn't exist")
+        return HttpResponse('Scout no longer exist in database')
+
+def workshop_completed(request, scout_id):
+    try:
+        scout=Scout.objects.get(scout_id=scout_id)
+        if(scout.scout_status=='WORKSHOP1_CHECKIN'):
+            scout.scout_status='WORKSHOP1_CHECKOUT'
+            scout.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        elif(scout.scout_status=='WORKSHOP2_CHECKIN'):
+            scout.scout_status='WORKSHOP2_CHECK OUT'
+            scout.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        else:
+            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops yet')
+    except:
+        print("Scout doesn't exist")
+        return HttpResponse('Scout no longer exist in database')
+
+def workshop_checkout(request, scout_id):
+    try:
+        scout=Scout.objects.get(scout_id=scout_id)
+        if(scout.scout_status=='WORKSHOP1_CHECKIN'):
+            scout.scout_status='WORKSHOP1_CHECKOUT'
+            scout.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        elif(scout.scout_status=='WORKSHOP2_CHECKIN'):
+            scout.scout_status='WORKSHOP2_CHECKOUT'
+            scout.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        else:
+            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops yet')    
+    except:
+        print("Scout doesn't exist")
+        return HttpResponse('Scout no longer exist in database')
+    
+
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
 
@@ -195,7 +267,7 @@ class RegistrationWizard(SessionWizardView):
         workshop_data=self.get_cleaned_data_for_step('2')
         session_data=self.get_cleaned_data_for_step('3')
         # store into database scout table    
-
+        
         scout = Scout(scout_first_name=scout_data["first_name"],
             scout_last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
@@ -245,14 +317,15 @@ class RegistrationWizard(SessionWizardView):
     		'workshop_1': course_1,
             'workshop_2': course_2
         }
-        # return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
+        confirmation_timestamp=Session.objects.get(session_id=session_id).confirmation_timestamp
+        print(confirmation_timestamp)
+        confirmation_send_email(form_list, scout_id)
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
     		'scout': Scout.objects.get(scout_id=scout_id),
     		'session': Session.objects.get(session_id=session_id),
     		'workshop_1': course_1,
             'workshop_2': course_2
         	})
-
 
 def confirmation_send_email(form_list, scout_id):
     message = None
@@ -262,11 +335,11 @@ def confirmation_send_email(form_list, scout_id):
     form_data =[form.cleaned_data for form in form_list]
     print("sending")
     #formatting data to be transmit through the message
-    scout_info = ("\n\nScout Information:\n\t"+"\n\tScout ID: "+str(scout_id)+"Scout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tOrganization: "+str(form_data[1]["affiliation"])+"\n\tTroop#:"+str(form_data[1]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
+    scout_info = ("\n\nScout Information:\n\tScout ID: "+str(scout_id)+"\n\tScout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tScout type: "+str(form_data[1]["affiliation"])+"\n\tUnit Number:"+str(form_data[1]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
     emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name:"+str(form_data[1]["emergency_first_name"])+" "+str(form_data[1]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[1]["emergency_phone"]))
     # course_info=("\n\nCourses:\tClass 1:"+form_data[2]["morning_subject"]+"\tClass 2:"+form_data[2]["evening_subject"])
-    payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"])+"\n\nTimeStamp: ")
-    message = "Hello,"+scout_info+emergency_info+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n\nThank you,\n\t Scout Engineering Day Development Team"
+    payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"]))
+    message = "Hello,"+scout_info+emergency_info+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge please use your Scout ID\n\nThank you,\n\t Scout Engineering Day Development Team"
 
 
     email = EmailMessage(

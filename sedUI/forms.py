@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Course
+from .models import Course, Workshop
+from django.db.models import Q
 
 class RegistrationForm1(forms.Form):
 	citizenship = forms.ChoiceField(widget=forms.RadioSelect(), choices=[('Yes', 'Yes'),('No','No')])
@@ -26,8 +27,8 @@ class RegistrationForm2(forms.Form):
 	food=forms.ChoiceField(choices=[("MEAL_PLAN1", "MEAL_PLAN1"),("MEAL_PLAN2", "MEAL_PLAN2"), ("PACKED","PACKED")], widget=forms.Select(attrs={'class': 'form-control'}))
 
 class RegistrationForm3(forms.Form):
-	morning_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('course_name'))
-	evening_subject = forms.ModelChoiceField(queryset=Course.objects.all().order_by('course_name'))
+	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="AM")))
+	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="PM")))
 
 class RegistrationForm4(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")])

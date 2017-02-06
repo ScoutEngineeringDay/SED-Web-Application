@@ -21,6 +21,15 @@ urlpatterns=[
 	url(r'^course_detail/(?P<course_id>[a-zA-Z0-9\-._]+)/?$', views.CourseDetailView.as_view(), name='course_detail/'),
 	url(r'^profile/?$', login_required(views.ProfileView.as_view()), name='profiles'),
 
+	## url scouts function:
+	## Event Checkin/Checkout
+	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/checkin/?$', login_required(views.event_checkin), name='scout_event_checkin/'),
+	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/checkout/?$', login_required(views.event_checkout), name='scout_event_checkout/'),
+
+	## Workshop Checkin/Checkout
+	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/workshop_checkin/?$', login_required(views.workshop_checkin), name='scout_workshop_checkin/'),
+	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/workshop_completed/?$', login_required(views.workshop_completed), name='scout_workshop_completed/'),
+	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/workshop_checkout/?$', login_required(views.workshop_checkout), name='scout_workshop_checkout/'),
 
 	#might need to look into class based view for later interation
     url(r'^login/?$', auth_views.login, {'template_name': 'sedUI/pages/login.html'}, name='login'),

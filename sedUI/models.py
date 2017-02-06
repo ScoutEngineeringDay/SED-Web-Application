@@ -92,7 +92,7 @@ class Workshop(models.Model):
 	workshop_open=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
 
 	def __str__(self):
-		return str(Course.objects.get(course_id=str(self.course_id)).course_name)
+		return str(Course.objects.get(course_id=str(self.course_id)).course_name)+"-"+str(self.workshop_time)
 
 	def __instructor__(self):
 		return str(Instructor.objects.get(instructor_id=str(self.instructor_id)).instructor_first_name+" "+Instructor.objects.get(instructor_id=str(self.instructor_id)).instructor_last_name)
@@ -106,13 +106,13 @@ class Session(models.Model):
 	workshop1_status=models.CharField(max_length=12, choices=[("COMPLETE","COMPLETE"),("INCOMPLETE","INCOMPLETE"),("IN PROGRESS","IN PROGRESS")], blank=False)
 	workshop2_id=models.CharField(max_length=10)
 	workshop2_status=models.CharField(max_length=12, choices=[("COMPLETE","COMPLETE"),("INCOMPLETE","INCOMPLETE"),("IN PROGRESS","IN PROGRESS")], blank=False)
-	confirmation_timestamp=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-	event_checkin=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-	event_checkout=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-	workshop1_checkin=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-	workshop1_checkout=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-	workshop2_checkin=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-	workshop2_checkout=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	confirmation_timestamp=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	event_checkin=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	event_checkout=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	workshop1_checkin=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	workshop1_checkout=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	workshop2_checkin=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	workshop2_checkout=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
 
 	def __str__(self):
 		return str(Scout.objects.get(scout_id=str(self.scout_id)).scout_first_name)+" "+str(Scout.objects.get(scout_id=str(self.scout_id)).scout_last_name)
@@ -127,8 +127,8 @@ class AboutPage(models.Model):
 
 class HomePage(models.Model):
 	homepage_id=models.AutoField(primary_key=True)
-	homepage_description=models.CharField(max_length=500000)
-	homepage_news_event=models.CharField(max_length=500000)
+	homepage_description=models.CharField(max_length=50000000)
+	homepage_news_event=models.CharField(max_length=50000000)
 
 
 
