@@ -1,5 +1,6 @@
 CREATE TABLE SED_Database.sedUI_session(
 	session_id INT(10) ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    session_year YEAR(4) NOT NULL,
 	scout_id INT(10) ZEROFILL NOT NULL,
 	payment_method ENUM('Pay_Mail', 'Pay_Online') NOT NULL,
 	payment_amount INT UNSIGNED,

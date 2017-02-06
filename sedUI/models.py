@@ -40,7 +40,8 @@ class Scout(models.Model):
 	scout_photo = models.BooleanField(default=False)
 	scout_medical = models.CharField(max_length=500, blank=True)
 	scout_allergy = models.CharField(max_length=500, blank=True)
-	scout_status = models.CharField( max_length=6, choices=scout_status, blank=True)
+	scout_status = models.CharField( max_length=20, choices=scout_status, blank=True)
+	scout_year=models.CharField(max_length=4)
 
 	def __str__(self):
 		return self.scout_first_name+" "+self.scout_last_name
@@ -103,9 +104,9 @@ class Session(models.Model):
 	payment_method=models.CharField(max_length=12, choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")], blank=True)
 	payment_amount=models.DecimalField(max_digits=6, decimal_places=2)
 	workshop1_id=models.CharField(max_length=10)
-	workshop1_status=models.CharField(max_length=12, choices=[("COMPLETE","COMPLETE"),("INCOMPLETE","INCOMPLETE"),("IN PROGRESS","IN PROGRESS")], blank=False)
+	workshop1_status=models.CharField(max_length=12, choices=[("COMPLETE","COMPLETE"),("INCOMPLETE","INCOMPLETE"),("IN PROGRESS","IN PROGRESS")], default="IN PROGRESS", blank=False)
 	workshop2_id=models.CharField(max_length=10)
-	workshop2_status=models.CharField(max_length=12, choices=[("COMPLETE","COMPLETE"),("INCOMPLETE","INCOMPLETE"),("IN PROGRESS","IN PROGRESS")], blank=False)
+	workshop2_status=models.CharField(max_length=12, choices=[("COMPLETE","COMPLETE"),("INCOMPLETE","INCOMPLETE"),("IN PROGRESS","IN PROGRESS")], default="IN PROGRESS", blank=False)
 	confirmation_timestamp=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
 	event_checkin=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
 	event_checkout=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
@@ -113,6 +114,7 @@ class Session(models.Model):
 	workshop1_checkout=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
 	workshop2_checkin=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
 	workshop2_checkout=models.DateTimeField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	session_year=models.CharField(max_length=4)
 
 	def __str__(self):
 		return str(Scout.objects.get(scout_id=str(self.scout_id)).scout_first_name)+" "+str(Scout.objects.get(scout_id=str(self.scout_id)).scout_last_name)

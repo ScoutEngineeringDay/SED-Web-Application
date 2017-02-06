@@ -11,6 +11,8 @@ from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, Regi
 from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView, CookieWizardView
 import datetime
+import re
+import pytz
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
@@ -114,10 +116,19 @@ class ScoutDetailView(generic.ListView):
         return ctx
 
 def event_checkin(request, scout_id):
-    scout=Scout.objects.get(scout_id=scout_id)
-    scout.scout_status='EVENT_CHECKIN'
-    scout.save()
-    return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+    try:
+        scout=Scout.objects.get(scout_id=scout_id)
+        if(scout.scout_status=="UNDERWAY"):
+            scout.scout_status='EVENT_CHECKIN'
+            scout.save()
+            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session.event_checkin=datetime.datetime.now()
+            session.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        else:
+            return HttpResponse('Scout has already check into the event')
+    except:
+        return HttpResponse('Scout no longer exist in database')
 
 def event_checkout(request, scout_id):
     try:
@@ -125,11 +136,13 @@ def event_checkout(request, scout_id):
         if(scout.scout_status=='EVENT_CHECKIN' or scout.scout_status=='WORKSHOP1_CHECKOUT' or scout.scout_status=='WORKSHOP2_CHECKOUT'):
             scout.scout_status='EVENT_CHECKOUT'
             scout.save()
+            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session.event_checkin=datetime.datetime.now()
+            session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
             return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops yet')
     except:
-        print("Scout doesn't exist")
         return HttpResponse('Scout no longer exist in database')
 
 def workshop_checkin(request, scout_id):
@@ -138,15 +151,20 @@ def workshop_checkin(request, scout_id):
         if(scout.scout_status=='EVENT_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKIN'
             scout.save()
+            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session.event_checkin=datetime.datetime.now()
+            session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         elif(scout.scout_status=='WORKSHOP1_CHECKOUT'):
             scout.scout_status='WORKSHOP2_CHECKIN'
             scout.save()
+            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session.event_checkin=datetime.datetime.now()
+            session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
-            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops yet')
+            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops or have already Checkout of Event')
     except:
-        print("Scout doesn't exist")
         return HttpResponse('Scout no longer exist in database')
 
 def workshop_completed(request, scout_id):
@@ -155,15 +173,22 @@ def workshop_completed(request, scout_id):
         if(scout.scout_status=='WORKSHOP1_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKOUT'
             scout.save()
+            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session.workshop1_status="COMPLETE"
+            session.workshop1_completed=datetime.datetime.now()
+            session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         elif(scout.scout_status=='WORKSHOP2_CHECKIN'):
             scout.scout_status='WORKSHOP2_CHECK OUT'
             scout.save()
+            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session.workshop2_status="COMPLETE"
+            session.workshop2_completed=datetime.datetime.now()
+            session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
-            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops yet')
+            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops or have already Checkout of Event')
     except:
-        print("Scout doesn't exist")
         return HttpResponse('Scout no longer exist in database')
 
 def workshop_checkout(request, scout_id):
@@ -172,15 +197,22 @@ def workshop_checkout(request, scout_id):
         if(scout.scout_status=='WORKSHOP1_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKOUT'
             scout.save()
+            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session.workshop1_status="INCOMPLETE"
+            session.workshop1_checkout=datetime.datetime.now()
+            session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         elif(scout.scout_status=='WORKSHOP2_CHECKIN'):
             scout.scout_status='WORKSHOP2_CHECKOUT'
             scout.save()
+            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session.workshop2_status="INCOMPLETE"
+            session.workshop2_checkout=datetime.datetime.now()
+            session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
-            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops yet')    
+            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops or have already Checkout of Event')    
     except:
-        print("Scout doesn't exist")
         return HttpResponse('Scout no longer exist in database')
     
 
@@ -250,6 +282,19 @@ class RegistrationWizard(SessionWizardView):
             if(data["citizenship"]=='No'):
                 return redirect(reverse('registrationIssue'))
 
+        # doesn't work at the moment
+        if(self.steps.current=='2'):
+            data=self.get_cleaned_data_for_step('2')
+            data1=str(data["morning_subject"]).split("-")
+            if(data1[1]=="AM"):
+                if(str(data["evening_subject"])==None):
+                    return render_goto_step(self.steps.current)
+
+        if(self.steps.current=='3'):
+            data=self.get_cleaned_data_for_step('3')
+            if(data["payment_method"]=='Pay_Mail'):
+                return done()
+
         # run default render_next_step
         next_step = self.steps.next
         new_form = self.get_form(
@@ -263,11 +308,13 @@ class RegistrationWizard(SessionWizardView):
         return self.render(new_form, **kwargs)
 
     def done(self, form_list, **kwargs):
+        course_1=None
+        course_2=None
         scout_data=self.get_cleaned_data_for_step('1')
         workshop_data=self.get_cleaned_data_for_step('2')
         session_data=self.get_cleaned_data_for_step('3')
         # store into database scout table    
-        
+        print(datetime.datetime.now().year)
         scout = Scout(scout_first_name=scout_data["first_name"],
             scout_last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
@@ -282,47 +329,73 @@ class RegistrationWizard(SessionWizardView):
             scout_medical=scout_data["medical_notes"],
             scout_allergy=scout_data["allergy_notes"],
             scout_food=scout_data["food"],
-            scout_status="UNDERWAY")
-        scout.save()
-        
-        # # store into database session table
-        scout_id=Scout.objects.get(
-        	scout_first_name=scout_data["first_name"],
-            scout_last_name=scout_data["last_name"],
-            unit_number=scout_data["unit_number"],
-            scout_phone=scout_data["phone"],
-            scout_email=scout_data["email"],
-            emergency_first_name=scout_data["emergency_first_name"],
-            emergency_last_name=scout_data["emergency_last_name"],
-            emergency_phone=scout_data["emergency_phone"],
-            emergency_email=scout_data["emergency_email"],
-            scout_type=scout_data["affiliation"]).scout_id
-
-        session = Session(
-            scout_id=scout_id,
-            payment_method=session_data["payment_method"],
-            payment_amount="20.00",
-            workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop_data["morning_subject"]).course_id, workshop_time="AM").workshop_id,
-            workshop2_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop_data["evening_subject"]).course_id, workshop_time="PM").workshop_id,
-            confirmation_timestamp=datetime.datetime.now()
+            scout_status="UNDERWAY",
+            scout_year=str(datetime.datetime.now().year)
             )
-        session.save()
-        course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_id).workshop1_id).course_id))
-        course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_id).workshop2_id).course_id))
-        session_id=Session.objects.get(scout_id=scout_id).session_id
+        scout.save()
+        # # store into database session table
+        #filter courses
+        workshop1_data=str(workshop_data["morning_subject"]).split('-')
+        if(workshop1_data[1]=="FULL"):
+            session = Session(
+            scout_id=scout.scout_id,
+            payment_method=session_data["payment_method"],
+            payment_amount="40.00",
+            workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop1_data[0]).course_id, workshop_time="FULL").workshop_id,
+            workshop1_status="INPROGRESS",
+            confirmation_timestamp=datetime.datetime.now(),
+            session_year=str(datetime.datetime.now().year)
+            )
+            session.save()
+            course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop1_id).course_id))
+            course_2=None
+        else:
+            #if there is a PM CLass
+            workshop2_data=None
+            if(workshop_data["evening_subject"]!=None):
+                workshop2_data=str(workshop_data["evening_subject"]).split('-')
+                session = Session(
+                scout_id=scout.scout_id,
+                payment_method=session_data["payment_method"],
+                payment_amount="40.00",
+                workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop1_data[0]).course_id, workshop_time="AM").workshop_id,
+                workshop2_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop2_data[0]).course_id, workshop_time="PM").workshop_id,
+                workshop1_status="INPROGRESS",
+                workshop2_status="INPROGRESS",
+                confirmation_timestamp=datetime.datetime.now(),
+                session_year=str(datetime.datetime.now().year)
+                )
+                session.save()
+                course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop1_id).course_id))
+                course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop2_id).course_id))
+            # Error issue
+            else:
+                workshop2_data=None
+                print("Error")
+                session = Session(
+                scout_id=scout.scout_id,
+                payment_method=session_data["payment_method"],
+                payment_amount="40.00",
+                workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop1_data[0]).course_id, workshop_time="AM").workshop_id,
+                workshop1_status="INPROGRESS",
+                confirmation_timestamp=datetime.datetime.now(),
+                session_year=str(datetime.datetime.now().year)
+                )
+                session.save()
+                course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop1_id).course_id))
+                course_2=None
         all_models_dict ={
         	'form_data': [form.cleaned_data for form in form_list],
-    		'scout': Scout.objects.get(scout_id=scout_id),
-    		'session': Session.objects.get(session_id=session_id),
+    		'scout': scout,
+    		'session': session,
     		'workshop_1': course_1,
             'workshop_2': course_2
         }
-        confirmation_timestamp=Session.objects.get(session_id=session_id).confirmation_timestamp
-        print(confirmation_timestamp)
-        confirmation_send_email(form_list, scout_id)
+        confirmation_timestamp=session.confirmation_timestamp
+        confirmation_send_email(form_list, scout.scout_id)
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
-    		'scout': Scout.objects.get(scout_id=scout_id),
-    		'session': Session.objects.get(session_id=session_id),
+    		'scout': scout,
+    		'session': session,
     		'workshop_1': course_1,
             'workshop_2': course_2
         	})
