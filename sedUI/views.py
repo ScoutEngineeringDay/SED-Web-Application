@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, redirect, HttpResponse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage
+from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage, Checkout
 import os
 from django.views import generic
 from django.core.urlresolvers import reverse
@@ -13,6 +13,7 @@ from formtools.wizard.views import SessionWizardView, CookieWizardView
 import datetime
 import re
 import pytz
+import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
@@ -137,7 +138,7 @@ def event_checkout(request, scout_id):
             scout.scout_status='EVENT_CHECKOUT'
             scout.save()
             session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
-            session.event_checkin=datetime.datetime.now()
+            session.event_checkout=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
@@ -148,18 +149,17 @@ def event_checkout(request, scout_id):
 def workshop_checkin(request, scout_id):
     try:
         scout=Scout.objects.get(scout_id=scout_id)
+        session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
         if(scout.scout_status=='EVENT_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKIN'
             scout.save()
-            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
-            session.event_checkin=datetime.datetime.now()
+            session.workshop1_checkin=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         elif(scout.scout_status=='WORKSHOP1_CHECKOUT'):
             scout.scout_status='WORKSHOP2_CHECKIN'
             scout.save()
-            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
-            session.event_checkin=datetime.datetime.now()
+            session.workshop2_checkin=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
@@ -170,20 +170,19 @@ def workshop_checkin(request, scout_id):
 def workshop_completed(request, scout_id):
     try:
         scout=Scout.objects.get(scout_id=scout_id)
+        session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
         if(scout.scout_status=='WORKSHOP1_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKOUT'
             scout.save()
-            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
             session.workshop1_status="COMPLETE"
-            session.workshop1_completed=datetime.datetime.now()
+            session.workshop1_checkout=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         elif(scout.scout_status=='WORKSHOP2_CHECKIN'):
             scout.scout_status='WORKSHOP2_CHECK OUT'
             scout.save()
-            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
             session.workshop2_status="COMPLETE"
-            session.workshop2_completed=datetime.datetime.now()
+            session.workshop2_checkout=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
@@ -194,10 +193,10 @@ def workshop_completed(request, scout_id):
 def workshop_checkout(request, scout_id):
     try:
         scout=Scout.objects.get(scout_id=scout_id)
+        session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
         if(scout.scout_status=='WORKSHOP1_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKOUT'
             scout.save()
-            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
             session.workshop1_status="INCOMPLETE"
             session.workshop1_checkout=datetime.datetime.now()
             session.save()
@@ -205,7 +204,6 @@ def workshop_checkout(request, scout_id):
         elif(scout.scout_status=='WORKSHOP2_CHECKIN'):
             scout.scout_status='WORKSHOP2_CHECKOUT'
             scout.save()
-            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
             session.workshop2_status="INCOMPLETE"
             session.workshop2_checkout=datetime.datetime.now()
             session.save()
@@ -267,6 +265,13 @@ class BadgeView(SessionWizardView):
 class RegistrationWizard(SessionWizardView):
     form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]
     template_name = 'sedUI/pages/registration_form.html'
+    
+    # def __init__(self, *args, **kwargs):
+    # 	super(RegistrationWizard, self).__init__(*args, **kwargs)
+    # 	ctx = kwargs.get('ctx', None)
+    # 	checkout_data= Checkout.objects.latest("checkout_id")
+    # 	if ctx is not None:
+    # 		model.checkout=checkout_data
 
     def render_next_step(self, form, **kwargs):
         """
@@ -281,19 +286,6 @@ class RegistrationWizard(SessionWizardView):
             data=self.get_cleaned_data_for_step('0')
             if(data["citizenship"]=='No'):
                 return redirect(reverse('registrationIssue'))
-
-        # doesn't work at the moment
-        if(self.steps.current=='2'):
-            data=self.get_cleaned_data_for_step('2')
-            data1=str(data["morning_subject"]).split("-")
-            if(data1[1]=="AM"):
-                if(str(data["evening_subject"])==None):
-                    return render_goto_step(self.steps.current)
-
-        if(self.steps.current=='3'):
-            data=self.get_cleaned_data_for_step('3')
-            if(data["payment_method"]=='Pay_Mail'):
-                return done()
 
         # run default render_next_step
         next_step = self.steps.next
@@ -313,6 +305,10 @@ class RegistrationWizard(SessionWizardView):
         scout_data=self.get_cleaned_data_for_step('1')
         workshop_data=self.get_cleaned_data_for_step('2')
         session_data=self.get_cleaned_data_for_step('3')
+
+        if(session_data["payment_method"]=="Pay_Online"):
+        	stripeCall(self.request)
+        
         # store into database scout table    
         print(datetime.datetime.now().year)
         scout = Scout(scout_first_name=scout_data["first_name"],
@@ -399,6 +395,23 @@ class RegistrationWizard(SessionWizardView):
     		'workshop_1': course_1,
             'workshop_2': course_2
         	})
+
+def stripeCall(request):
+	# Set your secret key: remember to change this to your live secret key in production
+	# See your keys here: https://dashboard.stripe.com/account/apikeys
+	stripe.api_key = "sk_test_iIX7K5Yv2bIePNxXIiHDEseL"
+
+	# Token is created using Stripe.js or Checkout!
+	# Get the payment token submitted by the form:
+	token = request.POST['stripeToken']
+
+	# Charge the user's card:
+	charge = stripe.Charge.create(
+		amount=4000,
+		currency="usd",
+		description="Example charge",
+		source=token,
+	)
 
 def confirmation_send_email(form_list, scout_id):
     message = None

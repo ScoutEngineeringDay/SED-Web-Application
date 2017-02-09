@@ -4,16 +4,13 @@
 	<div class="jumbotron">
 		<h1 style="text-align: center;">Scout Engineering Day</h1>
 		<p>{{HomePage.homepage_description}} </p>
-	</div>
-	{% include "sedUI/includes/img_carousel.html" %}
-
-	<div class="jumbotron">
-		<h1>Registration</h1>
-		<p>Registration opens on {{aboutPage.registrationOpenDate}} and {{aboutPage.registrationOpenTime}}. Sign up for classes to get your badges!</p>
+		<p><i>Registration opens on {{aboutPage.registrationOpenDate}} and {{aboutPage.registrationOpenTime}}. Sign up for classes to get your badges!</i></p>
+		<br>
 		<p>
 			<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
 		</p>
 	</div>
+	{% include "sedUI/includes/img_carousel.html" %}
 
 	<div class="jumbotron">
 		<h1>News and Events</h1>

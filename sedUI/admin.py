@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Scout, Instructor, Location, Session, Workshop, AboutPage, HomePage
+from .models import Course, Scout, Instructor, Location, Session, Workshop, AboutPage, HomePage, Checkout
 
 class CourseAdmin(admin.ModelAdmin):
 	list_display = ["course_id","__str__"]
@@ -31,6 +31,8 @@ class WorkshopAdmin(admin.ModelAdmin):
 	class Meta:
 		model = Workshop
 
+
+
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Instructor, InstructorAdmin)
 admin.site.register(Scout, ScoutAdmin)
@@ -39,3 +41,4 @@ admin.site.register(Session, SessionAdmin)
 admin.site.register(Workshop, WorkshopAdmin)
 admin.site.register(AboutPage)
 admin.site.register(HomePage)
+admin.site.register(Checkout)

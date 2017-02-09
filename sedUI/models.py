@@ -28,7 +28,7 @@ class Scout(models.Model):
 	# CharField(max_length=6, primary_key=True, default=pkgen)
 	scout_first_name=models.CharField(max_length=50, blank=True)
 	scout_last_name=models.CharField(max_length=50, blank=True)
-	unit_number=models.IntegerField(default=0, blank=True)
+	unit_number=models.PositiveIntegerField(default=0, blank=True)
 	scout_phone = models.CharField(max_length=10, blank=True)
 	scout_email=models.CharField(max_length=50, blank=True)
 	emergency_first_name=models.CharField(max_length=50, blank=True)
@@ -132,7 +132,13 @@ class HomePage(models.Model):
 	homepage_description=models.CharField(max_length=50000000)
 	homepage_news_event=models.CharField(max_length=50000000)
 
-
+class Checkout(models.Model):
+	checkout_id=models.AutoField(primary_key=True)
+	checkout_title=models.CharField(max_length=50)
+	checkout_description=models.CharField(max_length=150)
+	checkout_cost=models.PositiveIntegerField()
+	public_key=models.CharField(max_length=32)
+	private_key=models.CharField(max_length=32)
 
 #
 # Deffered for this interation
