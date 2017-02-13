@@ -9,7 +9,7 @@ class RegistrationForm1(forms.Form):
 class RegistrationForm2(forms.Form):
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
-	affiliation = forms.ChoiceField(choices=[("BOY", "Boy"),("GIRL", "Girl"), ("OTHER","Other")], widget=forms.Select(attrs={'class': 'form-control'}))
+	affiliation = forms.ChoiceField(choices=[("BOY", "Boy Scout"),("GIRL", "Girl Scout"), ("OTHER","Other")], widget=forms.Select(attrs={'class': 'form-control'}))
 	unit_number = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Unit Number', 'type': 'number'}))
 	email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
 	email_confirm = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Confirmation', 'type': 'email'}))
