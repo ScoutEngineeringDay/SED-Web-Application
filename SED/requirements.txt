@@ -1,0 +1,10 @@
+boto==2.45.0
+Django==1.10.3
+django-bootstrap3==7.1.0
+django-formtools==1.0
+django-javascript-settings==1.1.2
+django-multipleformwizard==0.2.16
+django-ses==0.8.1
+gunicorn==19.6.0
+MySQL-python==1.2.5
+six==1.10.0

@@ -25,7 +25,6 @@ class RegistrationForm2(forms.Form):
 	medical_issues = forms.BooleanField(initial=False, required=False)
 	allergy_issues = forms.BooleanField(initial=False, required=False)
 	photo = forms.BooleanField(initial=True, required=False)
-	food=forms.ChoiceField(choices=[("MEAL_PLAN1", "MEAL_PLAN1"),("MEAL_PLAN2", "MEAL_PLAN2"), ("PACKED","PACKED")], widget=forms.Select(attrs={'class': 'form-control'}))
 	captcha = ReCaptchaField()
 	
 class RegistrationForm3(forms.Form):

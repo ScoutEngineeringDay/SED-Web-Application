@@ -7,7 +7,6 @@ CREATE TABLE SED_Database.sedUI_scout(
 	scout_photo BOOLEAN NOT NULL DEFAULT 0,
 	scout_medical VARCHAR(5000),
 	scout_allergy VARCHAR(5000),
-	scout_food ENUM('MEAL_PLAN1', 'MEAL_PLAN2', 'PACKED') NOT NULL,
 	scout_type ENUM('BOY', 'GIRL', 'OTHER') NOT NULL,
 	unit_number VARCHAR(20) NOT NULL,
 	emergency_first_name VARCHAR(50) NOT NULL,

@@ -36,7 +36,6 @@ class Scout(models.Model):
 	emergency_phone=models.CharField(max_length=10, blank=True)
 	emergency_email=models.CharField(max_length=50, blank=True)
 	scout_type=models.CharField( max_length=6, choices=clubs_choice, blank=True)
-	scout_food = models.CharField( max_length=10, choices=food_choice, blank=True)
 	scout_photo = models.BooleanField(default=False)
 	scout_medical = models.CharField(max_length=500, blank=True)
 	scout_allergy = models.CharField(max_length=500, blank=True)
