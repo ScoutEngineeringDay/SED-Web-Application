@@ -15,12 +15,6 @@ input[type=password] {
     padding: 10px;
 }
 
-
-/*------------------Carousel-------------------*/
-.carousel {
-
-}
-
 /*------------------NewNavBar-------------------*/
 .navbar-header>a {
     width: 100%;
@@ -321,6 +315,9 @@ font-size: 24px;
     width: 100%;
   }
 
+  .non-mobile-friendly {
+    display: none;
+  }
 }
 
 .scoutbadge {
@@ -361,4 +358,30 @@ font-size: 24px;
   bottom: 8px;
   right: 16px;
   font-size: 18px;
+}
+
+.modal-header {
+  padding: 9px 15px;
+  border-bottom: 1px solid #eee;
+  background-color: #0480be;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

@@ -1,58 +1,96 @@
 {% block content %}
-    {% load staticfiles %}
-    <div align="center">
-        <form action="/registration/" method="post"> {% csrf_token %}
-        {{ wizard.management_form }}
-            <label for="Question" style="font-size: 32px">Select a Payment Method</label>
-            <br>
-            <div class="input-group" align="center">
-                <label class="radio-inline" style="font-size: 16px">
-                    <input type="radio" name="optradio" id="Pay_Online">{{wizard.form.payment_method.1}}
-                </label>
-                <label class="radio-inline" style="font-size: 16px">
-                    <input type="radio" name="optradio" id="Pay_Mail" checked="checked">{{wizard.form.payment_method.0}}
-                </label>
-            </div>
-            <br>
-            <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
+  {% load staticfiles %}
+  <div align="center">
+      <form action="/registration/" method="post"> {% csrf_token %}
+      {{ wizard.management_form }}
+          <label for="Question" style="font-size: 32px">Select a Payment Method</label>
+          <br>
+          <div class="input-group" align="center">
+              <label class="radio-inline" style="font-size: 16px">
+                  <input type="radio" name="optradio" id="Pay_Online">{{wizard.form.payment_method.1}}
+              </label>
+              <label class="radio-inline" style="font-size: 16px">
+                  <input type="radio" name="optradio" id="Pay_Mail" checked="checked">{{wizard.form.payment_method.0}}
+              </label>
+          </div>
+          <br>
+          <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
 
-        <input
-            type="submit"
-            value="Next"
-            class="btn btn-primary"
+      <input
+          type="submit"
+          value="Next"
+          class="btn btn-primary"
 
-            data-key="pk_test_92kS90THLx5tJ1giZLy7JIcO"
-            data-amount="4000"
-            data-currency="usd"
-            data-name="Scout Engineering Day"
-            data-description="Payment for the Event"
-            data-image="{% static '/img/images/sedLogo.jpg' %}"
-        />
+          data-key="pk_test_92kS90THLx5tJ1giZLy7JIcO"
+          data-amount="4000"
+          data-currency="usd"
+          data-name="Scout Engineering Day"
+          data-description="Payment for the Event"
+          data-image="{% static '/img/images/sedLogo.jpg' %}"
+      />
+    </form>
+  </div>
 
-        <script src="https://checkout.stripe.com/v2/checkout.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <script>
-        $(document).ready(function() {
-            
-            $(':submit').on('click', function(event) {
-                if (document.getElementById("id_3-payment_method_1").checked) {
-                  event.preventDefault();
-                  var $button = $(this),
-                  $form = $button.parents('form');
-                  var opts = $.extend({}, $button.data(), {
-                      token: function(result) {
-                        $form.append($('<input>').attr({ type: 'hidden', name: 'stripeToken', value: result.id })).submit();
-                      }
-                    });
-                    StripeCheckout.open(opts);
-                }
-                else if (document.getElementById("id_3-payment_method_0").checked) {
-                    alert("Please mail the check to ... by (date)");
-                }
-            });
-        });
-        </script>
 
-      </form>
+
+  <!-- Mail Info Modal -->
+  <div class="modal fade" id="mailInModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header btn-primary">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Mailing Information</h4>
+        </div>
+        <div class="modal-body" align="center">
+          <p>By selecting this option you will have to mail a check to </p>
+            <p><b>123 Somewhere Dr. SomeTown, State, 12345</b> by 1/2/34.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Loading Modal -->
+  <div class="modal fade" id="loadingModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header btn-primary" align="center">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Finishing Your Registration</h4>
+        </div>
+        <div class="modal-body" align="center">
+          <br>
+          <div class="loader"></div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://checkout.stripe.com/v2/checkout.js"></script>
+  <script>
+  $(document).ready(function() {
+    $("#id_3-payment_method_0").change(function () {
+      $("#mailInModal").modal('show');
+		});
+    $(':submit').on('click', function(event) {
+        if (document.getElementById("id_3-payment_method_1").checked) {
+          event.preventDefault();
+          var $button = $(this),
+          $form = $button.parents('form');
+          var opts = $.extend({}, $button.data(), {
+              token: function(result) {
+                $form.append($('<input>').attr({ type: 'hidden', name: 'stripeToken', value: result.id })).submit();
+              }
+            });
+            StripeCheckout.open(opts);
+        }
+        $("#loadingModal").modal('show');
+    });
+  });
+  </script>
 {% endblock %}
