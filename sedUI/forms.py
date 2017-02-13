@@ -28,7 +28,7 @@ class RegistrationForm2(forms.Form):
 
 class RegistrationForm3(forms.Form):
 	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="AM")))
-	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="PM")), required=False)
+	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="PM")))
 
 class RegistrationForm4(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")])

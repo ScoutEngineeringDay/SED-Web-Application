@@ -18,21 +18,21 @@
 											<tr>
 												<td>Scout ID:</td>
 												<!-- User Type -->
-												<td id="userType">{{scout.scout_id}}</td>
+												<td id="scout_id">{{scout.scout_id}}</td>
 											</tr>
 											<tr>
 												<td>Scout Type:</td>
 												<!-- User Type -->
-												<td id="userType">{{scout.scout_type}}</td>
+												<td id="scout_type">{{scout.scout_type}}</td>
 											</tr>
 											<tr>
 												<td>Unit Number:</td>
 												<!-- User Type -->
-												<td id="userType">{{scout.unit_number}}</td>
+												<td id="unit_number">{{scout.unit_number}}</td>
 											</tr>
 											<tr>
 												<td>Scout Status:</td>
-												<td id="userType">{{scout.scout_status}}</td>
+												<td id="scout_status">{{scout.scout_status}}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -44,12 +44,16 @@
 											<tr>
 												<td>Email</td>
 												<!-- User Email Format: <a href="mailto:edward.gedeon07@gmail.com">edward.gedeon07@gmail.com</a> -->
-												<td id="userEmail">{{scout.scout_email}}</td>
+												<td id="scout_email">
+													<a href="mailto:{{scout.scout_email}}?Subject=Scout%20Engineering%20Day" target="_top">{{scout.scout_email}}</a>
+												</td>
 											</tr>
 											<tr>
 												<td>Phone</td>
 												<!-- User Phone Number -->
-												<td id="userPhone">{{scout.scout_phone}}</td>
+												<td id="scout_phone">
+													<a href="tel:{{scout.scout_phone}}">{{scout.scout_phone}}</a>
+												</td>
 											</tr>
 										</tbody>
 									</table>
@@ -61,18 +65,22 @@
 										<tr>
 											<td>Name</td>
 											<!-- User Phone Number -->
-											<td id="userPhone">{{scout.emergency_first_name}} {{scout.emergency_last_name}}</td>
+											<td id="emergency_name">{{scout.emergency_first_name}} {{scout.emergency_last_name}}</td>
 										</tr>
-										
+
 										<tr>
 											<td>Email</td>
 											<!-- User Email Address -->
-											<td id="userPhone">{{scout.emergency_email}}</td>
+											<td id="emergency_email">
+												<a href="mailto:{{scout.emergency_email}}?Subject=Scout%20Engineering%20Day" target="_top">{{scout.emergency_email}}</a>
+											</td>
 										</tr>
 										<tr>
 											<td>Phone</td>
 											<!-- User Phone Number -->
-											<td id="userPhone">{{scout.emergency_phone}}</td>
+											<td id="emergency_phone">
+												<a href="tel:{scout.emergency_phone}}">{{scout.emergency_phone}}</a>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -83,7 +91,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td id="userPhone">{{scout.scout_medical}}</td>
+											<td id="emergency_phone">{{scout.scout_medical}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -95,7 +103,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td id="userPhone">{{scout.scout_allergy}}</td>
+											<td id="scout_allergy">{{scout.scout_allergy}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -108,13 +116,39 @@
 	</div>
 
 	<div class="container" align="center">
-		<a href="{% url 'scout_event_checkin/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
-		<a href="{% url 'scout_event_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-default btn-action">Check Out Of Event</i></a>
+		<a id="scout_event_checkin" href="{% url 'scout_event_checkin/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
+		<a id="scout_event_checkout" href="{% url 'scout_event_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-default btn-action">Check Out Of Event</i></a>
 	</div>
 	<br>
 	<div class="container" align="center">
-		<a href="{% url 'scout_workshop_checkin/' scout.scout_id %}" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-info btn-action">Check Into Class</i></a>
-		<a href="{% url 'scout_workshop_completed/' scout.scout_id %}" data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
-		<a href="{% url 'scout_workshop_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Check Out Of Class</i></a>
+		<a id="scout_workshop_checkin" href="{% url 'scout_workshop_checkin/' scout.scout_id %}" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-info btn-action">Check Into Class</i></a>
+		<a id="scout_workshop_completed" href="{% url 'scout_workshop_completed/' scout.scout_id %}" data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
+		<a id="scout_workshop_checkout" href="{% url 'scout_workshop_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Check Out Of Class</i></a>
 	</div>
+
+	<script>
+		jQuery(document).ready(function(){
+			if(document.getElementById("scout_status").innerText == "UNDERWAY" | document.getElementById("scout_status").innerText == "EVENT_CHECKOUT") {
+				$('#scout_event_checkout').addClass('disabled');
+				$('#scout_workshop_checkin').addClass('disabled');
+				$('#scout_workshop_completed').addClass('disabled');
+				$('#scout_workshop_checkout').addClass('disabled');
+			}
+			else if(document.getElementById("scout_status").innerText == "EVENT_CHECKIN" | document.getElementById("scout_status").innerText == "WORKSHOP1_CHECKOUT") {
+				$('#scout_event_checkin').addClass('disabled');
+				$('#scout_workshop_completed').addClass('disabled');
+				$('#scout_workshop_checkout').addClass('disabled');
+			}
+			else if(document.getElementById("scout_status").innerText == "WORKSHOP1_CHECKIN" | document.getElementById("scout_status").innerText == "WORKSHOP2_CHECKIN") {
+				$('#scout_event_checkin').addClass('disabled');
+				$('#scout_workshop_checkin').addClass('disabled');
+			}
+			else if(document.getElementById("scout_status").innerText == "WORKSHOP2_CHECKOUT") {
+				$('#scout_workshop_checkin').addClass('disabled');
+				$('#scout_workshop_completed').addClass('disabled');
+				$('#scout_workshop_checkout').addClass('disabled');
+				$('#scout_event_checkin').addClass('disabled');
+			}
+		});
+	</script>
 {% endblock %}/

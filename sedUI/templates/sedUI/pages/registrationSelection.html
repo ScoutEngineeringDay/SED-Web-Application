@@ -1,17 +1,55 @@
 {% block content %}
+<script>
+	jQuery(document).ready(function(){
+		$("#id_2-morning_subject").change(function () {
+			var morningDropdown = document.getElementById("id_2-morning_subject");
+			var morningSelection = morningDropdown.options[morningDropdown.selectedIndex].text;
+
+			if (morningSelection.endsWith("FULL")) {
+				document.getElementById("id_2-evening_subject").value = morningDropdown.value;
+				disable();
+			}
+			else {
+				if (document.getElementById("id_2-evening_subject").disabled == true) {
+					$('#id_2-evening_subject').get(0).selectedIndex = 0;
+					enable();
+				}
+			}
+		});
+
+		$("#id_2-evening_subject").change(function () {
+			var eveningDropdown = document.getElementById("id_2-evening_subject");
+			var eveningSelection = eveningDropdown.options[eveningDropdown.selectedIndex].text;
+
+			if (eveningSelection.endsWith("FULL")) {
+				document.getElementById("id_2-morning_subject").value = eveningDropdown.value;
+				disable();
+			}
+		});
+	});
+	function disable() {
+		document.getElementById("id_2-evening_subject").style.opacity = "0.6";
+		document.getElementById("id_2-evening_subject").disabled = true;
+	}
+
+	function enable() {
+		document.getElementById("id_2-evening_subject").style.opacity = "1";
+		document.getElementById("id_2-evening_subject").disabled = false;
+	}
+</script>
 <div align="center">
 	<form action="/registration/" method="post" style="margin: auto"> {% csrf_token %}
   	{{ wizard.management_form }}
 		<label for="InputName" style="font-size: 32px">Select the workshops to attend.</label>
 		<br>
 		<p>
-		**Note: You make select either a Full day course or select two half day(AM/PM) courses. If you select an FULL day course and a PM course, the PM course will be ignored
+		**Note: You make select either a Full day course or select two half day(AM/PM) courses.
 		</p>
 		<br>
 		<div class="input-group" align="center">
-			<label class="radio-inline" style="font-size: 16px">AM/FULL DAY Courses: </label>
+			<label class="radio-inline" style="font-size: 16px">AM Course   </label>
 			{{wizard.form.morning_subject}}
-			<label class="radio-inline" style="font-size: 16px">PM Courses: </label>
+			<label class="radio-inline" style="font-size: 16px">PM Course   </label>
 			{{wizard.form.evening_subject}}
 		</div>
 
