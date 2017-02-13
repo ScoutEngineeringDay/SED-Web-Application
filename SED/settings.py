@@ -42,6 +42,10 @@ EMAIL_HOST_PASSWORD = 'SEDPass123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+#recaptcha
+RECAPTCHA_PUBLIC_KEY = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6'
+RECAPTCHA_PRIVATE_KEY = ' 6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7'
+NOCAPTCHA = True
 '''
 If using gmail, you will need to unlock captcha
 google unlock captcha
@@ -57,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sedUI',
+    'captcha'
 ]
 
 MIDDLEWARE = [
