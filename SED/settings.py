@@ -45,7 +45,7 @@ EMAIL_USE_TLS = True
 #recaptcha
 RECAPTCHA_PUBLIC_KEY = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6'
 RECAPTCHA_PRIVATE_KEY = ' 6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7'
-NOCAPTCHA = True
+NOCAPTCHA = False
 '''
 If using gmail, you will need to unlock captcha
 google unlock captcha

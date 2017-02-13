@@ -25,7 +25,7 @@ class RegistrationForm2(forms.Form):
 	medical_issues = forms.BooleanField(initial=False, required=False)
 	allergy_issues = forms.BooleanField(initial=False, required=False)
 	photo = forms.BooleanField(initial=True, required=False)
-	captcha = ReCaptchaField()
+	captcha = ReCaptchaField(required=False)
 	
 class RegistrationForm3(forms.Form):
 	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="AM")))

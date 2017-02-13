@@ -14,8 +14,6 @@
         {% include "sedUI/pages/registrationSelection.html" %}
     {% elif wizard.steps.current == "3" %}
         {% include "sedUI/pages/registrationPayment.html" %}
-    {% elif wizard.steps.current == "4" %}
-        {% include "sedUI/pages/registrationConfirmation.html" %}
     {% else %}
         <p>test</p>
     {% endif %}

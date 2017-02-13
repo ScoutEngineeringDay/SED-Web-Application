@@ -118,8 +118,8 @@ class ScoutDetailView(generic.ListView):
 
 def event_checkin(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id)
-        if(scout.scout_status=="UNDERWAY"):
+        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
+        if(scout.scout_status=="UNDERWAY" or scout.scout_status=='EVENT_CHECKOUT'):
             scout.scout_status='EVENT_CHECKIN'
             scout.save()
             session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
@@ -133,7 +133,7 @@ def event_checkin(request, scout_id):
 
 def event_checkout(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id)
+        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
         if(scout.scout_status=='EVENT_CHECKIN' or scout.scout_status=='WORKSHOP1_CHECKOUT' or scout.scout_status=='WORKSHOP2_CHECKOUT'):
             scout.scout_status='EVENT_CHECKOUT'
             scout.save()
@@ -148,7 +148,7 @@ def event_checkout(request, scout_id):
 
 def workshop_checkin(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id)
+        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
         session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
         if(scout.scout_status=='EVENT_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKIN'
@@ -169,7 +169,7 @@ def workshop_checkin(request, scout_id):
 
 def workshop_completed(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id)
+        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
         session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
         if(scout.scout_status=='WORKSHOP1_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKOUT'
@@ -179,7 +179,7 @@ def workshop_completed(request, scout_id):
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         elif(scout.scout_status=='WORKSHOP2_CHECKIN'):
-            scout.scout_status='WORKSHOP2_CHECK OUT'
+            scout.scout_status='WORKSHOP2_CHECKOUT'
             scout.save()
             session.workshop2_status="COMPLETE"
             session.workshop2_checkout=datetime.datetime.now()
@@ -192,7 +192,7 @@ def workshop_completed(request, scout_id):
 
 def workshop_checkout(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id)
+        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
         session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
         if(scout.scout_status=='WORKSHOP1_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKOUT'
@@ -324,7 +324,6 @@ class RegistrationWizard(SessionWizardView):
             scout_photo=scout_data["photo"],
             scout_medical=scout_data["medical_notes"],
             scout_allergy=scout_data["allergy_notes"],
-            scout_food=scout_data["food"],
             scout_status="UNDERWAY",
             scout_year=str(datetime.datetime.now().year)
             )
