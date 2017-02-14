@@ -35,21 +35,23 @@ ALLOWED_HOSTS = ['www.sedteam.com','localhost','54.152.243.242', '54.236.255.148
 # AWS_SECRET_ACCESS_KEY = 'YOUR-SECRET-ACCESS-KEY'
 
 # EMAIL_BACKEND = 'django_ses.SESBackend'
-
+'''
+If using gmail, you will need to unlock captcha
+google unlock captcha
+'''
 EMAIL_HOST ='smtp.gmail.com'
 EMAIL_HOST_USER = 'scoutengineeringdaytest@gmail.com'
 EMAIL_HOST_PASSWORD = 'SEDPass123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-#recaptcha
+# recaptcha
 RECAPTCHA_PUBLIC_KEY = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6'
 RECAPTCHA_PRIVATE_KEY = ' 6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7'
-NOCAPTCHA = True
-'''
-If using gmail, you will need to unlock captcha
-google unlock captcha
-'''
+NOCAPTCHA = False
+
+# HASHID_FIELD_SALT
+HASHID_FIELD_SALT = '+yocgo501*1y2itpr+!i(!eeelhy=8u3xs)ax+ij0wk^*tzv&0'
 
 # Application definition
 

@@ -25,7 +25,7 @@ class RegistrationForm2(forms.Form):
 	medical_issues = forms.BooleanField(initial=False, required=False)
 	allergy_issues = forms.BooleanField(initial=False, required=False)
 	photo = forms.BooleanField(initial=True, required=False)
-	captcha = ReCaptchaField()
+	captcha = ReCaptchaField(public_key = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6', private_key= ' 6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7', required=False)
 	
 class RegistrationForm3(forms.Form):
 	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="AM")))
@@ -42,4 +42,4 @@ class ContactEmailForm(forms.Form):
 	message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Message'}))
 
 class BadgeForm(forms.Form):
-	scout_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Scout ID Number'}))
+	confirmation_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Confirmation ID'}))

@@ -17,6 +17,8 @@ import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
+from django.core.management.utils import get_random_secret_key
+from hashid_field import HashidField, HashidAutoField, Hashid
 
 FORMS = [("citizenship", RegistrationForm1),
          ("scout_info", RegistrationForm2),
@@ -25,17 +27,18 @@ FORMS = [("citizenship", RegistrationForm1),
 
 # Create your views here.
 class IndexView(generic.TemplateView):
-  template_name='sedUI/pages/index.html'
-  def get(self, request, *args, **kwargs):
-	HomePage_object=HomePage.objects.latest('homepage_id')
-	aboutPage = AboutPage.objects.latest('aboutPage_id')
-	img_fileNames = []
-	#Add first image
-	img_fileNames.append(os.path.join('img/images/', '00001.jpg'))
-	# for filename in os.listdir("sed/sedUI/static/img/homeImages"):    # Use if running on AWS Server
-	for filename in os.listdir("sedUI/static/img/homeImages"):          # Use if running on Local Machine
-		img_fileNames.append(os.path.join('img/homeImages/', filename))
-	return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames, "HomePage": HomePage_object,'aboutPage' : aboutPage})
+	print(get_random_secret_key())
+	template_name='sedUI/pages/index.html'
+	def get(self, request, *args, **kwargs):
+		HomePage_object=HomePage.objects.latest('homepage_id')
+		aboutPage = AboutPage.objects.latest('aboutPage_id')
+		img_fileNames = []
+		#Add first image
+		img_fileNames.append(os.path.join('img/images/', '00001.jpg'))
+		# for filename in os.listdir("sed/sedUI/static/img/homeImages"):    # Use if running on AWS Server
+		for filename in os.listdir("sedUI/static/img/homeImages"):          # Use if running on Local Machine
+			img_fileNames.append(os.path.join('img/homeImages/', filename))
+		return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames, "HomePage": HomePage_object,'aboutPage' : aboutPage})
 
 class RegistrationIssueView(generic.TemplateView):
     template_name = 'sedUI/pages/registrationIssue.html'
@@ -243,12 +246,12 @@ class BadgeView(SessionWizardView):
 
     def done(self, form_list, **kwargs):
         form_data=self.get_cleaned_data_for_step('0')
-        scout_id=form_data["scout_id"]
+        confirmation_id=form_data["confirmation_id"]
         try:
-            scout_data=Scout.objects.get(scout_id=scout_id)
-            session_id=Session.objects.get(scout_id=scout_id).session_id
-            course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_id).workshop1_id).course_id))
-            course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_id).workshop2_id).course_id))
+            scout_data=Scout.objects.get(confirmation_id=confirmation_id)
+            session_id=Session.objects.get(scout_id=scout_data.scout_id).session_id
+            course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_data.scout_id).workshop1_id).course_id))
+            course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_data.scout_id).workshop2_id).course_id))
         except Scout.DoesNotExist:
             scout_data = None
             course_1 = None
@@ -310,8 +313,9 @@ class RegistrationWizard(SessionWizardView):
         	stripeCall(self.request)
         
         # store into database scout table    
-        print(datetime.datetime.now().year)
-        scout = Scout(scout_first_name=scout_data["first_name"],
+        confirmation_id=Hashid(Scout.objects.count()+1)
+        scout = Scout(confirmation_id=confirmation_id,
+        	scout_first_name=scout_data["first_name"],
             scout_last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
             scout_phone=scout_data["phone"],
@@ -387,7 +391,7 @@ class RegistrationWizard(SessionWizardView):
             'workshop_2': course_2
         }
         confirmation_timestamp=session.confirmation_timestamp
-        confirmation_send_email(form_list, scout.scout_id)
+        confirmation_send_email(form_list, scout.scout_id, confirmation_id)
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
     		'scout': scout,
     		'session': session,
@@ -412,7 +416,7 @@ def stripeCall(request):
 		source=token,
 	)
 
-def confirmation_send_email(form_list, scout_id):
+def confirmation_send_email(form_list, scout_id, confirmation_id):
     message = None
     scout_info=None
     emergency_info=None
@@ -424,7 +428,7 @@ def confirmation_send_email(form_list, scout_id):
     emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name:"+str(form_data[1]["emergency_first_name"])+" "+str(form_data[1]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[1]["emergency_phone"]))
     # course_info=("\n\nCourses:\tClass 1:"+form_data[2]["morning_subject"]+"\tClass 2:"+form_data[2]["evening_subject"])
     payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"]))
-    message = "Hello,"+scout_info+emergency_info+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge please use your Scout ID\n\nThank you,\n\t Scout Engineering Day Development Team"
+    message = "Hello,"+scout_info+emergency_info+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge, go to Get Badge and enter your confirmation number: "+str(confirmation_id)+"\n\nThank you,\n\t Scout Engineering Day Development Team"
 
 
     email = EmailMessage(
