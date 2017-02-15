@@ -1,11 +1,18 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from hashid_field import HashidField, HashidAutoField
+import hashlib
+import time
+
+def _createHash():
+    """This function generate 10 character long hash"""
+    hash = hashlib.sha1()
+    hash.update(str(time.time()))
+    return  hash.hexdigest()[:-10]
 
 # Create your models here.
 class Scout(models.Model):
 	scout_id=models.AutoField(primary_key=True)
-	confirmation_id=HashidField()
+	confirmation_id=models.CharField(max_length=32, default=_createHash, unique=True)
 	phone_regex = RegexValidator(regex=r'^?1?\d{9,15}$', message="Phone number must be entered in the format: '999999999'. Up to 15 digits allowed.")
 	clubs_choice=(
 		('BOY','BOY'),
@@ -118,7 +125,10 @@ class Session(models.Model):
 	session_year=models.CharField(max_length=4)
 
 	def __str__(self):
-		return str(Scout.objects.get(scout_id=str(self.scout_id)).scout_first_name)+" "+str(Scout.objects.get(scout_id=str(self.scout_id)).scout_last_name)
+		try:
+			return str(Scout.objects.get(scout_id=str(self.scout_id)).scout_first_name)+" "+str(Scout.objects.get(scout_id=str(self.scout_id)).scout_last_name)
+		except:
+			return None
 
 class AboutPage(models.Model):
 	aboutPage_id=models.AutoField(primary_key=True)

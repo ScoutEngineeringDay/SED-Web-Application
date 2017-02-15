@@ -18,7 +18,6 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
 from django.core.management.utils import get_random_secret_key
-from hashid_field import HashidField, HashidAutoField, Hashid
 
 FORMS = [("citizenship", RegistrationForm1),
          ("scout_info", RegistrationForm2),
@@ -27,7 +26,6 @@ FORMS = [("citizenship", RegistrationForm1),
 
 # Create your views here.
 class IndexView(generic.TemplateView):
-	print(get_random_secret_key())
 	template_name='sedUI/pages/index.html'
 	def get(self, request, *args, **kwargs):
 		HomePage_object=HomePage.objects.latest('homepage_id')
@@ -313,9 +311,7 @@ class RegistrationWizard(SessionWizardView):
         	stripeCall(self.request)
         
         # store into database scout table    
-        confirmation_id=Hashid(Scout.objects.count()+1)
-        scout = Scout(confirmation_id=confirmation_id,
-        	scout_first_name=scout_data["first_name"],
+        scout = Scout(scout_first_name=scout_data["first_name"],
             scout_last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
             scout_phone=scout_data["phone"],
@@ -391,7 +387,7 @@ class RegistrationWizard(SessionWizardView):
             'workshop_2': course_2
         }
         confirmation_timestamp=session.confirmation_timestamp
-        confirmation_send_email(form_list, scout.scout_id, confirmation_id)
+        confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
     		'scout': scout,
     		'session': session,
@@ -428,7 +424,7 @@ def confirmation_send_email(form_list, scout_id, confirmation_id):
     emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name:"+str(form_data[1]["emergency_first_name"])+" "+str(form_data[1]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[1]["emergency_phone"]))
     # course_info=("\n\nCourses:\tClass 1:"+form_data[2]["morning_subject"]+"\tClass 2:"+form_data[2]["evening_subject"])
     payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"]))
-    message = "Hello,"+scout_info+emergency_info+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge, go to Get Badge and enter your confirmation number: "+str(confirmation_id)+"\n\nThank you,\n\t Scout Engineering Day Development Team"
+    message = "Hello,"+scout_info+emergency_info+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge, go to Get Badge and enter your confirmation number: "+confirmation_id+"\n\nThank you,\n\t Scout Engineering Day Development Team"
 
 
     email = EmailMessage(
