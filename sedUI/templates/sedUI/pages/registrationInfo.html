@@ -1,3 +1,29 @@
+<script>
+	jQuery(document).ready(function(){
+		$("#id_1-email_confirm").focusout(function () {
+			var email_confirm = document.getElementById("id_1-email_confirm");
+			var email = document.getElementById("id_1-email");
+			var goodColor = "#66cc66";
+    	var badColor = "#ff6666";
+			var orgColor = "#ffffff";
+    	var message = document.getElementById('confirmMessage');
+
+			if (email.value != email_confirm.value) {
+				email_confirm.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Oops, Emails Do Not Match!"
+				email_confirm.setCustomValidity('Emails Must be Matching.');
+			}
+			else {
+					email_confirm.style.backgroundColor = goodColor;
+	        message.style.color = goodColor;
+	        message.innerHTML = "Emails Match!"
+					email_confirm.setCustomValidity('');
+					setTimeout(function(){ email_confirm.style.backgroundColor = orgColor; }, 2000);
+			}
+		});
+	});
+</script>
 
 {% block content %}
 <form action="/registration/" method="post" style="width: 500px; margin: 0 auto"> {% csrf_token %}
@@ -46,6 +72,7 @@
 				{{wizard.form.email_confirm}}
 				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 			</div>
+			<span id="confirmMessage" class="confirmMessage"></span>
 		</div>
 
 		<div class="form-group">
