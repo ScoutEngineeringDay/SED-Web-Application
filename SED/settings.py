@@ -29,7 +29,7 @@ SECRET_KEY = 'a1u4znl-=0+!lzr=iyctr^*rxatx&6f%^60@62wtlyj+$_ea0$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.sedteam.com','localhost','54.152.243.242', '54.236.255.148', '52.90.26.230']
+ALLOWED_HOSTS = ['www.sedteam.com','sedteam.com', 'localhost','54.152.243.242', '54.236.255.148', '52.90.26.230']
 
 # AWS_ACCESS_KEY_ID = 'YOUR-ACCESS-KEY-ID'
 # AWS_SECRET_ACCESS_KEY = 'YOUR-SECRET-ACCESS-KEY'
@@ -48,7 +48,7 @@ EMAIL_USE_TLS = True
 # recaptcha
 RECAPTCHA_PUBLIC_KEY = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6'
 RECAPTCHA_PRIVATE_KEY = ' 6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7'
-NOCAPTCHA = False
+NOCAPTCHA = True
 
 # HASHID_FIELD_SALT
 HASHID_FIELD_SALT = '+yocgo501*1y2itpr+!i(!eeelhy=8u3xs)ax+ij0wk^*tzv&0'

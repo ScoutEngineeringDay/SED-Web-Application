@@ -247,9 +247,13 @@ class BadgeView(SessionWizardView):
         confirmation_id=form_data["confirmation_id"]
         try:
             scout_data=Scout.objects.get(confirmation_id=confirmation_id)
-            session_id=Session.objects.get(scout_id=scout_data.scout_id).session_id
-            course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_data.scout_id).workshop1_id).course_id))
-            course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=Session.objects.get(scout_id=scout_data.scout_id).workshop2_id).course_id))
+            session_data=Session.objects.get(scout_id=scout_data.scout_id)
+            course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session_data.workshop1_id).course_id))
+            course_2=None
+            if(session_data.workshop2_id=='0' or session_data.workshop2_id==None):
+                course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session_data.workshop2_id).course_id))
+            else:
+                course_2=None
         except Scout.DoesNotExist:
             scout_data = None
             course_1 = None
@@ -287,7 +291,12 @@ class RegistrationWizard(SessionWizardView):
             data=self.get_cleaned_data_for_step('0')
             if(data["citizenship"]=='No'):
                 return redirect(reverse('registrationIssue'))
-
+        print(self.steps.index)
+        if(self.steps.index==2):
+            data=self.get_cleaned_data_for_step('2')
+            print("------------------------------")
+            print(str(data["evening_subject"]))
+            print(str(data["morning_subject"]))
         # run default render_next_step
         next_step = self.steps.next
         new_form = self.get_form(

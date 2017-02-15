@@ -1,16 +1,20 @@
 {% block content %}
 <script>
 	jQuery(document).ready(function(){
+		$("#full_label").hide();
 		$("#id_2-morning_subject").change(function () {
 			var morningDropdown = document.getElementById("id_2-morning_subject");
+			console.log("The vew value of id_2-morning_subject is " + document.getElementById("id_2-morning_subject").value + " " + morningDropdown.options[morningDropdown.selectedIndex].text);	
 			var morningSelection = morningDropdown.options[morningDropdown.selectedIndex].text;
 
 			if (morningSelection.endsWith("FULL")) {
 				document.getElementById("id_2-evening_subject").value = morningDropdown.value;
+				console.log("The vew value of id_2-morning_subject is " + document.getElementById("id_2-morning_subject").value);
+				console.log("The vew value of id_2-evening_subject is " + document.getElementById("id_2-evening_subject").value);
 				disable();
 			}
 			else {
-				if (document.getElementById("id_2-evening_subject").disabled == true) {
+				if ($("#id_2-evening_subject").is(":hidden")) {
 					$('#id_2-evening_subject').get(0).selectedIndex = 0;
 					enable();
 				}
@@ -18,27 +22,37 @@
 		});
 
 		$("#id_2-evening_subject").change(function () {
-			var eveningDropdown = document.getElementById("id_2-evening_subject");
+			var eveningDropdown = document.getElementById("id_2-evening_subject"); 
+			console.log("The vew value of id_2-evening_subject is " + document.getElementById("id_2-evening_subject").value + " " + eveningDropdown.options[eveningDropdown.selectedIndex].text);
 			var eveningSelection = eveningDropdown.options[eveningDropdown.selectedIndex].text;
 
 			if (eveningSelection.endsWith("FULL")) {
 				document.getElementById("id_2-morning_subject").value = eveningDropdown.value;
+				var morningDropdown = document.getElementById("id_2-morning_subject");
+				console.log("The vew value of id_2-morning_subject is " + document.getElementById("id_2-morning_subject").value + " text is " + morningDropdown.options[morningDropdown.selectedIndex].text);
+				console.log("The vew value of id_2-evening_subject is " + document.getElementById("id_2-evening_subject").value + " text is " + eveningDropdown.options[eveningDropdown.selectedIndex].text);
 				disable();
 			}
 		});
 	});
 	function disable() {
-		document.getElementById("id_2-evening_subject").style.opacity = "0.6";
-		document.getElementById("id_2-evening_subject").disabled = true;
+		// document.getElementById("id_2-evening_subject").style.opacity = "0.6";
+		$("#id_2-evening_subject").hide();
+		$("#pm_label").hide();
+		$("#am_label").hide();
+		$("#full_label").show();
 	}
 
 	function enable() {
-		document.getElementById("id_2-evening_subject").style.opacity = "1";
-		document.getElementById("id_2-evening_subject").disabled = false;
+		// document.getElementById("id_2-evening_subject").style.opacity = "1";
+		$("#id_2-evening_subject").show();
+		$("#pm_label").show();
+		$("#am_label").show();
+		$("#full_label").hide();
 	}
 </script>
 <div align="center">
-	<form action="/registration/" method="post" style="margin: auto"> {% csrf_token %}
+	<form action="/registration/" method="post" onsubmit="enable()" style="margin: auto"> {% csrf_token %}
   	{{ wizard.management_form }}
 		<label for="InputName" style="font-size: 32px">Select the workshops to attend.</label>
 		<br>
@@ -47,9 +61,10 @@
 		</p>
 		<br>
 		<div class="input-group" align="center">
-			<label class="radio-inline" style="font-size: 16px">AM Course   </label>
+			<label id="am_label" class="radio-inline" style="font-size: 16px">AM Course   </label>
+			<label id="full_label" class="radio-inline" style="font-size: 16px">Full Day Course   </label>
 			{{wizard.form.morning_subject}}
-			<label class="radio-inline" style="font-size: 16px">PM Course   </label>
+			<label id="pm_label" class="radio-inline" style="font-size: 16px">PM Course   </label>
 			{{wizard.form.evening_subject}}
 		</div>
 

@@ -25,6 +25,9 @@
 		<div class="form-group">
 			<div class="input-group">
 				{{wizard.form.unit_number}}
+				{% if wizard.form.unit_number.errors %}
+				<p style="color: red"><b><i>Must be a positive number</i></b></p>
+				{% endif %}
 				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 			</div>
 		</div>
