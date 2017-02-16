@@ -1,3 +1,33 @@
+<script>
+	jQuery(document).ready(function(){
+		$("#id_1-email_confirm").focusout(function () {
+			var email_confirm = document.getElementById("id_1-email_confirm");
+			var email = document.getElementById("id_1-email");
+			var goodColor = "#66cc66";
+    	var badColor = "#ff6666";
+			var orgColor = "#ffffff";
+    	var message = document.getElementById('confirmMessage');
+
+			if (email.value != email_confirm.value) {
+				email_confirm.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Oops, Emails Do Not Match!";
+				email_confirm.setCustomValidity('Emails Must be Matching.');
+			}
+			else {
+					email_confirm.style.backgroundColor = goodColor;
+	        message.style.color = goodColor;
+	        message.innerHTML = "Emails Match!";
+					email_confirm.setCustomValidity('');
+					setTimeout(function(){ setViewNormal(); }, 2000);
+			}
+		});
+	});
+	function setViewNormal() {
+		email_confirm.style.backgroundColor = orgColor;
+		message.innerHTML = "";
+	}
+</script>
 
 {% block content %}
 <script type="text/javascript">
@@ -86,6 +116,7 @@
 				{{wizard.form.email_confirm}}
 				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 			</div>
+			<span id="confirmMessage" class="confirmMessage"></span>
 		</div>
 
 		<div class="form-group">
@@ -150,13 +181,6 @@
 	</div>
 	<br>
 	<div align="center">
-		<!-- <script src='https://www.google.com/recaptcha/api.js'></script>
-		<div class="form-group">
-			<div class="input-group">
-				TODO: This data-sitekey has to be updated for release
-				<div class="g-recaptcha" data-sitekey="6LccEhEUAAAAAExx5BF3N1Kz9ZzM9deDRg3A5Bsk"></div>
-			</div>
-		</div> -->
 		{{wizard.form.captcha}}
 		<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
 	</div>
