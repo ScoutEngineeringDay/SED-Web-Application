@@ -1,10 +1,10 @@
 {% block content %}
 <script>
 	jQuery(document).ready(function(){
+
 		$("#full_label").hide();
 		$("#id_2-morning_subject").change(function () {
 			var morningDropdown = document.getElementById("id_2-morning_subject");
-			console.log("The vew value of id_2-morning_subject is " + document.getElementById("id_2-morning_subject").value + " " + morningDropdown.options[morningDropdown.selectedIndex].text);	
 			var morningSelection = morningDropdown.options[morningDropdown.selectedIndex].text;
 
 			if (morningSelection.endsWith("FULL")) {
@@ -23,20 +23,15 @@
 
 		$("#id_2-evening_subject").change(function () {
 			var eveningDropdown = document.getElementById("id_2-evening_subject"); 
-			console.log("The vew value of id_2-evening_subject is " + document.getElementById("id_2-evening_subject").value + " " + eveningDropdown.options[eveningDropdown.selectedIndex].text);
 			var eveningSelection = eveningDropdown.options[eveningDropdown.selectedIndex].text;
 
 			if (eveningSelection.endsWith("FULL")) {
 				document.getElementById("id_2-morning_subject").value = eveningDropdown.value;
-				var morningDropdown = document.getElementById("id_2-morning_subject");
-				console.log("The vew value of id_2-morning_subject is " + document.getElementById("id_2-morning_subject").value + " text is " + morningDropdown.options[morningDropdown.selectedIndex].text);
-				console.log("The vew value of id_2-evening_subject is " + document.getElementById("id_2-evening_subject").value + " text is " + eveningDropdown.options[eveningDropdown.selectedIndex].text);
 				disable();
 			}
 		});
 	});
 	function disable() {
-		// document.getElementById("id_2-evening_subject").style.opacity = "0.6";
 		$("#id_2-evening_subject").hide();
 		$("#pm_label").hide();
 		$("#am_label").hide();
@@ -44,7 +39,6 @@
 	}
 
 	function enable() {
-		// document.getElementById("id_2-evening_subject").style.opacity = "1";
 		$("#id_2-evening_subject").show();
 		$("#pm_label").show();
 		$("#am_label").show();

@@ -21,11 +21,11 @@
           value="Next"
           class="btn btn-primary"
 
-          data-key="pk_test_92kS90THLx5tJ1giZLy7JIcO"
-          data-amount="4000"
+          data-key="{{checkout.public_key}}"
+          data-amount="{{checkout.checkout_cost}}"
           data-currency="usd"
-          data-name="Scout Engineering Day"
-          data-description="Payment for the Event"
+          data-name="{{checkout.checkout_title}}"
+          data-description="{{checkout.checkout_description}}"
           data-image="{% static '/img/images/sedLogo.jpg' %}"
       />
     </form>
@@ -43,8 +43,12 @@
           <h4 class="modal-title">Mailing Information</h4>
         </div>
         <div class="modal-body" align="center">
-          <p>By selecting this option you will have to mail a check to </p>
-            <p><b>123 Somewhere Dr. SomeTown, State, 12345</b> by 1/2/34.</p>
+          <p>By selecting this option you will have to mail a check to:</p>
+          <p><b>{{payment.mailPayment_person}}</b></p>
+          <p>at</p>
+          <p><b>{{payment.mailPayment_building}} {{payment.mailPayment_street}}, {{payment.mailPayment_city}}, {{payment.mailPayment_state}}, {{payment.mailPayment_zip}}</b></p>
+          <p>by</p>
+          <p><b>{{payment.mailPayment_due_date}}</b>.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -59,7 +63,6 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header btn-primary" align="center">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Finishing Your Registration</h4>
         </div>
         <div class="modal-body" align="center">

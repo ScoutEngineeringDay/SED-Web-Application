@@ -29,8 +29,8 @@ class RegistrationForm2(forms.Form):
 	captcha = ReCaptchaField(public_key = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6', private_key= ' 6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7', required=False)
 	
 class RegistrationForm3(forms.Form):
-	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="AM")))
-	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="PM")))
+	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="AM")), widget=forms.Select(attrs={'class': 'dropdown'}))
+	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="PM")), widget=forms.Select(attrs={'class': 'dropdown'}))
 
 class RegistrationForm4(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")])
@@ -43,4 +43,4 @@ class ContactEmailForm(forms.Form):
 	message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Message'}))
 
 class BadgeForm(forms.Form):
-	confirmation_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Confirmation ID'}))
+	confirmation_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Confirmation ID', 'class': 'form-control input-lg'}))

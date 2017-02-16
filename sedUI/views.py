@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, redirect, HttpResponse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage, Checkout
+from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage, Checkout, MailPayment
 import os
 from django.views import generic
 from django.core.urlresolvers import reverse
@@ -154,12 +154,14 @@ def workshop_checkin(request, scout_id):
         if(scout.scout_status=='EVENT_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKIN'
             scout.save()
+            session.workshop1_status='IN PROGRESS'
             session.workshop1_checkin=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
-        elif(scout.scout_status=='WORKSHOP1_CHECKOUT'):
+        elif(scout.scout_status=='WORKSHOP1_CHECKOUT' and session.workshop2_id != '0'):
             scout.scout_status='WORKSHOP2_CHECKIN'
             scout.save()
+            session.workshop1_status='IN PROGRESS'
             session.workshop2_checkin=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
@@ -213,7 +215,6 @@ def workshop_checkout(request, scout_id):
             return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops or have already Checkout of Event')    
     except:
         return HttpResponse('Scout no longer exist in database')
-    
 
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
@@ -270,13 +271,25 @@ class BadgeView(SessionWizardView):
 class RegistrationWizard(SessionWizardView):
     form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]
     template_name = 'sedUI/pages/registration_form.html'
-    
-    # def __init__(self, *args, **kwargs):
-    # 	super(RegistrationWizard, self).__init__(*args, **kwargs)
-    # 	ctx = kwargs.get('ctx', None)
-    # 	checkout_data= Checkout.objects.latest("checkout_id")
-    # 	if ctx is not None:
-    # 		model.checkout=checkout_data
+
+    def get_context_data(self, **kwargs):
+        ctx=super(RegistrationWizard, self).get_context_data(**kwargs)
+        #ctx['instructor']=Instructor2.objects.get(instructor_id=str(Workshop2.objects.get(course_id=str(self.get_queryset().course_id), workshop_time="AM").instructor_id))
+        try:
+            ctx['payment']=MailPayment.objects.latest('mailPayment_id')
+            ctx['checkout']=Checkout.objects.latest('checkout_id')
+        except:
+            ctx['payment']=None
+            ctx['checkout']=None
+        return ctx
+
+    def render(self, form=None, **kwargs):
+        form = form or self.get_form()
+        if self.steps.current=='3':
+            context = self.get_context_data(form=form, **kwargs)
+            return self.render_to_response(context)
+        context = self.get_context_data(form=form, **kwargs)
+        return self.render_to_response(context)
 
     def render_next_step(self, form, **kwargs):
         """
@@ -291,12 +304,6 @@ class RegistrationWizard(SessionWizardView):
             data=self.get_cleaned_data_for_step('0')
             if(data["citizenship"]=='No'):
                 return redirect(reverse('registrationIssue'))
-        print(self.steps.index)
-        if(self.steps.index==2):
-            data=self.get_cleaned_data_for_step('2')
-            print("------------------------------")
-            print(str(data["evening_subject"]))
-            print(str(data["morning_subject"]))
         # run default render_next_step
         next_step = self.steps.next
         new_form = self.get_form(
@@ -407,7 +414,7 @@ class RegistrationWizard(SessionWizardView):
 def stripeCall(request):
 	# Set your secret key: remember to change this to your live secret key in production
 	# See your keys here: https://dashboard.stripe.com/account/apikeys
-	stripe.api_key = "sk_test_iIX7K5Yv2bIePNxXIiHDEseL"
+	stripe.api_key = Checkout.objects.latest('checkout_id').private_key
 
 	# Token is created using Stripe.js or Checkout!
 	# Get the payment token submitted by the form:

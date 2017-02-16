@@ -60,8 +60,6 @@ class Scout(models.Model):
 		scout.save()
 		return scout
 
-
-
 class Course(models.Model):
 	course_id=models.AutoField(primary_key=True)
 	course_name=models.CharField(max_length=50)
@@ -145,11 +143,41 @@ class HomePage(models.Model):
 
 class Checkout(models.Model):
 	checkout_id=models.AutoField(primary_key=True)
-	checkout_title=models.CharField(max_length=50)
-	checkout_description=models.CharField(max_length=150)
+	checkout_title=models.CharField(max_length=100)
+	checkout_description=models.CharField(max_length=200)
 	checkout_cost=models.PositiveIntegerField()
 	public_key=models.CharField(max_length=32)
 	private_key=models.CharField(max_length=32)
+
+class MailPayment(models.Model):
+	states_choice=(
+		('AL','AL'), ('AK','AK'), ('AZ','AZ'), ('AR','AR'), ('CA','CA'), 
+		('CO','CO'), ('CT','CT'), ('DE','DE'), ('FL','FL'), ('GA','GA'), 
+		('HI','HI'), ('ID','ID'), ('IL','IL'), ('IN','IN'), ('IA','IA'), 
+		('KS','KS'), ('KY','KY'), ('LA','LA'), ('ME','ME'), ('MD','MD'), 
+		('MA','MA'), ('MI','MI'), ('MN','MN'), ('MS','MS'), ('MO','MO'), 
+		('MT','MT'), ('NE','NE'), ('NV','NV'), ('NH','NH'), ('NJ','NJ'), 
+		('NM','NM'), ('NY','NY'), ('NC','NC'), ('ND','ND'), ('OH','OH'), 
+		('OK','OK'), ('OR','OR'), ('PA','PA'), ('RI','RI'), ('SC','SC'), 
+		('SD','SD'), ('TN','TN'), ('TX','TX'), ('UT','UT'), ('VT','VT'), 
+		('VA','VA'), ('WA','WA'), ('WV','WV'), ('WI','WI'), ('WY','WY'))
+	
+	mailPayment_id = models.AutoField(primary_key=True)
+	mailPayment_person = models.CharField(max_length=100)
+	mailPayment_building = models.CharField(max_length=50)
+	mailPayment_street = models.CharField(max_length=50)
+	mailPayment_city = models.CharField(max_length=50)
+	mailPayment_state = models.CharField(max_length=2, choices=states_choice, blank=True)
+	mailPayment_zip = models.CharField(max_length=6)
+	mailPayment_due_date = models.CharField(max_length=8)
+
+
+	def __payment_person__(self):
+		return self.mailPayment_person
+	def __payment_address__(self):
+		return self.mailPayment_building+" "+self.mailPayment_street+", "+self.mailPayment_city+", "+self.mailPayment_state+", "+self.mailPayment_zip 
+	def __payment_due_date__(self):
+		return self.mailPayment_due_date
 
 #
 # Deffered for this interation
