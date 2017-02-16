@@ -1,5 +1,6 @@
 CREATE TABLE SED_Database.sedUI_scout(
 	scout_id INT(10) ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    confirmation_id CHAR(32) NOT NULL,
 	scout_first_name VARCHAR(50) NOT NULL,
 	scout_last_name VARCHAR(50) NOT NULL,
 	scout_phone CHAR(13),
