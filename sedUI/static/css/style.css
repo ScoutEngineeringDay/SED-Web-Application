@@ -310,11 +310,13 @@ font-size: 24px;
     float: left;
     width: auto;
   }
-
   .btn-action {
     width: 100%;
   }
-
+  .ul-links {
+    width: 100%;
+    float: left;
+  }
   .non-mobile-friendly {
     display: none;
   }

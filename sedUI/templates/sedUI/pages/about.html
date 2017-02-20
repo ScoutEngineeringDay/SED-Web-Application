@@ -22,16 +22,16 @@
 			<div class="jumbotron">
 				<h2 style="text-align: center; font-size: 32pt;">Courses Offered at Scout Engineering Day</h2>
 				<br>
-				<div class="container-fluid" style="margin: 0 auto; width: 80%">
+				<div class="container-fluid ul-links" style="margin: 0 auto; width: 80%">
 					{% if all_courses %}
-						<div class="left-float">
+						<div class="left-float ul-links">
 								{% for course in left_items %}
-									<li><a class="blackLink" href="#"> {{course.course_name}} </a></li>
+									<li><a class="blackLink" href="/course_detail/{{course.course_id}}"> {{course.course_name}} </a></li>
 								{% endfor %}
 						</div>
-						<div class="right-float">
+						<div class="right-float ul-links">
 								{% for course in right_items %}
-									<li><a class="blackLink" href="#"> {{course.course_name}} </a></li>
+									<li><a class="blackLink" href="/course_detail/{{course.course_id}}"> {{course.course_name}} </a></li>
 								{% endfor %}
 						</div>
 					{% else %}
