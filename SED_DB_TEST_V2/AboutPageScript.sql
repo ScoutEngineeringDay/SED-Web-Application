@@ -1,10 +1,10 @@
 CREATE TABLE SED_Database.sedUI_aboutpage(
 	aboutpage_id INT(10) ZEROFILL NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    saveDate VARCHAR(5000),
-    eventLocation VARCHAR(5000),
-    registrationOpenDate VARCHAR(5000),
-    registrationOpenTime VARCHAR(5000),
-    locationMap VARCHAR(5000)
+    saveDate VARCHAR(2000),
+    eventLocation VARCHAR(2000),
+    registrationOpenDate VARCHAR(2000),
+    registrationOpenTime VARCHAR(2000),
+    locationMap VARCHAR(2000)
 );
 INSERT INTO SED_Database.sedUI_aboutpage
 	(saveDate, eventLocation, registrationOpenDate, registrationOpenTime, locationMap)
