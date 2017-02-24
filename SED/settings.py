@@ -148,7 +148,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Eastern'
 
 USE_I18N = True
 
@@ -161,8 +161,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 # PROJECT_DIR = os.path.dirname(__file__)
-# STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
-STATIC_URL = '/sedUI/static/'
+STATIC_URL = 'https://s3.amazonaws.com/elasticbeanstalk-us-east-1-246431403030/static/'
 # STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'staticfiles'),)
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
