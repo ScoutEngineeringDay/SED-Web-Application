@@ -26,7 +26,7 @@ class RegistrationForm2(forms.Form):
 	medical_issues = forms.BooleanField(initial=False, required=False)
 	allergy_issues = forms.BooleanField(initial=False, required=False)
 	photo = forms.BooleanField(initial=True, required=False)
-	captcha = ReCaptchaField(public_key = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6', private_key= ' 6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7')
+	captcha = ReCaptchaField(public_key = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6', private_key= '6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7')
 	
 class RegistrationForm3(forms.Form):
 	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="AM")), widget=forms.Select(attrs={'class': 'dropdown'}))
@@ -41,7 +41,7 @@ class ContactEmailForm(forms.Form):
 	email_address = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Email', 'size': '40'}))
 	message_subject = forms.ChoiceField([("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support")], widget=forms.Select(attrs={'class': 'form-control'}))
 	message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Message'}))
-	captcha = ReCaptchaField(public_key = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6', private_key= ' 6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7')
+	captcha = ReCaptchaField(public_key = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6', private_key= '6LcYEhEUAAAAAGPUC_zxtUqTGZxrj9tqxqisyzc7')
 
 class BadgeForm(forms.Form):
 	confirmation_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Confirmation ID', 'class': 'form-control input-lg'}))
