@@ -51,7 +51,7 @@ class ContactView(SessionWizardView):
     def done(self, form_list, **kwargs):
         print("send")
         contact_send_email(form_list)
-        return render_to_response('sedUI/pages/registration_done.html', {'form_data': [form.cleaned_data for form in form_list]})
+        return render_to_response('sedUI/pages/contactConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
 
 def contact_send_email(form_list):
     form_data =[form.cleaned_data for form in form_list]
