@@ -212,7 +212,7 @@ def workshop_checkout(request, scout_id):
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
-            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops or have already Checkout of Event')    
+            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops or have already Checkout of Event')
     except:
         return HttpResponse('Scout no longer exist in database')
 
@@ -325,8 +325,8 @@ class RegistrationWizard(SessionWizardView):
 
         if(session_data["payment_method"]=="Pay_Online"):
         	stripeCall(self.request)
-        
-        # store into database scout table    
+
+        # store into database scout table
         scout = Scout(scout_first_name=scout_data["first_name"],
             scout_last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
