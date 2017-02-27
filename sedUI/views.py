@@ -353,7 +353,7 @@ class RegistrationWizard(SessionWizardView):
             payment_method=session_data["payment_method"],
             payment_amount="40.00",
             workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop1_data[0]).course_id, workshop_time="FULL").workshop_id,
-            workshop1_status="INPROGRESS",
+            workshop1_status="IN PROGRESS",
             confirmation_timestamp=datetime.datetime.now(),
             session_year=str(datetime.datetime.now().year)
             )
@@ -371,8 +371,8 @@ class RegistrationWizard(SessionWizardView):
                 payment_amount="40.00",
                 workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop1_data[0]).course_id, workshop_time="AM").workshop_id,
                 workshop2_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop2_data[0]).course_id, workshop_time="PM").workshop_id,
-                workshop1_status="INPROGRESS",
-                workshop2_status="INPROGRESS",
+                workshop1_status="IN PROGRESS",
+                workshop2_status="IN PROGRESS",
                 confirmation_timestamp=datetime.datetime.now(),
                 session_year=str(datetime.datetime.now().year)
                 )
@@ -388,7 +388,7 @@ class RegistrationWizard(SessionWizardView):
                 payment_method=session_data["payment_method"],
                 payment_amount="40.00",
                 workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop1_data[0]).course_id, workshop_time="AM").workshop_id,
-                workshop1_status="INPROGRESS",
+                workshop1_status="IN PROGRESS",
                 confirmation_timestamp=datetime.datetime.now(),
                 session_year=str(datetime.datetime.now().year)
                 )
