@@ -1,3 +1,4 @@
+{% block content %}
 <script>
 	jQuery(document).ready(function(){
 		$("#id_1-email_confirm").focusout(function () {
@@ -26,45 +27,6 @@
 	function setViewNormal() {
 		email_confirm.style.backgroundColor = orgColor;
 		message.innerHTML = "";
-	}
-</script>
-
-{% block content %}
-<script type="text/javascript">
-	jQuery(document).ready(function(){
-
-		$("#id_1-email_confirm").focusout(function () {
-			var email_confirm = document.getElementById("id_1-email_confirm");
-			var email = document.getElementById("id_1-email");
-
-			if (email.endsWith("FULL")) {
-				document.getElementById("id_2-evening_subject").value = morningDropdown.value;
-				console.log("The vew value of id_2-morning_subject is " + document.getElementById("id_2-morning_subject").value);
-				console.log("The vew value of id_2-evening_subject is " + document.getElementById("id_2-evening_subject").value);
-				disable();
-			}
-			else {
-				if ($("#id_2-evening_subject").is(":hidden")) {
-					$('#id_2-evening_subject').get(0).selectedIndex = 0;
-					enable();
-				}
-			}
-		});
-
-		$("#id_2-evening_subject").change(function () {
-			var eveningDropdown = document.getElementById("id_2-evening_subject"); 
-			var eveningSelection = eveningDropdown.options[eveningDropdown.selectedIndex].text;
-
-			if (eveningSelection.endsWith("FULL")) {
-				document.getElementById("id_2-morning_subject").value = eveningDropdown.value;
-				disable();
-			}
-		});
-	});
-	function disable() {
-	}
-
-	function enable() {
 	}
 </script>
 <form action="/registration/" method="post" style="width: 500px; margin: 0 auto"> {% csrf_token %}
