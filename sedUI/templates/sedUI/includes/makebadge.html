@@ -1,0 +1,36 @@
+{% load staticfiles %}
+{% block content %}
+<div class="container-fluid scoutbadge" id="scoutbadge" style="position: relative">
+  <!-- Medical -->
+  {% if scout.scout_medical or scout.scout_allergy %}
+    <div class="badge-top-left" id="medical">M</div>
+  {% endif %}
+  <!-- Photo -->
+  {% if scout.scout_photo %}
+    <div class="badge-top-right" id="noPhoto">P</div>
+  {% endif %}
+  <div class="badge-center">
+    <font size="6">{{scout.scout_first_name}} {{scout.scout_last_name}}</font><br/>
+    <font size="5">{{scout.scout_id}}</font>
+  </div>
+  <div class="badge-bottom-left" id="qrcode"></div>
+  <div class="badge-bottom-right" id="classes">
+    <p>
+      {{ workshop_1.course_name}}
+      <br>
+      {{ workshop_2.course_name }}
+    </p>
+  </div>
+</div>
+
+<script type="text/javascript" src="{% static '/js/jquery.qrcode.min.js' %}"></script>
+<script>
+  jQuery('#qrcode').qrcode({
+    render	: "canvas",
+    /*text	: "http://www.sedteam.com:8000/scout_detail/{{ scout.scout_id }}",*/
+    text  : location.protocol + '//' + location.hostname + (location.port ? ':' + location.port: '') + "/scout_detail/{{ scout.scout_id }}",
+    width: 85,
+    height: 85
+  });
+</script>
+{% endblock %}

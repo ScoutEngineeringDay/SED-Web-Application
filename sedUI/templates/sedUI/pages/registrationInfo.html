@@ -3,11 +3,11 @@
 	jQuery(document).ready(function(){
 		$("#id_1-email_confirm").focusout(function () {
 			var email_confirm = document.getElementById("id_1-email_confirm");
+    	var message = document.getElementById('confirmMessage');
 			var email = document.getElementById("id_1-email");
 			var goodColor = "#66cc66";
     	var badColor = "#ff6666";
 			var orgColor = "#ffffff";
-    	var message = document.getElementById('confirmMessage');
 
 			if (email.value != email_confirm.value) {
 				email_confirm.style.backgroundColor = badColor;
@@ -20,14 +20,16 @@
 	        message.style.color = goodColor;
 	        message.innerHTML = "Emails Match!";
 					email_confirm.setCustomValidity('');
+					console.log("Wait 2 Seconds");
 					setTimeout(function(){ setViewNormal(); }, 2000);
+					console.log("2 Seconds Up");
+			}
+			function setViewNormal() {
+				email_confirm.style.backgroundColor = orgColor;
+				message.innerHTML = "";
 			}
 		});
 	});
-	function setViewNormal() {
-		email_confirm.style.backgroundColor = orgColor;
-		message.innerHTML = "";
-	}
 </script>
 <form action="/registration/" method="post" style="width: 500px; margin: 0 auto"> {% csrf_token %}
 	{{ wizard.management_form }}

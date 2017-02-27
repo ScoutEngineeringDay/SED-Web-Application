@@ -1,52 +1,13 @@
 {% load staticfiles %}
 {% block content %}
-<div class="container-fluid scoutbadge" id="scoutbadge" style="position: relative">
-  <!-- Medical -->
-  <!-- TODO: MAKE DYNAMIC -->
-<!--   {{scout.scout_medical}}
-  {{scout.scout_allergy}} -->
-  {% if scout.scout_medical or scout.scout_allergy %}
-    <div class="badge-top-left" id="medical">M</div>
-  {% endif %}
-  <!-- Photo -->
-  <!-- TODO: MAKE DYNAMIC -->
-  {% if scout.scout_photo %}
-    <div class="badge-top-right" id="noPhoto">P</div>
-  {% endif %}
-  <div class="badge-center">
-    <!-- TODO: MAKE DYNAMIC -->
-    <font size="6">{{scout.scout_first_name}} {{scout.scout_last_name}}</font><br/>
-    <font size="5">{{scout.scout_id}}</font>
-  </div>
-  <div class="badge-bottom-left" id="qrcode"></div>
-  <div class="badge-bottom-right" id="classes">
-    <!-- TODO: MAKE DYNAMIC -->
-    <p>
-      {{ workshop_1.course_name}}
-      <br>
-      {{ workshop_2.course_name }}
-    </p>
-  </div>
-</div>
+
+{% include "sedUI/includes/makebadge.html" %}
 <br>
 <button class="btn btn-primary btn-lg" id="savebadge">Download Badge</button>
-{% if request.user.is_superuser %}
-  <button class="btn btn-primary btn-lg" id="savebadge">Email Badge</button>
-{% endif %}
 
-<script type="text/javascript" src="{% static '/js/jquery.qrcode.min.js' %}"></script>
-<script type="text/javascript" src="{% static '/js/jspdf.debug.js' %}"></script>
+<!--<script type="text/javascript" src="{% static '/js/jspdf.debug.js' %}"></script>-->
 <script type="text/javascript" src="{% static '/js/html2canvas.js' %}"></script>
 <script>
-  jQuery('#qrcode').qrcode({
-    render	: "canvas",
-    //TODO: MAKE DYNAMIC
-    /*text	: "http://www.sedteam.com:8000/scout_detail/{{ scout.scout_id }}",*/
-    text  : "http://" + window.location.hostname + ":8000/scout_detail/{{ scout.scout_id }}",
-    width: 85,
-    height: 85
-  });
-
   $( document ).ready(function() {
     $('#savebadge').click(function () {
       html2canvas($("#scoutbadge"), {
