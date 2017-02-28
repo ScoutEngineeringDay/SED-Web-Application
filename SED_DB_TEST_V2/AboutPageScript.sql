@@ -4,7 +4,8 @@ CREATE TABLE SED_Database.sedUI_aboutpage(
     eventLocation VARCHAR(2000),
     registrationOpenDate VARCHAR(2000),
     registrationOpenTime VARCHAR(2000),
-    locationMap VARCHAR(2000)
+    locationMap VARCHAR(2000),
+    forceClosed BOOLEAN
 );
 INSERT INTO SED_Database.sedUI_aboutpage
 	(saveDate, eventLocation, registrationOpenDate, registrationOpenTime, locationMap)

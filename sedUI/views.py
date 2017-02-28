@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, redirect, HttpResponse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage, Checkout, MailPayment
+from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage, Checkout, MailPayment, Location
 import os
 from django.views import generic
 from django.core.urlresolvers import reverse
@@ -261,7 +261,7 @@ class BadgeView(SessionWizardView):
             location_1=Location.objects.get(location_id=(Workshop.objects.get(workshop_id=session_data.workshop1_id).location_id))
             if(session_data.workshop2_id=='0' or session_data.workshop2_id==None):
                 course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session_data.workshop2_id).course_id))
-                location_2=Location.objects.get(location_id=(Workshop.objects.get(workshop_id=session_data.workshop1_id).location_id))
+                location_2=Location.objects.get(location_id=(Workshop.objects.get(workshop_id=session_data.workshop2_id).location_id))
             else:
                 course_2=None
                 location_2=None
