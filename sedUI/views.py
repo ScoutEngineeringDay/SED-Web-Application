@@ -369,6 +369,8 @@ class RegistrationWizard(SessionWizardView):
             session.save()
             course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop1_id).course_id))
             course_2=None
+            location_1=Location.objects.get(location_id=Workshop.objects.get(workshop_id=session.workshop1_id).location_id)
+            location_2=None
         else:
             #if there is a PM CLass
             workshop2_data=None
@@ -388,6 +390,8 @@ class RegistrationWizard(SessionWizardView):
                 session.save()
                 course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop1_id).course_id))
                 course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop2_id).course_id))
+                location_1=Location.objects.get(location_id=Workshop.objects.get(workshop_id=session.workshop1_id).location_id)
+                location_2=Location.objects.get(location_id=Workshop.objects.get(workshop_id=session.workshop2_id).location_id)
             # Error issue
             else:
                 workshop2_data=None
@@ -404,12 +408,16 @@ class RegistrationWizard(SessionWizardView):
                 session.save()
                 course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop1_id).course_id))
                 course_2=None
+                location_1=Location.objects.get(location_id=Workshop.objects.get(workshop_id=session.workshop1_id).location_id)
+                location_2=None
         all_models_dict ={
         	'form_data': [form.cleaned_data for form in form_list],
     		'scout': scout,
     		'session': session,
     		'workshop_1': course_1,
-            'workshop_2': course_2
+            'workshop_2': course_2,
+            'location_1': location_1,
+            'location_2': location_2
         }
         confirmation_timestamp=session.confirmation_timestamp
         confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
@@ -417,7 +425,9 @@ class RegistrationWizard(SessionWizardView):
     		'scout': scout,
     		'session': session,
     		'workshop_1': course_1,
-            'workshop_2': course_2
+            'workshop_2': course_2,
+            'location_1': location_1,
+            'location_2': location_2
         	})
 
 def stripeCall(request):
