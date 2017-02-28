@@ -231,11 +231,18 @@ class AboutView(generic.TemplateView):
         all_courses = Course.objects.all()
         left_items = all_courses[:(len(all_courses)+1)/2]
         right_items = all_courses[(len(all_courses)+1)/2:]
+        current_datetime = datetime.datetime.now()
+        isOpen=checkOpenDate()
+        # if (current_datetime>aboutPage.registrationOpenDate) and (current_datetime<aboutPage.saveDate):
+        #     isOpen=True
+        # else:
+        #     isOpen=False
         context = {
             'all_courses' : all_courses,
             'left_items' : left_items,
             'right_items' : right_items,
-            'aboutPage' : aboutPage
+            'aboutPage' : aboutPage,
+            'isOpen' : isOpen
         }
     	return render(request, 'sedUI/pages/about.html', context);
 
@@ -276,9 +283,11 @@ class RegistrationWizard(SessionWizardView):
         ctx=super(RegistrationWizard, self).get_context_data(**kwargs)
         #ctx['instructor']=Instructor2.objects.get(instructor_id=str(Workshop2.objects.get(course_id=str(self.get_queryset().course_id), workshop_time="AM").instructor_id))
         try:
+            ctx['isOpen']=checkOpenDate()
             ctx['payment']=MailPayment.objects.latest('mailPayment_id')
             ctx['checkout']=Checkout.objects.latest('checkout_id')
         except:
+            ctx['isOpen']=checkOpenDate()
             ctx['payment']=None
             ctx['checkout']=None
         return ctx
@@ -453,3 +462,18 @@ def confirmation_send_email(form_list, scout_id, confirmation_id):
     #send_mail(subject, message, from, to)
     # send_mail('Confirmation', str(form_data), settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
+
+def checkOpenDate():
+    isOpen=False
+    aboutPage = AboutPage.objects.latest('aboutPage_id')
+    current_datetime= str(datetime.datetime.now())
+    if(current_datetime<aboutPage.saveDate and current_datetime>aboutPage.registrationOpenDate):
+        print("registration open")
+        isOpen=True
+    else:
+        print("registration closed")
+        isOpen=False
+    print(current_datetime)
+    print(aboutPage.saveDate)
+    print(aboutPage.registrationOpenDate)
+    return isOpen
