@@ -258,20 +258,27 @@ class BadgeView(SessionWizardView):
             session_data=Session.objects.get(scout_id=scout_data.scout_id)
             course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session_data.workshop1_id).course_id))
             course_2=None
+            location_1=Location.objects.get(location_id=(Workshop.objects.get(workshop_id=session_data.workshop1_id).location_id))
             if(session_data.workshop2_id=='0' or session_data.workshop2_id==None):
                 course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session_data.workshop2_id).course_id))
+                location_2=Location.objects.get(location_id=(Workshop.objects.get(workshop_id=session_data.workshop1_id).location_id))
             else:
                 course_2=None
+                location_2=None
         except Scout.DoesNotExist:
             scout_data = None
             course_1 = None
             course_2 = None
+            location_1 = None
+            location_2 = None
         print("get")
         return render_to_response('sedUI/pages/showBadge.html',
             {'form_data': [form.cleaned_data for form in form_list],
                 'scout': scout_data,
                 'workshop_1': course_1,
-                'workshop_2': course_2
+                'workshop_2': course_2,
+                'location_1': location_1,
+                'location_2': location_2
             }
         )
 
