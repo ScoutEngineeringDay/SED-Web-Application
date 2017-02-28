@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
 <!-- <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </p> -->
-{% if isOpen or request.user.is_superuser%}
+{% if isOpen == "Opened" or request.user.is_superuser%}
 {% include "sedUI/includes/registrationStatus.html"%}
 <form action="/registration/" method="post" style="margin: 0 auto"> {% csrf_token %}
   {{ wizard.management_form }}
@@ -16,8 +16,11 @@
         {% include "sedUI/pages/registrationPayment.html" %}
     {% endif %}
 </form>
+{% elif isOpen == "ForcedClosed" %}
+    <h4 align="center">Registration is down for maintance</h4>
 {% else %}
     <h4 align="center">Registration is Closed at the moment</h4>
+}
 {% endif %}
 </div>
 {% endblock %}

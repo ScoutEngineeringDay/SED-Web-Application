@@ -40,10 +40,12 @@
 				</div>
 				<br>
 				<div class="container-fluid" style="margin: 0 auto; width: 80%">
-					{% if isOpen or request.user.is_superuser %}
-					<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
+					{% if isOpen == "Opened" or request.user.is_superuser %}
+						<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
+					{% elif isOpen == "ForcedClosed" %}
+    					<h4 align="center">Registration is down for maintance</h4>
 					{% else %}
-					<p style="color:red">Registration is Closed at the moment</p>
+						<h4 style="color:red">Registration is Closed at the moment</h4>
 					{% endif %}
 				</div>
 			</div>

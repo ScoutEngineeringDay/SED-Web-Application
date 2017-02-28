@@ -135,6 +135,7 @@ class AboutPage(models.Model):
 	registrationOpenDate=models.CharField(max_length=5000)
 	registrationOpenTime=models.CharField(max_length=5000)
 	locationMap=models.CharField(max_length=5000)
+	forceClosed=models.BooleanField(default=False)
 
 class HomePage(models.Model):
 	homepage_id=models.AutoField(primary_key=True)
