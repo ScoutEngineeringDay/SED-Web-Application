@@ -481,17 +481,18 @@ def confirmation_send_email(form_list, scout_id, confirmation_id):
     return form_data
 
 def checkOpenDate():
-    isOpen=False
+    isOpen=None
     registration_force_closed=True
     aboutPage = AboutPage.objects.latest('aboutPage_id')
     current_datetime= str(datetime.datetime.now())
     if(aboutPage.forceClosed==True):
         print("registration forced closed")
         isOpen="ForcedClosed"
-    elif(current_datetime<aboutPage.saveDate and current_datetime>aboutPage.registrationOpenDate):
+    elif(current_datetime<aboutPage.saveDate and current_datetime>=aboutPage.registrationOpenDate):
         print("registration open")
         isOpen="Opened"
     else:
         print("registration closed")
         isOpen="Closed"
     return isOpen
+
