@@ -252,14 +252,15 @@ class BadgeView(SessionWizardView):
             scout_data=getScoutByConfirmation_id(confirmation_id)
             session_data=getSessionByUniqueSession(scout_data.scout_id, scout_data.scout_year)
             course_1=getCourseBySession(session_data.workshop1_id)
-            course_2=None
             location_1=getLocationBySession(session_data.workshop1_id)
-            if(session_data.workshop2_id=='0' or session_data.workshop2_id==None):
+            if(session_data.workshop2_id!='0' or session_data.workshop2_id!=None):
                 course_2=getCourseBySession(session_data.workshop2_id)
-                location_2=getLocationBySession(session.workshop2_id)
+                location_2=getLocationBySession(session_data.workshop2_id)
             else:
                 course_2=None
                 location_2=None
+            print(course_2.course_id)
+            print(location_2.location_id)
         except Scout.DoesNotExist:
             scout_data = None
             course_1 = None
@@ -488,18 +489,18 @@ def checkOpenDate():
         print("registration forced closed")
         isOpen="ForcedClosed"
     else:
-        # if(current_datetime>aboutPage.saveDate and current_datetime<=aboutPage.registrationOpenDate):
-        #     print("registration open")
-        #     isOpen="Opened"
-        # else:
-        #     print(current_datetime)
-        #     print(aboutPage.saveDate)
-        #     print(aboutPage.registrationOpenDate)
+        if(current_datetime>aboutPage.saveDate and current_datetime<=aboutPage.registrationOpenDate):
+            print("registration open")
+            isOpen="Opened"
+        else:
+            print(current_datetime)
+            print(aboutPage.saveDate)
+            print(aboutPage.registrationOpenDate)
 
-        #     print("registration closed")
-        #     isOpen="Closed"
-        print("registration open")
-        isOpen="Opened"
+            print("registration closed")
+            isOpen="Closed"
+        # print("registration open")
+        # isOpen="Opened"
     return isOpen
 
 def getScoutByUniqueScout(ScoutID, ScoutYear):
