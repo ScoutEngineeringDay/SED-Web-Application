@@ -26,17 +26,18 @@ FORMS = [("citizenship", RegistrationForm1),
 
 # Create your views here.
 class IndexView(generic.TemplateView):
-	template_name='sedUI/pages/index.html'
-	def get(self, request, *args, **kwargs):
-		HomePage_object=HomePage.objects.latest('homepage_id')
-		aboutPage = AboutPage.objects.latest('aboutPage_id')
-		img_fileNames = []
-		#Add first image
-		img_fileNames.append(os.path.join('img/images/', '00001.jpg'))
-		# for filename in os.listdir("sed/sedUI/static/img/homeImages"):    # Use if running on AWS Server
-		for filename in os.listdir("sedUI/static/img/homeImages"):          # Use if running on Local Machine
-			img_fileNames.append(os.path.join('img/homeImages/', filename))
-		return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames, "HomePage": HomePage_object,'aboutPage' : aboutPage})
+    template_name='sedUI/pages/index.html'
+    def get(self, request, *args, **kwargs):
+        HomePage_object=getHomePageLatest()
+        aboutPage = getAboutPageLatest()
+        isOpen=checkOpenDate()
+        img_fileNames = []
+        #Add first image
+        img_fileNames.append(os.path.join('img/images/', '00001.jpg'))
+        # for filename in os.listdir("sed/sedUI/static/img/homeImages"):    # Use if running on AWS Server
+        for filename in os.listdir("sedUI/static/img/homeImages"):          # Use if running on Local Machine
+            img_fileNames.append(os.path.join('img/homeImages/', filename))
+        return render(request, 'sedUI/pages/index.html', {"fileNames" : img_fileNames, "HomePage": HomePage_object,'aboutPage' : aboutPage, 'isOpen' : isOpen})
 
 class RegistrationIssueView(generic.TemplateView):
     template_name = 'sedUI/pages/registrationIssue.html'
@@ -80,17 +81,16 @@ class CourseDetailView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         ctx=super(CourseDetailView, self).get_context_data(**kwargs)
-        #ctx['instructor2']=Instructor2.objects.get(instructor_id=str(Workshop2.objects.get(course_id=str(self.get_queryset().course_id), workshop_time="AM").instructor_id))
         try:
-            ctx['instructorAM']=Instructor.objects.get(instructor_id=Workshop.objects.get(course_id=self.get_queryset().course_id, workshop_time="AM").instructor_id)
+            ctx['instructorAM']=getInstructorbyCourse(self.get_queryset().course_id, "AM")
         except:
             ctx['instructorAM']=None
         try:
-            ctx['instructorPM']=Instructor.objects.get(instructor_id=Workshop.objects.get(course_id=self.get_queryset().course_id, workshop_time="PM").instructor_id)
+            ctx['instructorPM']=getInstructorbyCourse(self.get_queryset().course_id, "PM")
         except:
             ctx['instructorPM']=None
         try:
-            ctx['instructorFULL']=Instructor.objects.get(instructor_id=Workshop.objects.get(course_id=self.get_queryset().course_id, workshop_time="FULL").instructor_id)
+            ctx['instructorFULL']=getInstructorbyCourse(self.get_queryset().course_id, "FULL")
         except:
             ctx['instructorFULL']=None
         return ctx
@@ -110,20 +110,16 @@ class ScoutDetailView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         ctx=super(ScoutDetailView, self).get_context_data(**kwargs)
-        #ctx['instructor']=Instructor2.objects.get(instructor_id=str(Workshop2.objects.get(course_id=str(self.get_queryset().course_id), workshop_time="AM").instructor_id))
-        try:
-            ctx['session']=Session.objects.get(scout_id=self.get_queryset().scout_id)
-        except:
-            ctx['session']=None
+        ctx['session']=getSessionByUniqueSession(self.get_queryset().scout_id, self.get_queryset().scout_year)
         return ctx
 
 def event_checkin(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
+        scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
         if(scout.scout_status=="UNDERWAY" or scout.scout_status=='EVENT_CHECKOUT'):
             scout.scout_status='EVENT_CHECKIN'
             scout.save()
-            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session=getSessionByUniqueSession(scout_id, scout.scout_year)
             session.event_checkin=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
@@ -134,11 +130,11 @@ def event_checkin(request, scout_id):
 
 def event_checkout(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
+        scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
         if(scout.scout_status=='EVENT_CHECKIN' or scout.scout_status=='WORKSHOP1_CHECKOUT' or scout.scout_status=='WORKSHOP2_CHECKOUT'):
             scout.scout_status='EVENT_CHECKOUT'
             scout.save()
-            session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+            session=getSessionByUniqueSession(scout_id, scout.scout_year)
             session.event_checkout=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
@@ -149,8 +145,8 @@ def event_checkout(request, scout_id):
 
 def workshop_checkin(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
-        session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+        scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
+        session=getSessionByUniqueSession(scout_id, scout.scout_year)
         if(scout.scout_status=='EVENT_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKIN'
             scout.save()
@@ -172,8 +168,8 @@ def workshop_checkin(request, scout_id):
 
 def workshop_completed(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
-        session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+        scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
+        session=getSessionByUniqueSession(scout_id, scout.scout_year)
         if(scout.scout_status=='WORKSHOP1_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKOUT'
             scout.save()
@@ -195,8 +191,8 @@ def workshop_completed(request, scout_id):
 
 def workshop_checkout(request, scout_id):
     try:
-        scout=Scout.objects.get(scout_id=scout_id, scout_year=datetime.datetime.now().year)
-        session=Session.objects.get(scout_id=scout_id, session_year=scout.scout_year)
+        scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
+        session=getSessionByUniqueSession(scout_id, scout.scout_year)
         if(scout.scout_status=='WORKSHOP1_CHECKIN'):
             scout.scout_status='WORKSHOP1_CHECKOUT'
             scout.save()
@@ -219,7 +215,6 @@ def workshop_checkout(request, scout_id):
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
 
-
 class ProfileView(generic.TemplateView):
     template_name = 'sedUI/pages/profile.html'
 
@@ -227,7 +222,7 @@ class AboutView(generic.TemplateView):
     template_name='sedUI/pages/about.html'
     # context_object_name = 'all_courses'
     def get(self, request, *args, **kwargs):
-    	aboutPage = AboutPage.objects.latest('aboutPage_id')
+    	aboutPage = getAboutPageLatest()
         all_courses = Course.objects.all()
         left_items = all_courses[:(len(all_courses)+1)/2]
         right_items = all_courses[(len(all_courses)+1)/2:]
@@ -254,14 +249,14 @@ class BadgeView(SessionWizardView):
         form_data=self.get_cleaned_data_for_step('0')
         confirmation_id=form_data["confirmation_id"]
         try:
-            scout_data=Scout.objects.get(confirmation_id=confirmation_id)
-            session_data=Session.objects.get(scout_id=scout_data.scout_id)
-            course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session_data.workshop1_id).course_id))
+            scout_data=getScoutByConfirmation_id(confirmation_id)
+            session_data=getSessionByUniqueSession(scout_data.scout_id, scout_data.scout_year)
+            course_1=getCourseBySession(session_data.workshop1_id)
             course_2=None
-            location_1=Location.objects.get(location_id=(Workshop.objects.get(workshop_id=session_data.workshop1_id).location_id))
+            location_1=getLocationBySession(session_data.workshop1_id)
             if(session_data.workshop2_id=='0' or session_data.workshop2_id==None):
-                course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session_data.workshop2_id).course_id))
-                location_2=Location.objects.get(location_id=(Workshop.objects.get(workshop_id=session_data.workshop2_id).location_id))
+                course_2=getCourseBySession(session_data.workshop2_id)
+                location_2=getLocationBySession(session.workshop2_id)
             else:
                 course_2=None
                 location_2=None
@@ -291,8 +286,8 @@ class RegistrationWizard(SessionWizardView):
         #ctx['instructor']=Instructor2.objects.get(instructor_id=str(Workshop2.objects.get(course_id=str(self.get_queryset().course_id), workshop_time="AM").instructor_id))
         try:
             ctx['isOpen']=checkOpenDate()
-            ctx['payment']=MailPayment.objects.latest('mailPayment_id')
-            ctx['checkout']=Checkout.objects.latest('checkout_id')
+            ctx['payment']=getMailPaymentLatest()
+            ctx['checkout']=getCheckoutLatest()
         except:
             ctx['isOpen']=checkOpenDate()
             ctx['payment']=None
@@ -368,15 +363,15 @@ class RegistrationWizard(SessionWizardView):
             scout_id=scout.scout_id,
             payment_method=session_data["payment_method"],
             payment_amount="40.00",
-            workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop1_data[0]).course_id, workshop_time="FULL").workshop_id,
+            workshop1_id=getWorkshopbyCourse(workshop1_data[0], "FULL"),
             workshop1_status="IN PROGRESS",
             confirmation_timestamp=datetime.datetime.now(),
             session_year=str(datetime.datetime.now().year)
             )
             session.save()
-            course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop1_id).course_id))
+            course_1=getCourseBySession(session.workshop1_id)
             course_2=None
-            location_1=Location.objects.get(location_id=Workshop.objects.get(workshop_id=session.workshop1_id).location_id)
+            location_1=getLocationBySession(session.workshop1_id)
             location_2=None
         else:
             #if there is a PM CLass
@@ -387,18 +382,18 @@ class RegistrationWizard(SessionWizardView):
                 scout_id=scout.scout_id,
                 payment_method=session_data["payment_method"],
                 payment_amount="40.00",
-                workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop1_data[0]).course_id, workshop_time="AM").workshop_id,
-                workshop2_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop2_data[0]).course_id, workshop_time="PM").workshop_id,
+                workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
+                workshop2_id=getWorkshopbyCourse(workshop2_data[0], "PM"),
                 workshop1_status="IN PROGRESS",
                 workshop2_status="IN PROGRESS",
                 confirmation_timestamp=datetime.datetime.now(),
                 session_year=str(datetime.datetime.now().year)
                 )
                 session.save()
-                course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop1_id).course_id))
-                course_2=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop2_id).course_id))
-                location_1=Location.objects.get(location_id=Workshop.objects.get(workshop_id=session.workshop1_id).location_id)
-                location_2=Location.objects.get(location_id=Workshop.objects.get(workshop_id=session.workshop2_id).location_id)
+                course_1=getCourseBySession(session.workshop1_id)
+                course_2=getCourseBySession(session.workshop2_id)
+                location_1=getLocationBySession(session.workshop1_id)
+                location_2=getLocationBySession(session.workshop2_id)
             # Error issue
             else:
                 workshop2_data=None
@@ -407,15 +402,15 @@ class RegistrationWizard(SessionWizardView):
                 scout_id=scout.scout_id,
                 payment_method=session_data["payment_method"],
                 payment_amount="40.00",
-                workshop1_id=Workshop.objects.get(course_id=Course.objects.get(course_name=workshop1_data[0]).course_id, workshop_time="AM").workshop_id,
+                workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
                 workshop1_status="IN PROGRESS",
                 confirmation_timestamp=datetime.datetime.now(),
                 session_year=str(datetime.datetime.now().year)
                 )
                 session.save()
-                course_1=Course.objects.get(course_id=(Workshop.objects.get(workshop_id=session.workshop1_id).course_id))
+                course_1=getCourseBySession(session.workshop1_id)
                 course_2=None
-                location_1=Location.objects.get(location_id=Workshop.objects.get(workshop_id=session.workshop1_id).location_id)
+                location_1=getLocationBySession(session.workshop1_id)
                 location_2=None
         all_models_dict ={
         	'form_data': [form.cleaned_data for form in form_list],
@@ -440,19 +435,20 @@ class RegistrationWizard(SessionWizardView):
 def stripeCall(request):
 	# Set your secret key: remember to change this to your live secret key in production
 	# See your keys here: https://dashboard.stripe.com/account/apikeys
-	stripe.api_key = Checkout.objects.latest('checkout_id').private_key
+    checkout = getCheckoutLatest()
+    stripe.api_key = checkout.private_key
 
-	# Token is created using Stripe.js or Checkout!
-	# Get the payment token submitted by the form:
-	token = request.POST['stripeToken']
+    # Token is created using Stripe.js or Checkout!
+    # Get the payment token submitted by the form:
+    token = request.POST['stripeToken']
 
-	# Charge the user's card:
-	charge = stripe.Charge.create(
-		amount=4000,
-		currency="usd",
-		description="Example charge",
-		source=token,
-	)
+    # Charge the user's card:
+    charge = stripe.Charge.create(
+    	amount=4000,
+    	currency="usd",
+    	description="Example charge",
+    	source=token,
+    )
 
 def confirmation_send_email(form_list, scout_id, confirmation_id):
     message = None
@@ -481,6 +477,9 @@ def confirmation_send_email(form_list, scout_id, confirmation_id):
     return form_data
 
 def checkOpenDate():
+    #Note:
+    # Date must match format of (Day, Month, DayDate, Year) and date must be real or else it will states that the registration is closed.
+    #
     isOpen=None
     registration_force_closed=True
     aboutPage = AboutPage.objects.latest('aboutPage_id')
@@ -488,11 +487,84 @@ def checkOpenDate():
     if(aboutPage.forceClosed==True):
         print("registration forced closed")
         isOpen="ForcedClosed"
-    elif(current_datetime<aboutPage.saveDate and current_datetime>=aboutPage.registrationOpenDate):
+    else:
+        # if(current_datetime>aboutPage.saveDate and current_datetime<=aboutPage.registrationOpenDate):
+        #     print("registration open")
+        #     isOpen="Opened"
+        # else:
+        #     print(current_datetime)
+        #     print(aboutPage.saveDate)
+        #     print(aboutPage.registrationOpenDate)
+
+        #     print("registration closed")
+        #     isOpen="Closed"
         print("registration open")
         isOpen="Opened"
-    else:
-        print("registration closed")
-        isOpen="Closed"
     return isOpen
 
+def getScoutByUniqueScout(ScoutID, ScoutYear):
+    try:
+        return Scout.objects.get(scout_id=ScoutID, scout_year=ScoutYear)
+    except:
+        return None
+
+def getScoutByConfirmation_id(confirmation_id):
+    try:
+        return Scout.objects.get(confirmation_id=confirmation_id)
+    except:
+        return None
+
+def getInstructorbyCourse(CourseID, WorkshopTime):
+    try:
+        return Instructor.objects.get(instructor_id=Workshop.objects.get(course_id=CourseID, workshop_time=WorkshopTime).instructor_id)
+    except:
+        return None
+
+def getSessionByUniqueSession(ScoutID, ScoutYear):
+    try:
+        return Session.objects.get(scout_id=ScoutID, session_year=ScoutYear)
+    except: 
+        return None
+
+def getCourseBySession(SessionWorkshopID):
+    try:
+        return Course.objects.get(course_id=(Workshop.objects.get(workshop_id=SessionWorkshopID).course_id))
+    except: 
+        return None
+
+def getLocationBySession(SessionWorkshopID):
+    try:
+        return Location.objects.get(location_id=(Workshop.objects.get(workshop_id=SessionWorkshopID).location_id))
+    except: 
+        return None
+
+
+def getAboutPageLatest():
+    try:
+        return AboutPage.objects.latest('aboutPage_id')
+    except:
+        return None
+
+def getHomePageLatest():
+    try:
+        return HomePage.objects.latest('homepage_id')
+    except:
+        return None
+
+def getCheckoutLatest():
+    try:
+        return Checkout.objects.latest('checkout_id')
+    except:
+        return None
+
+def getMailPaymentLatest():
+    try:
+        return MailPayment.objects.latest('mailPayment_id')
+    except:
+        return None
+
+def getWorkshopbyCourse(CourseName, WorkshopTime):
+    try:
+        return Workshop.objects.get(course_id=Course.objects.get(course_name=CourseName).course_id, workshop_time=WorkshopTime).workshop_id
+    except:
+        return None

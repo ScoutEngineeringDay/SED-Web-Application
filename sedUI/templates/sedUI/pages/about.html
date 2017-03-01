@@ -1,6 +1,7 @@
 {% extends "sedUI/base/header.html" %}
 {% load staticfiles %}
 {% block content %}
+	{% if aboutPage %}
 		<div class="container">
 		    <div class="container">
 			<div class="jumbotron">
@@ -90,4 +91,7 @@
 		        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXhUi4Rr6tydsw9jIbfs4k7rLOlxt4-hA&callback=myMap">
 			</script>
 		</div>
+	{% else %}
+		<p> Error with AboutPage Data </p>
+	{% endif %}
 {% endblock %}

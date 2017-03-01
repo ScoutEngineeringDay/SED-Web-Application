@@ -1,39 +1,45 @@
 {% extends "sedUI/base/header.html" %}
 {% block content %}
-<div class="container">
-	<div class="jumbotron">
-		<h1 style="text-align: center;">Scout Engineering Day</h1>
-		<p>{{HomePage.homepage_description}} </p>
-		<p><i>Registration opens on {{aboutPage.registrationOpenDate}} and {{aboutPage.registrationOpenTime}}. Sign up for classes to get your badges!</i></p>
-		<br>
-		<p>
-		{% if isOpen == "Opened" or request.user.is_superuser %}
-			<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
-		{% elif isOpen == "ForcedClosed" %}
-   			<h4 align="center">Registration is down for maintance</h4>
-		{% else %}
-			<h4 style="color:red">Registration is Closed at the moment</h4>
-		{% endif %}
-		</p>
-	</div>
-	{% include "sedUI/includes/img_carousel.html" %}
-
-	<div class="jumbotron">
-		<h1>News and Events</h1>
-		<p>{{HomePage.homepage_news_event}}</p>
-			<p>
-				<a class="btn btn-primary btn-lg" href="/about/" role="button">Learn
-					more</a>
+	{% if HomePage %}
+		{% if aboutPage %}
+		<div class="container">
+			<div class="jumbotron">
+				<h1 style="text-align: center;">Scout Engineering Day</h1>
+				<p>{{HomePage.homepage_description}} </p>
+				<p><i>Registration opens on {{aboutPage.registrationOpenDate}} and {{aboutPage.registrationOpenTime}}. Sign up for classes to get your badges!</i></p>
+				<br>
+				<p>
+				{% if isOpen == "Opened" or request.user.is_superuser %}
+					<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
+				{% elif isOpen == "ForcedClosed" %}
+		   			<h4 align="center">Registration is down for maintance</h4>
+				{% else %}
+					<h4 style="color:red">Registration is Closed at the moment</h4>
+				{% endif %}
 				</p>
 			</div>
-		</div>
-<script type="text/javascript">
-     $(function(){
-       {% if alert %}
-          //whatever conditions and js code
-          alert('{{alert}}');
-       {% endif %}
-     });
-    </script>
+			{% include "sedUI/includes/img_carousel.html" %}
 
-		{% endblock %}
+			<div class="jumbotron">
+				<h1>News and Events</h1>
+				<p>{{HomePage.homepage_news_event}}</p>
+					<p>
+						<a class="btn btn-primary btn-lg" href="/about/" role="button">Learn more</a>
+					</p>
+				</div>
+			</div>
+		{% else %}
+			<p> Error with AboutPage Data </p>
+		{% endif %}
+	{% else %}
+		<p> Error with HomePage Data </p>
+	{% endif %}
+<script type="text/javascript">
+	$(function(){
+	{% if alert %}
+		//whatever conditions and js code
+		alert('{{alert}}');
+	{% endif %}
+	});
+</script>
+{% endblock %}
