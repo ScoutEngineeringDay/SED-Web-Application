@@ -276,6 +276,13 @@ class BadgeView(SessionWizardView):
             }
         )
 
+class AllBadgesView(generic.ListView):
+    template_name = 'sedUI/pages/getAllBadges.html'
+    context_object_name = 'all_scouts'
+
+    def get_queryset(self):
+        return Scout.objects.all()
+
 class RegistrationWizard(SessionWizardView):
     form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]
     template_name = 'sedUI/pages/registration_form.html'
@@ -522,19 +529,19 @@ def getInstructorbyCourse(CourseID, WorkshopTime):
 def getSessionByUniqueSession(ScoutID, ScoutYear):
     try:
         return Session.objects.get(scout_id=ScoutID, session_year=ScoutYear)
-    except: 
+    except:
         return None
 
 def getCourseBySession(SessionWorkshopID):
     try:
         return Course.objects.get(course_id=(Workshop.objects.get(workshop_id=SessionWorkshopID).course_id))
-    except: 
+    except:
         return None
 
 def getLocationBySession(SessionWorkshopID):
     try:
         return Location.objects.get(location_id=(Workshop.objects.get(workshop_id=SessionWorkshopID).location_id))
-    except: 
+    except:
         return None
 
 

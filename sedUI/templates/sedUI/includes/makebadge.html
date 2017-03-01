@@ -13,8 +13,8 @@
     <font size="6">{{scout.scout_first_name}} {{scout.scout_last_name}}</font><br/>
     <font size="5">ID: {{scout.scout_id}}</font>
   </div>
-  <div class="badge-bottom-left" id="qrcode"></div>
-  <div class="badge-bottom-right" id="classes">
+  <div class="badge-bottom-left" id="qrcode{{scout.scout_id}}"></div>
+  <div class="badge-bottom-right" id="classes{{scout.scout_id}}">
     <p>
       {{ workshop_1.course_name }} - {{ location_1.location_room }}
       <br>
@@ -27,7 +27,7 @@
 
 <script type="text/javascript" src="{% static '/js/jquery.qrcode.min.js' %}"></script>
 <script>
-  jQuery('#qrcode').qrcode({
+  jQuery('#qrcode{{scout.scout_id}}').qrcode({
     render	: "canvas",
     text  : location.protocol + '//' + location.hostname + (location.port ? ':' + location.port: '') + "/scout_detail/{{ scout.scout_id }}",
     width: 85,

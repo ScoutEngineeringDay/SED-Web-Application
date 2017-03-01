@@ -1,0 +1,34 @@
+{% extends "sedUI/base/header.html" %}
+{% load staticfiles %}
+{% block content %}
+  <div align="center">
+    <button class="btn btn-primary btn-lg" id="savebadges">Download Badges</button>
+  </div>
+  <br>
+  <div id="scoutbadges" class="container">
+      {% for scout in all_scouts %}
+          {% include "sedUI/includes/makebadge.html" %}
+          <br>
+      {% endfor %}
+	</div>
+
+  <script type="text/javascript" src="{% static '/js/jspdf.debug.js' %}"></script>
+  <script type="text/javascript" src="{% static '/js/html2canvas.js' %}"></script>
+  <script>
+    $( document ).ready(function() {
+      $('#savebadges').click(function () {
+        html2canvas($("#scoutbadges"), {
+          background :'#FFFFFF',
+          onrendered: function(canvas) {
+              // canvas is the final rendered <canvas> element
+              var imgData = canvas.toDataURL("image/jpeg");
+              var pdf = new jsPDF();
+
+              pdf.addImage(imgData, 'JPEG', 10, 10);
+              pdf.save("scoutbadge.pdf");
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}
