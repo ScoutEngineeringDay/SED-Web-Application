@@ -491,14 +491,14 @@ def checkOpenDate():
             print("registration open")
             isOpen="Opened"
         else:
-            print(current_datetime)
-            print(aboutPage.saveDate)
-            print(aboutPage.registrationOpenDate)
+            # print(current_datetime)
+            # print(aboutPage.saveDate)
+            # print(aboutPage.registrationOpenDate)
 
-            print("registration closed")
-            isOpen="Closed"
-        # print("registration open")
-        # isOpen="Opened"
+            # print("registration closed")
+            # isOpen="Closed"
+	        print("registration open")
+	        isOpen="Opened"
     return isOpen
 
 def getScoutByUniqueScout(ScoutID, ScoutYear):
