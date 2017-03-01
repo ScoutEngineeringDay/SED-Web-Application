@@ -18,7 +18,9 @@
     <p>
       {{ workshop_1.course_name }} - {{ location_1.location_room }}
       <br>
+      {% if workshop_2 %}
       {{ workshop_2.course_name }} - {{ location_2.location_room }}
+      {% endif %}
     </p>
   </div>
 </div>

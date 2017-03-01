@@ -259,8 +259,6 @@ class BadgeView(SessionWizardView):
             else:
                 course_2=None
                 location_2=None
-            print(course_2.course_id)
-            print(location_2.location_id)
         except Scout.DoesNotExist:
             scout_data = None
             course_1 = None
@@ -489,7 +487,7 @@ def checkOpenDate():
         print("registration forced closed")
         isOpen="ForcedClosed"
     else:
-        if(current_datetime>aboutPage.saveDate and current_datetime<=aboutPage.registrationOpenDate):
+        if(current_datetime<aboutPage.saveDate and current_datetime>=aboutPage.registrationOpenDate):
             print("registration open")
             isOpen="Opened"
         else:
