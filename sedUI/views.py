@@ -289,23 +289,18 @@ class AllBadgesView(generic.ListView):
     	ctx['data']={}
         for scout in Scout.objects.all():
            session_data=getSessionByUniqueSession(scout.scout_id, scout.scout_year)
-           print(scout.scout_id)
-           print(getCourseBySession(session_data.workshop1_id))
-           print(getCourseBySession(session_data.workshop2_id))
-           print(getLocationBySession(session_data.workshop1_id))
-           print(getLocationBySession(session_data.workshop2_id))
-           print('----------------------')
            location_1=getLocationBySession(session_data.workshop1_id)
            location_2=getLocationBySession(session_data.workshop2_id)
            workshop_1=getCourseBySession(session_data.workshop1_id)
            workshop_2=getCourseBySession(session_data.workshop2_id)
-
+           # ceremony=str(session_data.ceremony_room)
            workshop_1_data=str(workshop_1.course_name)+" - "+str(location_1.location_room)
            try:
             workshop_2_data=str(workshop_2.course_name)+" - "+str(location_2.location_room)
            except:
             workshop_2_data=None
            scout_information={'scout': scout,
+           # 'open_ceremony': ceremony,
            'workshop_1': workshop_1_data,
            'workshop_2': workshop_2_data,
 

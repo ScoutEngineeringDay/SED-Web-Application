@@ -8,6 +8,7 @@
   <div id="scoutbadges" class="container">
 
       {% for key,values in data.items %}
+        {{ key }}
         <div class="container-fluid scoutbadge" id="scoutbadge" style="position: relative">
           {% for k,v in values.items %}
             {% if k == "scout" %}
@@ -35,6 +36,7 @@
               </script>
             {% endif %}
             <div class="badge-bottom-right">
+            
             <p>
             {% if k == "workshop_1"%}
               {% if v %}
@@ -42,7 +44,6 @@
               {% endif %}
             {% endif %}
             </p>
-            <br>
             <p>
             {% if k == "workshop_2" %}
               {% if v %}
