@@ -285,7 +285,7 @@ class AllBadgesView(generic.ListView):
 
     def get_context_data(self, **kwargs):
     	ctx=super(AllBadgesView, self).get_context_data(**kwargs)
-    	
+
     	ctx['data']={}
         for scout in Scout.objects.all():
            session_data=getSessionByUniqueSession(scout.scout_id, scout.scout_year)
@@ -307,7 +307,7 @@ class AllBadgesView(generic.ListView):
            }
            scoutstring=str(scout.scout_id)
            ctx['data'].update({scoutstring:scout_information})
-        sorted(ctx['data'].iteritems())
+        ctx['data'].iteritems()
         return ctx
 
 class RegistrationWizard(SessionWizardView):
@@ -398,6 +398,8 @@ class RegistrationWizard(SessionWizardView):
             payment_amount="40.00",
             workshop1_id=getWorkshopbyCourse(workshop1_data[0], "FULL"),
             workshop1_status="IN PROGRESS",
+            workshop2_id=None,
+            workshop2_status=None,
             confirmation_timestamp=datetime.datetime.now(),
             session_year=str(datetime.datetime.now().year)
             )
