@@ -6,12 +6,68 @@
   </div>
   <br>
   <div id="scoutbadges" class="container">
-      {% for scout in all_scouts %}
-          {% include "sedUI/includes/makebadge.html" %}
-          <br>
-      {% endfor %}
-	</div>
 
+      {% for key,values in data.items %}
+        <div class="container-fluid scoutbadge" id="scoutbadge" style="position: relative">
+          {% for k,v in values.items %}
+            {% if k == "scout" %}
+              <!-- Medical -->
+              {% if v.scout_medical or v.scout_allergy %}
+                <div class="badge-top-left" id="medical">M</div>
+              {% endif %}
+              <!-- Photo -->
+              {% if v.scout_photo %}
+                <div class="badge-top-right" id="noPhoto">P</div>
+              {% endif %}
+              <div class="badge-center">
+                <font size="6">{{v.scout_first_name}} {{v.scout_last_name}}</font><br/>
+                <font size="5">ID: {{v.scout_id}}</font>
+              </div>
+              <div class="badge-bottom-left" id="qrcode{{v.scout_id}}"></div>
+              <div class="badge-bottom-right" id="classes{{v.scout_id}}"></div>
+              <script type="text/javascript" src="{% static '/js/jquery.qrcode.min.js' %}"></script>
+              <script>jQuery('#qrcode{{v.scout_id}}').qrcode({
+                  render  : "canvas",
+                  text  : location.protocol + '//' + location.hostname + (location.port ? ':' + location.port: '') + "/scout_detail/{{ v.scout_id }}",
+                  width: 85,
+                  height: 85
+                });
+              </script>
+            {% endif %}
+              
+            {% if k == "workshop_1"%}
+              {% if v %}
+                <p>{{ v.course_name }} -</p>
+              {% endif %}
+            {% endif %}
+            
+            
+            {% if k == "location_1" %}
+              {% if v %}
+                <p>{{ v.location_room }}</p>
+              {% endif %}
+            {% endif %}
+            
+            
+            
+            {% if k == "workshop_2" %}
+              {% if v %}
+                <br><p>{{ v.course_name }} -</p>
+              {% endif %}
+            {% endif %}
+            {% if k == "location_2" %}
+              {% if v %}
+                <p>{{ v.location_room }}</p>
+              {% endif %}
+            {% endif %}
+          {% endfor %}</div>
+        {% endfor %}</div>
+
+        
+        
+      
+	
+  
   <script type="text/javascript" src="{% static '/js/jspdf.debug.js' %}"></script>
   <script type="text/javascript" src="{% static '/js/html2canvas.js' %}"></script>
   <script>

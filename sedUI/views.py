@@ -283,6 +283,29 @@ class AllBadgesView(generic.ListView):
     def get_queryset(self):
         return Scout.objects.all()
 
+    def get_context_data(self, **kwargs):
+    	ctx=super(AllBadgesView, self).get_context_data(**kwargs)
+    	
+    	ctx['data']={}
+        for scout in Scout.objects.all():
+	        session_data=getSessionByUniqueSession(scout.scout_id, scout.scout_year)
+	        print(scout.scout_id)
+	        print(getCourseBySession(session_data.workshop1_id))
+	        print(getCourseBySession(session_data.workshop2_id))
+	        print(getLocationBySession(session_data.workshop1_id))
+	        print(getLocationBySession(session_data.workshop2_id))
+	        print('----------------------')
+	        
+	        scout_information={'scout': scout,
+	         'workshop_1': getCourseBySession(session_data.workshop1_id),
+	         'workshop_2': getCourseBySession(session_data.workshop2_id),
+	         'location_1': getLocationBySession(session_data.workshop1_id),
+	         'location_2': getLocationBySession(session_data.workshop2_id)
+	        }
+	        scoutstring='scout'+str(scout.scout_id)
+	        ctx['data'].update({scoutstring:scout_information})
+        return ctx
+
 class RegistrationWizard(SessionWizardView):
     form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]
     template_name = 'sedUI/pages/registration_form.html'
@@ -543,7 +566,6 @@ def getLocationBySession(SessionWorkshopID):
         return Location.objects.get(location_id=(Workshop.objects.get(workshop_id=SessionWorkshopID).location_id))
     except:
         return None
-
 
 def getAboutPageLatest():
     try:
