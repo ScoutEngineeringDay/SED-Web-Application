@@ -24,7 +24,7 @@
                 <font size="5">ID: {{v.scout_id}}</font>
               </div>
               <div class="badge-bottom-left" id="qrcode{{v.scout_id}}"></div>
-              <div class="badge-bottom-right" id="classes{{v.scout_id}}"></div>
+              
               <script type="text/javascript" src="{% static '/js/jquery.qrcode.min.js' %}"></script>
               <script>jQuery('#qrcode{{v.scout_id}}').qrcode({
                   render  : "canvas",
@@ -34,32 +34,23 @@
                 });
               </script>
             {% endif %}
-              
+            <div class="badge-bottom-right">
+            <p>
             {% if k == "workshop_1"%}
               {% if v %}
-                <p>{{ v.course_name }} -</p>
+                {{ v }}  
               {% endif %}
             {% endif %}
-            
-            
-            {% if k == "location_1" %}
-              {% if v %}
-                <p>{{ v.location_room }}</p>
-              {% endif %}
-            {% endif %}
-            
-            
-            
+            </p>
+            <br>
+            <p>
             {% if k == "workshop_2" %}
               {% if v %}
-                <br><p>{{ v.course_name }} -</p>
+                {{ v }}
               {% endif %}
             {% endif %}
-            {% if k == "location_2" %}
-              {% if v %}
-                <p>{{ v.location_room }}</p>
-              {% endif %}
-            {% endif %}
+            </p>
+            </div>
           {% endfor %}</div>
         {% endfor %}</div>
 
