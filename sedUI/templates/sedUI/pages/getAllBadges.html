@@ -3,19 +3,24 @@
 {% block content %}
   <div align="center">
     <button class="btn btn-primary btn-lg donotprint" onclick="PrintWindow()">Print Badges</button>
+    <button class="btn btn-primary btn-lg" id="savebadges">Download Badges</button>
   </div>
   <br>
   <div id="section-to-print" class="container">
       {% for key,values in data.items %}
-        {% if forloop.counter0|divisibleby:2 %}
-          <div class="left-float">
-        {% else %}
-          <div class="right-float">
-        {% endif %}
         {% if forloop.counter0|divisibleby:6 and forloop.counter0 != 0 %}
-          <div class="page-break"></div>
+          </div>
         {% endif %}
-          <div class="container-fluid scoutbadge" id="scoutbadge" style="position: relative">
+        {% if forloop.counter0|divisibleby:6 %}
+          <div id="img{{forloop.counter0}}">
+        {% endif %}
+        {% if forloop.counter0|divisibleby:2 %}
+          <div class="left-float" align="right" style="padding: 0;">
+        {% else %}
+          <div class="right-float" align="left" style="padding: 0;">
+        {% endif %}
+
+          <div class="container-fluid scoutbadge" id="scoutbadge{{v.scout_id}}" style="position: relative; margin: 0px;">
             {% for k,v in values.items %}
               {% if k == "scout" %}
                 <!-- Medical -->
@@ -61,6 +66,9 @@
               </div>
             {% endfor %}
           </div>
+        {% if forloop.counter0|divisibleby:6 %}
+          </div>
+        {% endif %}
         </div>
       {% endfor %}
     </div>
@@ -73,21 +81,24 @@
     function PrintWindow() {
       window.print();
     }
-    // $( document ).ready(function() {
-    //   $('#savebadges').click(function () {
-    //     html2canvas($("#scoutbadges"), {
-    //       background :'#FFFFFF',
-    //       onrendered: function(canvas) {
-    //           // canvas is the final rendered <canvas> element
-    //           var imgData = canvas.toDataURL("image/jpeg");
-    //           var pdf = new jsPDF();
-    //
-    //           pdf.addImage(imgData, 'JPEG', 10, 10);
-    //           pdf.save("scoutbadge.pdf");
-    //       }
-    //     });
-    //   });
-    // });
+    $( document ).ready(function() {
+
+      {% for key,values in data.items %}
+        $('#savebadges').click(function () {
+          html2canvas($("#img0"), {
+            background :'#FFFFFF',
+            onrendered: function(canvas) {
+                // canvas is the final rendered <canvas> element
+                var imgData = canvas.toDataURL("image/jpeg");
+                var pdf = new jsPDF();
+
+                pdf.addImage(imgData, 'JPEG', 10, 10);
+                pdf.save("scoutbadge.pdf");
+            }
+          });
+        });
+        {% endfor %}
+    });
   </script>
 
 {% endblock %}
