@@ -297,6 +297,8 @@ font-size: 24px;
     width: 50%;
 }
 
+
+
 .btn-action {
   margin: 3px;
 }
@@ -386,4 +388,30 @@ font-size: 24px;
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.badges-row
+{
+    display: table;
+    table-layout: fixed; /*Optional*/
+}
+.badges-column
+{
+    display: table-cell;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #section-to-print, #section-to-print * {
+    visibility: visible;
+  }
+  #section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .donotprint { display: none !important; }
+  .page-break	{ page-break-before: always !important; }
 }
