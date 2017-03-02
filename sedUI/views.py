@@ -293,20 +293,19 @@ class AllBadgesView(generic.ListView):
            location_2=getLocationBySession(session_data.workshop2_id)
            workshop_1=getCourseBySession(session_data.workshop1_id)
            workshop_2=getCourseBySession(session_data.workshop2_id)
-           # ceremony=str(session_data.ceremony_room)
            workshop_1_data=str(workshop_1.course_name)+" - "+str(location_1.location_room)
            try:
             workshop_2_data=str(workshop_2.course_name)+" - "+str(location_2.location_room)
            except:
             workshop_2_data=None
            scout_information={'scout': scout,
-           # 'open_ceremony': ceremony,
            'workshop_1': workshop_1_data,
            'workshop_2': workshop_2_data,
 
            }
            scoutstring=str(scout.scout_id)
            ctx['data'].update({scoutstring:scout_information})
+        sorted(ctx['data'].iteritems())
         return ctx
 
 class RegistrationWizard(SessionWizardView):
@@ -315,7 +314,6 @@ class RegistrationWizard(SessionWizardView):
 
     def get_context_data(self, **kwargs):
         ctx=super(RegistrationWizard, self).get_context_data(**kwargs)
-        #ctx['instructor']=Instructor2.objects.get(instructor_id=str(Workshop2.objects.get(course_id=str(self.get_queryset().course_id), workshop_time="AM").instructor_id))
         try:
             ctx['isOpen']=checkOpenDate()
             ctx['payment']=getMailPaymentLatest()
