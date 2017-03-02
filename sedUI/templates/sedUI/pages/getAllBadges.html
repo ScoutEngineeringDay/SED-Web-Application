@@ -9,11 +9,7 @@
   <div id="section-to-print" class="container">
       {% for key,values in data.items %}
         {% if forloop.counter0|divisibleby:6 and forloop.counter0 != 0 %}
-          </div>
-        {% endif %}
-        {% if forloop.counter0|divisibleby:6 %}
-          <div class="page-break"><br><br><br></div>
-          <div id="img{{forloop.counter0}}">
+          <div class="page-break">
         {% endif %}
         {% if forloop.counter0|divisibleby:2 %}
           <div class="left-float" align="right" style="padding: 0;">

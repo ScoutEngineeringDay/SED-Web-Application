@@ -325,8 +325,8 @@ font-size: 24px;
 }
 
 .scoutbadge {
-  width: 4in;
-  height: 3in;
+  width: 4in !important;
+  height: 3in !important;
   border-style: solid;
   padding: 5px;
   background-color: #ffffff;
