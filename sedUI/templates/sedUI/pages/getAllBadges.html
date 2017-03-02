@@ -1,74 +1,72 @@
+{% extends "sedUI/base/header.html" %}
 {% load staticfiles %}
 {% block content %}
-<link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" type = "text/css"/>
-<link rel="stylesheet" href="{% static '/css/style.css' %}" type = "text/css"/>
-<meta name="viewport" content = "width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="{% static '/img/images/sedLogo.jpg' %}">
-<script type="text/javascript" src="{% static '/js/jquery-2.1.1.min.js' %}"></script>
-<script type="text/javascript" src="{% static '/js/bootstrap.js' %}"></script>
-  <div id="section-to-print" class="container">
-      {% for key,values in data.items %}
-        {% if forloop.counter0|divisibleby:6 and forloop.counter0 != 0 %}
-          <div class="page-break">
-        {% endif %}
-        {% if forloop.counter0|divisibleby:2 %}
-          <div class="left-float" align="right" style="padding: 0;">
-        {% else %}
-          <div class="right-float" align="left" style="padding: 0;">
-        {% endif %}
+  <div align="center">
+    <button class="btn btn-primary btn-lg donotprint" onclick="PrintWindow()">Print Badges</button>
+    <button class="btn btn-primary btn-lg" id="savebadges">Download Badges</button>
+  </div>
+  <br>
+    {% for key,values in data.items %}
+      {% if forloop.counter0|divisibleby:6 and forloop.counter0 != 0 %}
+        <div class="page-break">
+      {% endif %}
+      {% if forloop.counter0|divisibleby:2 %}
+        <div class="left-float" align="right" style="padding: 0;">
+      {% else %}
+        <div class="right-float" align="left" style="padding: 0;">
+      {% endif %}
 
-          <div class="container-fluid scoutbadge" id="scoutbadge{{v.scout_id}}" style="position: relative; margin: 0px;">
-            {% for k,v in values.items %}
-              {% if k == "scout" %}
-                <!-- Medical -->
-                {% if v.scout_medical or v.scout_allergy %}
-                  <div class="badge-top-left" id="medical">M</div>
-                {% endif %}
-                <!-- Photo -->
-                {% if v.scout_photo %}
-                  <div class="badge-top-right" id="noPhoto">P</div>
-                {% endif %}
-                <div class="badge-center">
-                  <font size="6">{{v.scout_first_name}} {{v.scout_last_name}}</font><br/>
-                  <font size="5">ID: {{v.scout_id}}</font>
-                </div>
-                <div class="badge-bottom-left" id="qrcode{{v.scout_id}}"></div>
-
-                <script type="text/javascript" src="{% static '/js/jquery.qrcode.min.js' %}"></script>
-                <script>jQuery('#qrcode{{v.scout_id}}').qrcode({
-                    render  : "canvas",
-                    text  : location.protocol + '//' + location.hostname + (location.port ? ':' + location.port: '') + "/scout_detail/{{ v.scout_id }}",
-                    width: 85,
-                    height: 85
-                  });
-                </script>
+        <div class="container-fluid scoutbadge section-to-print" id="scoutbadge{{v.scout_id}}" style="position: relative; margin: 0px;">
+          {% for k,v in values.items %}
+            {% if k == "scout" %}
+              <!-- Medical -->
+              {% if v.scout_medical or v.scout_allergy %}
+                <div class="badge-top-left" id="medical">M</div>
               {% endif %}
-              <div class="badge-bottom-right">
-
-              <p>
-              {% if k == "workshop_1"%}
-                {% if v %}
-                  {{ v }}
-                {% endif %}
+              <!-- Photo -->
+              {% if v.scout_photo %}
+                <div class="badge-top-right" id="noPhoto">P</div>
               {% endif %}
-              </p>
-              <br>
-              <p>
-              {% if k == "workshop_2" %}
-                {% if v %}
-                  {{ v }}
-                {% endif %}
-              {% endif %}
-              </p>
+              <div class="badge-center">
+                <font size="6">{{v.scout_first_name}} {{v.scout_last_name}}</font><br/>
+                <font size="5">ID: {{v.scout_id}}</font>
               </div>
-            {% endfor %}
-          </div>
-        {% if forloop.counter0|divisibleby:6 %}
-          </div>
-        {% endif %}
+              <div class="badge-bottom-left" id="qrcode{{v.scout_id}}"></div>
+
+              <script type="text/javascript" src="{% static '/js/jquery.qrcode.min.js' %}"></script>
+              <script>jQuery('#qrcode{{v.scout_id}}').qrcode({
+                  render  : "canvas",
+                  text  : location.protocol + '//' + location.hostname + (location.port ? ':' + location.port: '') + "/scout_detail/{{ v.scout_id }}",
+                  width: 85,
+                  height: 85
+                });
+              </script>
+            {% endif %}
+            <div class="badge-bottom-right">
+
+            <p>
+            {% if k == "workshop_1"%}
+              {% if v %}
+                {{ v }}
+              {% endif %}
+            {% endif %}
+            </p>
+            <br>
+            <p>
+            {% if k == "workshop_2" %}
+              {% if v %}
+                {{ v }}
+              {% endif %}
+            {% endif %}
+            </p>
+            </div>
+          {% endfor %}
         </div>
-      {% endfor %}
-    </div>
+      {% if forloop.counter0|divisibleby:6 %}
+        </div>
+      {% endif %}
+      </div>
+    {% endfor %}
 
 
 
