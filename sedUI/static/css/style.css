@@ -331,6 +331,13 @@ font-size: 24px;
   padding: 5px;
   background-color: #ffffff;
 }
+.scoutbadgeall {
+  width: 5in;
+  height: 3.75in;
+  border-style: solid;
+  padding: 5px;
+  background-color: #ffffff;
+}
 
 .badge-center {
   padding-top: 40px;
@@ -414,4 +421,12 @@ font-size: 24px;
   }
   .donotprint { display: none !important; }
   .page-break	{ page-break-before: always !important; }
+}
+
+.page-break	{
+  page-break-before: always !important;
+}
+
+.scoutbadge {
+    page-break-inside: avoid;
 }
