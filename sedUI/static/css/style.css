@@ -325,17 +325,25 @@ font-size: 24px;
 }
 
 .scoutbadge {
-  width: 4in !important;
-  height: 3in !important;
+  width: 3.75in !important;
+  height: 2.8125in !important;
   border-style: solid;
-  padding: 5px;
+  padding: 10px;
   background-color: #ffffff;
 }
-.scoutbadgeall {
-  width: 5in;
-  height: 3.75in;
+.scoutbadgeFullName {
+  width: 3.75in !important;
+  height: 0.5in !important;
   border-style: solid;
-  padding: 5px;
+  padding: 10px;
+  background-color: #ffffff;
+  position: relative;
+}
+.scoutbadgeall {
+  width: 3in;
+  height: 2.25in;
+  border-style: solid;
+  padding: 10px;
   background-color: #ffffff;
 }
 
@@ -348,20 +356,20 @@ font-size: 24px;
   position: absolute;
   top: 8px;
   left: 16px;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .badge-top-right {
   position: absolute;
   top: 8px;
   right: 16px;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .badge-bottom-left {
   position: absolute;
-  bottom: 5px;
-  left: 5px;
+  bottom: 10px;
+  left: 10px;
 }
 
 .badge-bottom-right {
@@ -406,13 +414,15 @@ font-size: 24px;
 {
     display: table-cell;
 }
-
+.section-to-only-print {
+  visibility: hidden;
+}
 @media print {
   body * {
     visibility: hidden;
   }
-  .section-to-print, .section-to-print * {
-    visibility: visible;
+  .section-to-print, .section-to-only-print, .section-to-print * {
+    visibility: visible !important;
   }
   .section-to-print {
     position: absolute;

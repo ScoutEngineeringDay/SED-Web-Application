@@ -3,12 +3,13 @@
 {% block content %}
   <div align="center">
     <button class="btn btn-primary btn-lg donotprint" onclick="PrintWindow()">Print Badges</button>
-    <button class="btn btn-primary btn-lg" id="savebadges">Download Badges</button>
+    <!-- <button class="btn btn-primary btn-lg" id="savebadges">Download Badges</button> -->
+    <h2 class="section-to-only-print"> This page is left intentionally blank <h4>
   </div>
-  <br>
     {% for key,values in data.items %}
-      {% if forloop.counter0|divisibleby:6 and forloop.counter0 != 0 %}
+      {% if forloop.counter0|divisibleby:6 %}
         <div class="page-break">
+        <br>
       {% endif %}
       {% if forloop.counter0|divisibleby:2 %}
         <div class="left-float" align="right" style="padding: 0;">
@@ -24,11 +25,11 @@
                 <div class="badge-top-left" id="medical">M</div>
               {% endif %}
               <!-- Photo -->
-              {% if v.scout_photo %}
+              {% if v.scout_photo == False %}
                 <div class="badge-top-right" id="noPhoto">P</div>
               {% endif %}
               <div class="badge-center">
-                <font size="6">{{v.scout_first_name}} {{v.scout_last_name}}</font><br/>
+                <font size="6">{{v.scout_first_name}} {{v.scout_last_name|slice:"1"}}.</font><br/>
                 <font size="5">ID: {{v.scout_id}}</font>
               </div>
               <div class="badge-bottom-left" id="qrcode{{v.scout_id}}"></div>
@@ -60,8 +61,16 @@
             {% endif %}
             </p>
             </div>
+
           {% endfor %}
         </div>
+        {% for k,v in values.items %}
+          {% if k == "scout" %}
+            <div class="container-fluid scoutbadgeFullName section-to-print" id="scoutbadgeFullName{{v.scout_id}}" style="position: relative; margin: 0px;">
+              <h4 align="center">{{v.scout_first_name}} {{v.scout_last_name}}</h4>
+            </div>
+          {% endif %}
+        {% endfor %}
       {% if forloop.counter0|divisibleby:6 %}
         </div>
       {% endif %}
