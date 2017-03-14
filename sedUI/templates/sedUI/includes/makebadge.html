@@ -10,12 +10,14 @@
     <div class="badge-top-right" id="noPhoto">P</div>
   {% endif %}
   <div class="badge-center">
-    <font size="6">{{scout.scout_first_name}} {{scout.scout_last_name}}</font><br/>
+    <font size="6">{{scout.scout_first_name}} {{scout.scout_last_name|slice:"1"}}</font><br/>
     <font size="5">ID: {{scout.scout_id}}</font>
   </div>
   <div class="badge-bottom-left" id="qrcode{{scout.scout_id}}"></div>
   <div class="badge-bottom-right" id="classes{{scout.scout_id}}">
     <p>
+      Open Ceremony - {{session.open_ceremony}}
+      <br>
       {{ workshop_1.course_name }} - {{ location_1.location_room }}
       <br>
       {% if workshop_2 %}
@@ -24,7 +26,9 @@
     </p>
   </div>
 </div>
-
+<div class="container-fluid scoutbadgeFullName section-to-print" id="scoutbadgeFullName{{v.scout_id}}" style="position: relative; margin: 0px;">
+              <h4 align="center">{{scout.scout_first_name}} {{scout.scout_last_name}}</h4>
+            </div>
 <script type="text/javascript" src="{% static '/js/jquery.qrcode.min.js' %}"></script>
 <script>
   jQuery('#qrcode{{scout.scout_id}}').qrcode({

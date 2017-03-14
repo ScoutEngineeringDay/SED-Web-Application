@@ -269,6 +269,7 @@ class BadgeView(SessionWizardView):
         return render_to_response('sedUI/pages/showBadge.html',
             {'form_data': [form.cleaned_data for form in form_list],
                 'scout': scout_data,
+                'session': session_data,
                 'workshop_1': course_1,
                 'workshop_2': course_2,
                 'location_1': location_1,
