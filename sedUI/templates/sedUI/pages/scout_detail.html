@@ -31,9 +31,36 @@
 												<td id="unit_number">{{scout.unit_number}}</td>
 											</tr>
 											<tr>
+												<td>Payment:</td>
+												<!-- User Type -->
+												<td id="payment_method">{{session.payment_method}}</td>
+											</tr>
+											<tr>
 												<td>Scout Status:</td>
 												<td id="scout_status">{{scout.scout_status}}</td>
 											</tr>
+										</tbody>
+									</table>
+									<table class="table table-user-information">
+										<thead>
+											<h3> Workshops </h3>
+										</thead>
+										<tbody>
+											<tr>
+												<td>AM</td>
+												<td id="workshop1">
+													{{session.workshop1_id}}
+												</td>
+											</tr>
+											{% if session.workshop2_id != none %}
+											<tr>
+												<td>PM</td>
+												<!-- User Phone Number -->
+												<td id="workshop2">
+													{{session.workshop2_id}}
+												</td>
+											</tr>
+											{% endif %}
 										</tbody>
 									</table>
 									<table class="table table-user-information">
@@ -91,7 +118,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td id="emergency_phone">{{scout.scout_medical}}</td>
+											<td id="scout_medical">{{scout.scout_medical}}</td>
 										</tr>
 									</tbody>
 								</table>

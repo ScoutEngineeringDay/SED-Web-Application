@@ -22,6 +22,11 @@
           </div>
         </div>
       </form>
+      <br>
+      {% if request.user.is_staff%}
+        <br>
+        <a href="/allbadges/" type="button" class="btn btn-success">All Badges</a>
+      {% endif %}
     </div>
   </div>
 </div>

@@ -43,8 +43,7 @@
                 });
               </script>
             {% endif %}
-            <div class="badge-bottom-right">
-	    
+            <div class="badge-bottom-right">  
             <p>
             {% if k == "workshop_1"%}
               {% if v %}
@@ -53,16 +52,15 @@
               </p>
                 {{ v }}
               {% endif %}
-            {% endif %}
-            </p>
-            <br>
-            <p>
-            {% if k == "workshop_2" %}
-              {% if v %}
-                {{ v }}
+              </p>
+              <br>
+              <p>
+              {% if k == "workshop_2" %}
+                {% if v %}
+                  {{ v }}
+                {% endif %}
               {% endif %}
-            {% endif %}
-            </p>
+              </p>
             </div>
 
           {% endfor %}
