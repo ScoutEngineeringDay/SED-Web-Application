@@ -109,6 +109,7 @@ class Session(models.Model):
 	scout_id=models.CharField(max_length=10)
 	payment_method=models.CharField(max_length=12, choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment"),("Waived","Waived")], blank=True)
 	payment_amount=models.DecimalField(max_digits=6, decimal_places=2)
+	payment_status=models.CharField(max_length=8, choices=[("PAID","PAID"),("NOT PAID","NOT PAID")], blank=False)
 	open_ceremony=models.CharField(max_length=1)
 	workshop1_id=models.CharField(max_length=10)
 	workshop1_status=models.CharField(max_length=12, choices=[("IN PROGRESS","IN PROGRESS"),("COMPLETE","COMPLETE"),("INCOMPLETE","INCOMPLETE")], blank=False)

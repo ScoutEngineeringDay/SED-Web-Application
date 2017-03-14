@@ -301,7 +301,7 @@ class AllBadgesView(generic.ListView):
            scout_information={'scout': scout,
            'workshop_1': workshop_1_data,
            'workshop_2': workshop_2_data,
-
+           'session': session_data,
            }
            scoutstring=str(scout.scout_id)
            ctx['data'].update({scoutstring:scout_information})

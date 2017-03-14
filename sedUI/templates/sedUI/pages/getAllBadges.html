@@ -43,14 +43,20 @@
                 });
               </script>
             {% endif %}
-            <div class="badge-bottom-right">  
-            <p>
-            {% if k == "workshop_1"%}
-              {% if v %}
+            <div class="badge-bottom-right">
               <p>
-              Opening Ceremony - A
+              {% if k == "session"%}
+                {% if v %}
+                  Open Ceremony - {{ v.open_ceremony }}
+                {% endif %}
+              {% endif %}
               </p>
-                {{ v }}
+              <br>
+              <p>
+              {% if k == "workshop_1"%}
+                {% if v %}
+                  {{ v }}
+                {% endif %}
               {% endif %}
               </p>
               <br>
