@@ -33,5 +33,6 @@ VALUES
     ("Radio","Radio is a way to send information, or communications, from one place to another. Broadcasting includes both one-way radio (a person hears the information but can't reply) as well as two-way radio (where the same person can both receive and send messages).",20, "HALF"),
     ("Computers","Technology has come a long way since Computers merit badge was first introduced in 1967. This badge will teach Scouts about technology in the digital age.",20, "HALF"),
     ("Inventing","Inventing involves finding technological solutions to real-world problems. Inventors understand the importance of inventing to society because they creatively think of ways to improve the lives of others. Explore the world of inventing through this new merit badge, and discover your inner inventiveness.",20, "HALF"),
-    ("Mining in Society","---",20, "HALF"),
-    ("Animation","---",20, "HALF");
+		("Mining in Society","Mining has been an important part of our nation since the 19th century. Today, the industry employes 3 million Americans, directly and indirectly, and is a major contributor to the global mining landscape. This merit badge covers the history of mining, explores the status of mining in the 21st century, introduces Scouts to modern mining careers, and explores the all-important topic of mining safety.",20, "HALF"),
+		("Animation","Computer or traditional animation tasks that will test a Scout’s creativity, artistic skills, and storytelling abilities.",20, "HALF"),
+    ("None","---",20, "HALF");
