@@ -34,4 +34,5 @@ VALUES
     ("Computers","Technology has come a long way since Computers merit badge was first introduced in 1967. This badge will teach Scouts about technology in the digital age.",20, "HALF"),
     ("Inventing","Inventing involves finding technological solutions to real-world problems. Inventors understand the importance of inventing to society because they creatively think of ways to improve the lives of others. Explore the world of inventing through this new merit badge, and discover your inner inventiveness.",20, "HALF"),
     ("Mining in Society","---",20, "HALF"),
-    ("Animation","---",20, "HALF");
+    ("Animation","---",20, "HALF"),
+    ("None","---", 20, "HALF");
