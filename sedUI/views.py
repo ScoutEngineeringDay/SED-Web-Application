@@ -389,12 +389,18 @@ class RegistrationWizard(SessionWizardView):
         # # store into database session table
         #filter courses
         workshop1_data=str(workshop_data["morning_subject"]).split('-')
+        if(session_data["payment_method"]=="Waived"):
+            payment_status_info="PAID"
+        elif(session_data["payment_method"]=="Pay_Online"):
+            payment_status_info="PAID"
+        else:
+            payment_status_info="NOT PAID"
         if(workshop1_data[1]=="FULL"):
             session = Session(
             scout_id=scout.scout_id,
             payment_method=session_data["payment_method"],
             payment_amount="40.00",
-            payment_status="PAID",
+            payment_status=payment_status_info,
             workshop1_id=getWorkshopbyCourse(workshop1_data[0], "FULL"),
             workshop1_status="IN PROGRESS",
             confirmation_timestamp=datetime.datetime.now(),
@@ -414,7 +420,7 @@ class RegistrationWizard(SessionWizardView):
                 scout_id=scout.scout_id,
                 payment_method=session_data["payment_method"],
                 payment_amount="40.00",
-                payment_status="PAID",
+                payment_status=payment_status_info,
                 workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
                 workshop2_id=getWorkshopbyCourse(workshop2_data[0], "PM"),
                 workshop1_status="IN PROGRESS",
@@ -435,7 +441,7 @@ class RegistrationWizard(SessionWizardView):
                 scout_id=scout.scout_id,
                 payment_method=session_data["payment_method"],
                 payment_amount="40.00",
-                payment_status="PAID",
+                payment_status=payment_status_info,
                 workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
                 workshop1_status="IN PROGRESS",
                 confirmation_timestamp=datetime.datetime.now(),
