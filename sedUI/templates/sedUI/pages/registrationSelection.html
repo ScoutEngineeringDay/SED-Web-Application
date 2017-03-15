@@ -7,7 +7,8 @@
 			var morningDropdown = document.getElementById("id_2-morning_subject");
 			var morningSelection = morningDropdown.options[morningDropdown.selectedIndex].text;
 
-			if (morningSelection.endsWith("FULL")) {
+			// if (morningSelection.endsWith("FULL")) {
+			if (morningSelection.match("FULL$")) {
 				document.getElementById("id_2-evening_subject").value = morningDropdown.value;
 				console.log("The vew value of id_2-morning_subject is " + document.getElementById("id_2-morning_subject").value);
 				console.log("The vew value of id_2-evening_subject is " + document.getElementById("id_2-evening_subject").value);
@@ -22,10 +23,11 @@
 		});
 
 		$("#id_2-evening_subject").change(function () {
-			var eveningDropdown = document.getElementById("id_2-evening_subject"); 
+			var eveningDropdown = document.getElementById("id_2-evening_subject");
 			var eveningSelection = eveningDropdown.options[eveningDropdown.selectedIndex].text;
 
-			if (eveningSelection.endsWith("FULL")) {
+			// if (eveningSelection.endsWith("FULL")) {
+			if (eveningSelection.match("FULL$")) {
 				document.getElementById("id_2-morning_subject").value = eveningDropdown.value;
 				disable();
 			}
