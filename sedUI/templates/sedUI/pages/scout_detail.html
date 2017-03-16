@@ -46,18 +46,27 @@
 											<h3> Workshops </h3>
 										</thead>
 										<tbody>
+											{% if workshop1.course_duration == "FULL" %}
+											<tr>
+												<td>FULL</td>
+												<td id="workshop1">
+													{{workshop1.course_name}}
+												</td>
+											</tr>
+											{% elif workshop1.course_duration == "HALF" %}
 											<tr>
 												<td>AM</td>
 												<td id="workshop1">
-													{{session.workshop1_id}}
+													{{workshop1.course_name}}
 												</td>
 											</tr>
+											{% endif %}
 											{% if session.workshop2_id != none %}
 											<tr>
 												<td>PM</td>
 												<!-- User Phone Number -->
 												<td id="workshop2">
-													{{session.workshop2_id}}
+													{{workshop2.course_name}}
 												</td>
 											</tr>
 											{% endif %}

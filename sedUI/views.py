@@ -110,7 +110,10 @@ class ScoutDetailView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         ctx=super(ScoutDetailView, self).get_context_data(**kwargs)
-        ctx['session']=getSessionByUniqueSession(self.get_queryset().scout_id, self.get_queryset().scout_year)
+        session_data=getSessionByUniqueSession(self.get_queryset().scout_id, self.get_queryset().scout_year)
+        ctx['session']=session_data
+        ctx['workshop1']=getCourseBySession(session_data.workshop1_id)
+        ctx['workshop2']=getCourseBySession(session_data.workshop2_id)
         return ctx
 
 def event_checkin(request, scout_id):
