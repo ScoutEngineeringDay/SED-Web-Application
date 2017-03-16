@@ -27,13 +27,13 @@ class RegistrationForm2(forms.Form):
 	allergy_issues = forms.BooleanField(initial=False, required=False)
 	photo = forms.BooleanField(initial=True, required=False)
 	# captcha = ReCaptchaField()
-	
+
 class RegistrationForm3(forms.Form):
 	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="AM")), widget=forms.Select(attrs={'class': 'dropdown'}))
 	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="PM")), widget=forms.Select(attrs={'class': 'dropdown'}))
 
 class RegistrationForm4(forms.Form):
-	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")])
+	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment"),("Waived","Waived")])
 	# confirmation_timestamp = forms.DateField(auto_now=True, auto_now_add=True)
 
 class ContactEmailForm(forms.Form):

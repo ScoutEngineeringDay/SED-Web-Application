@@ -1,7 +1,7 @@
 {% block content %}
   {% load staticfiles %}
   <div align="center">
-      <form action="/registration/" method="post"> {% csrf_token %}
+      <form id="paymentMethodForm" action="/registration/" method="post"> {% csrf_token %}
       {{ wizard.management_form }}
           <label for="Question" style="font-size: 32px">Select a Payment Method</label>
           <br>
@@ -10,8 +10,13 @@
                   <input type="radio" name="optradio" id="Pay_Online">{{wizard.form.payment_method.1}}
               </label>
               <label class="radio-inline" style="font-size: 16px">
-                  <input type="radio" name="optradio" id="Pay_Mail" checked="checked">{{wizard.form.payment_method.0}}
+                  <input type="radio" name="optradio" id="Pay_Mail">{{wizard.form.payment_method.0}}
               </label>
+              {% if request.user.is_superuser %}
+              <label class="radio-inline" style="font-size: 16px">
+                  <input type="radio" name="optradio" id="Waived">{{wizard.form.payment_method.2}}
+              </label>
+              {% endif %}
           </div>
           <br>
           <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
@@ -92,7 +97,9 @@
             });
             StripeCheckout.open(opts);
         }
-        $("#loadingModal").modal('show');
+        if (document.getElementById("id_3-payment_method_1").checked || document.getElementById("id_3-payment_method_0").checked || document.getElementById("id_3-payment_method_2").checked) {
+          $("#loadingModal").modal('show');
+        }
     });
   });
   </script>
