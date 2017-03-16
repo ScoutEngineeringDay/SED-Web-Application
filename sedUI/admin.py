@@ -22,12 +22,12 @@ class LocationAdmin(admin.ModelAdmin):
 		model = Location
 
 class SessionAdmin(admin.ModelAdmin):
-	list_display = ["session_id","__str__"]
+	list_display = ["session_id","__str__", "open_ceremony"]
 	class Meta:
 		model = Session
 
 class WorkshopAdmin(admin.ModelAdmin):
-	list_display = ["workshop_id","__str__", "__instructor__", "workshop_time", "workshop_open"]
+	list_display = ["workshop_id","__str__", "__instructor__", "workshop_time", "workshop_open", "open_ceremony"]
 	class Meta:
 		model = Workshop
 
