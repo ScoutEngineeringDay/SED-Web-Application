@@ -3,6 +3,7 @@
 {% block content %}
 	{% if all_courses %}
 		{% for course in all_courses %}
+			{% if course.course_name != "None" or course.course_name == "none" %}
 			<div class="container">
 				<a href="/course_detail/{{course.course_id}}">
 					<div class="well well-sm courseInfo">
@@ -13,6 +14,7 @@
 					 </div>
 				</a>
 			</div>
+			{% endif %}
 		{% endfor %}
 	{% else %}
 		<h4> You don't have any courses </h4>
