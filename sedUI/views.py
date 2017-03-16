@@ -404,8 +404,11 @@ class RegistrationWizard(SessionWizardView):
             payment_method=session_data["payment_method"],
             payment_amount="40.00",
             payment_status=payment_status_info,
+            open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "FULL"),
             workshop1_id=getWorkshopbyCourse(workshop1_data[0], "FULL"),
             workshop1_status="IN PROGRESS",
+            workshop2_id=None,
+            workshop2_status="IN PROGRESS",
             confirmation_timestamp=datetime.datetime.now(),
             session_year=str(datetime.datetime.now().year)
             )
@@ -424,6 +427,7 @@ class RegistrationWizard(SessionWizardView):
                 payment_method=session_data["payment_method"],
                 payment_amount="40.00",
                 payment_status=payment_status_info,
+                open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
                 workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
                 workshop2_id=getWorkshopbyCourse(workshop2_data[0], "PM"),
                 workshop1_status="IN PROGRESS",
@@ -445,8 +449,11 @@ class RegistrationWizard(SessionWizardView):
                 payment_method=session_data["payment_method"],
                 payment_amount="40.00",
                 payment_status=payment_status_info,
+                open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
                 workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
                 workshop1_status="IN PROGRESS",
+                workshop2_id=None,
+                workshop2_status="IN PROGRESS",
                 confirmation_timestamp=datetime.datetime.now(),
                 session_year=str(datetime.datetime.now().year)
                 )
@@ -608,5 +615,11 @@ def getMailPaymentLatest():
 def getWorkshopbyCourse(CourseName, WorkshopTime):
     try:
         return Workshop.objects.get(course_id=Course.objects.get(course_name=CourseName).course_id, workshop_time=WorkshopTime).workshop_id
+    except:
+        return None
+
+def getOpenCeremonybyWorkshop(CourseName, WorkshopTime):
+    try:
+        return Workshop.objects.get(course_id=Course.objects.get(course_name=CourseName).course_id, workshop_time=WorkshopTime).open_ceremony
     except:
         return None

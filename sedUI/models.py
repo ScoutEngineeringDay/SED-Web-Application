@@ -93,6 +93,7 @@ class Location(models.Model):
 class Workshop(models.Model):
 	workshop_id=models.AutoField(primary_key=True)
 	course_id=models.CharField(max_length=10)
+	open_ceremony=models.CharField(max_length=1)
 	location_id=models.CharField(max_length=10)
 	instructor_id=models.CharField(max_length=10)
 	workshop_time=models.CharField(max_length=4, choices=[("AM","AM"),("PM","PM"),("FULL","FULL")], blank=True)
@@ -126,9 +127,9 @@ class Session(models.Model):
 
 	def __str__(self):
 		try:
-			return str(Scout.objects.get(scout_id=str(self.scout_id)).scout_first_name)+" "+str(Scout.objects.get(scout_id=str(self.scout_id)).scout_last_name)
+			return str(Scout.objects.get(scout_id=str(self.scout_id), scout_year=self.session_year).scout_first_name)+" "+str(Scout.objects.get(scout_id=str(self.scout_id), scout_year=self.session_year).scout_last_name)
 		except:
-			return None
+			return "Removed Scout Data: "+ str(self.session_year)
 
 class AboutPage(models.Model):
 	aboutPage_id=models.AutoField(primary_key=True)
