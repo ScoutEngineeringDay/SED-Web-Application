@@ -17,7 +17,7 @@
         <div class="right-float" align="left" style="padding: 0;">
       {% endif %}
 
-        <div class="container-fluid scoutbadge section-to-print" id="scoutbadge{{v.scout_id}}" style="position: relative; margin: 0px;">
+        <div class="container-fluid scoutbadge section-to-print" id="scoutbadge{{v.scout_id}}" style="position: relative; margin-left: 5px; margin-right: 5px;">
           {% for k,v in values.items %}
             {% if k == "scout" %}
               <!-- Medical -->
@@ -73,7 +73,7 @@
         </div>
         {% for k,v in values.items %}
           {% if k == "scout" %}
-            <div class="container-fluid scoutbadgeFullName section-to-print" id="scoutbadgeFullName{{v.scout_id}}" style="position: relative; margin: 0px;">
+            <div class="container-fluid scoutbadgeFullName section-to-print" id="scoutbadgeFullName{{v.scout_id}}" style="position: relative; margin-left: 5px; margin-right: 5px;">
               <h4 align="center">{{v.scout_first_name}} {{v.scout_last_name}}</h4>
             </div>
           {% endif %}
