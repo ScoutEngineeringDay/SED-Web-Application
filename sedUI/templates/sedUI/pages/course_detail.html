@@ -5,20 +5,23 @@
 		<div class="well well-sm">
 			<p class="courseName"><b>{{course.course_name}}</b></p>
 			<!-- TODO Make this Instructor -->
+			{%if course.course_duration == "HALF" %}
 			{% if instructorAM %}
-			<p><i>AM Course Instructor: {{instructorAM.instructor_first_name}} {{instructorAM.instructor_last_name}}</i></p>
+				<p><i>AM Course Instructor: {{instructorAM.instructor_first_name}} {{instructorAM.instructor_last_name}}</i></p>
 			{% else %}
-			<p><i>AM Course Instructor: TBA</i></p>
+				<p><i>AM Course Instructor: TBA</i></p>
 			{% endif %}
 			{% if instructorPM %}
-			<p><i>PM Course Instructor: {{instructorAM.instructor_first_name}} {{instructorAM.instructor_last_name}}</i></p>
+				<p><i>PM Course Instructor: {{instructorPM.instructor_first_name}} {{instructorPM.instructor_last_name}}</i></p>
 			{% else %}
-			<p><i>PM Course Instructor: TBA</i></p>
+				<p><i>PM Course Instructor: TBA</i></p>
 			{% endif %}
-			{% if instructorFULL %}
-			<p><i>Full Day Course Instructor: {{instructorAM.instructor_first_name}} {{instructorAM.instructor_last_name}}</i></p>
 			{% else %}
-			<p><i>Full Day Course Instructor: TBA</i></p>
+				{% if instructorFULL %}
+					<p><i>Full Day Course Instructor: {{instructorFULL.instructor_first_name}} {{instructorFULL.instructor_last_name}}</i></p>
+				{% else %}
+					<p><i>Full Day Course Instructor: TBA</i></p>
+				{% endif %}
 			{% endif %}
 			<p>{{course.course_description}}</p>
 		</div>
