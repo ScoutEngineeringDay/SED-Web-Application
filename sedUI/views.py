@@ -297,11 +297,14 @@ class AllBadgesView(generic.ListView):
            location_2=getLocationBySession(session_data.workshop2_id)
            workshop_1=getCourseBySession(session_data.workshop1_id)
            workshop_2=getCourseBySession(session_data.workshop2_id)
-           workshop_1_data=str(workshop_1.course_name)+" - "+str(location_1.location_room)
            try:
-            workshop_2_data=str(workshop_2.course_name)+" - "+str(location_2.location_room)
+             workshop_1_data=str(workshop_1.course_name)+" - "+str(location_1.location_room)
            except:
-            workshop_2_data=None
+             workshop_2_data=" "
+           try:
+             workshop_2_data=str(workshop_2.course_name)+" - "+str(location_2.location_room)
+           except:
+             workshop_2_data=" "
            scout_information={'scout': scout,
            'workshop_1': workshop_1_data,
            'workshop_2': workshop_2_data,

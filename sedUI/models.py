@@ -100,10 +100,22 @@ class Workshop(models.Model):
 	workshop_open=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
 
 	def __str__(self):
-		return str(Course.objects.get(course_id=str(self.course_id)).course_name)+"-"+str(self.workshop_time)
+		try:
+			return str(Course.objects.get(course_id=str(self.course_id)).course_name)+"-"+str(self.workshop_time)
+		except:
+			return "no course name"
 
 	def __instructor__(self):
-		return str(Instructor.objects.get(instructor_id=str(self.instructor_id)).instructor_first_name+" "+Instructor.objects.get(instructor_id=str(self.instructor_id)).instructor_last_name)
+		try:
+			return str(Instructor.objects.get(instructor_id=str(self.instructor_id)).instructor_first_name+" "+Instructor.objects.get(instructor_id=str(self.instructor_id)).instructor_last_name)
+		except:
+			return "No teacher"
+
+	def __room__(self):
+		try:
+			return str(Location.objects.get(location_id=self.location_id).location_room)
+		except:
+			return "location missing"
 
 class Session(models.Model):
 	session_id=models.AutoField(primary_key=True)
@@ -130,6 +142,18 @@ class Session(models.Model):
 			return str(Scout.objects.get(scout_id=str(self.scout_id), scout_year=self.session_year).scout_first_name)+" "+str(Scout.objects.get(scout_id=str(self.scout_id), scout_year=self.session_year).scout_last_name)
 		except:
 			return "Removed Scout Data: "+ str(self.session_year)
+
+	def __workshop1__(self):
+		try:
+			return str(Course.objects.get(course_id=Workshop.objects.get(workshop_id=self.workshop1_id).course_id).course_name)
+		except:
+			return "workshop1 missing "
+
+	def __workshop2__(self):
+		try:
+			return str(Course.objects.get(course_id=Workshop.objects.get(workshop_id=self.workshop2_id).course_id).course_name)
+		except:
+			return "workshop2 missing"
 
 class AboutPage(models.Model):
 	aboutPage_id=models.AutoField(primary_key=True)
