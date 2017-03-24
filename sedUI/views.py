@@ -112,6 +112,7 @@ class ScoutDetailView(generic.ListView):
         ctx=super(ScoutDetailView, self).get_context_data(**kwargs)
         session_data=getSessionByUniqueSession(self.get_queryset().scout_id, self.get_queryset().scout_year)
         ctx['session']=session_data
+        #check if workshop are done
         ctx['workshop1']=getCourseBySession(session_data.workshop1_id)
         ctx['workshop2']=getCourseBySession(session_data.workshop2_id)
         return ctx
@@ -126,10 +127,11 @@ def event_checkin(request, scout_id):
             session.event_checkin=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+            #add checkin check
         else:
-            return HttpResponse('Scout has already check into the event')
+            return render_to_response('sedUI/pages/errorPage.html', status=404)
     except:
-        return HttpResponse('Scout no longer exist in database')
+        return render_to_response('sedUI/pages/errorPage.html', status=404)
 
 def event_checkout(request, scout_id):
     try:
@@ -142,9 +144,9 @@ def event_checkout(request, scout_id):
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
-            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops yet')
+            return render_to_response('sedUI/pages/errorPage.html', status=404)
     except:
-        return HttpResponse('Scout no longer exist in database')
+        return render_to_response('sedUI/pages/errorPage.html', status=404)
 
 def workshop_checkin(request, scout_id):
     try:
@@ -160,14 +162,14 @@ def workshop_checkin(request, scout_id):
         elif(scout.scout_status=='WORKSHOP1_CHECKOUT' and session.workshop2_id != '0'):
             scout.scout_status='WORKSHOP2_CHECKIN'
             scout.save()
-            session.workshop1_status='IN PROGRESS'
+            session.workshop2_status='IN PROGRESS'
             session.workshop2_checkin=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
-            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops or have already Checkout of Event')
+            return render_to_response('sedUI/pages/errorPage.html', status=404)
     except:
-        return HttpResponse('Scout no longer exist in database')
+        return render_to_response('sedUI/pages/errorPage.html', status=404)
 
 def workshop_completed(request, scout_id):
     try:
@@ -188,9 +190,9 @@ def workshop_completed(request, scout_id):
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
-            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops or have already Checkout of Event')
+            return render_to_response('sedUI/pages/errorPage.html', status=404)
     except:
-        return HttpResponse('Scout no longer exist in database')
+        return render_to_response('sedUI/pages/errorPage.html', status=404)
 
 def workshop_checkout(request, scout_id):
     try:
@@ -211,9 +213,9 @@ def workshop_checkout(request, scout_id):
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
         else:
-            return HttpResponse('Scout has not been Check into the Event or Checkout of Workshops or have already Checkout of Event')
+            return render_to_response('sedUI/pages/errorPage.html', status=404)
     except:
-        return HttpResponse('Scout no longer exist in database')
+        return render_to_response('sedUI/pages/errorPage.html', status=404)
 
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
@@ -262,14 +264,7 @@ class BadgeView(SessionWizardView):
             else:
                 course_2=None
                 location_2=None
-        except Scout.DoesNotExist:
-            scout_data = None
-            course_1 = None
-            course_2 = None
-            location_1 = None
-            location_2 = None
-        print("get")
-        return render_to_response('sedUI/pages/showBadge.html',
+            return render_to_response('sedUI/pages/showBadge.html',
             {'form_data': [form.cleaned_data for form in form_list],
                 'scout': scout_data,
                 'session': session_data,
@@ -277,8 +272,10 @@ class BadgeView(SessionWizardView):
                 'workshop_2': course_2,
                 'location_1': location_1,
                 'location_2': location_2
-            }
-        )
+            })
+        except:
+        	return render_to_response('sedUI/pages/errorPage.html', status=404)
+        
 
 class AllBadgesView(generic.ListView):
     template_name = 'sedUI/pages/getAllBadges.html'
