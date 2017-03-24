@@ -52,6 +52,14 @@
 												<td id="workshop1">
 													{{workshop1.course_name}}
 												</td>
+												{% if session.workshop1_status == "COMPLETE" and session.workshop2_status == "COMPLETE" %}
+												<td>COMPLETE</td>
+												{% elif session.workshop1_status == "IN PROGRESS" and session.workshop2_status == "IN PROGRESS" %}
+												<td>IN PROGRESS</td>
+												{% else %}
+												<td>INCOMPLETE</td>
+												{% endif %}
+												
 											</tr>
 											{% elif workshop1.course_duration == "HALF" %}
 											<tr>
@@ -59,15 +67,17 @@
 												<td id="workshop1">
 													{{workshop1.course_name}}
 												</td>
+												<td>{{session.workshop1_status}}</td>
 											</tr>
 											{% endif %}
-											{% if session.workshop2_id != none %}
+											{% if session.workshop2_id != none and session.workshop2_id != 0 %}
 											<tr>
 												<td>PM</td>
 												<!-- User Phone Number -->
 												<td id="workshop2">
 													{{workshop2.course_name}}
 												</td>
+												<td>{{session.workshop2_status}}</td>
 											</tr>
 											{% endif %}
 										</tbody>
