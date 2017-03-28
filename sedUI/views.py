@@ -253,8 +253,17 @@ class BadgeView(SessionWizardView):
     def done(self, form_list, **kwargs):
         form_data=self.get_cleaned_data_for_step('0')
         confirmation_id=form_data["confirmation_id"]
-        try:
+        scout_id=form_data["scout_id"]
+        scout_data=None
+        if(confirmation_id):
             scout_data=getScoutByConfirmation_id(confirmation_id)
+        elif(scout_id):
+            scout_year=str(datetime.datetime.now().year)
+            scout_data=getScoutByUniqueScout(scout_id, scout_year)
+        else:
+            return render_to_response('sedUI/pages/errorPage.html', status=404)
+        try:
+            
             session_data=getSessionByUniqueSession(scout_data.scout_id, scout_data.scout_year)
             course_1=getCourseBySession(session_data.workshop1_id)
             location_1=getLocationBySession(session_data.workshop1_id)

@@ -17,6 +17,12 @@
           <div class="form-group">
             {{ wizard.form.confirmation_id }}
           </div>
+          {% if request.user.is_staff%}
+          <h1 class="h1">Administer: To recover Scout's Badge please provide the Scout's ID number</h1>
+          <div class="form-group">
+            {{ wizard.form.scout_id }}
+          </div>
+          {% endif %}
           <div class="col-md-12">
             <input type="submit" name="submit" id="submit" value="Get Badge" class="btn btn-primary">
           </div>
