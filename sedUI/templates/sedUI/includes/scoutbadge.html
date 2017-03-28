@@ -10,17 +10,27 @@
 <script>
   $( document ).ready(function() {
     $('#savebadge').click(function () {
+      var pdf = new jsPDF();
+      var fullNameImg;
+      html2canvas($("#scoutbadgeFullName"), {
+        background :'#FFFFFF',
+        onrendered: function(canvas) {
+            // canvas is the final rendered <canvas> element
+            fullNameImg = canvas.toDataURL("image/jpeg");
+        }
+      });
       html2canvas($("#scoutbadge"), {
         background :'#FFFFFF',
         onrendered: function(canvas) {
             // canvas is the final rendered <canvas> element
-            var imgData = canvas.toDataURL("image/jpeg");
-            var pdf = new jsPDF();
-
-            pdf.addImage(imgData, 'JPEG', 10, 10);
+            var badgeImg = canvas.toDataURL("image/jpeg");
+            pdf.addImage(badgeImg, 'JPEG', 10, 10);
+            pdf.addImage(fullNameImg, 'JPEG', 10, 10 + canvas.height/3.78); // The 3.78 is the ratio from canvas size to pdf
             pdf.save("scoutbadge.pdf");
         }
+
       });
+
     });
   });
 </script>

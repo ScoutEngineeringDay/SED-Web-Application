@@ -71,7 +71,7 @@
 												{% else %}
 												Error
 												{% endif %}
-												</td>											
+												</td>
 											</tr>
 										</tbody>
 									</table>
@@ -181,29 +181,31 @@
 										</tr>
 									</tbody>
 								</table>
-								{% if scout.scout_medical %}
-								<table class="table table-user-information">
-									<thead>
-										<h3> Medical Conditions</h3>
-									</thead>
-									<tbody>
-										<tr>
-											<td id="scout_medical">{{scout.scout_medical}}</td>
-										</tr>
-									</tbody>
-								</table>
-								{% endif %}
-								{% if scout.scout_allergy %}
-								<table class="table table-user-information">
-									<thead>
-										<h3> Allergies </h3>
-									</thead>
-									<tbody>
-										<tr>
-											<td id="scout_allergy">{{scout.scout_allergy}}</td>
-										</tr>
-									</tbody>
-								</table>
+								{% if request.user.is_superuser %}
+									{% if scout.scout_medical %}
+									<table class="table table-user-information">
+										<thead>
+											<h3> Medical Conditions</h3>
+										</thead>
+										<tbody>
+											<tr>
+												<td id="scout_medical">{{scout.scout_medical}}</td>
+											</tr>
+										</tbody>
+									</table>
+									{% endif %}
+									{% if scout.scout_allergy %}
+									<table class="table table-user-information">
+										<thead>
+											<h3> Allergies </h3>
+										</thead>
+										<tbody>
+											<tr>
+												<td id="scout_allergy">{{scout.scout_allergy}}</td>
+											</tr>
+										</tbody>
+									</table>
+									{% endif %}
 								{% endif %}
 							</div>
 						</div>
@@ -213,16 +215,16 @@
 	</div>
 
 	{% if session.payment_status == "PAID" %}
-	<div class="container" align="center">
-		<a id="scout_event_checkin" href="{% url 'scout_event_checkin/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
-		<a id="scout_event_checkout" href="{% url 'scout_event_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-default btn-action">Check Out Of Event</i></a>
-	</div>
-	<br>
-	<div class="container" align="center">
-		<a id="scout_workshop_checkin" href="{% url 'scout_workshop_checkin/' scout.scout_id %}" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-info btn-action">Check Into Class</i></a>
-		<a id="scout_workshop_completed" href="{% url 'scout_workshop_completed/' scout.scout_id %}" data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
-		<a id="scout_workshop_checkout" href="{% url 'scout_workshop_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Check Out Of Class</i></a>
-	</div>
+		<div class="container" align="center">
+			<a id="scout_event_checkin" href="{% url 'scout_event_checkin/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
+			<a id="scout_event_checkout" href="{% url 'scout_event_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-default btn-action">Check Out Of Event</i></a>
+		</div>
+		<br>
+		<div class="container" align="center">
+			<a id="scout_workshop_checkin" href="{% url 'scout_workshop_checkin/' scout.scout_id %}" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-info btn-action">Check Into Class</i></a>
+			<a id="scout_workshop_completed" href="{% url 'scout_workshop_completed/' scout.scout_id %}" data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
+			<a id="scout_workshop_checkout" href="{% url 'scout_workshop_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Check Out Of Class</i></a>
+		</div>`
 	{% else %}
 		<h3 align="center" style="color:red;"> THIS SCOUT HAS NOT PAID FOR THE EVENT </h3>
 	{% endif %}
