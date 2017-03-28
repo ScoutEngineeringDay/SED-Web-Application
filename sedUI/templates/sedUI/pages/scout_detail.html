@@ -23,7 +23,15 @@
 											<tr>
 												<td>Scout Type:</td>
 												<!-- User Type -->
-												<td id="scout_type">{{scout.scout_type}}</td>
+												<td id="scout_type">
+												{% if scout.scout_type == "BOY" %}
+												Boy
+												{% elif scout.scout_type == "GIRL" %}
+												Girl
+												{% else %}
+												Other
+												{% endif %}
+												</td>
 											</tr>
 											<tr>
 												<td>Unit Number:</td>
@@ -33,11 +41,37 @@
 											<tr>
 												<td>Payment:</td>
 												<!-- User Type -->
-												<td id="payment_method">{{session.payment_method}}</td>
+												<td id="payment_method">
+												{% if session.payment_method == "Pay_Mail" %}
+												Paid by Mail
+												{% elif session.payment_method == "Pay_Online" %}
+												Paid Online
+												{% elif session.payment_method == "Waived" %}
+												Waived
+												{% endif %}
+												</td>
 											</tr>
 											<tr>
 												<td>Scout Status:</td>
-												<td id="scout_status">{{scout.scout_status}}</td>
+												<td id="scout_status">
+												{% if scout.scout_status == "UNDERWAY" %}
+												Underway
+												{% elif scout.scout_status == "EVENT_CHECKIN" %}
+												Check into Event
+												{% elif scout.scout_status == "WORKSHOP1_CHECKIN" %}
+												AM Workshop Checked In
+												{% elif scout.scout_status == "WORKSHOP1_CHECKOUT" %}
+												AM Workshop Checked Out
+												{% elif scout.scout_status == "WORKSHOP2_CHECKIN" %}
+												PM Workshop Checked In
+												{% elif scout.scout_status == "WORKSHOP2_CHECKOUT" %}
+												PM Workshop Checked Out
+												{% elif scout.scout_status == "EVENT_CHECKOUT" %}
+												Checkout from Event
+												{% else %}
+												Error
+												{% endif %}
+												</td>											
 											</tr>
 										</tbody>
 									</table>
@@ -48,18 +82,19 @@
 										<tbody>
 											{% if workshop1.course_duration == "FULL" %}
 											<tr>
-												<td>FULL</td>
+												<td>Full Day</td>
 												<td id="workshop1">
 													{{workshop1.course_name}}
 												</td>
+												<td>
 												{% if session.workshop1_status == "COMPLETE" and session.workshop2_status == "COMPLETE" %}
-												<td>COMPLETE</td>
+												Completed
 												{% elif session.workshop1_status == "IN PROGRESS" and session.workshop2_status == "IN PROGRESS" %}
-												<td>IN PROGRESS</td>
+												In Progress
 												{% else %}
-												<td>INCOMPLETE</td>
+												Incompleted
 												{% endif %}
-												
+												</td>
 											</tr>
 											{% elif workshop1.course_duration == "HALF" %}
 											<tr>
@@ -67,7 +102,15 @@
 												<td id="workshop1">
 													{{workshop1.course_name}}
 												</td>
-												<td>{{session.workshop1_status}}</td>
+												<td>
+												{% if session.workshop1_status == "COMPLETE" %}
+												Completed
+												{% elif session.workshop1_status == "IN PROGRESS" %}
+												In Progress
+												{% else %}
+												Incompleted
+												{% endif %}
+												</td>
 											</tr>
 											{% endif %}
 											{% if session.workshop2_id != none and session.workshop2_id != 0 %}
@@ -77,7 +120,15 @@
 												<td id="workshop2">
 													{{workshop2.course_name}}
 												</td>
-												<td>{{session.workshop2_status}}</td>
+												<td>
+												{% if session.workshop2_status == "COMPLETE" %}
+												Completed
+												{% elif session.workshop2_status == "IN PROGRESS" %}
+												In Progress
+												{% else %}
+												Incompleted
+												{% endif %}
+												</td>
 											</tr>
 											{% endif %}
 										</tbody>
@@ -178,23 +229,23 @@
 
 	<script>
 		jQuery(document).ready(function(){
-			if(document.getElementById("scout_status").innerText == "UNDERWAY" | document.getElementById("scout_status").innerText == "EVENT_CHECKOUT") {
+			if(document.getElementById("scout_status").innerText == "Underway" | document.getElementById("scout_status").innerText == "Checkout from Event") {
 				$('#scout_event_checkout').addClass('disabled');
 				$('#scout_workshop_checkin').addClass('disabled');
 				$('#scout_workshop_completed').addClass('disabled');
 				$('#scout_workshop_checkout').addClass('disabled');
 			}
-			else if(document.getElementById("scout_status").innerText == "EVENT_CHECKIN" | document.getElementById("scout_status").innerText == "WORKSHOP1_CHECKOUT") {
+			else if(document.getElementById("scout_status").innerText == "Check into Event" | document.getElementById("scout_status").innerText == "AM Workshop Checked Out") {
 				$('#scout_event_checkin').addClass('disabled');
 				$('#scout_workshop_completed').addClass('disabled');
 				$('#scout_workshop_checkout').addClass('disabled');
 			}
-			else if(document.getElementById("scout_status").innerText == "WORKSHOP1_CHECKIN" | document.getElementById("scout_status").innerText == "WORKSHOP2_CHECKIN") {
+			else if(document.getElementById("scout_status").innerText == "AM Workshop Checked In" | document.getElementById("scout_status").innerText == "PM Workshop Checked In") {
 				$('#scout_event_checkout').addClass('disabled');
 				$('#scout_event_checkin').addClass('disabled');
 				$('#scout_workshop_checkin').addClass('disabled');
 			}
-			else if(document.getElementById("scout_status").innerText == "WORKSHOP2_CHECKOUT") {
+			else if(document.getElementById("scout_status").innerText == "PM Workshop Checked Out") {
 				$('#scout_workshop_checkin').addClass('disabled');
 				$('#scout_workshop_completed').addClass('disabled');
 				$('#scout_workshop_checkout').addClass('disabled');

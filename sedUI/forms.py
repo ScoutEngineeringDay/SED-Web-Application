@@ -44,5 +44,5 @@ class ContactEmailForm(forms.Form):
 	# captcha = ReCaptchaField()
 
 class BadgeForm(forms.Form):
-	confirmation_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Confirmation ID', 'class': 'form-control input-lg'}),required=False)
-	scout_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Scout ID', 'class': 'form-control input-lg'}),required=False)
+	confirmation_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Confirmation ID', 'class': 'form-control input-lg'}), required=False)
+	scout_id = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Scout ID', 'class': 'form-control input-lg'}), required=False)

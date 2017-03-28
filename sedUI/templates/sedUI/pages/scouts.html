@@ -35,10 +35,32 @@
 							{{scout.scout_last_name}}
 						</td>
 						<td align="left">
-							{{scout.scout_type}}
+							{% if scout.scout_type == "BOY" %}
+							Boy
+							{% elif scout.scout_type == "GIRL" %}
+							Girl
+							{% else %}
+							Other
+							{% endif %}
 						</td>
 						<td align="left">
-							{{scout.scout_status}}
+							{% if scout.scout_status == "UNDERWAY" %}
+							Underway
+							{% elif scout.scout_status == "EVENT_CHECKIN" %}
+							Check into Event
+							{% elif scout.scout_status == "WORKSHOP1_CHECKIN" %}
+							AM Workshop Checked In
+							{% elif scout.scout_status == "WORKSHOP1_CHECKOUT" %}
+							AM Workshop Checked Out
+							{% elif scout.scout_status == "WORKSHOP2_CHECKIN" %}
+							PM Workshop Checked In
+							{% elif scout.scout_status == "WORKSHOP2_CHECKOUT" %}
+							PM Workshop Checked Out
+							{% elif scout.scout_status == "EVENT_CHECKOUT" %}
+							Checkout from Event
+							{% else %}
+							Error
+							{% endif %}
 						</td>
 						<td align="left">
 							<a class="btn btn-primary btn-sm" href="/scout_detail/{{scout.scout_id}}" role="button">User Page</a>

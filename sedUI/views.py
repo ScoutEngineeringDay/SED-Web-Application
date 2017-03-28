@@ -120,14 +120,25 @@ class ScoutDetailView(generic.ListView):
 def event_checkin(request, scout_id):
     try:
         scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
-        if(scout.scout_status=="UNDERWAY" or scout.scout_status=='EVENT_CHECKOUT'):
+        session=getSessionByUniqueSession(scout_id, scout.scout_year)
+        if(session.workshop2_status=="COMPLETE" or session.workshop2_status=='INCOMPLETE'):
+            scout.scout_status='WORKSHOP2_CHECKOUT'
+            scout.save()
+            session.workshop2_checkout=datetime.datetime.now()
+            session.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        elif(session.workshop1_status=="COMPLETE" or session.workshop1_status=='INCOMPLETE'):
+            scout.scout_status='WORKSHOP1_CHECKOUT'
+            scout.save()
+            session.workshop1_checkout=datetime.datetime.now()
+            session.save()
+            return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+        elif(scout.scout_status=="UNDERWAY" or scout.scout_status=='EVENT_CHECKOUT'):
             scout.scout_status='EVENT_CHECKIN'
             scout.save()
-            session=getSessionByUniqueSession(scout_id, scout.scout_year)
             session.event_checkin=datetime.datetime.now()
             session.save()
             return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
-            #add checkin check
         else:
             return render_to_response('sedUI/pages/errorPage.html', status=404)
     except:
