@@ -93,11 +93,14 @@ class Location(models.Model):
 class Workshop(models.Model):
 	workshop_id=models.AutoField(primary_key=True)
 	course_id=models.CharField(max_length=10)
-	open_ceremony=models.CharField(max_length=1)
+	open_ceremony=models.CharField(max_length=1, blank=True)
 	location_id=models.CharField(max_length=10)
 	instructor_id=models.CharField(max_length=10)
 	workshop_time=models.CharField(max_length=4, choices=[("AM","AM"),("PM","PM"),("FULL","FULL")], blank=True)
 	workshop_open=models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+	workshop_year=models.CharField(max_length=4)
+	workshop_size=models.IntegerField()
+	workshop_open_status=models.CharField(max_length=6, choices=[("OPENED","OPENED"), ("CLOSED", "CLOSED")], blank=False)
 
 	def __str__(self):
 		try:

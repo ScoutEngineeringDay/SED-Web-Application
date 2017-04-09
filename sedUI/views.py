@@ -386,6 +386,10 @@ class RegistrationWizard(SessionWizardView):
         # 	stripeCall(self.request)
 
         # store into database scout table
+        scout_size=Scout.objects.all().count()
+        RegistrationClosedTrigger()
+        scout_size=scout_size+1
+        RegistrationClosedTrigger()
         scout = Scout(scout_first_name=scout_data["first_name"],
             scout_last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
@@ -416,6 +420,8 @@ class RegistrationWizard(SessionWizardView):
         
 
         if(workshop1_data[1]=="FULL"):
+
+            WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
             session = Session(
             scout_id=scout.scout_id,
             payment_method="Waived",
@@ -435,10 +441,12 @@ class RegistrationWizard(SessionWizardView):
             location_1=getLocationBySession(session.workshop1_id)
             location_2=None
         else:
+            WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
             #if there is a PM CLass
             workshop2_data=None
             if(workshop_data["evening_subject"]!=None):
                 workshop2_data=str(workshop_data["evening_subject"]).split('-')
+                WorkshopClosedTrigger(getWorkshopbyCourse(workshop2_data[0], workshop2_data[1]), workshop2_data[1])
                 session = Session(
                 scout_id=scout.scout_id,
                 payment_method="Waived",
@@ -552,8 +560,8 @@ def checkOpenDate():
     aboutPage = AboutPage.objects.latest('aboutPage_id')
     current_datetime= str(datetime.datetime.now())
     if(aboutPage.forceClosed==True):
-        print("registration forced closed")
-        isOpen="ForcedClosed"
+        print("registration closed")
+        isOpen="Closed"
     else:
         if(current_datetime<aboutPage.saveDate and current_datetime>=aboutPage.registrationOpenDate):
             print("registration open")
@@ -640,3 +648,50 @@ def getOpenCeremonybyWorkshop(CourseName, WorkshopTime):
         return Workshop.objects.get(course_id=Course.objects.get(course_name=CourseName).course_id, workshop_time=WorkshopTime).open_ceremony
     except:
         return None
+
+def WorkshopClosedTrigger(workshop_id, workshopTime):
+    try:
+        if(workshopTime=="AM"):
+            workshop_size=Session.objects.filter(workshop1_id=workshop_id).count()
+            print(workshop_size)
+            if(workshop_size<Workshop.objects.get(workshop_id=workshop_id).workshop_size):
+                print("there is room")
+                if (workshop_size+1>=Workshop.objects.get(workshop_id=workshop_id).workshop_size):
+                    workshop=Workshop.objects.get(workshop_id=workshop_id)
+                    workshop.workshop_open_status="CLOSED"
+                    workshop.save()
+            else:
+                print("class is fulled")
+        elif(workshopTime=="PM"):
+            workshop_size=Session.objects.filter(workshop2_id=workshop_id).count()
+            print(workshop_size)
+            if(workshop_size<Workshop.objects.get(workshop_id=workshop_id).workshop_size):
+                print("there is room")
+                if (workshop_size+1>=Workshop.objects.get(workshop_id=workshop_id).workshop_size):
+                    workshop=Workshop.objects.get(workshop_id=workshop_id)
+                    workshop.workshop_open_status="CLOSED"
+                    workshop.save()
+        else: #if full time
+            workshop_size=Session.objects.filter(workshop1_id=workshop_id).count()
+            print(workshop_size)
+            if(workshop_size<Workshop.objects.get(workshop_id=workshop_id).workshop_size):
+                print("there is room")
+                if (workshop_size+1>=Workshop.objects.get(workshop_id=workshop_id).workshop_size):
+                    workshop=Workshop.objects.get(workshop_id=workshop_id)
+                    workshop.workshop_open_status="CLOSED"
+                    workshop.save()
+    except:
+        return render_to_response('sedUI/pages/errorPage.html', status=404)
+
+def RegistrationClosedTrigger():
+    try:
+        max_scout_size=3
+        aboutPage = AboutPage.objects.latest('aboutPage_id')
+        if (Scout.objects.all().count()+1>=max_scout_size):
+            aboutPage.forceClosed=True
+            aboutPage.save()
+        else:
+            return HttpResponse("hit max scout size")
+    except:
+        return render_to_response('sedUI/pages/errorPage.html', status=404)
+
