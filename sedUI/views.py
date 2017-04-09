@@ -19,11 +19,6 @@ from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
 from django.core.management.utils import get_random_secret_key
 
-FORMS = [("citizenship", RegistrationForm1),
-         ("scout_info", RegistrationForm2),
-         ("selection", RegistrationForm3),
-         ("payment", RegistrationForm4)]
-
 # Create your views here.
 class IndexView(generic.TemplateView):
     template_name='sedUI/pages/index.html'
@@ -296,7 +291,6 @@ class BadgeView(SessionWizardView):
         except:
         	return render_to_response('sedUI/pages/errorPage.html', status=404)
         
-
 class AllBadgesView(generic.ListView):
     template_name = 'sedUI/pages/getAllBadges.html'
     context_object_name = 'all_scouts'
@@ -333,7 +327,7 @@ class AllBadgesView(generic.ListView):
         return ctx
 
 class RegistrationWizard(SessionWizardView):
-    form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4]
+    form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3]
     template_name = 'sedUI/pages/registration_form.html'
 
     def get_context_data(self, **kwargs):
@@ -350,9 +344,9 @@ class RegistrationWizard(SessionWizardView):
 
     def render(self, form=None, **kwargs):
         form = form or self.get_form()
-        if self.steps.current=='3':
-            context = self.get_context_data(form=form, **kwargs)
-            return self.render_to_response(context)
+        # if self.steps.current=='3':
+        #     context = self.get_context_data(form=form, **kwargs)
+        #     return self.render_to_response(context)
         context = self.get_context_data(form=form, **kwargs)
         return self.render_to_response(context)
 
@@ -386,10 +380,10 @@ class RegistrationWizard(SessionWizardView):
         course_2=None
         scout_data=self.get_cleaned_data_for_step('1')
         workshop_data=self.get_cleaned_data_for_step('2')
-        session_data=self.get_cleaned_data_for_step('3')
+        # session_data=self.get_cleaned_data_for_step('3')
 
-        if(session_data["payment_method"]=="Pay_Online"):
-        	stripeCall(self.request)
+        # if(session_data["payment_method"]=="Pay_Online"):
+        # 	stripeCall(self.request)
 
         # store into database scout table
         scout = Scout(scout_first_name=scout_data["first_name"],
@@ -412,16 +406,19 @@ class RegistrationWizard(SessionWizardView):
         # # store into database session table
         #filter courses
         workshop1_data=str(workshop_data["morning_subject"]).split('-')
-        if(session_data["payment_method"]=="Waived"):
-            payment_status_info="PAID"
-        elif(session_data["payment_method"]=="Pay_Online"):
-            payment_status_info="PAID"
-        else:
-            payment_status_info="NOT PAID"
+        payment_status_info="PAID"
+        # if(session_data["payment_method"]=="Waived"):
+        #     payment_status_info="PAID"
+        # elif(session_data["payment_method"]=="Pay_Online"):
+        #     payment_status_info="PAID"
+        # else:
+        #     payment_status_info="NOT PAID"
+        
+
         if(workshop1_data[1]=="FULL"):
             session = Session(
             scout_id=scout.scout_id,
-            payment_method=session_data["payment_method"],
+            payment_method="Waived",
             payment_amount="40.00",
             payment_status=payment_status_info,
             open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "FULL"),
@@ -444,7 +441,7 @@ class RegistrationWizard(SessionWizardView):
                 workshop2_data=str(workshop_data["evening_subject"]).split('-')
                 session = Session(
                 scout_id=scout.scout_id,
-                payment_method=session_data["payment_method"],
+                payment_method="Waived",
                 payment_amount="40.00",
                 payment_status=payment_status_info,
                 open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
@@ -466,7 +463,7 @@ class RegistrationWizard(SessionWizardView):
                 print("Error")
                 session = Session(
                 scout_id=scout.scout_id,
-                payment_method=session_data["payment_method"],
+                payment_method="Waived",
                 payment_amount="40.00",
                 payment_status=payment_status_info,
                 open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
@@ -531,8 +528,8 @@ def confirmation_send_email(form_list, scout_id, confirmation_id):
     scout_info = ("\n\nScout Information:\n\tScout ID: "+str(scout_id)+"\n\tScout Name: "+str(form_data[1]["first_name"])+" "+str(form_data[1]["last_name"])+"\n\tScout type: "+str(form_data[1]["affiliation"])+"\n\tUnit Number:"+str(form_data[1]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[1]["phone"])+"\n\tEmail: "+str(form_data[1]["email"]))
     emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name:"+str(form_data[1]["emergency_first_name"])+" "+str(form_data[1]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[1]["emergency_phone"]))
     # course_info=("\n\nCourses:\tClass 1:"+form_data[2]["morning_subject"]+"\tClass 2:"+form_data[2]["evening_subject"])
-    payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"]))
-    message = "Hello,"+scout_info+emergency_info+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge, go to Get Badge and enter your confirmation number: "+confirmation_id+"\n\nThank you,\n\t Scout Engineering Day Development Team"
+    # payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"]))
+    message = "Hello,"+scout_info+emergency_info+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge, go to Get Badge and enter your confirmation number: "+confirmation_id+"\n\nThank you,\n\t Scout Engineering Day Development Team"
 
 
     email = EmailMessage(

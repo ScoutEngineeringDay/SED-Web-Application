@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECRET_KEY = 'a1u4znl-=0+!lzr=iyctr^*rxatx&6f%^60@62wtlyj+$_ea0$'
 SECRET_KEY = 'django.utils.crypt.get_random_string()'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['www.sedteam.com','sedteam.com', 'localhost','54.152.243.242', '54.236.255.148', '52.90.26.230']
 
