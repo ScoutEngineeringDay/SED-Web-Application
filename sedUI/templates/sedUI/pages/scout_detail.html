@@ -217,13 +217,13 @@
 	{% if session.payment_status == "PAID" %}
 		<div class="container" align="center">
 			<a id="scout_event_checkin" href="{% url 'scout_event_checkin/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
-			<a id="scout_event_checkout" href="{% url 'scout_event_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-default btn-action">Check Out Of Event</i></a>
+			<a id="scout_event_checkout" href="{% url 'scout_event_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Check Out Of Event</i></a>
 		</div>
 		<br>
 		<div class="container" align="center">
-			<a id="scout_workshop_checkin" href="{% url 'scout_workshop_checkin/' scout.scout_id %}" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-info btn-action">Check Into Class</i></a>
+			<a id="scout_workshop_checkin" href="{% url 'scout_workshop_checkin/' scout.scout_id %}" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-primary btn-action">Check Into Class</i></a>
+			<a id="scout_workshop_checkout" href="{% url 'scout_workshop_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Class Incomplete</i></a>
 			<a id="scout_workshop_completed" href="{% url 'scout_workshop_completed/' scout.scout_id %}" data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
-			<a id="scout_workshop_checkout" href="{% url 'scout_workshop_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Check Out Of Class</i></a>
 		</div>`
 	{% else %}
 		<h3 align="center" style="color:red;"> THIS SCOUT HAS NOT PAID FOR THE EVENT </h3>

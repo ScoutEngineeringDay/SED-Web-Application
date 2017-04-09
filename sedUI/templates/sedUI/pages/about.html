@@ -4,94 +4,94 @@
 	{% if aboutPage %}
 		<div class="container">
 		    <div class="container">
-			<div class="jumbotron">
-				<h2 style="text-align: center; font-size: 32pt;">Scout Engineering Day</h2>
-				<p align="center" style="color:blue; font-size:200%;">
-					Save the Date!
-					<br>
-					{{aboutPage.saveDate}}
-					<br>
-					in
-					<br>
-					{{aboutPage.eventLocation}}
-				</p>
-				<p style="text-align: center;">
-					Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}
-				</p>
+					<div class="jumbotron">
+						<h2 style="text-align: center; font-size: 32pt;">Scout Engineering Day</h2>
+						<p align="center" style="color:blue; font-size:200%;">
+							Save the Date!
+							<br>
+							{{aboutPage.saveDate}}
+							<br>
+							in
+							<br>
+							{{aboutPage.eventLocation}}
+						</p>
+						<p style="text-align: center;">
+							Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}
+						</p>
 
-			</div>
-			<div class="jumbotron">
-				<h2 style="text-align: center; font-size: 32pt;">Courses Offered at Scout Engineering Day</h2>
-				<br>
-				<div class="container-fluid ul-links" style="margin: 0 auto; width: 80%">
-					{% if all_courses %}
-						<div class="left-float ul-links">
+					</div>
+					<div class="jumbotron">
+						<h2 style="text-align: center; font-size: 32pt;">Courses Offered at Scout Engineering Day</h2>
+						<br>
+						<div class="container-fluid ul-links" style="margin: 0 auto; width: 80%">
+							{% if all_courses %}
+								<div class="left-float ul-links">
 								{% for course in left_items %}
 									<li><a class="blackLink" href="/course_detail/{{course.course_id}}"> {{course.course_name}} </a></li>
 								{% endfor %}
-						</div>
-						<div class="right-float ul-links">
-								{% for course in right_items %}
-									<li><a class="blackLink" href="/course_detail/{{course.course_id}}"> {{course.course_name}} </a></li>
-								{% endfor %}
-						</div>
-					{% else %}
-						<h4> You don't have any courses </h4>
-					{% endif %}
-				</div>
-				<br>
-				<div class="container-fluid" style="margin: 0 auto; width: 80%">
-					{% if isOpen == "Opened" or request.user.is_superuser %}
-						<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
-					{% elif isOpen == "ForcedClosed" %}
+								</div>
+								<div class="right-float ul-links">
+									{% for course in right_items %}
+										<li><a class="blackLink" href="/course_detail/{{course.course_id}}"> {{course.course_name}} </a></li>
+									{% endfor %}
+								</div>
+							{% else %}
+							<h4> You don't have any courses </h4>
+						{% endif %}
+					</div>
+					<br>
+					<div class="container-fluid" style="margin: 0 auto; width: 80%">
+						{% if isOpen == "Opened" or request.user.is_superuser %}
+							<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
+						{% elif isOpen == "ForcedClosed" %}
     					<h4 align="center">Registration is down for maintance</h4>
-					{% else %}
-						<h4 style="color:red">Registration is Closed at the moment</h4>
-					{% endif %}
-				</div>
-			</div>
-
-			<div class="jumbotron">
-		  	<div class="container-fluid">
-			    <h2>Location of Scout Engineering Day</h2>
-			    <h4>{{aboutPage.locationMap}}</h4>
-			  	<style>#map {width: 60%; height: 500px; float: left; }</style>
-			  	<style>#inst {width: 35%; float: right;}</style>
-			  	<div>
-				    <div id="map"></div>
-					<div id="inst">
-
-					<p>
-						Parking Insturctions
-						<br>
-						MITRE 2
-						<br>
-						Go to Registration
-						<br>
-						MITRE Complex Link
-						<br>
-					</p>
-
-					<a class="btn btn-primary btn-lg" href="https://www.google.com/maps/dir//7515+Colshire+Drive,+McLean,+VA+22102/@38.9226832,-77.2082459,17z/data=!3m1!4b1!4m8!4m7!1m0!1m5!1m1!1s0x89b64ac62ab07a31:0x75dcc97e7f5adaed!2m2!1d-77.2060572!2d38.922679" target="_blank" role="button">Get Directions</a>
+						{% else %}
+							<h4 style="color:red">Registration is Closed at the moment</h4>
+						{% endif %}
 					</div>
 				</div>
-			</div>
-			<script>
-				function myMap() {
-					 var myCenter = new google.maps.LatLng(38.922679,-77.206057);
-					 var mapCanvas = document.getElementById("map");
-					 var mapOptions = {center: myCenter, zoom: 13, scrollwheel: false};
-					 var map = new google.maps.Map(mapCanvas, mapOptions);
-					 var marker = new google.maps.Marker({position:myCenter});
-					 marker.setMap(map);
-				}
-		    </script>
+				<div class="jumbotron">
+		  		<div class="container-fluid">
+			    	<h2>Location of Scout Engineering Day</h2>
+			    	<h4>{{aboutPage.locationMap}}</h4>
+			  		<style>#map {width: 100%; height: 500px;}</style>
+			  		<style>#inst {width: 100%;}</style>
+			  		<div>
+				    	<div id="map"></div>
+								<div id="inst">
+									<p>
+										<h3>Parking Insturctions</h3>
+										MITRE 2
+										<br>
+										<br>
+										<h3>Registration Location</h3>
+										Go to Registration
+										<br>
+										<br>
+									</p>
+									<a class="btn btn-primary btn-lg" href="https://www.google.com/maps/dir//mitre+quantico/@38.514568,-77.4057954,13z/data=!3m1!4b1!4m8!4m7!1m0!1m5!1m1!1s0x89b6fa7c6cd66689:0x19cf5f20360d3af4!2m2!1d-77.3707759!2d38.5145732" target="_blank" role="button">Get Directions</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<script>
+						function myMap() {
+							var myCenter = new google.maps.LatLng(38.514414, -77.370830);
+							var mapCanvas = document.getElementById("map");
+							var mapOptions = {center: myCenter, zoom: 13, scrollwheel: false};
+						 	var map = new google.maps.Map(mapCanvas, mapOptions);
+						 	var marker = new google.maps.Marker({position:myCenter});
+						 	marker.setMap(map);
+						}
+	    		</script>
 
-		    <script async defer
-		        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXhUi4Rr6tydsw9jIbfs4k7rLOlxt4-hA&callback=myMap">
-			</script>
+	    		<script async defer
+	        	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXhUi4Rr6tydsw9jIbfs4k7rLOlxt4-hA&callback=myMap">
+					</script>
+				</div>
+				{% else %}
+					<p> Error with AboutPage Data </p>
+
 		</div>
-	{% else %}
-		<p> Error with AboutPage Data </p>
 	{% endif %}
 {% endblock %}
