@@ -29,8 +29,8 @@ class RegistrationForm2(forms.Form):
 	# captcha = ReCaptchaField()
 
 class RegistrationForm3(forms.Form):
-	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="AM")), widget=forms.Select(attrs={'class': 'dropdown'}))
-	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(Q(workshop_time="FULL") | Q(workshop_time="PM")), widget=forms.Select(attrs={'class': 'dropdown'}))
+	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter((Q(workshop_time="FULL") | Q(workshop_time="AM") & Q(workshop_open_status="OPENED"))), widget=forms.Select(attrs={'class': 'dropdown'}))
+	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter((Q(workshop_time="FULL") | Q(workshop_time="PM") & Q(workshop_open_status="OPENED"))), widget=forms.Select(attrs={'class': 'dropdown'}))
 
 class RegistrationForm4(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment"),("Waived","Waived")])
