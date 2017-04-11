@@ -63,9 +63,10 @@ class Scout(models.Model):
 class Course(models.Model):
 	course_id=models.AutoField(primary_key=True)
 	course_name=models.CharField(max_length=50)
-	course_description=models.CharField(max_length=500)
+	course_description=models.CharField(max_length=5000)
 	course_size=models.IntegerField()
 	course_duration=models.CharField(max_length=4, choices=[("HALF","HALF"),("FULL","FULL")], blank=True)
+	course_prereq=models.CharField(max_length=5000)
 
 	def __str__(self):
 		return self.course_name

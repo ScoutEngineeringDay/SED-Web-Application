@@ -661,7 +661,9 @@ def WorkshopClosedTrigger(workshop_id, workshopTime):
                     workshop.workshop_open_status="CLOSED"
                     workshop.save()
             else:
-                print("class is fulled")
+                workshop=Workshop.objects.get(workshop_id=workshop_id)
+                workshop.workshop_open_status="CLOSED"
+                workshop.save()
         elif(workshopTime=="PM"):
             workshop_size=Session.objects.filter(workshop2_id=workshop_id).count()
             print(workshop_size)
@@ -671,6 +673,10 @@ def WorkshopClosedTrigger(workshop_id, workshopTime):
                     workshop=Workshop.objects.get(workshop_id=workshop_id)
                     workshop.workshop_open_status="CLOSED"
                     workshop.save()
+            else:
+                workshop=Workshop.objects.get(workshop_id=workshop_id)
+                workshop.workshop_open_status="CLOSED"
+                workshop.save()
         else: #if full time
             workshop_size=Session.objects.filter(workshop1_id=workshop_id).count()
             print(workshop_size)
@@ -680,6 +686,10 @@ def WorkshopClosedTrigger(workshop_id, workshopTime):
                     workshop=Workshop.objects.get(workshop_id=workshop_id)
                     workshop.workshop_open_status="CLOSED"
                     workshop.save()
+            else:
+                workshop=Workshop.objects.get(workshop_id=workshop_id)
+                workshop.workshop_open_status="CLOSED"
+                workshop.save()
     except:
         return render_to_response('sedUI/pages/errorPage.html', status=404)
 
