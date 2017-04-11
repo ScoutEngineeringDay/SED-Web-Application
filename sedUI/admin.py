@@ -27,7 +27,7 @@ class SessionAdmin(admin.ModelAdmin):
 		model = Session
 
 class WorkshopAdmin(admin.ModelAdmin):
-	list_display = ["workshop_id","__str__", "__instructor__", "workshop_time", "workshop_open", "open_ceremony", "__room__"]
+	list_display = ["workshop_id","__str__", "__instructor__", "workshop_time", "workshop_open", "open_ceremony", "__room__", "workshop_size", "workshop_open_status"]
 	class Meta:
 		model = Workshop
 

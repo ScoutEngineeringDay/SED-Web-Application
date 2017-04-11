@@ -685,7 +685,7 @@ def WorkshopClosedTrigger(workshop_id, workshopTime):
 
 def RegistrationClosedTrigger():
     try:
-        max_scout_size=3
+        max_scout_size=6
         aboutPage = AboutPage.objects.latest('aboutPage_id')
         if (Scout.objects.all().count()+1>=max_scout_size):
             aboutPage.forceClosed=True
