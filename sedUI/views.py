@@ -66,7 +66,7 @@ class CourseView(generic.ListView):
     template_name = 'sedUI/pages/courses.html'
     context_object_name = 'all_courses'
     def get_queryset(self):
-        return Course.objects.all()
+        return Course.objects.all().order_by('course_name')
 
 class CourseDetailView(generic.ListView):
     template_name = 'sedUI/pages/course_detail.html'
