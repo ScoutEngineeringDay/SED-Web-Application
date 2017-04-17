@@ -6,7 +6,7 @@
 			<div class="jumbotron">
 				<h1 style="text-align: center;">Scout Engineering Day</h1>
 				<p>{{HomePage.homepage_description}} </p>
-				<p><i>Registration opens on {{aboutPage.registrationOpenDate}} and {{aboutPage.registrationOpenTime}}. Sign up for classes to get your badges!</i></p>
+				<p><i>Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}. Sign up for classes to get your badges!</i></p>
 				<br>
 				<p>
 				{% if isOpen == "Opened" or request.user.is_superuser %}
