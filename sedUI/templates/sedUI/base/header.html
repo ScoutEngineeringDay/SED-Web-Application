@@ -47,8 +47,9 @@
             			<li><a href="/contact/">Contact</a></li>
 				  	</ul>
 				  	<ul class="nav navbar-nav navbar-right">
+				  		{% if user.is_staff %}
 						<li><a href="/badge/">Get Badge</a></li>
-					  	{% if user.is_staff %}
+					  
 					  	<li><a href="/admin/"></span> {{user.username}}</a></li>
 					  	<li><a href="/logout/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 						{% else %}
