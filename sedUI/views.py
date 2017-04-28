@@ -311,7 +311,7 @@ class AllBadgesView(generic.ListView):
            try:
              workshop_1_data=str(workshop_1.course_name)+" - "+str(location_1.location_room)
            except:
-             workshop_2_data=" "
+             workshop_1_data=" "
            try:
              workshop_2_data=str(workshop_2.course_name)+" - "+str(location_2.location_room)
            except:
