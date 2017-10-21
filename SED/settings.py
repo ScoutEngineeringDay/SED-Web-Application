@@ -29,7 +29,7 @@ SECRET_KEY = 'django.utils.crypt.get_random_string()'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.sedteam.com','sedteam.com', 'localhost','54.152.243.242', '54.236.255.148', '52.90.26.230']
+ALLOWED_HOSTS = ['localhost']
 
 # AWS_ACCESS_KEY_ID = 'YOUR-ACCESS-KEY-ID'
 # AWS_SECRET_ACCESS_KEY = 'YOUR-SECRET-ACCESS-KEY'
@@ -62,8 +62,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sedUI',
-    'captcha'
+    'sedUI'
+#    'captcha'
 ]
 
 MIDDLEWARE = [
@@ -96,18 +96,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'SED.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 # DATABASES = {
 #    'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'sed_database',
-#         'USER': 'root',
-#         'PASSWORD':'test',
+#         'USER': 'sed_admin',
+#         'PASSWORD':'sed_password',
 #         'HOST': 'localhost',
 #         'PORT': '3306',
 #     }
@@ -116,10 +113,10 @@ WSGI_APPLICATION = 'SED.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'SED_Database',
-        'USER': 'sed',
-        'PASSWORD':'Pass1234',
-        'HOST': 'sed-db.cqpg4rn4jalr.us-east-1.rds.amazonaws.com',
+        'NAME': 'sed_database',
+        'MYSQL_USER': 'sed_admin',
+        'PASSWORD':'sed_password',
+        'HOST': '172.17.0.4', #need to change to match container
         'PORT': '3306',
     }
 }
@@ -142,7 +139,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -161,8 +157,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 # PROJECT_DIR = os.path.dirname(__file__)
-STATIC_URL = 'https://s3.amazonaws.com/elasticbeanstalk-us-east-1-246431403030/static/'
-#STATIC_URL = '/sedUI/static/'
+STATIC_URL = '/sedUI/static/'
 # STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'staticfiles'),)
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
