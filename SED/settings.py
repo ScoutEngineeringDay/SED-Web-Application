@@ -119,7 +119,7 @@ DATABASES = {
         'PASSWORD':'sed_password',
         'MYSQL_ROOT_PASSWORD':'sed_password',
         'MYSQL_PASSWORD':'sed_password',
-        'HOST': 'localhost', #need to change to match container
+        'HOST': '172.17.0.4', #need to change to match container
         'PORT': '3306',
     }
 }
