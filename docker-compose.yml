@@ -5,9 +5,14 @@ services:
     volumes:
       - "./sito/db/:/var/lib/mysql"
     ports:
-      - "3306:3310"
+      - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: "sed_password"
+      NAME: 'sed_database',
+      MYSQL_USER: 'sed_admin',
+      USER: 'sed_admin',
+      PASSWORD: 'sed_password',
+      MYSQL_ROOT_PASSWORD: 'sed_password',
+      MYSQL_PASSWORD: 'sed_password',
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000

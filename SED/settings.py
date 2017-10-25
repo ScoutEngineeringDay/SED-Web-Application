@@ -110,25 +110,25 @@ WSGI_APPLICATION = 'SED.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#    'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'sed_database',
-#         'MYSQL_USER': 'sed_admin',
-#         'USER': 'sed_admin',
-#         'PASSWORD':'sed_password',
-#         'MYSQL_ROOT_PASSWORD':'sed_password',
-#         'MYSQL_PASSWORD':'sed_password',
-#         'HOST': '172.17.0.4', #need to change to match container
-#         'PORT': '3306',
-#     }
-# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+   'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sed_database',
+        'MYSQL_USER': 'sed_admin',
+        'USER': 'sed_admin',
+        'PASSWORD':'sed_password',
+        'MYSQL_ROOT_PASSWORD':'sed_password',
+        'MYSQL_PASSWORD':'sed_password',
+        'HOST': 'localhost', #need to change to match container
+        'PORT': '3306',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
