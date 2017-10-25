@@ -116,7 +116,7 @@ DATABASES = {
         'NAME': 'sed_database',
         'USER': 'sed_admin',
         'MYSQL_ROOT_PASSWORD':'sed_password',
-        'HOST': 'sedwebapplication_db_1', #need to change to match container
+        'HOST': 'sed_database', #need to change to match container
         'PORT': '3306',
     }
 }
