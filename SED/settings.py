@@ -114,8 +114,8 @@ DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sed_database',
-        'USER': 'sed_admin',
-        'MYSQL_ROOT_PASSWORD':'sed_password',
+        'MYSQL_USER': 'sed_admin',
+        'MYSQL_PASSWORD':'sed_password',
         'HOST': '172.17.0.4', #need to change to match container
         'PORT': '3306',
     }
