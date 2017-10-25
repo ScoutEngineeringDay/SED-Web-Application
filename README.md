@@ -1,6 +1,6 @@
 # SED Web Registration Application Development
 
-This program is in development and is to be used for the Mitre Scout Engineering Day as a Registration Web Service. The front end of the registration service and is written in HTML, JavaScript, Python and CSS; while to back end is done using MySQL. Anyone who would like to help with development please contact Ryan Dufrene at rdufrene@mitre.org.
+This program is in development and is to be used for the Mitre Scout Engineering Day as a Registration Web Service. The front end of the registration service and is written in HTML, JavaScript, Python and CSS; while to back end is done using MySQL. Anyone who would like to help with development please contact Ryan Dufrene at rdufrene@mitre.org, or Walter Hiranpat at whiranpat@mitre.org.
 
 
 # Installation
@@ -101,8 +101,17 @@ The following tools are needed:
 - [ ] Integrate the Stripe Payment process
 
 ## Credits
-
+Developer Team(2016):
 * **Sue Kim**: Manager - *Initial work*
 * **Ryan Dufrene**: Front-End Developer - *Initial work*
-* **Walter Hiranpat**: AWS, Django Back-End Developer, Database Developer - *Initial work*
-* **Edward Gedeon**: Front-End Developer - *Initial work*
+* **Walter Hiranpat**: AWS, Django Back-End Developer, Database 
+Developer - *Initial work*
+
+Developer Team(2017):
+* **Sue Kim**: Manager - *Initial work*
+* **Ryan Dufrene**: Front-End Developer - *Initial work*
+* **Walter Hiranpat**: AWS, Django Back-End Developer, Database 
+* **Phillip Marlow**:
+* **Kaylee White**:
+* **Joseph Mahakian**:
+* **Joel Stien**:
