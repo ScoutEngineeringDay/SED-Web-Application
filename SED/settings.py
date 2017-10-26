@@ -166,8 +166,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-# PROJECT_DIR = os.path.dirname(__file__)
+PROJECT_DIR = os.path.dirname(__file__)
 STATIC_URL = '/sedUI/static/'
-# STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'staticfiles'),)
+STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'staticfiles'),)
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
