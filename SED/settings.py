@@ -113,7 +113,7 @@ WSGI_APPLICATION = 'SED.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sed_database',
+        'NAME': 'SED_Database',
         'MYSQL_USER': 'sed_admin',
         'USER': 'sed_admin',
         'PASSWORD':'sed_password',
