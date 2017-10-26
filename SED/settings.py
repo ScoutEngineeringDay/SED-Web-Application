@@ -167,7 +167,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 PROJECT_DIR = os.path.dirname(__file__)
-STATIC_URL = '/sedUI/static/'
-STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'staticfiles'),)
+# STATIC_URL = '/sedUI/static/'
+STATICFILES_DIRS = (os.path.join(PROJECT_DIR, '/sedUI/static/'),)
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
