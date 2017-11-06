@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" type = "text/css"/>
 	<link rel="stylesheet" href="{% static '/css/style.css' %}" type = "text/css"/>
 	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="{% static '/img/images/sedLogoQ.png' %}">
+	<link rel="shortcut icon" href="{% static '/img/images/sedLogo.png' %}">
 	<script type="text/javascript" src="{% static '/js/jquery-2.1.1.min.js' %}"></script>
 	<script type="text/javascript" src="{% static '/js/bootstrap.js' %}"></script>
 
@@ -20,7 +20,7 @@
 		<nav class="navbar navbar-default navbar-top" style="background-color:#ffffff; margin:0">
 				<div class="navbar-header">
 					<a class="navbar-brand1" href="/"><img
-						class="banner-image1" src="{% static 'img/images/sedbannerQ.png' %}"></a> <a
+						class="banner-image1" src="{% static 'img/images/sedbanner.png' %}"></a> <a
 						class="navbar-brand2" href="https://www.mitre.org/">
 						<img class="banner-image2" src="{% static 'img/images/Mitre.png' %}"></a>
 				</div>
@@ -49,7 +49,7 @@
 				  	<ul class="nav navbar-nav navbar-right">
 				  		{% if user.is_staff %}
 						<li><a href="/badge/">Get Badge</a></li>
-					  
+
 					  	<li><a href="/admin/"></span> {{user.username}}</a></li>
 					  	<li><a href="/logout/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 						{% else %}

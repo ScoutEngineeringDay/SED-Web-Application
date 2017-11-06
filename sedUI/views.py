@@ -269,7 +269,7 @@ class BadgeView(SessionWizardView):
         else:
             return render_to_response('sedUI/pages/errorPage.html', status=404)
         try:
-            
+
             session_data=getSessionByUniqueSession(scout_data.scout_id, scout_data.scout_year)
             course_1=getCourseBySession(session_data.workshop1_id)
             location_1=getLocationBySession(session_data.workshop1_id)
@@ -290,7 +290,7 @@ class BadgeView(SessionWizardView):
             })
         except:
         	return render_to_response('sedUI/pages/errorPage.html', status=404)
-        
+
 class AllBadgesView(generic.ListView):
     template_name = 'sedUI/pages/getAllBadges.html'
     context_object_name = 'all_scouts'
@@ -300,7 +300,7 @@ class AllBadgesView(generic.ListView):
 
     def get_context_data(self, **kwargs):
     	ctx=super(AllBadgesView, self).get_context_data(**kwargs)
-    	
+
     	ctx['data']={}
         for scout in Scout.objects.all():
            session_data=getSessionByUniqueSession(scout.scout_id, scout.scout_year)
@@ -417,7 +417,7 @@ class RegistrationWizard(SessionWizardView):
         #     payment_status_info="PAID"
         # else:
         #     payment_status_info="NOT PAID"
-        
+
 
         if(workshop1_data[1]=="FULL"):
 
@@ -538,7 +538,7 @@ def confirmation_send_email(form_list, scout_id, confirmation_id):
     # course_info=("\n\nCourses:\tClass 1:"+form_data[2]["morning_subject"]+"\tClass 2:"+form_data[2]["evening_subject"])
     # payment_timestamp=("\n\nPayment Method: "+str(form_data[3]["payment_method"]))
     # message = "Hello,"+scout_info+emergency_info+"\n\n"+course_info+"\n\n"+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge, go to Get Badge and enter your confirmation number: "+confirmation_id+"\n\nThank you,\n\t Scout Engineering Day Development Team"
-    
+
     #Modify for Quantico
     message = "Hello,"+scout_info+emergency_info+"\n\nIf there is any information that is mistaken please contact us.\n\nThank you,\n\t Scout Engineering Day Development Team"
 
@@ -698,7 +698,7 @@ def WorkshopClosedTrigger(workshop_id, workshopTime):
 
 def RegistrationClosedTrigger():
     try:
-        max_scout_size=100
+        max_scout_size=1000
         aboutPage = AboutPage.objects.latest('aboutPage_id')
         if (Scout.objects.all().count()+1>=max_scout_size):
             aboutPage.forceClosed=True
@@ -707,4 +707,3 @@ def RegistrationClosedTrigger():
             return HttpResponse("hit max scout size")
     except:
         return render_to_response('sedUI/pages/errorPage.html', status=404)
-
