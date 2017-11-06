@@ -344,9 +344,9 @@ class RegistrationWizard(SessionWizardView):
 
     def render(self, form=None, **kwargs):
         form = form or self.get_form()
-        # if self.steps.current=='3':
-        #     context = self.get_context_data(form=form, **kwargs)
-        #     return self.render_to_response(context)
+        if self.steps.current=='3':
+            context = self.get_context_data(form=form, **kwargs)
+            return self.render_to_response(context)
         context = self.get_context_data(form=form, **kwargs)
         return self.render_to_response(context)
 
@@ -380,10 +380,10 @@ class RegistrationWizard(SessionWizardView):
         course_2=None
         scout_data=self.get_cleaned_data_for_step('1')
         workshop_data=self.get_cleaned_data_for_step('2')
-        # session_data=self.get_cleaned_data_for_step('3')
+        session_data=self.get_cleaned_data_for_step('3')
 
-        # if(session_data["payment_method"]=="Pay_Online"):
-        # 	stripeCall(self.request)
+        if(session_data["payment_method"]=="Pay_Online"):
+        	stripeCall(self.request)
 
         # store into database scout table
         scout_size=Scout.objects.all().count()
