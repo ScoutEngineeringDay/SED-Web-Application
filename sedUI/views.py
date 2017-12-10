@@ -382,8 +382,8 @@ class RegistrationWizard(SessionWizardView):
         workshop_data=self.get_cleaned_data_for_step('2')
         session_data=self.get_cleaned_data_for_step('3')
 
-        if(session_data["payment_method"]=="Pay_Online"):
-        	stripeCall(self.request)
+        # if(session_data["payment_method"]=="Pay_Online"):
+        # 	stripeCall(self.request)
 
         # store into database scout table
         scout_size=Scout.objects.all().count()
@@ -497,7 +497,7 @@ class RegistrationWizard(SessionWizardView):
             'location_2': location_2
         }
         confirmation_timestamp=session.confirmation_timestamp
-        confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
+        #confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
     		'scout': scout,
     		'session': session,
