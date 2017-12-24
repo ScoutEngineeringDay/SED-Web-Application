@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from . import views
 from django.contrib.auth.decorators import login_required, permission_required
-from sedUI.forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm, BadgeForm
+from sedUI.forms import RegistrationForm1, RegistrationForm1_5, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm, BadgeForm
 
 urlpatterns=[
 	url(r'^$', views.IndexView.as_view(), name='index'),
@@ -12,7 +12,7 @@ urlpatterns=[
 	url(r'^badge/?$', views.BadgeView.as_view([BadgeForm]), name='badge'),
 	url(r'^allbadges/?$', login_required(views.AllBadgesView.as_view()), name='allbadges'),
 
-	url(r'^registration/?$', views.RegistrationWizard.as_view([RegistrationForm1, RegistrationForm2, RegistrationForm3]), name='registration'),
+	url(r'^registration/?$', views.RegistrationWizard.as_view([RegistrationForm1, RegistrationForm1_5, RegistrationForm2, RegistrationForm3, RegistrationForm4]), name='registration'),
 	url(r'^registrationIssue/?$', views.RegistrationIssueView.as_view(), name='registrationIssue'),
 
 	url(r'^scouts/?$', login_required(views.ScoutView.as_view()), name='scout'),

@@ -8,6 +8,15 @@ from django.core.validators import MinValueValidator
 class RegistrationForm1(forms.Form):
 	citizenship = forms.ChoiceField(widget=forms.RadioSelect(), choices=[('Yes', 'Yes'),('No','No')])
 
+class RegistrationForm1_5(forms.Form):
+	first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
+	last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
+	email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
+	email_confirm = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Confirmation', 'type': 'email'}))
+	mitre_employee = forms.BooleanField(initial=False, required=False)
+	CHOICES = (("myself","I am registering myself"),("others","I am registering others"),("both","I am registering myself & others"))
+	registration_type = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+
 class RegistrationForm2(forms.Form):
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))

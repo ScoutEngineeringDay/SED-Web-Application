@@ -14,11 +14,12 @@
       <div class="col-xs-3 bs-wizard-step complete">
     {% endif %}
       <div class="text-center bs-wizard-stepnum">Step 1</div>
-      <div class="progress"><div class="progress-bar"></div></div>
-      <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center non-mobile-friendly">Citizenship</div>
-    </div>
-
+        <div class="progress">
+          <div class="progress-bar"></div>
+        </div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center non-mobile-friendly">Citizenship</div>
+      </div>
 
     {% if wizard.steps.current < "1" %}
       <div class="col-xs-3 bs-wizard-step disabled"><!-- disabled -->
@@ -28,36 +29,42 @@
       <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
     {% endif %}
       <div class="text-center bs-wizard-stepnum">Step 2</div>
-      <div class="progress"><div class="progress-bar"></div></div>
-      <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center non-mobile-friendly">Scout Information</div>
-    </div>
+        <div class="progress">
+          <div class="progress-bar"></div>
+        </div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center non-mobile-friendly">Register Information</div>
+      </div>
 
     {% if wizard.steps.current < "2" %}
-      <div class="col-xs-3 bs-wizard-step disabled"><!-- disabled -->
+    <div class="col-xs-3 bs-wizard-step disabled"><!-- disabled -->
     {% elif wizard.steps.current == "2" %}
       <div class="col-xs-3 bs-wizard-step active"><!-- active -->
     {% elif wizard.steps.current > "2" %}
       <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
     {% endif %}
       <div class="text-center bs-wizard-stepnum">Step 3</div>
-      <div class="progress"><div class="progress-bar"></div></div>
-      <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center non-mobile-friendly">Workshop Selection</div>
-    </div>
+        <div class="progress">
+          <div class="progress-bar"></div>
+        </div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center non-mobile-friendly">Scout Information</div>
+      </div>
 
-    <!-- {% if wizard.steps.current < "3" %}
-      <div class="col-xs-3 bs-wizard-step disabled">
+    {% if wizard.steps.current < "3" %}
+      <div class="col-xs-3 bs-wizard-step disabled"><!-- disabled -->
     {% elif wizard.steps.current == "3" %}
-      <div class="col-xs-3 bs-wizard-step active">
+      <div class="col-xs-3 bs-wizard-step active"><!-- active -->
     {% elif wizard.steps.current > "3" %}
-      <div class="col-xs-3 bs-wizard-step complete">
+      <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
     {% endif %}
       <div class="text-center bs-wizard-stepnum">Step 4</div>
-      <div class="progress"><div class="progress-bar"></div></div>
-      <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center non-mobile-friendly">Payment</div>
-    </div>
+        <div class="progress">
+          <div class="progress-bar"></div>
+        </div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center non-mobile-friendly">Workshop Selection</div>
+      </div>
 
     {% if wizard.steps.current < "4" %}
       <div class="col-xs-3 bs-wizard-step disabled">
@@ -67,23 +74,27 @@
       <div class="col-xs-3 bs-wizard-step complete">
     {% endif %}
       <div class="text-center bs-wizard-stepnum">Step 5</div>
-      <div class="progress"><div class="progress-bar"></div></div>
-      <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center non-mobile-friendly">Confirmation</div>
-    </div> -->
+        <div class="progress">
+          <div class="progress-bar"></div>
+        </div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center non-mobile-friendly">Payment</div>
+      </div>
 
-    {% if wizard.steps.current < "3" %}
+    {% if wizard.steps.current < "5" %}
       <div class="col-xs-3 bs-wizard-step disabled">
-    {% elif wizard.steps.current == "3" %}
+    {% elif wizard.steps.current == "5" %}
       <div class="col-xs-3 bs-wizard-step active">
-    {% elif wizard.steps.current > "3" %}
+    {% elif wizard.steps.current > "5" %}
       <div class="col-xs-3 bs-wizard-step complete">
     {% endif %}
-      <div class="text-center bs-wizard-stepnum">Step 4</div>
-      <div class="progress"><div class="progress-bar"></div></div>
-      <a href="#" class="bs-wizard-dot"></a>
-      <div class="bs-wizard-info text-center non-mobile-friendly">Confirmation</div>
-    </div>
+      <div class="text-center bs-wizard-stepnum">Step 6</div>
+        <div class="progress">
+          <div class="progress-bar"></div>
+        </div>
+        <a href="#" class="bs-wizard-dot"></a>
+        <div class="bs-wizard-info text-center non-mobile-friendly">Confirmation</div>
+      </div> 
   </div>
 </div>
 

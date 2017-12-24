@@ -7,7 +7,7 @@ import os
 from django.views import generic
 from django.core.urlresolvers import reverse
 from django.views.generic import View
-from .forms import RegistrationForm1, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm, BadgeForm
+from .forms import RegistrationForm1, RegistrationForm1_5, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm, BadgeForm
 from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView, CookieWizardView
 import datetime
@@ -327,7 +327,7 @@ class AllBadgesView(generic.ListView):
         return ctx
 
 class RegistrationWizard(SessionWizardView):
-    form_list = [RegistrationForm1, RegistrationForm2, RegistrationForm3]
+    form_list = [RegistrationForm1, RegistrationForm1_5, RegistrationForm2, RegistrationForm3, RegistrationForm4]
     template_name = 'sedUI/pages/registration_form.html'
 
     def get_context_data(self, **kwargs):

@@ -9,10 +9,12 @@
     {% if wizard.steps.current == "0" %}
         {% include "sedUI/pages/registrationCitizen.html" %}
     {% elif wizard.steps.current == "1" %}
-        {% include "sedUI/pages/registrationInfo.html" %}
+        {% include "sedUI/pages/registrationRegister.html"%}
     {% elif wizard.steps.current == "2" %}
-        {% include "sedUI/pages/registrationSelection.html" %}
+        {% include "sedUI/pages/registrationInfo.html" %}
     {% elif wizard.steps.current == "3" %}
+        {% include "sedUI/pages/registrationSelection.html" %}
+    {% elif wizard.steps.current == "4" %}
         {% include "sedUI/pages/registrationPayment.html" %}
     {% endif %}
 </form>
