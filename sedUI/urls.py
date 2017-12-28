@@ -18,6 +18,9 @@ urlpatterns=[
 	url(r'^scouts/?$', login_required(views.ScoutView.as_view()), name='scout'),
 	url(r'^scout_detail/(?P<scout_id>[a-zA-Z0-9\-._]+)/?$', login_required(views.ScoutDetailView.as_view()), name='scout_detail/'),
 
+	url(r'^workshops/?$', login_required(views.WorkshopView.as_view()), name='workshop'),
+	url(r'^workshop_detail/(?P<workshop_id>[a-zA-Z0-9\-._]+)/?$', login_required(views.WorkshopDetailView.as_view()), name='workshop_detail/'),
+
 	url(r'^courses/?$', views.CourseView.as_view(), name='course'),
 	url(r'^course_detail/(?P<course_id>[a-zA-Z0-9\-._]+)/?$', views.CourseDetailView.as_view(), name='course_detail/'),
 	url(r'^profile/?$', login_required(views.ProfileView.as_view()), name='profiles'),

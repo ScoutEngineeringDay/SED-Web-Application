@@ -56,11 +56,11 @@ def contact_send_email(form_list):
     send_mail(form_data[0]["message_subject"], message, form_data[0]["email_address"], [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
 
-def login(request):
-    return render(request, 'sedUI/pages/basic.html')
+# def login(request):
+#     return render(request, 'sedUI/pages/basic.html')
 
-def loginOrRegister(request):
-    return render(request, 'sedUI/pages/loginOrRegister.html')
+# def loginOrRegister(request):
+#     return render(request, 'sedUI/pages/loginOrRegister.html')
 
 class CourseView(generic.ListView):
     template_name = 'sedUI/pages/courses.html'
@@ -223,6 +223,32 @@ def workshop_checkout(request, scout_id):
     except:
         return render_to_response('sedUI/pages/errorPage.html', status=404)
 
+class WorkshopView(generic.ListView):
+    template_name = 'sedUI/pages/workshop.html'
+    context_object_name = 'all_workshop'
+
+    def get_queryset(self):
+        return Workshop.objects.all()      
+
+    def get_context_data(self, **kwargs):
+        ctx=super(WorkshopView, self).get_context_data(**kwargs)
+        ctx['instructor']=Instructor.objects.all()
+        ctx['location']=Location.objects.all()
+        ctx['course']=get_object_or_404(Course, name=self.kwargs['course_id'])
+        return ctx
+
+class WorkshopDetailView(generic.ListView):
+    template_name = 'sedUI/pages/workshop_detail.html'
+    context_object_name='workshop;'
+    def get_queryset(self):
+        return Workshop.objects.get(workshop_id=self.kwargs['workshop_id'])
+
+    def get_context_data(self, **kwargs):
+        ctx=super(WorkshopDetailView, self).get_context_data(**kwargs)
+        ctx['instructor']=getInstructorByID(self.get_queryset().instructor_id)
+        ctx['location']=getLocationByID(self.get_queryset().location_id)
+        return ctx
+
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
 
@@ -332,21 +358,19 @@ class RegistrationWizard(SessionWizardView):
 
     def get_context_data(self, **kwargs):
         ctx=super(RegistrationWizard, self).get_context_data(**kwargs)
-        try:
-            ctx['isOpen']=checkOpenDate()
-            ctx['payment']=getMailPaymentLatest()
-            ctx['checkout']=getCheckoutLatest()
-        except:
-            ctx['isOpen']=checkOpenDate()
-            ctx['payment']=None
-            ctx['checkout']=None
+        if self.steps.current=='4':
+            try:
+                ctx['isOpen']=checkOpenDate()
+                ctx['payment']=getMailPaymentLatest()
+                ctx['checkout']=getCheckoutLatest()
+            except:
+                ctx['isOpen']=checkOpenDate()
+                ctx['payment']=None
+                ctx['checkout']=None
         return ctx
 
     def render(self, form=None, **kwargs):
         form = form or self.get_form()
-        if self.steps.current=='3':
-            context = self.get_context_data(form=form, **kwargs)
-            return self.render_to_response(context)
         context = self.get_context_data(form=form, **kwargs)
         return self.render_to_response(context)
 
@@ -378,18 +402,18 @@ class RegistrationWizard(SessionWizardView):
     def done(self, form_list, **kwargs):
         course_1=None
         course_2=None
-        scout_data=self.get_cleaned_data_for_step('1')
-        workshop_data=self.get_cleaned_data_for_step('2')
-        session_data=self.get_cleaned_data_for_step('3')
+        scout_data=self.get_cleaned_data_for_step('2')
+        workshop_data=self.get_cleaned_data_for_step('3')
+        session_data=self.get_cleaned_data_for_step('4')
 
-        # if(session_data["payment_method"]=="Pay_Online"):
-        # 	stripeCall(self.request)
+        if(session_data["payment_method"]=="Pay_Online"):
+        	stripeCall(self.request)
+
 
         # store into database scout table
         scout_size=Scout.objects.all().count()
         RegistrationClosedTrigger()
         scout_size=scout_size+1
-        RegistrationClosedTrigger()
         scout = Scout(scout_first_name=scout_data["first_name"],
             scout_last_name=scout_data["last_name"],
             unit_number=scout_data["unit_number"],
@@ -420,7 +444,6 @@ class RegistrationWizard(SessionWizardView):
 
 
         if(workshop1_data[1]=="FULL"):
-
             WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
             session = Session(
             scout_id=scout.scout_id,
@@ -580,6 +603,7 @@ def checkOpenDate():
 	        isOpen="Opened"
     return isOpen
 
+# Get Function
 def getScoutByUniqueScout(ScoutID, ScoutYear):
     try:
         return Scout.objects.get(scout_id=ScoutID, scout_year=ScoutYear)
@@ -598,6 +622,12 @@ def getInstructorbyCourse(CourseID, WorkshopTime):
     except:
         return None
 
+def getInstructorByID(instructorID):
+    try:
+        return Instructor.objects.get(instructor_id=instructorID)
+    except:
+        return None
+
 def getSessionByUniqueSession(ScoutID, ScoutYear):
     try:
         return Session.objects.get(scout_id=ScoutID, session_year=ScoutYear)
@@ -610,9 +640,27 @@ def getCourseBySession(SessionWorkshopID):
     except:
         return None
 
+def getCourseByID(course_id):
+    try:
+        return Course.objects.get(course_id=course_id)
+    except:
+        return None
+
 def getLocationBySession(SessionWorkshopID):
     try:
         return Location.objects.get(location_id=(Workshop.objects.get(workshop_id=SessionWorkshopID).location_id))
+    except:
+        return None
+
+def getLocationByWorkshop(WorkshopID):
+    try:
+        return Location.objects.get(location_id=(Workshop.objects.get(workshop_id=WorkshopID).location_id))
+    except:
+        return None
+
+def getLocationByID(location_id):
+    try:
+        return Location.objects.get(location_id=location_id)
     except:
         return None
 

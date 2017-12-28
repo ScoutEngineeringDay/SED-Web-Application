@@ -108,6 +108,12 @@ class Workshop(models.Model):
 		except:
 			return "no course name"
 
+	def __course__(self):
+		try:
+			return str(Course.objects.get(course_id=str(self.course_id)).course_name)
+		except:
+			return "No Course Name"
+
 	def __instructor__(self):
 		try:
 			return str(Instructor.objects.get(instructor_id=str(self.instructor_id)).instructor_first_name+" "+Instructor.objects.get(instructor_id=str(self.instructor_id)).instructor_last_name)
