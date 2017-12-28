@@ -234,7 +234,7 @@ class WorkshopView(generic.ListView):
         ctx=super(WorkshopView, self).get_context_data(**kwargs)
         ctx['instructor']=Instructor.objects.all()
         ctx['location']=Location.objects.all()
-        ctx['course']=get_object_or_404(Course, name=self.kwargs['course_id'])
+        ctx['course']=Course.objects.all()
         return ctx
 
 class WorkshopDetailView(generic.ListView):
