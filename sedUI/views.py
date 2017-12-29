@@ -352,6 +352,7 @@ class AllBadgesView(generic.ListView):
         sorted(ctx['data'].iteritems())
         return ctx
 
+# Scout Registration
 class RegistrationWizard(SessionWizardView):
     form_list = [RegistrationForm1, RegistrationForm1_5, RegistrationForm2, RegistrationForm3, RegistrationForm4]
     template_name = 'sedUI/pages/registration_form.html'
@@ -529,6 +530,20 @@ class RegistrationWizard(SessionWizardView):
             'location_1': location_1,
             'location_2': location_2
         	})
+
+# Volunteer Registration
+# class VolunteerRegistrationWizard(SessionWizardView):
+#     form_list = []
+#     template_name = 'sedUI/pages/registration_form.html'
+
+#     def get_context_data(self, **kwargs):
+
+#     def render(self, form=None, **kwargs):
+
+#     def render_next_step(self, form, **kwargs):
+
+#     def done(self, form_list, **kwargs):
+
 
 def stripeCall(request):
 	# Set your secret key: remember to change this to your live secret key in production
