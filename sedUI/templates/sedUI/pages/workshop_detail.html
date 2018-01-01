@@ -1,0 +1,25 @@
+{% extends "sedUI/base/header.html" %}
+{% block content %}
+	<div class="container">
+		<h1>Course: {{course.course_name}}</h1>
+		<h3>Instructor: {{instructor.instructor_first_name}} {{instructor.instructor_last_name}}</h3>
+		<h3>Location: {{location.location_building}} {{location.location_room}}</h3>
+		</br>
+		<h4>Scout Table</h4>
+		<table>
+			<thead>
+				<tr>
+					<th align="left"><b>First Name</b></th>
+					<th align="left"><b>Last Name</b></th>
+					<th align="left"><b>Checkbox</b></th>
+				</tr>
+			</thead>
+		</table>
+		<a class="btn btn-primary btn-sm" href="/workshop_detail/checkin/" role="button">Check in</a>
+		<a class="btn btn-primary btn-sm" href="/workshop_detail/checkout/" role="button">Check Out</a>
+	</div>
+
+
+	<script>
+	</script>
+{% endblock %}/
