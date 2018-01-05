@@ -7,7 +7,11 @@ import os
 from django.views import generic
 from django.core.urlresolvers import reverse
 from django.views.generic import View
+<<<<<<< HEAD
 from .forms import RegistrationForm1, RegistrationForm2, RegistrationScoutForm1, RegistrationScoutForm2, RegistrationVolunteerForm1, RegistrationVolunteerForm2, RegistrationPaymentForm, ContactEmailForm, BadgeForm
+=======
+from .forms import RegistrationForm1, RegistrationForm1_5, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm, BadgeForm
+>>>>>>> d5f5e0c33f5b6b60d13ae62169635f2ac6f05115
 from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView, CookieWizardView
 import datetime
@@ -54,11 +58,11 @@ def contact_send_email(form_list):
     send_mail(form_data[0]["message_subject"], message, form_data[0]["email_address"], [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
 
-def login(request):
-    return render(request, 'sedUI/pages/basic.html')
+# def login(request):
+#     return render(request, 'sedUI/pages/basic.html')
 
-def loginOrRegister(request):
-    return render(request, 'sedUI/pages/loginOrRegister.html')
+# def loginOrRegister(request):
+#     return render(request, 'sedUI/pages/loginOrRegister.html')
 
 class CourseView(generic.ListView):
     template_name = 'sedUI/pages/courses.html'
@@ -227,6 +231,7 @@ class WorkshopView(generic.ListView):
 
     def get_queryset(self):
         return Workshop.objects.all()   
+
 
     def get_context_data(self, **kwargs):
         ctx=super(WorkshopView, self).get_context_data(**kwargs)
@@ -577,6 +582,19 @@ class RegistrationConfirmation(generic.TemplateView):
 #             'location_2': location_2
 #         	})
 
+# Volunteer Registration
+# class VolunteerRegistrationWizard(SessionWizardView):
+#     form_list = []
+#     template_name = 'sedUI/pages/registration_form.html'
+
+#     def get_context_data(self, **kwargs):
+
+#     def render(self, form=None, **kwargs):
+
+#     def render_next_step(self, form, **kwargs):
+
+#     def done(self, form_list, **kwargs):
+
 
 def stripeCall(request):
 	# Set your secret key: remember to change this to your live secret key in production
@@ -651,6 +669,7 @@ def checkOpenDate():
 	        isOpen="Opened"
     return isOpen
 
+
 ## Get Commands
 # Scouts
 def getScoutByUniqueScout(ScoutID, ScoutYear):
@@ -677,6 +696,7 @@ def getInstructorByID(instructorID):
         return Instructor.objects.get(instructor_id=instructorID)
     except:
         return None
+
 # Session
 def getSessionByUniqueSession(ScoutID, ScoutYear):
     try:
@@ -697,8 +717,39 @@ def getCourseByID(course_id):
     except:
         return None
 
-# Location
 def getLocationBySession(SessionWorkshopID):
+    try:
+        return Course.objects.get(course_id=course_id)
+    except:
+        return None
+
+
+# Location
+def getLocationByWorkshop(WorkshopID):
+    try:
+        return Location.objects.get(location_id=(Workshop.objects.get(workshop_id=WorkshopID).location_id))
+    except:
+        return None
+
+def getLocationByID(location_id):
+    try:
+        return Location.objects.get(location_id=location_id)
+    except:
+        return None
+
+def getAboutPageLatest():
+    try:
+        return AboutPage.objects.latest('aboutPage_id')
+    except:
+        return None
+
+def getHomePageLatest():
+    try:
+        return HomePage.objects.latest('homepage_id')
+    except:
+        return None
+
+def getCheckoutLatest():
     try:
         return Location.objects.get(location_id=(Workshop.objects.get(workshop_id=SessionWorkshopID).location_id))
     except:

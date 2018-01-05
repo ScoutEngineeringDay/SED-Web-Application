@@ -33,6 +33,7 @@
 </script>
 <form action="/registration/" method="post" style="width: 500px; margin: 0 auto"> {% csrf_token %}
 	{{ wizard.management_form }}
+	{{ wizard.form.registration_type }}
 	<div>
 		<div class="form-group">
 			<label for="InputFirstName">Scout Information</label>

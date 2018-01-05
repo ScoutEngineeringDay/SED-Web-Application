@@ -8,6 +8,15 @@ from django.core.validators import MinValueValidator
 class RegistrationForm1(forms.Form):
 	citizenship = forms.ChoiceField(widget=forms.RadioSelect(), choices=[('Yes', 'Yes'),('No','No')])
 
+class RegistrationForm1_5(forms.Form):
+	register_first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
+	register_last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
+	register_email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
+	register_email_confirm = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Confirmation', 'type': 'email'}))
+	mitre_employee = forms.BooleanField(initial=False, required=False)
+	CHOICES = (("myself","I am registering myself"),("others","I am registering others"),("both","I am registering myself & others"))
+	registration_type = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+
 class RegistrationForm2(forms.Form):
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
@@ -38,7 +47,7 @@ class RegistrationForm4(forms.Form):
 class ContactEmailForm(forms.Form):
 	contact_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Contact Name'}))
 	email_address = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Email', 'size': '40'}))
-	message_subject = forms.ChoiceField([("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support")], widget=forms.Select(attrs={'class': 'form-control'}))
+	message_subject = forms.ChoiceField([("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support"),("MITRE Employee", "MITRE Employee"), ("Volunteer","Volunteer")], widget=forms.Select(attrs={'class': 'form-control'}))
 	message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Message'}))
 	# captcha = ReCaptchaField()
 
