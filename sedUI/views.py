@@ -7,11 +7,8 @@ import os
 from django.views import generic
 from django.core.urlresolvers import reverse
 from django.views.generic import View
-<<<<<<< HEAD
+
 from .forms import RegistrationForm1, RegistrationForm2, RegistrationScoutForm1, RegistrationScoutForm2, RegistrationVolunteerForm1, RegistrationVolunteerForm2, RegistrationPaymentForm, ContactEmailForm, BadgeForm
-=======
-from .forms import RegistrationForm1, RegistrationForm1_5, RegistrationForm2, RegistrationForm3, RegistrationForm4, ContactEmailForm, BadgeForm
->>>>>>> d5f5e0c33f5b6b60d13ae62169635f2ac6f05115
 from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView, CookieWizardView
 import datetime
@@ -235,14 +232,12 @@ class WorkshopView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         ctx=super(WorkshopView, self).get_context_data(**kwargs)
-        ctx['instructor']=Instructor.objects.all()
-        ctx['location']=Location.objects.all()
-        ctx['course']=Course.objects.all()
+        ctx['all_workshop_custom']=getWorkshopCustom()
         return ctx
 
 class WorkshopDetailView(generic.ListView):
     template_name = 'sedUI/pages/workshop_detail.html'
-    context_object_name='workshop;'
+    context_object_name='workshop'
     def get_queryset(self):
         return Workshop.objects.get(workshop_id=self.kwargs['workshop_id'])
 
@@ -251,6 +246,7 @@ class WorkshopDetailView(generic.ListView):
         ctx['instructor']=getInstructorByID(self.get_queryset().instructor_id)
         ctx['location']=getLocationByID(self.get_queryset().location_id)
         ctx['course']=getCourseByID(self.get_queryset().course_id)
+        ctx['scouts']=getScoutSessionsByWorkshop(self.get_queryset().workshop_id, self.get_queryset().workshop_time)
         return ctx
 
 class ReportView(generic.TemplateView):
@@ -704,6 +700,31 @@ def getSessionByUniqueSession(ScoutID, ScoutYear):
     except:
         return None
 
+def getScoutSessionsByWorkshop(workshop_id, time):
+    try:
+        if(time=="AM" or time=="FULL"):
+            sessions = Session.objects.all().filter(workshop1_id=workshop_id)
+            scouts=[]
+            for session in sessions:
+                scouts.append(Scout.objects.get(scout_id=session.scout_id))
+            return scouts
+        else:
+            sessions = Session.objects.all().filter(workshop2_id=workshop_id)
+            scouts=[]
+            for session in sessions:
+                scouts.append(Scout.objects.get(scout_id=session.scout_id))
+            return scouts
+    except:
+        return None
+
+def getCountSessionInWorkshop(workshop_id, year, time):
+    try:
+        if(time=="AM" or time=="FULL"):
+            return Session.objects.all().filter(workshop1_id=workshop_id, session_year=year).count()
+        else:
+            return Session.objects.all().filter(workshop2_id=workshop_id, session_year=year).count()
+    except:
+        return None
 # Course
 def getCourseBySession(SessionWorkshopID):
     try:
@@ -722,7 +743,6 @@ def getLocationBySession(SessionWorkshopID):
         return Course.objects.get(course_id=course_id)
     except:
         return None
-
 
 # Location
 def getLocationByWorkshop(WorkshopID):
@@ -761,7 +781,43 @@ def getLocationByID(location_id):
     except:
         return None
 
+class workshop_object(object):
+    workshop_id= None
+    course_name = None
+    instructor_first_name = None
+    instructor_last_name = None
+    open_ceremony=None
+    time_slot=None
+    size=0
+    location_building = None
+    location_room = None
+    open_status=None
+    workshop_year=None
+
+    def __init__(self,  workshop_id):
+        workshop=Workshop.objects.get(workshop_id=workshop_id)
+        self.workshop_id= workshop.workshop_id
+        self.course_name = getCourseByID(workshop.course_id).course_name
+        self.instructor_first_name =getInstructorByID(workshop.instructor_id).instructor_first_name
+        self.instructor_last_name =getInstructorByID(workshop.instructor_id).instructor_last_name
+        self.open_ceremony=workshop.open_ceremony
+        self.workshop_time=workshop.workshop_time
+        self.scouts_count=getCountSessionInWorkshop(workshop.workshop_id, workshop.workshop_year, workshop.workshop_time)
+        self.workshop_size=workshop.workshop_size
+        self.location_building = getLocationByWorkshop(workshop.workshop_id).location_building
+        self.location_room = getLocationByWorkshop(workshop.workshop_id).location_room
+        self.workshop_open_status=workshop.workshop_open_status
+        self.workshop_year=workshop.workshop_year
+
 # Workshop
+def getWorkshopCustom():
+    workshop_customs=[]
+    for workshop in Workshop.objects.all():
+        x=workshop_object(workshop.workshop_id)
+        workshop_customs.append(x)
+    return workshop_customs
+
+
 def getWorkshopbyCourse(CourseName, WorkshopTime):
     try:
         return Workshop.objects.get(course_id=Course.objects.get(course_name=CourseName).course_id, workshop_time=WorkshopTime).workshop_id

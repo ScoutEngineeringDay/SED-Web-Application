@@ -219,14 +219,13 @@ class MailPayment(models.Model):
 #
 # Deffered for this interation
 #
-# class Volunteer2(models.Model):
-# 	volunteer_id=models.AutoField(primary_key=True)
-# 	volunteer_first_name=models.CharField(max_length=50, blank=True)
-# 	volunteer_last_name=models.CharField(max_length=50, blank=True)
-# 	volunteer_email=models.CharField(max_length=50, blank=True)
-# 	volunteer_phone=models.CharField(max_length=10, blank=True)
-# 	volunteer_area=models.CharField(max_length=5000, blank=True)
-# 	volunteer_status=models.CharField(max_length=8, choices=[("ACTIVE","ACTIVE"),("INACTIVE","INACTIVE")], blank=True)
+class Volunteer(models.Model):
+	volunteer_id=models.AutoField(primary_key=True)
+	volunteer_first_name=models.CharField(max_length=50, blank=True)
+	volunteer_last_name=models.CharField(max_length=50, blank=True)
+	volunteer_email=models.CharField(max_length=50, blank=True)
+	volunteer_phone=models.CharField(max_length=10, blank=True)
+	volunteer_status=models.CharField(max_length=8, choices=[("ACTIVE","ACTIVE"),("INACTIVE","INACTIVE")], blank=True)
 
-# 	def __str__(self):
-# 		return self.volunteer_first_name+" "+self.volunteer_last_name
+	def __str__(self):
+		return self.volunteer_first_name+" "+self.volunteer_last_name

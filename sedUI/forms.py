@@ -8,7 +8,7 @@ from django.core.validators import MinValueValidator
 class RegistrationForm1(forms.Form):
 	citizenship = forms.ChoiceField(widget=forms.RadioSelect(), choices=[('Yes', 'Yes'),('No','No')])
 
-class RegistrationForm1_5(forms.Form):
+class RegistrationForm2(forms.Form):
 	register_first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
 	register_last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
 	register_email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
@@ -17,7 +17,7 @@ class RegistrationForm1_5(forms.Form):
 	CHOICES = (("myself","I am registering myself"),("others","I am registering others"),("both","I am registering myself & others"))
 	registration_type = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
 
-class RegistrationForm2(forms.Form):
+class RegistrationScoutForm1(forms.Form):
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
 	affiliation = forms.ChoiceField(choices=[("BOY", "Boy Scout"),("GIRL", "Girl Scout"), ("OTHER","Other")], widget=forms.Select(attrs={'class': 'form-control'}))
@@ -37,11 +37,23 @@ class RegistrationForm2(forms.Form):
 	photo = forms.BooleanField(initial=True, required=False)
 	# captcha = ReCaptchaField()
 
-class RegistrationForm3(forms.Form):
+class RegistrationScoutForm2(forms.Form):
 	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter((Q(workshop_time="FULL") | Q(workshop_time="AM") & Q(workshop_open_status="OPENED"))), widget=forms.Select(attrs={'class': 'dropdown'}))
 	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter((Q(workshop_time="FULL") | Q(workshop_time="PM") & Q(workshop_open_status="OPENED"))), widget=forms.Select(attrs={'class': 'dropdown'}))
 
-class RegistrationForm4(forms.Form):
+class RegistrationVolunteerForm1(forms.Form):
+	volunteer_first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
+	volunteer_last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
+	volunteer_email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
+	volunteer_email_confirm = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Confirmation', 'type': 'email'}))
+	volunteer_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone', 'type': 'tel', 'minlength': '10', 'maxlength': '10'}), required=False) #TODO make not reqired
+
+class RegistrationVolunteerForm2(forms.Form):
+	morning_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter((Q(workshop_time="FULL") | Q(workshop_time="AM") & Q(workshop_open_status="OPENED"))), widget=forms.Select(attrs={'class': 'dropdown'}))
+	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter((Q(workshop_time="FULL") | Q(workshop_time="PM") & Q(workshop_open_status="OPENED"))), widget=forms.Select(attrs={'class': 'dropdown'}))
+
+
+class RegistrationPaymentForm(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment"),("Waived","Waived")])
 
 class ContactEmailForm(forms.Form):
