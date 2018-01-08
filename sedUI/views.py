@@ -7,6 +7,7 @@ import os
 from django.views import generic
 from django.core.urlresolvers import reverse
 from django.views.generic import View
+
 from .forms import RegistrationForm1, RegistrationForm2, RegistrationScoutForm1, RegistrationScoutForm2, RegistrationVolunteerForm1, RegistrationVolunteerForm2, RegistrationPaymentForm, ContactEmailForm, BadgeForm
 from formtools.wizard.views import WizardView
 from formtools.wizard.views import SessionWizardView, CookieWizardView
@@ -14,11 +15,13 @@ import datetime
 import re
 import pytz
 import stripe
+import urlparse
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
 from django.core.management.utils import get_random_secret_key
-from itertools import chain
+from django.contrib.sites.models import Site
+from django.contrib.sites.shortcuts import get_current_site
 
 # Create your views here.
 class IndexView(generic.TemplateView):
@@ -54,11 +57,11 @@ def contact_send_email(form_list):
     send_mail(form_data[0]["message_subject"], message, form_data[0]["email_address"], [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
 
-def login(request):
-    return render(request, 'sedUI/pages/basic.html')
+# def login(request):
+#     return render(request, 'sedUI/pages/basic.html')
 
-def loginOrRegister(request):
-    return render(request, 'sedUI/pages/loginOrRegister.html')
+# def loginOrRegister(request):
+#     return render(request, 'sedUI/pages/loginOrRegister.html')
 
 class CourseView(generic.ListView):
     template_name = 'sedUI/pages/courses.html'
@@ -228,16 +231,15 @@ class WorkshopView(generic.ListView):
     def get_queryset(self):
         return Workshop.objects.all()   
 
+
     def get_context_data(self, **kwargs):
         ctx=super(WorkshopView, self).get_context_data(**kwargs)
-        ctx['instructor']=Instructor.objects.all()
-        ctx['location']=Location.objects.all()
-        ctx['course']=Course.objects.all()
+        ctx['all_workshop_custom']=getWorkshopCustom()
         return ctx
 
 class WorkshopDetailView(generic.ListView):
     template_name = 'sedUI/pages/workshop_detail.html'
-    context_object_name='workshop;'
+    context_object_name='workshop'
     def get_queryset(self):
         return Workshop.objects.get(workshop_id=self.kwargs['workshop_id'])
 
@@ -246,6 +248,7 @@ class WorkshopDetailView(generic.ListView):
         ctx['instructor']=getInstructorByID(self.get_queryset().instructor_id)
         ctx['location']=getLocationByID(self.get_queryset().location_id)
         ctx['course']=getCourseByID(self.get_queryset().course_id)
+        ctx['scouts']=getScoutSessionsByWorkshop(self.get_queryset().workshop_id, self.get_queryset().workshop_time)
         return ctx
 
 class ReportView(generic.TemplateView):
@@ -259,6 +262,10 @@ class AboutView(generic.TemplateView):
     # context_object_name = 'all_courses'
     def get(self, request, *args, **kwargs):
     	aboutPage = getAboutPageLatest()
+        # all_courses = []
+        # for course in Course.objects.all():
+        #     if re.search("\w* - [b-zB-Z]", course, re.IGNORECASE) != True:
+        #         all_courses.append(course)
         all_courses = Course.objects.all()
         left_items = all_courses[:(len(all_courses)+1)/2]
         right_items = all_courses[(len(all_courses)+1)/2:]
@@ -352,21 +359,26 @@ class AllBadgesView(generic.ListView):
         return ctx
 
 ## Registration Process
-class RegistrationView(generic.TemplateView):
-    template_name = 'sedUI/pages/registration.html'
-
 class RegistrationIssueView(generic.TemplateView):
     template_name = 'sedUI/pages/registrationIssue.html'
 
-class RegistrationWizard(SessionWizardView):
-    form_list = [RegistrationForm1, RegistrationForm2]
+class RegistrationVolunteerWizard(SessionWizardView):
     template_name = 'sedUI/pages/registration_form.html'
+    form_list = [RegistrationForm1, RegistrationForm2, RegistrationVolunteerForm1, RegistrationVolunteerForm2]
     def render_next_step(self, form, **kwargs):
+        """
+        This method gets called when the next step/form should be rendered.
+        `form` contains the last/current form.
+        """
+        # get the form instance based on the data from the storage backend
+        # (if available).
+
         # check citizen status
         if(self.steps.current=='0'):
             data=self.get_cleaned_data_for_step('0')
             if(data["citizenship"]=='No'):
                 return redirect(reverse('registrationIssue'))
+        
         # run default render_next_step
         next_step = self.steps.next
         new_form = self.get_form(
@@ -374,209 +386,212 @@ class RegistrationWizard(SessionWizardView):
             data=self.storage.get_step_data(next_step),
             files=self.storage.get_step_files(next_step),
         )
+
+        # change the stored current step
+        self.storage.current_step = next_step
+        return self.render(new_form, **kwargs)
+    
+    # def get_context_data(self, **kwargs):
+    #     ctx = super(RegistrationVolunteerWizard, self).get_context_data(**kwargs)
+    #     try:
+    #         ctx['volunteerList']
+
     def done(self, form_list, **kwargs):
-        return redirect(reverse('scout_registration'))
+        return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
+    		'volunteer': volunteer,
+            'event': event
+        	})
 
 class RegistrationScoutWizard(SessionWizardView):
-    form_list = [RegistrationScoutForm1, RegistrationScoutForm2]
+    form_list = [RegistrationForm1, RegistrationForm2, RegistrationScoutForm1, RegistrationScoutForm2, RegistrationPaymentForm]
+    template_name = 'sedUI/pages/registration_form.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(RegistrationScoutWizard, self).get_context_data(**kwargs)
+        try:
+            ctx['isOpen']=checkOpenDate()
+            ctx['payment']=getMailPaymentLatest()
+            ctx['checkout']=getCheckoutLatest()
+        except:
+            ctx['isOpen']=checkOpenDate()
+            ctx['payment']=None
+            ctx['checkout']=None
+        try:
+            register_data = self.get_cleaned_data_for_step('1')
+            ctx['scoutList']=getScoutList(register_data['register_id'])
+        except:
+            ctx['scoutList']=None
+        return ctx
+
+    def render(self, form=None, **kwargs):
+        form = form or self.get_form()
+        if self.steps.current=='4':
+            context = self.get_context_data(form=form, **kwargs)
+            return self.render_to_response(context)
+        context = self.get_context_data(form=form, **kwargs)
+        return self.render_to_response(context)
+
+    def render_next_step(self, form, **kwargs):
+        """
+        This method gets called when the next step/form should be rendered.
+        `form` contains the last/current form.
+        """
+        # get the form instance based on the data from the storage backend
+        # (if available).
+
+        # check citizen status
+        if(self.steps.current == '0'):
+            data = self.get_cleaned_data_for_step('0')
+            if(data["citizenship"] == 'No'):
+                return redirect(reverse('registrationIssue'))
+        
+        if(self.steps.current == '1'):
+            data = self.get_cleaned_data_for_step('1')
+            register.save()
+
+        # run default render_next_step
+        next_step = self.steps.next
+        new_form = self.get_form(
+            next_step,
+            data=self.storage.get_step_data(next_step),
+            files=self.storage.get_step_files(next_step),
+        )
+
+        # change the stored current step
+        self.storage.current_step = next_step
+        return self.render(new_form, **kwargs)
+
     def done(self, form_list, **kwargs):
-        return 
-    
-class RegistrationVolunteerWizard(SessionWizardView):
-    form_list = [RegistrationVolunteerForm1, RegistrationVolunteerForm2]
-    def done(self, form_list, **kwargs):
-        return 
+        course_1=None
+        course_2=None
+        scout_data=self.get_cleaned_data_for_step('2')
+        workshop_data=self.get_cleaned_data_for_step('3')
+        session_data=self.get_cleaned_data_for_step('4')
 
-class RegistrationLastWizard(SessionWizardView):
-    form_list = [RegistrationPaymentForm]
-    def done(self, form_list, **kwargs):
-        return 
+        # if(session_data["payment_method"]=="Pay_Online"):
+        # 	stripeCall(self.request)
 
-class RegistrationConfirmation(generic.TemplateView):
-    template_name = 'sedUI/pages/registrationConfirmation.html'
-
-
-# class RegistrationWizard(SessionWizardView):
-#     form_list = [RegistrationForm1, RegistrationForm2]
-#     template_name = 'sedUI/pages/registration_form.html'
-
-#     def get_context_data(self, **kwargs):
-#         ctx=super(RegistrationWizard, self).get_context_data(**kwargs)
-#         try:
-#             ctx['isOpen']=checkOpenDate()
-#             ctx['payment']=getMailPaymentLatest()
-#             ctx['checkout']=getCheckoutLatest()
-#         except:
-#             ctx['isOpen']=checkOpenDate()
-#             ctx['payment']=None
-#             ctx['checkout']=None
-#         return ctx
-
-#     def render(self, form=None, **kwargs):
-#         form = form or self.get_form()
-#         if self.steps.current=='3':
-#             context = self.get_context_data(form=form, **kwargs)
-#             return self.render_to_response(context)
-#         context = self.get_context_data(form=form, **kwargs)
-#         return self.render_to_response(context)
-
-#     def render_next_step(self, form, **kwargs):
-#         """
-#         This method gets called when the next step/form should be rendered.
-#         `form` contains the last/current form.
-#         """
-#         # get the form instance based on the data from the storage backend
-#         # (if available).
-
-#         # check citizen status
-#         if(self.steps.current=='0'):
-#             data=self.get_cleaned_data_for_step('0')
-#             if(data["citizenship"]=='No'):
-#                 return redirect(reverse('registrationIssue'))
-#         # run default render_next_step
-#         next_step = self.steps.next
-#         new_form = self.get_form(
-#             next_step,
-#             data=self.storage.get_step_data(next_step),
-#             files=self.storage.get_step_files(next_step),
-#         )
-
-#         # change the stored current step
-#         self.storage.current_step = next_step
-#         return self.render(new_form, **kwargs)
-
-#     def done(self, form_list, **kwargs):
-#         course_1=None
-#         course_2=None
-#         scout_data=self.get_cleaned_data_for_step('1')
-#         workshop_data=self.get_cleaned_data_for_step('2')
-#         session_data=self.get_cleaned_data_for_step('3')
-
-#         if(session_data["payment_method"]=="Pay_Online"):
-#         	stripeCall(self.request)
-
-#         # store into database scout table
-#         scout_size=Scout.objects.all().count()
-#         RegistrationClosedTrigger()
-#         scout_size=scout_size+1
-#         RegistrationClosedTrigger()
-#         scout = Scout(scout_first_name=scout_data["first_name"],
-#             scout_last_name=scout_data["last_name"],
-#             unit_number=scout_data["unit_number"],
-#             scout_phone=scout_data["phone"],
-#             scout_email=scout_data["email"],
-#             emergency_first_name=scout_data["emergency_first_name"],
-#             emergency_last_name=scout_data["emergency_last_name"],
-#             emergency_phone=scout_data["emergency_phone"],
-#             emergency_email=scout_data["emergency_email"],
-#             scout_type=scout_data["affiliation"],
-#             scout_photo=scout_data["photo"],
-#             scout_medical=scout_data["medical_notes"],
-#             scout_allergy=scout_data["allergy_notes"],
-#             scout_status="UNDERWAY",
-#             scout_year=str(datetime.datetime.now().year)
-#             )
-#         scout.save()
-#         # # store into database session table
-#         #filter courses
-#         workshop1_data=str(workshop_data["morning_subject"]).split('-')
-#         payment_status_info="PAID"
-#         # if(session_data["payment_method"]=="Waived"):
-#         #     payment_status_info="PAID"
-#         # elif(session_data["payment_method"]=="Pay_Online"):
-#         #     payment_status_info="PAID"
-#         # else:
-#         #     payment_status_info="NOT PAID"
+        # store into database scout table
+        scout_size=Scout.objects.all().count()
+        RegistrationClosedTrigger()
+        scout_size=scout_size+1
+        RegistrationClosedTrigger()
+        scout = Scout(scout_first_name=scout_data["first_name"],
+            scout_last_name=scout_data["last_name"],
+            unit_number=scout_data["unit_number"],
+            scout_phone=scout_data["phone"],
+            scout_email=scout_data["email"],
+            emergency_first_name=scout_data["emergency_first_name"],
+            emergency_last_name=scout_data["emergency_last_name"],
+            emergency_phone=scout_data["emergency_phone"],
+            emergency_email=scout_data["emergency_email"],
+            scout_type=scout_data["affiliation"],
+            scout_photo=scout_data["photo"],
+            scout_medical=scout_data["medical_notes"],
+            scout_allergy=scout_data["allergy_notes"],
+            scout_status="UNDERWAY",
+            scout_year=str(datetime.datetime.now().year)
+            )
+        scout.save()
+        # # store into database session table
+        #filter courses
+        workshop1_data=str(workshop_data["morning_subject"]).split('-')
+        payment_status_info="PAID"
+        # if(session_data["payment_method"]=="Waived"):
+        #     payment_status_info="PAID"
+        # elif(session_data["payment_method"]=="Pay_Online"):
+        #     payment_status_info="PAID"
+        # else:
+        #     payment_status_info="NOT PAID"
 
 
-#         if(workshop1_data[1]=="FULL"):
+        if(workshop1_data[1]=="FULL"):
 
-#             WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
-#             session = Session(
-#             scout_id=scout.scout_id,
-#             payment_method="Waived",
-#             payment_amount="40.00",
-#             payment_status=payment_status_info,
-#             open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "FULL"),
-#             workshop1_id=getWorkshopbyCourse(workshop1_data[0], "FULL"),
-#             workshop1_status="IN PROGRESS",
-#             workshop2_id=None,
-#             workshop2_status="IN PROGRESS",
-#             confirmation_timestamp=datetime.datetime.now(),
-#             session_year=str(datetime.datetime.now().year)
-#             )
-#             session.save()
-#             course_1=getCourseBySession(session.workshop1_id)
-#             course_2=None
-#             location_1=getLocationBySession(session.workshop1_id)
-#             location_2=None
-#         else:
-#             WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
-#             #if there is a PM CLass
-#             workshop2_data=None
-#             if(workshop_data["evening_subject"]!=None):
-#                 workshop2_data=str(workshop_data["evening_subject"]).split('-')
-#                 WorkshopClosedTrigger(getWorkshopbyCourse(workshop2_data[0], workshop2_data[1]), workshop2_data[1])
-#                 session = Session(
-#                 scout_id=scout.scout_id,
-#                 payment_method="Waived",
-#                 payment_amount="40.00",
-#                 payment_status=payment_status_info,
-#                 open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
-#                 workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
-#                 workshop2_id=getWorkshopbyCourse(workshop2_data[0], "PM"),
-#                 workshop1_status="IN PROGRESS",
-#                 workshop2_status="IN PROGRESS",
-#                 confirmation_timestamp=datetime.datetime.now(),
-#                 session_year=str(datetime.datetime.now().year)
-#                 )
-#                 session.save()
-#                 course_1=getCourseBySession(session.workshop1_id)
-#                 course_2=getCourseBySession(session.workshop2_id)
-#                 location_1=getLocationBySession(session.workshop1_id)
-#                 location_2=getLocationBySession(session.workshop2_id)
-#             # Error issue
-#             else:
-#                 workshop2_data=None
-#                 print("Error")
-#                 session = Session(
-#                 scout_id=scout.scout_id,
-#                 payment_method="Waived",
-#                 payment_amount="40.00",
-#                 payment_status=payment_status_info,
-#                 open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
-#                 workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
-#                 workshop1_status="IN PROGRESS",
-#                 workshop2_id=None,
-#                 workshop2_status="IN PROGRESS",
-#                 confirmation_timestamp=datetime.datetime.now(),
-#                 session_year=str(datetime.datetime.now().year)
-#                 )
-#                 session.save()
-#                 course_1=getCourseBySession(session.workshop1_id)
-#                 course_2=None
-#                 location_1=getLocationBySession(session.workshop1_id)
-#                 location_2=None
-#         all_models_dict ={
-#         	'form_data': [form.cleaned_data for form in form_list],
-#     		'scout': scout,
-#     		'session': session,
-#     		'workshop_1': course_1,
-#             'workshop_2': course_2,
-#             'location_1': location_1,
-#             'location_2': location_2
-#         }
-#         confirmation_timestamp=session.confirmation_timestamp
-#         confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
-#         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
-#     		'scout': scout,
-#     		'session': session,
-#     		'workshop_1': course_1,
-#             'workshop_2': course_2,
-#             'location_1': location_1,
-#             'location_2': location_2
-#         	})
-
+            WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
+            session = Session(
+            scout_id=scout.scout_id,
+            payment_method="Waived",
+            payment_amount="40.00",
+            payment_status=payment_status_info,
+            open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "FULL"),
+            workshop1_id=getWorkshopbyCourse(workshop1_data[0], "FULL"),
+            workshop1_status="IN PROGRESS",
+            workshop2_id=None,
+            workshop2_status="IN PROGRESS",
+            confirmation_timestamp=datetime.datetime.now(),
+            session_year=str(datetime.datetime.now().year)
+            )
+            session.save()
+            course_1=getCourseBySession(session.workshop1_id)
+            course_2=None
+            location_1=getLocationBySession(session.workshop1_id)
+            location_2=None
+        else:
+            WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
+            #if there is a PM CLass
+            workshop2_data=None
+            if(workshop_data["evening_subject"]!=None):
+                workshop2_data=str(workshop_data["evening_subject"]).split('-')
+                WorkshopClosedTrigger(getWorkshopbyCourse(workshop2_data[0], workshop2_data[1]), workshop2_data[1])
+                session = Session(
+                scout_id=scout.scout_id,
+                payment_method="Waived",
+                payment_amount="40.00",
+                payment_status=payment_status_info,
+                open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
+                workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
+                workshop2_id=getWorkshopbyCourse(workshop2_data[0], "PM"),
+                workshop1_status="IN PROGRESS",
+                workshop2_status="IN PROGRESS",
+                confirmation_timestamp=datetime.datetime.now(),
+                session_year=str(datetime.datetime.now().year)
+                )
+                session.save()
+                course_1=getCourseBySession(session.workshop1_id)
+                course_2=getCourseBySession(session.workshop2_id)
+                location_1=getLocationBySession(session.workshop1_id)
+                location_2=getLocationBySession(session.workshop2_id)
+            # Error issue
+            else:
+                workshop2_data=None
+                print("Error")
+                session = Session(
+                scout_id=scout.scout_id,
+                payment_method="Waived",
+                payment_amount="40.00",
+                payment_status=payment_status_info,
+                open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
+                workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
+                workshop1_status="IN PROGRESS",
+                workshop2_id=None,
+                workshop2_status="IN PROGRESS",
+                confirmation_timestamp=datetime.datetime.now(),
+                session_year=str(datetime.datetime.now().year)
+                )
+                session.save()
+                course_1=getCourseBySession(session.workshop1_id)
+                course_2=None
+                location_1=getLocationBySession(session.workshop1_id)
+                location_2=None
+        all_models_dict ={
+        	'form_data': [form.cleaned_data for form in form_list],
+    		'scout': scout,
+    		'session': session,
+    		'workshop_1': course_1,
+            'workshop_2': course_2,
+            'location_1': location_1,
+            'location_2': location_2
+        }
+        confirmation_timestamp=session.confirmation_timestamp
+        # confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
+        return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
+    		'scout': scout,
+    		'session': session,
+    		'workshop_1': course_1,
+            'workshop_2': course_2,
+            'location_1': location_1,
+            'location_2': location_2
+        	})
 
 def stripeCall(request):
 	# Set your secret key: remember to change this to your live secret key in production
@@ -677,6 +692,7 @@ def getInstructorByID(instructorID):
         return Instructor.objects.get(instructor_id=instructorID)
     except:
         return None
+
 # Session
 def getSessionByUniqueSession(ScoutID, ScoutYear):
     try:
@@ -684,6 +700,31 @@ def getSessionByUniqueSession(ScoutID, ScoutYear):
     except:
         return None
 
+def getScoutSessionsByWorkshop(workshop_id, time):
+    try:
+        if(time=="AM" or time=="FULL"):
+            sessions = Session.objects.all().filter(workshop1_id=workshop_id)
+            scouts=[]
+            for session in sessions:
+                scouts.append(Scout.objects.get(scout_id=session.scout_id))
+            return scouts
+        else:
+            sessions = Session.objects.all().filter(workshop2_id=workshop_id)
+            scouts=[]
+            for session in sessions:
+                scouts.append(Scout.objects.get(scout_id=session.scout_id))
+            return scouts
+    except:
+        return None
+
+def getCountSessionInWorkshop(workshop_id, year, time):
+    try:
+        if(time=="AM" or time=="FULL"):
+            return Session.objects.all().filter(workshop1_id=workshop_id, session_year=year).count()
+        else:
+            return Session.objects.all().filter(workshop2_id=workshop_id, session_year=year).count()
+    except:
+        return None
 # Course
 def getCourseBySession(SessionWorkshopID):
     try:
@@ -697,8 +738,38 @@ def getCourseByID(course_id):
     except:
         return None
 
-# Location
 def getLocationBySession(SessionWorkshopID):
+    try:
+        return Course.objects.get(course_id=course_id)
+    except:
+        return None
+
+# Location
+def getLocationByWorkshop(WorkshopID):
+    try:
+        return Location.objects.get(location_id=(Workshop.objects.get(workshop_id=WorkshopID).location_id))
+    except:
+        return None
+
+def getLocationByID(location_id):
+    try:
+        return Location.objects.get(location_id=location_id)
+    except:
+        return None
+
+def getAboutPageLatest():
+    try:
+        return AboutPage.objects.latest('aboutPage_id')
+    except:
+        return None
+
+def getHomePageLatest():
+    try:
+        return HomePage.objects.latest('homepage_id')
+    except:
+        return None
+
+def getCheckoutLatest():
     try:
         return Location.objects.get(location_id=(Workshop.objects.get(workshop_id=SessionWorkshopID).location_id))
     except:
@@ -710,7 +781,42 @@ def getLocationByID(location_id):
     except:
         return None
 
+class workshop_object(object):
+    workshop_id= None
+    course_name = None
+    instructor_first_name = None
+    instructor_last_name = None
+    open_ceremony=None
+    time_slot=None
+    size=0
+    location_building = None
+    location_room = None
+    open_status=None
+    workshop_year=None
+
+    def __init__(self,  workshop_id):
+        workshop=Workshop.objects.get(workshop_id=workshop_id)
+        self.workshop_id= workshop.workshop_id
+        self.course_name = getCourseByID(workshop.course_id).course_name
+        self.instructor_first_name =getInstructorByID(workshop.instructor_id).instructor_first_name
+        self.instructor_last_name =getInstructorByID(workshop.instructor_id).instructor_last_name
+        self.open_ceremony=workshop.open_ceremony
+        self.workshop_time=workshop.workshop_time
+        self.scouts_count=getCountSessionInWorkshop(workshop.workshop_id, workshop.workshop_year, workshop.workshop_time)
+        self.workshop_size=workshop.workshop_size
+        self.location_building = getLocationByWorkshop(workshop.workshop_id).location_building
+        self.location_room = getLocationByWorkshop(workshop.workshop_id).location_room
+        self.workshop_open_status=workshop.workshop_open_status
+        self.workshop_year=workshop.workshop_year
+
 # Workshop
+def getWorkshopCustom():
+    workshop_customs=[]
+    for workshop in Workshop.objects.all():
+        x=workshop_object(workshop.workshop_id)
+        workshop_customs.append(x)
+    return workshop_customs
+
 def getWorkshopbyCourse(CourseName, WorkshopTime):
     try:
         return Workshop.objects.get(course_id=Course.objects.get(course_name=CourseName).course_id, workshop_time=WorkshopTime).workshop_id

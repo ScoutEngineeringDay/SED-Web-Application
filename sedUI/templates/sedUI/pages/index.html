@@ -8,15 +8,17 @@
 				<p>{{HomePage.homepage_description}} </p>
 				<p><i>Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}. Sign up for classes to get your badges!</i></p>
 				<br>
-				<p>
+				
+				<div style="text-align: center"><p>
 				{% if isOpen == "Opened" or request.user.is_superuser %}
-					<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
+					<a class="btn btn-primary btn-lg" href="/registration_scout/" role="button">Register Scouts Now!</a>
+					<a class="btn btn-primary btn-lg" href="/registration_volunteer/" role="button">Register as a Volunteer!</a>
 				{% elif isOpen == "ForcedClosed" %}
 		   			<h4 align="center">Registration is down for maintance</h4>
 				{% else %}
 					<h4 style="color:red">Registration is Closed at the moment</h4>
 				{% endif %}
-				</p>
+				</p></div>
 			</div>
 			{% include "sedUI/includes/img_carousel.html" %}
 
@@ -34,12 +36,12 @@
 	{% else %}
 		<p> Error with HomePage Data </p>
 	{% endif %}
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(function(){
 	{% if alert %}
 		//whatever conditions and js code
 		alert('{{alert}}');
 	{% endif %}
 	});
-</script>
+</script> -->
 {% endblock %}
