@@ -216,7 +216,6 @@ class MailPayment(models.Model):
 	def __payment_due_date__(self):
 		return self.mailPayment_due_date
 
-#
 # Deffered for this interation
 #
 class Volunteer(models.Model):
@@ -226,6 +225,28 @@ class Volunteer(models.Model):
 	volunteer_email=models.CharField(max_length=50, blank=True)
 	volunteer_phone=models.CharField(max_length=10, blank=True)
 	volunteer_status=models.CharField(max_length=8, choices=[("ACTIVE","ACTIVE"),("INACTIVE","INACTIVE")], blank=True)
+	volunteer_duty = models.CharField(max_length=50, blank=True)
+	volunteer_choice1= models.CharField(max_length=50, blank=True) 
+	volunteer_choice2= models.CharField(max_length=50, blank=True)
+	volunteer_choice3= models.CharField(max_length=50, blank=True)
 
 	def __str__(self):
 		return self.volunteer_first_name+" "+self.volunteer_last_name
+
+	@classmethod
+	def create(volunteer_first_name, volunteer_last_name, volunteer_phone, volunteer_email, volunteer_duty, volunteer_choice1, volunteer_choice2, volunteer_choice3):
+		volunteer = Volunteer.object.create(volunteer_first_name, volunteer_last_name, volunteer_phone, volunteer_email, volunteer_duty, volunteer_choice1, volunteer_choice2, volunteer_choice3)
+		volunteer.save()
+		return volunteer
+
+class Register(models.Model):
+	register_id=models.AutoField(primary_key=True)
+	register_first_name=models.CharField(max_length=50, blank=True)
+	register_last_name=models.CharField(max_length=50, blank=True)
+	register_email=models.CharField(max_length=50, blank=True)
+	register_phone=models.CharField(max_length=10, blank=True)
+	register_sui=models.CharField(max_length=50, blank=True)
+	register_code=models.CharField(max_length=50, blank=True)
+
+	def __str__(self):
+		return self.register_email+": "+self.register_sui+" "+self.register_code

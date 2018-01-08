@@ -31,7 +31,7 @@ SECRET_KEY = 'django.utils.crypt.get_random_string()'
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
-
+SITE_ID=1
 # AWS_ACCESS_KEY_ID = 'YOUR-ACCESS-KEY-ID'
 # AWS_SECRET_ACCESS_KEY = 'YOUR-SECRET-ACCESS-KEY'
 
@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'sedUI'
 #    'captcha'
 ]
