@@ -34,14 +34,19 @@
 						<br>
 						<div class="container-fluid ul-links" style="margin: 0 auto; width: 80%">
 							{% if all_courses %}
+								
 								<div class="left-float ul-links">
 								{% for course in left_items %}
-									<li><a class="blackLink" href="/course_detail/{{course.course_id}}"> {{course.course_name}} </a></li>
+									{% if course.course_name != "None"%}
+										<li><a class="blackLink" href="/course_detail/{{course.course_id}}"> {{course.course_name}} </a></li>
+									{% endif %}
 								{% endfor %}
 								</div>
 								<div class="right-float ul-links">
 									{% for course in right_items %}
-										<li><a class="blackLink" href="/course_detail/{{course.course_id}}"> {{course.course_name}} </a></li>
+										{% if course.course_name != "None"%}
+											<li><a class="blackLink" href="/course_detail/{{course.course_id}}"> {{course.course_name}} </a></li>
+										{% endif %}
 									{% endfor %}
 								</div>
 							{% else %}
@@ -51,7 +56,7 @@
 					<br>
 					<div class="container-fluid" style="margin: 0 auto; width: 80%">
 						{% if isOpen == "Opened" or request.user.is_superuser %}
-							<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
+							<a class="btn btn-primary btn-lg" href="/registration_scout/" role="button">Register Scouts Now!</a>
 						{% elif isOpen == "ForcedClosed" %}
     					<h4 align="center">Registration is down for maintance</h4>
 						{% else %}
