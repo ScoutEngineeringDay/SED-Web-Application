@@ -2,20 +2,16 @@ from django.shortcuts import render, render_to_response, redirect, HttpResponse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage, Checkout, MailPayment, Location
-import os
+from django.contrib.auth.models import User, Group
+from .models import Course, Scout, Workshop, Session, Instructor, AboutPage, HomePage, Checkout, MailPayment, Location, Register
 from django.views import generic
 from django.core.urlresolvers import reverse
+from django.contrib.auth.hashers import make_password
 from django.views.generic import View
-
+from random import randint, shuffle
 from .forms import RegistrationForm1, RegistrationForm2, RegistrationScoutForm1, RegistrationScoutForm2, RegistrationVolunteerForm1, RegistrationVolunteerForm2, RegistrationPaymentForm, ContactEmailForm, BadgeForm
-from formtools.wizard.views import WizardView
-from formtools.wizard.views import SessionWizardView, CookieWizardView
-import datetime
-import re
-import pytz
-import stripe
-import urlparse
+from formtools.wizard.views import WizardView, SessionWizardView, CookieWizardView
+import os, datetime, re, pytz, stripe, urlparse
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
@@ -41,20 +37,88 @@ class IndexView(generic.TemplateView):
 class ContactConfirmationView(generic.TemplateView):
     template_name = 'sedUI/pages/contactConfirmation.html'
 
+class ContactConfirmationViewMember(generic.ListView):
+    template_name = 'sedUI/pages/contactConfirmation.html'
+    context_object_name='register'
+    def get_queryset(self):
+        return Register.objects.get(registration_id=self.kwargs['registration_id'])
+    def get_context_data(self, **kwargs):
+        ctx=super(ContactConfirmationViewMember, self).get_context_data(**kwargs)
+        ctx["register"]=Register.objects.get(registration_id=self.kwargs['registration_id'])
+        return ctx
+
 class ContactView(SessionWizardView):
     form_list=[ContactEmailForm]
     template_name = 'sedUI/pages/contact.html'
 
     def done(self, form_list, **kwargs):
         print("send")
-        contact_send_email(form_list)
-        return render_to_response('sedUI/pages/contactConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
+        # contact_send_email(form_list)
+        form_data=self.get_cleaned_data_for_step('0')
+        if(form_data["message_subject"]=="Volunteer" or form_data["message_subject"]=="MITRE Employee"):
+            # Check if person already have a code
+            if(Register.objects.all().filter(register_first_name=form_data["contact_first_name"], register_last_name=form_data["contact_last_name"], register_email=form_data["email_address"]).count()>0):
+                register = Register.objects.get(register_first_name=form_data["contact_first_name"], register_last_name=form_data["contact_last_name"], register_email=form_data["email_address"])
+                return HttpResponseRedirect(reverse('contactConfirmationMember/', args=(register.registration_id, register.register_sui)))
+            else:
+                # Generate username
+                firstname = str(form_data["contact_first_name"])
+                firstletter = firstname[0].lower()
+                lastname = str(form_data["contact_last_name"])
+                username = firstletter+lastname.lower()
+                if(form_data["message_subject"]=="MITRE Employee"):
+                    register_type = "MITRE"
+                    my_group = Group.objects.get(name='mitre')
+                elif(form_data["message_subject"]=="Volunteer"):
+                    register_type = "volunteer"
+                    my_group = Group.objects.get(name='volunteer')
+                else:
+                    register_type = "regular"
+
+                # Generate Password
+                all_courses = Course.objects.all()
+                randomInt = randint(0, len(all_courses))
+                word = Course.objects.order_by('?').first().course_name
+                if(word.find(' ')!=-1):
+                    word.replace(" ", "")
+                if(word.find('-')!=-1):
+                    password = word.split("-")[0]
+                else:
+                    password = word
+                
+                passcode = password + str(randomInt)
+                
+                # Create an account for them 
+
+                register = Register(
+                    register_first_name = form_data["contact_first_name"],
+                    register_last_name = form_data["contact_last_name"],
+                    register_email = form_data["email_address"],
+                    register_sui = username,
+                    register_code = passcode,
+                    register_type = register_type,               
+                    registration_year = str(datetime.datetime.now().year),
+                    volunteer = True
+                )
+                user = User.objects.create(
+                    username=register.register_sui,
+                    first_name =register.register_first_name,
+                    last_name = register.register_last_name,
+                    email=register.register_email,
+                    password=make_password(register.register_code)
+                )
+                my_group.user_set.add(user)
+                register.save()
+                return HttpResponseRedirect(reverse('contactConfirmationMember/', args=(register.registration_id, register.register_sui)))
+        else:
+            return redirect(reverse('contactConfirmation'))
 
 def contact_send_email(form_list):
-    form_data =[form.cleaned_data for form in form_list]
-    message=("Contact Email: "+ form_data[0]["email_address"]+"\n\nContact name: "+form_data[0]["contact_name"]+"\n\nMessage:\n"+form_data[0]["message"])
-    #send_mail(subject, message, from, to)
-    send_mail(form_data[0]["message_subject"], message, form_data[0]["email_address"], [settings.EMAIL_HOST_USER], fail_silently=False)
+    message=("Contact Email: "+ form_data["email_address"]+"\n\nContact name: "+form_data["contact_name"]+"\n\nMessage:\n"+form_data["message"])
+    # if(form_data["message_subject"] == "MITRE Employee"):
+    # elif(form_data["message_subject"] == "Volunteer"):
+    # # Format: send_mail(subject, message, from, to)
+    # send_mail(form_data["message_subject"], message, form_data["email_address"], [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
 
 # def login(request):
@@ -229,7 +293,7 @@ class WorkshopView(generic.ListView):
     context_object_name = 'all_workshop'
 
     def get_queryset(self):
-        return Workshop.objects.all()   
+        return Workshop.objects.all()
 
 
     def get_context_data(self, **kwargs):
@@ -253,6 +317,18 @@ class WorkshopDetailView(generic.ListView):
 
 class ReportView(generic.TemplateView):
     template_name = 'sedUI/pages/reportAnalysis.html'
+    def get(self, request, *args, **kwargs):
+        context = {
+            'all_courses' : Course.objects.all(),
+            'all_scouts' : Scout.objects.all(),
+            'all_session' : Session.objects.all(),
+            'all_workshop' : Workshop.objects.all(),
+            'all_instructor' : Instructor.objects.all()
+        }
+    	return render(request, 'sedUI/pages/reportAnalysis.html', context)
+
+    def get_context_data(self, **kwargs):
+        return context
 
 class ProfileView(generic.TemplateView):
     template_name = 'sedUI/pages/profile.html'
@@ -266,7 +342,7 @@ class AboutView(generic.TemplateView):
         # for course in Course.objects.all():
         #     if re.search("\w* - [b-zB-Z]", course, re.IGNORECASE) != True:
         #         all_courses.append(course)
-        all_courses = Course.objects.all()
+        all_courses = Course.objects.all().exclude(course_name='None')
         left_items = all_courses[:(len(all_courses)+1)/2]
         right_items = all_courses[(len(all_courses)+1)/2:]
         current_datetime = datetime.datetime.now()
@@ -282,7 +358,7 @@ class AboutView(generic.TemplateView):
             'aboutPage' : aboutPage,
             'isOpen' : isOpen
         }
-    	return render(request, 'sedUI/pages/about.html', context);
+    	return render(request, 'sedUI/pages/about.html', context)
 
 class BadgeView(SessionWizardView):
     form_list=[BadgeForm]

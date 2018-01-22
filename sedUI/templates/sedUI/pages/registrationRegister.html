@@ -65,14 +65,14 @@
 			<div class="input-group">
 				{{wizard.form.mitre_employee}} Mitre Employee
 			</div>
-        </div>
-        <div class="form-group">
-            {% for choices in wizard.form.registration_type %}
-            <div class="registration_type">
-                {{ choices }}
-            </div>
-            {% endfor %}
-        </div>
+		</div>
+		{% if request.path == "/registration_scout/"%}
+		<div class="form-group">
+			<div class="input-group">
+				{{wizard.form.volunteer_checkbox}} Are you volunteering?
+			</div>
+		</div>
+		{% endif %}
 	</div>
 	<br>
 	<div align="center">

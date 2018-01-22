@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Scout, Instructor, Location, Session, Workshop, AboutPage, HomePage, MailPayment, Checkout
+from .models import Course, Scout, Instructor, Location, Session, Workshop, AboutPage, HomePage, MailPayment, Checkout, Register
 
 class CourseAdmin(admin.ModelAdmin):
 	list_display = ["course_id","__str__"]
@@ -36,6 +36,11 @@ class MailPaymentAdmin(admin.ModelAdmin):
 	class Meta:
 		model = MailPayment
 
+class RegisterAdmin(admin.ModelAdmin):
+	list_display = ["__str__"]
+	class Meta:
+		model = Register
+
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Instructor, InstructorAdmin)
 admin.site.register(Scout, ScoutAdmin)
@@ -46,3 +51,4 @@ admin.site.register(AboutPage)
 admin.site.register(HomePage)
 admin.site.register(Checkout)
 admin.site.register(MailPayment, MailPaymentAdmin)
+admin.site.register(Register, RegisterAdmin)

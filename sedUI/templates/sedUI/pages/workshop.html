@@ -25,6 +25,7 @@
 				</thead>
 				<tbody>
 				{% for workshop in all_workshop_custom %}
+					{% if workshop.course_name != "None" %}
 					<tr >
 						<td align="left">
 							{{workshop.workshop_id}}
@@ -60,6 +61,7 @@
 							<a class="btn btn-primary btn-sm" href="/workshop_detail/{{workshop.workshop_id}}" role="button">User Page</a>
 						</td>
 					</tr>
+					{% endif %}
 				{% endfor %}
 				</tbody>
 			</table>

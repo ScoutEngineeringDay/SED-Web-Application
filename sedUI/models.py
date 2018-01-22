@@ -1,7 +1,10 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.db.models.aggregates import Count
+from random import randint
 import hashlib
 import time
+
 
 def _createHash():
     """This function generate 10 character long hash"""
@@ -229,6 +232,7 @@ class Volunteer(models.Model):
 	volunteer_choice1= models.CharField(max_length=50, blank=True) 
 	volunteer_choice2= models.CharField(max_length=50, blank=True)
 	volunteer_choice3= models.CharField(max_length=50, blank=True)
+	volunteer_year = models.CharField(max_length=4)
 
 	def __str__(self):
 		return self.volunteer_first_name+" "+self.volunteer_last_name
@@ -239,14 +243,25 @@ class Volunteer(models.Model):
 		volunteer.save()
 		return volunteer
 
+class Task(models.Model):
+	task_id=models.AutoField(primary_key=True)
+	task_name=models.CharField(max_length=50, blank=True)
+	task_description=models.CharField(max_length=50000000, blank=True)
+
+	def __str__(self):
+		return self.task_name+" "+self.task_description
+
 class Register(models.Model):
-	register_id=models.AutoField(primary_key=True)
-	register_first_name=models.CharField(max_length=50, blank=True)
-	register_last_name=models.CharField(max_length=50, blank=True)
-	register_email=models.CharField(max_length=50, blank=True)
-	register_phone=models.CharField(max_length=10, blank=True)
-	register_sui=models.CharField(max_length=50, blank=True)
-	register_code=models.CharField(max_length=50, blank=True)
+	registration_id = models.AutoField(primary_key=True)
+	register_first_name = models.CharField(max_length=50, blank=True)
+	register_last_name = models.CharField(max_length=50, blank=True)
+	register_email = models.CharField(max_length=50, blank=True)
+	register_sui = models.CharField(max_length=50, blank=True)
+	register_code = models.CharField(max_length=50, blank=True)
+	register_type = models.CharField(max_length=10, choices=[("MITRE","MITRE"),("volunteer","volunteer")], blank=True)
+	registration_year = models.CharField(max_length=4)
+	volunteer = models.BooleanField(default=False)
+
 
 	def __str__(self):
 		return self.register_email+": "+self.register_sui+" "+self.register_code
