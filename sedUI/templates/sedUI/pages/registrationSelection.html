@@ -3,45 +3,45 @@
 	jQuery(document).ready(function(){
 
 		$("#full_label").hide();
-		$("#id_2-morning_subject").change(function () {
-			var morningDropdown = document.getElementById("id_2-morning_subject");
+		$("#id_3-morning_subject").change(function () {
+			var morningDropdown = document.getElementById("id_3-morning_subject");
 			var morningSelection = morningDropdown.options[morningDropdown.selectedIndex].text;
 
 			// if (morningSelection.endsWith("FULL")) {
 			if (morningSelection.match("FULL$")) {
-				document.getElementById("id_2-evening_subject").value = morningDropdown.value;
-				console.log("The vew value of id_2-morning_subject is " + document.getElementById("id_2-morning_subject").value);
-				console.log("The vew value of id_2-evening_subject is " + document.getElementById("id_2-evening_subject").value);
+				document.getElementById("id_3-evening_subject").value = morningDropdown.value;
+				console.log("The vew value of id_3-morning_subject is " + document.getElementById("id_3-morning_subject").value);
+				console.log("The vew value of id_3-evening_subject is " + document.getElementById("id_3-evening_subject").value);
 				disable();
 			}
 			else {
-				if ($("#id_2-evening_subject").is(":hidden")) {
-					$('#id_2-evening_subject').get(0).selectedIndex = 0;
+				if ($("#id_3-evening_subject").is(":hidden")) {
+					$('#id_3-evening_subject').get(0).selectedIndex = 0;
 					enable();
 				}
 			}
 		});
 
-		$("#id_2-evening_subject").change(function () {
-			var eveningDropdown = document.getElementById("id_2-evening_subject");
+		$("#id_3-evening_subject").change(function () {
+			var eveningDropdown = document.getElementById("id_3-evening_subject");
 			var eveningSelection = eveningDropdown.options[eveningDropdown.selectedIndex].text;
 
 			// if (eveningSelection.endsWith("FULL")) {
 			if (eveningSelection.match("FULL$")) {
-				document.getElementById("id_2-morning_subject").value = eveningDropdown.value;
+				document.getElementById("id_3-morning_subject").value = eveningDropdown.value;
 				disable();
 			}
 		});
 	});
 	function disable() {
-		$("#id_2-evening_subject").hide();
+		$("#id_3-evening_subject").hide();
 		$("#pm_label").hide();
 		$("#am_label").hide();
 		$("#full_label").show();
 	}
 
 	function enable() {
-		$("#id_2-evening_subject").show();
+		$("#id_3-evening_subject").show();
 		$("#pm_label").show();
 		$("#am_label").show();
 		$("#full_label").hide();

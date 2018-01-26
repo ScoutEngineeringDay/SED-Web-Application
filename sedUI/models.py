@@ -249,7 +249,7 @@ class Task(models.Model):
 	task_description=models.CharField(max_length=50000000, blank=True)
 
 	def __str__(self):
-		return self.task_name+" "+self.task_description
+		return self.task_name+": "+self.task_description
 
 class Register(models.Model):
 	registration_id = models.AutoField(primary_key=True)

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Course, Workshop
+from .models import Course, Workshop, Task
 from django.db.models import Q
 from captcha.fields import ReCaptchaField
 from django.core.validators import MinValueValidator
@@ -13,8 +13,10 @@ class RegistrationForm2(forms.Form):
 	register_last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
 	register_email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email'}))
 	register_email_confirm = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Confirmation', 'type': 'email'}))
+	register_phone =phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone', 'type': 'tel', 'minlength': '10', 'maxlength': '10'}), required=False) #TODO make not reqired
 	mitre_employee = forms.BooleanField(initial=False, required=False)
 	volunteer_checkbox = forms.BooleanField(initial=False, required=False)
+	register_is_volunteer = forms.BooleanField(initial=True, required=False)
 	# CHOICES = (("myself","I am registering myself"),("others","I am registering others"),("both","I am registering myself & others"))
 	# registration_type = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
 
@@ -51,9 +53,9 @@ class RegistrationVolunteerForm1(forms.Form):
 	volunteer_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone', 'type': 'tel', 'minlength': '10', 'maxlength': '10'}), required=False) #TODO make not reqired
 
 class RegistrationVolunteerForm2(forms.Form):
-	volunteer_event1 = forms.ModelChoiceField(queryset=Task.objects.all().taskDescription, widget=forms.Select(attrs={'class': 'dropdown'}))
-	volunteer_event2 = forms.ModelChoiceField(queryset=Task.objects.all().taskDescription, widget=forms.Select(attrs={'class': 'dropdown'}))
-	volunteer_event3 = forms.ModelChoiceField(queryset=Task.objects.all().taskDescription, widget=forms.Select(attrs={'class': 'dropdown'}))
+	volunteer_event1 = forms.ModelChoiceField(queryset=Task.objects.all(), widget=forms.Select(attrs={'class': 'dropdown'}))
+	volunteer_event2 = forms.ModelChoiceField(queryset=Task.objects.all(), widget=forms.Select(attrs={'class': 'dropdown'}))
+	volunteer_event3 = forms.ModelChoiceField(queryset=Task.objects.all(), widget=forms.Select(attrs={'class': 'dropdown'}))
 
 class RegistrationPaymentForm(forms.Form):
 	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment"),("Waived","Waived")])
@@ -62,7 +64,7 @@ class ContactEmailForm(forms.Form):
 	contact_first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'First Name'}))
 	contact_last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Last Name'}))
 	email_address = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Email', 'size': '40'}))
-	CHOICES = (("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support"),("MITRE Employee Registeration Request", "MITRE Employee"), ("Volunteer Registeration Request","Volunteer"))
+	CHOICES = (("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support"),("MITRE Employee", "MITRE Employee Registeration Request"), ("Volunteer","Volunteer Registeration Request"))
 	message_subject = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=CHOICES)
 	message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Message'}))
 	# captcha = ReCaptchaField()

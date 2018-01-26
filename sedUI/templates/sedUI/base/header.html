@@ -56,9 +56,10 @@
 						{% if user.is_authenticated %}
 							{% if user.is_staff %}
 								<li><a href="/badge/">Get Badge</a></li>
-								<li><a href="/admin/"></span> {{user.username}}</a></li>
+								<li><a href="/admin/"><span> {{user.username}}</span></a></li>
 								<li><a href="/logout/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 							{% else %}
+								<li><a><span>{{user.username}}</span></a></li>
 								<li><a href="/logout/"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 							{% endif %}
 						{% else %}
@@ -73,6 +74,5 @@
 	{% endblock %}
 	
 </body>
-</br>
-{% include "sedUI/base/footer.html" %}
+
 </html>

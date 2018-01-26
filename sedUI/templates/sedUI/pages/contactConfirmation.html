@@ -3,12 +3,19 @@
 {% block content %}
   <div class="container" >
     <h2 class="form-signin-heading">Thank you for contacting us, we will be sending you an email with our response.</h2>
-    {% if request.path != "/contactConfirmation/" %}
-    <div>
+    {% if register != None %}
+    <div align="center">
+      </br>
       <p>Username: {{register.register_sui}}</p>
       <p>Passcode: {{register.register_code}}</p>
+      </br>
       <p style="color: red"><b><i>Please use this username and passcode when registering</i></b></p>
+      {% if user.is_authenticated %}
+        <p>Please log out first or use current account to register</p>
+      {% else %}
+        <button><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> Login</a></button>
+      {% endif %}
     </div>
-  {% endif %}
+    {% endif %}
   </div>
 {% endblock %}
