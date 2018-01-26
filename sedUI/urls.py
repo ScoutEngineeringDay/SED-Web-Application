@@ -11,9 +11,12 @@ urlpatterns=[
 	url(r'^about/?$', views.AboutView.as_view(), name='about'),
 	url(r'^contact/?$', views.ContactView.as_view([ContactEmailForm]), name='contact'),
 	url(r'^contactConfirmation/?$', views.ContactConfirmationView.as_view(), name='contactConfirmation'),
+	url(r'^contactConfirmation/(?P<registration_id>[a-zA-Z0-9\-._]+)/(?P<register_sui>[a-zA-Z0-9\-._]+)/?$', views.ContactConfirmationViewMember.as_view(), name='contactConfirmationMember/'),
+
 	url(r'^badge/?$', views.BadgeView.as_view([BadgeForm]), name='badge'),
 	url(r'^allbadges/?$', login_required(views.AllBadgesView.as_view()), name='allbadges'),
 
+	url(r'reports/?$', login_required(views.ReportView.as_view()), name='reports'),
 
 	# ## Registration Process Pages
 	url(r'^registrationIssue/?$', views.RegistrationIssueView.as_view(), name='registrationIssue'),

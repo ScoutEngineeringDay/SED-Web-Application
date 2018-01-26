@@ -2,41 +2,45 @@
 {% block content %}
 <div class="container">
 <!-- <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} </p> -->
-{% if isOpen == "Opened" or request.user.is_superuser%}
-{% include "sedUI/includes/registrationStatus.html"%}
-{% if request.path == "/registration_scout/" %}
-<form action="/registration_scout/" method="post" style="margin: 0 auto"> {% csrf_token %}
-  {{ wizard.management_form }}
-    {% if wizard.steps.current == "0" %}
-        {% include "sedUI/pages/registrationCitizen.html" %}
-    {% elif wizard.steps.current == "1" %}
-        {% include "sedUI/pages/registrationRegister.html"%}
-    {% elif wizard.steps.current == "2" %}
-        {% include "sedUI/pages/registrationInfo.html" %}
-    {% elif wizard.steps.current == "3" %}
-        {% include "sedUI/pages/registrationSelection.html" %}
-    {% elif wizard.steps.current == "4" %}
-        {% include "sedUI/pages/registrationPayment.html" %}
+
+{% if isOpen == "Opened" or user.is_authenticated %}
+    {% include "sedUI/includes/registrationStatus.html"%}
+    {% if request.path == "/registration_scout/" %}
+        <form action="/registration_scout/" method="post" style="margin: 0 auto"> {% csrf_token %}
+            {{ wizard.management_form }}
+            {% if wizard.steps.current == "0" %}
+                {% include "sedUI/pages/registrationCitizen.html" %}
+            {% elif wizard.steps.current == "1" %}
+                {% include "sedUI/pages/registrationRegister.html"%}
+            {% elif wizard.steps.current == "2" %}
+                {% include "sedUI/pages/registrationInfo.html" %}
+            {% elif wizard.steps.current == "3" %}
+                {% include "sedUI/pages/registrationSelection.html" %}
+            {% elif wizard.steps.current == "4" %}
+                {% include "sedUI/pages/registrationPayment.html" %}
+            {% endif %}
+        </form>
+    {% elif request.path == "/registration_volunteer/" %}
+        <form action="/registration_volunteer/" method="post" style="margin: 0 auto"> {% csrf_token %}
+            {{ wizard.management_form }}
+            {% if wizard.steps.current == "0" %}
+                {% include "sedUI/pages/registrationCitizen.html" %}
+            {% elif wizard.steps.current == "1" %}
+                {% include "sedUI/pages/registrationRegister.html"%}
+            {% elif wizard.steps.current == "2" %}
+                {% include "sedUI/pages/registrationVolunteerInfo.html" %}
+            {% elif wizard.steps.current == "3" %}
+                {% include "sedUI/pages/registrationVolunteerSelection.html" %}
+            {% endif %}
+        </form>
     {% endif %}
-</form>
-{% elif request.path == "/registration_volunteer/"%}
-<form action="/registration_volunteer/" method="post" style="margin: 0 auto"> {% csrf_token %}
-    {{ wizard.management_form }}
-        {% if wizard.steps.current == "0" %}
-            {% include "sedUI/pages/registrationCitizen.html" %}
-        {% elif wizard.steps.current == "1" %}
-            {% include "sedUI/pages/registrationRegister.html"%}
-        {% elif wizard.steps.current == "2" %}
-            {% include "sedUI/pages/registrationInfo.html" %}
-        {% elif wizard.steps.current == "3" %}
-            {% include "sedUI/pages/registrationSelection.html" %}
-        {% endif %}
-  </form>
-{% endif %}
 {% elif isOpen == "ForcedClosed" %}
     <h4 align="center">Registration is down for maintance</h4>
 {% else %}
     <h4 align="center">Registration is Closed at the moment</h4>
+    </br>
+    <p align="center">If you are attempting to perform an early registration please go to the contact us page and fill in an account request</p>
+    </br>
 {% endif %}
 </div>
 {% endblock %}

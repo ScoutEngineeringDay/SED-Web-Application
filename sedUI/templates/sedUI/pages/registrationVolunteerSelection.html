@@ -2,9 +2,15 @@
 <div align="center">
 	<form action="/registration_volunteer/" method="post" onsubmit="enable()" style="margin: auto"> {% csrf_token %}
   	{{ wizard.management_form }}
-		<label for="InputName" style="font-size: 32px">Select the workshops to attend.</label>
+		<label for="InputName" style="font-size: 32px">Select your preferred three tasks.</label>
 		<div class="input-group" align="center">
-			
+			<label id="choice1" class="radio-inline" style="font-size: 16px">Choice 1:  </label>
+			{{wizard.form.volunteer_event1}}</br>
+			<label id="choice2" class="radio-inline" style="font-size: 16px">Choice 2: </label>
+			{{wizard.form.volunteer_event2}}</br>
+			<label id="choice3" class="radio-inline" style="font-size: 16px">Choice 3: </label>
+			{{wizard.form.volunteer_event3}}</br>
+			</br>
 		</div>
 
 		<br>

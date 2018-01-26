@@ -62,17 +62,30 @@
 			<span id="confirmMessage" class="confirmMessage"></span>
 		</div>
 		<div class="form-group">
+			<label for="InputEmail">Enter Phone Number</label>
+			<div class="input-group">
+				{{wizard.form.register_phone}}
+				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+			</div>
+		</div>
+		<div class="form-group">
 			<div class="input-group">
 				{{wizard.form.mitre_employee}} Mitre Employee
 			</div>
-        </div>
-        <div class="form-group">
-            {% for choices in wizard.form.registration_type %}
-            <div class="registration_type">
-                {{ choices }}
-            </div>
-            {% endfor %}
-        </div>
+		</div>
+		{% if request.path == "/registration_scout/"%}
+		<div class="form-group">
+			<div class="input-group">
+				{{wizard.form.volunteer_checkbox}} Are you volunteering?
+			</div>
+		</div>
+		{% elif request.path == "/registration_volunteer/" %}
+		<div class="form-group">
+			<div class="input-group">
+				{{wizard.form.register_is_volunteer}} Are you the register is the one volunteering?
+			</div>
+		</div>
+		{% endif %}
 	</div>
 	<br>
 	<div align="center">

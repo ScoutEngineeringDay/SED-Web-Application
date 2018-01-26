@@ -7,11 +7,11 @@
   <!-- with 5 steps padding-left: 12% -->
   <div class="row bs-wizard" style="border-bottom:0; padding-left: 0%">
     {% if wizard.steps.current == "0" %}
-      <!-- with 4 steps all should be col-xs-3 -->
+      <!-- with 4 steps all should be col-xs-2 -->
       <!-- with 5 steps all should be col-xs-2 -->
-      <div class="col-xs-3 bs-wizard-step active"><!-- active -->
+      <div class="col-xs-2 bs-wizard-step active"><!-- active -->
     {% else %}
-      <div class="col-xs-3 bs-wizard-step complete">
+      <div class="col-xs-2 bs-wizard-step complete">
     {% endif %}
       <div class="text-center bs-wizard-stepnum">Step 1</div>
         <div class="progress">
@@ -22,11 +22,11 @@
       </div>
 
     {% if wizard.steps.current < "1" %}
-      <div class="col-xs-3 bs-wizard-step disabled"><!-- disabled -->
+      <div class="col-xs-2 bs-wizard-step disabled"><!-- disabled -->
     {% elif wizard.steps.current == "1" %}
-      <div class="col-xs-3 bs-wizard-step active"><!-- active -->
+      <div class="col-xs-2 bs-wizard-step active"><!-- active -->
     {% elif wizard.steps.current > "1" %}
-      <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
+      <div class="col-xs-2 bs-wizard-step complete"><!-- complete -->
     {% endif %}
       <div class="text-center bs-wizard-stepnum">Step 2</div>
         <div class="progress">
@@ -37,11 +37,11 @@
       </div>
 
     {% if wizard.steps.current < "2" %}
-    <div class="col-xs-3 bs-wizard-step disabled"><!-- disabled -->
+    <div class="col-xs-2 bs-wizard-step disabled"><!-- disabled -->
     {% elif wizard.steps.current == "2" %}
-      <div class="col-xs-3 bs-wizard-step active"><!-- active -->
+      <div class="col-xs-2 bs-wizard-step active"><!-- active -->
     {% elif wizard.steps.current > "2" %}
-      <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
+      <div class="col-xs-2 bs-wizard-step complete"><!-- complete -->
     {% endif %}
       <div class="text-center bs-wizard-stepnum">Step 3</div>
         <div class="progress">
@@ -56,11 +56,11 @@
       </div>
 
     {% if wizard.steps.current < "3" %}
-      <div class="col-xs-3 bs-wizard-step disabled"><!-- disabled -->
+      <div class="col-xs-2 bs-wizard-step disabled"><!-- disabled -->
     {% elif wizard.steps.current == "3" %}
-      <div class="col-xs-3 bs-wizard-step active"><!-- active -->
+      <div class="col-xs-2 bs-wizard-step active"><!-- active -->
     {% elif wizard.steps.current > "3" %}
-      <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
+      <div class="col-xs-2 bs-wizard-step complete"><!-- complete -->
     {% endif %}
       <div class="text-center bs-wizard-stepnum">Step 4</div>
         <div class="progress">
@@ -75,11 +75,11 @@
       </div>
     
     {% if wizard.steps.current < "4" %}
-      <div class="col-xs-3 bs-wizard-step disabled">
+      <div class="col-xs-2 bs-wizard-step disabled">
     {% elif wizard.steps.current == "4" %}
-      <div class="col-xs-3 bs-wizard-step active">
+      <div class="col-xs-2 bs-wizard-step active">
     {% elif wizard.steps.current > "4" %}
-      <div class="col-xs-3 bs-wizard-step complete">
+      <div class="col-xs-2 bs-wizard-step complete">
     {% endif %}
     {% if request.path == "/registration_scout/" %}
       <div class="text-center bs-wizard-stepnum">Step 5</div>
@@ -100,11 +100,11 @@
     {% endif %}
     {% if request.path == "/registration_scout/"%}
       {% if wizard.steps.current < "5" %}
-        <div class="col-xs-3 bs-wizard-step disabled">
+        <div class="col-xs-2 bs-wizard-step disabled">
       {% elif wizard.steps.current == "5" %}
-        <div class="col-xs-3 bs-wizard-step active">
+        <div class="col-xs-2 bs-wizard-step active">
       {% elif wizard.steps.current > "5" %}
-        <div class="col-xs-3 bs-wizard-step complete">
+        <div class="col-xs-2 bs-wizard-step complete">
       {% endif %}
         <div class="text-center bs-wizard-stepnum">Step 6</div>
         <div class="progress">

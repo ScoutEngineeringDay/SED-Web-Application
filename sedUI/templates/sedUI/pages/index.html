@@ -10,13 +10,13 @@
 				<br>
 				
 				<div style="text-align: center"><p>
-				{% if isOpen == "Opened" or request.user.is_superuser %}
+				{% if isOpen == "Opened" or user.is_authenticated  %}
 					<a class="btn btn-primary btn-lg" href="/registration_scout/" role="button">Register Scouts Now!</a>
 					<a class="btn btn-primary btn-lg" href="/registration_volunteer/" role="button">Register as a Volunteer!</a>
 				{% elif isOpen == "ForcedClosed" %}
 		   			<h4 align="center">Registration is down for maintance</h4>
 				{% else %}
-					<h4 style="color:red">Registration is Closed at the moment</h4>
+					{% include "sedUI/includes/registrationClosed.html" %}
 				{% endif %}
 				</p></div>
 			</div>
