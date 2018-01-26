@@ -82,11 +82,11 @@
   <script src="https://checkout.stripe.com/v2/checkout.js"></script>
   <script>
   $(document).ready(function() {
-    $("#id_3-payment_method_0").change(function () {
+    $("#id_4-payment_method_0").change(function () {
       $("#mailInModal").modal('show');
 		});
     $(':submit').on('click', function(event) {
-        if (document.getElementById("id_3-payment_method_1").checked) {
+        if (document.getElementById("id_4-payment_method_1").checked) {
           event.preventDefault();
           var $button = $(this),
           $form = $button.parents('form');
@@ -97,7 +97,7 @@
             });
             StripeCheckout.open(opts);
         }
-        if (document.getElementById("id_3-payment_method_1").checked || document.getElementById("id_3-payment_method_0").checked || document.getElementById("id_3-payment_method_2").checked) {
+        if (document.getElementById("id_4-payment_method_1").checked || document.getElementById("id_4-payment_method_0").checked || document.getElementById("id_4-payment_method_2").checked) {
           $("#loadingModal").modal('show');
         }
     });

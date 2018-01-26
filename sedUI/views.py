@@ -612,7 +612,7 @@ class RegistrationScoutWizard(SessionWizardView):
             WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
             session = Session(
             scout_id=scout.scout_id,
-            payment_method="Waived",
+            payment_method=session_data["payment_method"],
             payment_amount="40.00",
             payment_status=payment_status_info,
             open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "FULL"),
@@ -637,7 +637,7 @@ class RegistrationScoutWizard(SessionWizardView):
                 WorkshopClosedTrigger(getWorkshopbyCourse(workshop2_data[0], workshop2_data[1]), workshop2_data[1])
                 session = Session(
                 scout_id=scout.scout_id,
-                payment_method="Waived",
+                payment_method=session_data["payment_method"],
                 payment_amount="40.00",
                 payment_status=payment_status_info,
                 open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
@@ -659,7 +659,7 @@ class RegistrationScoutWizard(SessionWizardView):
                 print("Error")
                 session = Session(
                 scout_id=scout.scout_id,
-                payment_method="Waived",
+                payment_method=session_data["payment_method"],
                 payment_amount="40.00",
                 payment_status=payment_status_info,
                 open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
