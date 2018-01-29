@@ -8,6 +8,12 @@
 	});
 </script>
 	<div class="container">
+		
+		{{instructor}}
+		{{location}}
+		{{course}}
+		{{scouts}}
+
 		<h1>Course: {{course.course_name}}</h1>
 		<h3>Instructor: {{instructor.instructor_first_name}} {{instructor.instructor_last_name}}</h3>
 		<h3>Location: {{location.location_building}} {{location.location_room}}</h3>
@@ -28,14 +34,14 @@
 						<tr>
 							<td align="left">{{scout.scout_first_name}}</td>
 							<td align="left">{{scout.scout_last_name}}</td>
-							<td></td>
+							<td><input type="checkbox" name="scouts[]" value={{scout.scout_id}}> </td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
-		<a class="btn btn-primary btn-sm" href="/workshop_detail/checkin/" role="button">Check in</a>
-		<a class="btn btn-primary btn-sm" href="/workshop_detail/checkout/" role="button">Check Out</a>
+		<a class="btn btn-primary btn-sm" href="{% url 'workshop_event_checkin/' workshop.workshop_id %}" role="button">Check in</a>
+		<a class="btn btn-primary btn-sm" href="{% url 'workshop_event_checkout/' workshop.workshop_id %}" role="button">Check Out</a>
 
 	</div>
 

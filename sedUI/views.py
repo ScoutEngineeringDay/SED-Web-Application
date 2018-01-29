@@ -18,6 +18,8 @@ from django.core.mail import send_mail, EmailMessage
 from django.core.management.utils import get_random_secret_key
 from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
+# import django_tables2 as tables
+# from django_tables2 import SingleTableView
 
 # Create your views here.
 class IndexView(generic.TemplateView):
@@ -292,6 +294,7 @@ class WorkshopView(generic.ListView):
 class WorkshopDetailView(generic.ListView):
     template_name = 'sedUI/pages/workshop_detail.html'
     context_object_name='workshop'
+
     def get_queryset(self):
         return Workshop.objects.get(workshop_id=self.kwargs['workshop_id'])
 
@@ -869,21 +872,21 @@ def getSessionByUniqueSession(ScoutID, ScoutYear):
         return None
 
 def getScoutSessionsByWorkshop(workshop_id, time):
+    scouts=[]
+    year=datetime.datetime.now().year
     try:
         if(time=="AM" or time=="FULL"):
-            sessions = Session.objects.all().filter(workshop1_id=workshop_id)
-            scouts=[]
+            sessions = Session.objects.all().filter(workshop1_id=workshop_id, session_year=year)
             for session in sessions:
                 scouts.append(Scout.objects.get(scout_id=session.scout_id))
             return scouts
         else:
-            sessions = Session.objects.all().filter(workshop2_id=workshop_id)
-            scouts=[]
+            sessions = Session.objects.all().filter(workshop2_id=workshop_id, session_year=year)
             for session in sessions:
                 scouts.append(Scout.objects.get(scout_id=session.scout_id))
             return scouts
     except:
-        return None
+        return scouts
 
 def getCountSessionInWorkshop(workshop_id, year, time):
     try:
@@ -1053,6 +1056,7 @@ def RegistrationClosedTrigger():
     except:
         return render_to_response('sedUI/pages/errorPage.html', status=404)
 
+# Basic functions
 def getAboutPageLatest():
     try:
         return AboutPage.objects.latest('aboutPage_id')
@@ -1076,3 +1080,67 @@ def getMailPaymentLatest():
         return MailPayment.objects.latest('mailPayment_id')
     except:
         return None
+
+def workshopMassiveCheckin(request, workshop_id):
+    try:
+        some_var = request.POST.getlist('scouts',[])
+        size=len(some_var)
+        for i in size:
+            scout_id=some_var[i].value
+            scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
+            session=getSessionByUniqueSession(scout_id, scout.scout_year)
+            if(session.workshop2_status=="COMPLETE" or session.workshop2_status=='INCOMPLETE'):
+                scout.scout_status='WORKSHOP2_CHECKOUT'
+                scout.save()
+                session.workshop2_checkout=datetime.datetime.now()
+                session.save()
+                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
+            elif(session.workshop1_status=="COMPLETE" or session.workshop1_status=='INCOMPLETE'):
+                scout.scout_status='WORKSHOP1_CHECKOUT'
+                scout.save()
+                session.workshop1_checkout=datetime.datetime.now()
+                session.save()
+                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
+            elif(scout.scout_status=="UNDERWAY" or scout.scout_status=='EVENT_CHECKOUT'):
+                scout.scout_status='EVENT_CHECKIN'
+                scout.save()
+                session.event_checkin=datetime.datetime.now()
+                session.save()
+                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
+            else:
+                return render_to_response('sedUI/pages/errorPage.html', status=404)
+    except:
+        return render_to_response('sedUI/pages/errorPage.html', status=404)
+
+def workshopMassiveCheckout(request, workshop_id):
+    try:
+
+        some_var = request.POST.getlist('scouts',[])
+        size=len(some_var)
+        for i in size:
+            scout_id=some_var[i].value
+            scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
+            session=getSessionByUniqueSession(scout_id, scout.scout_year)
+            if(session.workshop2_status=="COMPLETE" or session.workshop2_status=='INCOMPLETE'):
+                scout.scout_status='WORKSHOP2_CHECKOUT'
+                scout.save()
+                session.workshop2_checkout=datetime.datetime.now()
+                session.save()
+                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
+            elif(session.workshop1_status=="COMPLETE" or session.workshop1_status=='INCOMPLETE'):
+                scout.scout_status='WORKSHOP1_CHECKOUT'
+                scout.save()
+                session.workshop1_checkout=datetime.datetime.now()
+                session.save()
+                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
+            elif(scout.scout_status=="UNDERWAY" or scout.scout_status=='EVENT_CHECKOUT'):
+                scout.scout_status='EVENT_CHECKIN'
+                scout.save()
+                session.event_checkin=datetime.datetime.now()
+                session.save()
+                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
+            else:
+                return render_to_response('sedUI/pages/errorPage.html', status=404)
+    except:
+        return render_to_response('sedUI/pages/errorPage.html', status=404)
+        
