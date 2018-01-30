@@ -8,6 +8,12 @@
 	});
 </script>
 	<div class="container">
+		
+		{{instructor}}
+		{{location}}
+		{{course}}
+		{{scouts}}
+
 		<h1>Course: {{course.course_name}}</h1>
 		<h3>Instructor: {{instructor.instructor_first_name}} {{instructor.instructor_last_name}}</h3>
 		<h3>Location: {{location.location_building}} {{location.location_room}}</h3>
@@ -27,6 +33,7 @@
 				<tbody>
 					{% for scout in scouts %}
 						<tr>
+\
 							<td align="left">
 								<input id="{{scout.scout_id}}" type="checkbox" name="scoutCheckbox">
 							</td>
