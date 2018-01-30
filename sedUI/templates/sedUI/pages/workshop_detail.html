@@ -18,28 +18,81 @@
 			<table id="workshoptable" class="table table-striped table-hover table-sm" cellspacing="0" width="100%">
 				<thead>
 					<tr>
+						<th align="left"><b></b></th>
 						<th align="left"><b>First Name</b></th>
 						<th align="left"><b>Last Name</b></th>
-						<th align="left"><b>Checkbox</b></th>
+						<th align="left"><b>Actions</b></th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for scout in scouts %}
 						<tr>
-							<td align="left">{{scout.scout_first_name}}</td>
-							<td align="left">{{scout.scout_last_name}}</td>
-							<td></td>
+							<td align="left">
+								<input id="{{scout.scout_id}}" type="checkbox" name="scoutCheckbox">
+							</td>
+							<td align="left">
+								{{scout.scout_first_name}}
+							</td>
+							<td align="left">
+								{{scout.scout_last_name}}
+							</td>
+							<td align="left">
+								<a class="btn btn-primary btn-sm"  onclick="checkinScout({{scout.scout_id}});" role="button" name="checkin_{{scout.scout_id}}">Check In</a>
+								<a class="btn btn-warning btn-sm"  onclick="checkoutScout({{scout.scout_id}});" role="button" name="checkout_{{scout.scout_id}}">Course Incomplete</a>
+								<a class="btn btn-success btn-sm"  onclick="completeScout({{scout.scout_id}});" role="button" name="completed_{{scout.scout_id}}">Course Completed</a>
+							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
-		<a class="btn btn-primary btn-sm" href="/workshop_detail/checkin/" role="button">Check in</a>
-		<a class="btn btn-primary btn-sm" href="/workshop_detail/checkout/" role="button">Check Out</a>
-
+		<a class="btn btn-primary btn-lg" onclick="checkinAllScout();" role="button">Check In</a>
+		<a class="btn btn-warning btn-lg" onclick="checkoutAllScout();" role="button">Course Incomplete</a>
+		<a class="btn btn-success btn-lg" onclick="completeAllScout();" role="button">Course Completed</a>
 	</div>
-
-
 	<script>
+		function checkinScout(scoutId) {
+			console.log("Scout with ID " + scoutId + "check into workshop with ID " + {{workshop.workshop_id}})
+		}
+		function checkoutScout(scoutId) {
+			console.log("Scout with ID " + scoutId + "check out of workshop with ID " + {{workshop.workshop_id}})
+		}
+		function completeScout(scoutId) {
+			console.log("Scout with ID " + scoutId + "completed workshop with ID " + {{workshop.workshop_id}})
+		}
+
+		function checkinAllScout() {
+			var checkedScoutIds = getCheckedScouts();
+			for (var i=0; i<checkedScoutIds.length; i++) {
+				console.log("Scout with ID " + checkedScoutIds[i] + "check into workshop with ID " + {{workshop.workshop_id}})
+			}
+		}
+		function checkoutAllScout() {
+			var checkedScoutIds = getCheckedScouts();
+			for (var i=0; i<checkedScoutIds.length; i++) {
+				console.log("Scout with ID " + checkedScoutIds[i] + "check out of workshop with ID " + {{workshop.workshop_id}})
+			}
+		}
+		function completeAllScout() {
+			var checkedScoutIds = getCheckedScouts();
+			for (var i=0; i<checkedScoutIds.length; i++) {
+				console.log("Scout with ID " + checkedScoutIds[i] + "completed workshop with ID " + {{workshop.workshop_id}})
+			}
+		}
+
+		// Pass the checkbox name to the function
+		function getCheckedScouts() {
+		  var checkboxes = document.getElementsByName(scoutCheckbox);
+		  var checkedScoutIds = [];
+		  // loop over them all
+		  for (var i=0; i<checkboxes.length; i++) {
+		     // And stick the checked ones onto an array...
+		     if (checkboxes[i].checked) {
+		        checkedScoutIds.push(checkboxes[i].id);
+		     }
+		  }
+		  // Return the array if it is non-empty, or null
+		  return checkedScoutIds.length > 0 ? checkedScoutIds : null;
+		}
 	</script>
 {% endblock %}/
