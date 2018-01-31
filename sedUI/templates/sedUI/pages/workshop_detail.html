@@ -4,36 +4,38 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jqc-1.12.4/dt-1.10.13/af-2.1.3/datatables.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#workshoptable').dataTable();
+		$('#workshoptable').dataTable({
+			"paging": false,
+			"order": [[ 2, "asc" ]],
+			"columns": [
+				{"orderable": false},
+				null,
+				null,
+				{"orderable": false}
+			]
+		});
 	});
 </script>
 	<div class="container">
-		
-		{{instructor}}
-		{{location}}
-		{{course}}
-		{{scouts}}
-
 		<h1>Course: {{course.course_name}}</h1>
 		<h3>Instructor: {{instructor.instructor_first_name}} {{instructor.instructor_last_name}}</h3>
 		<h3>Location: {{location.location_building}} {{location.location_room}}</h3>
 		<h4>Time {{workshop.workshop_time}}</h4>
 		</br>
-		<h4>Scouts Table</h4>
+		<h4>Attendees</h4>
 		<div class="container table-responsive section-to-print">
 			<table id="workshoptable" class="table table-striped table-hover table-sm" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th align="left"><b></b></th>
-						<th align="left"><b>First Name</b></th>
-						<th align="left"><b>Last Name</b></th>
-						<th align="left"><b>Actions</b></th>
+						<th align="left"><b>First</b></th>
+						<th align="left"><b>Last</b></th>
+						<th align="left"></th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for scout in scouts %}
 						<tr>
-\
 							<td align="left">
 								<input id="{{scout.scout_id}}" type="checkbox" name="scoutCheckbox">
 							</td>
@@ -44,52 +46,41 @@
 								{{scout.scout_last_name}}
 							</td>
 							<td align="left">
-								<a class="btn btn-primary btn-sm"  onclick="checkinScout({{scout.scout_id}});" role="button" name="checkin_{{scout.scout_id}}">Check In</a>
-								<a class="btn btn-warning btn-sm"  onclick="checkoutScout({{scout.scout_id}});" role="button" name="checkout_{{scout.scout_id}}">Course Incomplete</a>
-								<a class="btn btn-success btn-sm"  onclick="completeScout({{scout.scout_id}});" role="button" name="completed_{{scout.scout_id}}">Course Completed</a>
+								<a class="btn btn-primary btn-sm" href="/scout_detail/{{scout.scout_id}}" role="button">User Page</a>
 							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>
-		<a class="btn btn-primary btn-lg" onclick="checkinAllScout();" role="button">Check In</a>
-		<a class="btn btn-warning btn-lg" onclick="checkoutAllScout();" role="button">Course Incomplete</a>
-		<a class="btn btn-success btn-lg" onclick="completeAllScout();" role="button">Course Completed</a>
+		<br>
+		<a class="btn btn-primary btn-sm" onclick="checkinAllScout();" role="button">Check In</a>
+		<a class="btn btn-warning btn-sm" onclick="checkoutAllScout();" role="button">Course Incomplete</a>
+		<a class="btn btn-success btn-sm" onclick="completeAllScout();" role="button">Course Completed</a>
 	</div>
 	<script>
-		function checkinScout(scoutId) {
-			console.log("Scout with ID " + scoutId + "check into workshop with ID " + {{workshop.workshop_id}})
-		}
-		function checkoutScout(scoutId) {
-			console.log("Scout with ID " + scoutId + "check out of workshop with ID " + {{workshop.workshop_id}})
-		}
-		function completeScout(scoutId) {
-			console.log("Scout with ID " + scoutId + "completed workshop with ID " + {{workshop.workshop_id}})
-		}
-
 		function checkinAllScout() {
 			var checkedScoutIds = getCheckedScouts();
 			for (var i=0; i<checkedScoutIds.length; i++) {
-				console.log("Scout with ID " + checkedScoutIds[i] + "check into workshop with ID " + {{workshop.workshop_id}})
+				console.log("Scout with ID " + checkedScoutIds[i] + " check into workshop with ID " + {{workshop.workshop_id}})
 			}
 		}
 		function checkoutAllScout() {
 			var checkedScoutIds = getCheckedScouts();
 			for (var i=0; i<checkedScoutIds.length; i++) {
-				console.log("Scout with ID " + checkedScoutIds[i] + "check out of workshop with ID " + {{workshop.workshop_id}})
+				console.log("Scout with ID " + checkedScoutIds[i] + " check out of workshop with ID " + {{workshop.workshop_id}})
 			}
 		}
 		function completeAllScout() {
 			var checkedScoutIds = getCheckedScouts();
 			for (var i=0; i<checkedScoutIds.length; i++) {
-				console.log("Scout with ID " + checkedScoutIds[i] + "completed workshop with ID " + {{workshop.workshop_id}})
+				console.log("Scout with ID " + checkedScoutIds[i] + " completed workshop with ID " + {{workshop.workshop_id}})
 			}
 		}
 
 		// Pass the checkbox name to the function
 		function getCheckedScouts() {
-		  var checkboxes = document.getElementsByName(scoutCheckbox);
+		  var checkboxes = document.getElementsByName("scoutCheckbox");
 		  var checkedScoutIds = [];
 		  // loop over them all
 		  for (var i=0; i<checkboxes.length; i++) {

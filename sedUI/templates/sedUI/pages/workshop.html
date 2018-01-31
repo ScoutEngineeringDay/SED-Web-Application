@@ -13,14 +13,14 @@
 			<table id="workshoptable" class="table table-striped table-hover table-sm" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th align="left"><b>Workshop ID</b></th>
-						<th align="left"><b>Course Name</b></th>
+						<th align="left"><b>ID</b></th>
+						<th align="left"><b>Course</b></th>
 						<th align="left"><b>Instructor</b></th>
-						<th align="left"><b>Time Slot</b></th>
+						<th align="left"><b>Time</b></th>
 						<th align="left"><b>Size</b></th>
-						<th align="left"><b>Open Ceremony</b></th>
+						<th align="left"><b>Ceremony</b></th>
 						<th align="left"><b>Location</b></th>
-						<th align="left"><b>Open Status</b></th>
+						<th align="left"><b>Status</b></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -32,7 +32,7 @@
 								{{workshop.workshop_id}}
 							</td>
 							<td align="left" height="50px" vertical-align="bottom">
-								{{workshop.course_name}}
+								<a class="blackLink" href="/workshop_detail/{{workshop.workshop_id}}">{{workshop.course_name}}</a>
 							</td>
 							<td align="left">
 								{{workshop.instructor_first_name}} {{workshop.instructor_last_name}}
@@ -57,9 +57,6 @@
 							</td>
 							<td align="left">
 								{{workshop.workshop_open_status}}
-								</td>
-							<td align="left" class="donotprint">
-								<a class="btn btn-primary btn-sm" href="/workshop_detail/{{workshop.workshop_id}}" role="button">Workshop Page</a>
 							</td>
 						</tr>
 						{% endif %}
