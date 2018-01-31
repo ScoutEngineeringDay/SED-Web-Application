@@ -283,12 +283,13 @@ class WorkshopView(generic.ListView):
     context_object_name = 'all_workshop'
 
     def get_queryset(self):
-        return Workshop.objects.all()
+        return Workshop.objects.all().filter(workshop_year=datetime.datetime.now().year)
 
 
     def get_context_data(self, **kwargs):
         ctx=super(WorkshopView, self).get_context_data(**kwargs)
         ctx['all_workshop_custom']=getWorkshopCustom()
+        ctx['current_date']=datetime.datetime.now().year
         return ctx
 
 class WorkshopDetailView(generic.ListView):

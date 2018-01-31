@@ -25,42 +25,44 @@
 				</thead>
 				<tbody>
 				{% for workshop in all_workshop_custom %}
-					{% if workshop.course_name != "None" %}
-					<tr >
-						<td align="left">
-							{{workshop.workshop_id}}
-						</td>
-						<td align="left" height="50px" vertical-align="bottom">
-							{{workshop.course_name}}
-						</td>
-						<td align="left">
-							{{workshop.instructor_first_name}} {{workshop.instructor_last_name}}
-						</td>
-						<td align="left">
-							{% if workshop.workshop_time == "AM" %}
-							AM
-							{% elif workshop.workshop_time == "PM" %}
-							PM
-							{% else %}
-							FULL
-							{% endif %}
-						</td>
-						<td align="left">
-							{{workshop.scouts_count}} / {{workshop.workshop_size}}
-						</td>
-						<td align="left">
-							{{workshop.open_ceremony}}
-						</td>
-						<td align="left">
-							{{workshop.location_building}} {{workshop.location_room}}
-						</td>
-						<td align="left">
-							{{workshop.workshop_open_status}}
+					{% if workshop.workshop_year == current_date %}
+						{% if workshop.course_name != "None" %}
+						<tr >
+							<td align="left">
+								{{workshop.workshop_id}}
 							</td>
-						<td align="left" class="donotprint">
-							<a class="btn btn-primary btn-sm" href="/workshop_detail/{{workshop.workshop_id}}" role="button">Workshop Page</a>
-						</td>
-					</tr>
+							<td align="left" height="50px" vertical-align="bottom">
+								{{workshop.course_name}}
+							</td>
+							<td align="left">
+								{{workshop.instructor_first_name}} {{workshop.instructor_last_name}}
+							</td>
+							<td align="left">
+								{% if workshop.workshop_time == "AM" %}
+								AM
+								{% elif workshop.workshop_time == "PM" %}
+								PM
+								{% else %}
+								FULL
+								{% endif %}
+							</td>
+							<td align="left">
+								{{workshop.scouts_count}} / {{workshop.workshop_size}}
+							</td>
+							<td align="left">
+								{{workshop.open_ceremony}}
+							</td>
+							<td align="left">
+								{{workshop.location_building}} {{workshop.location_room}}
+							</td>
+							<td align="left">
+								{{workshop.workshop_open_status}}
+								</td>
+							<td align="left" class="donotprint">
+								<a class="btn btn-primary btn-sm" href="/workshop_detail/{{workshop.workshop_id}}" role="button">Workshop Page</a>
+							</td>
+						</tr>
+						{% endif %}
 					{% endif %}
 				{% endfor %}
 				</tbody>
