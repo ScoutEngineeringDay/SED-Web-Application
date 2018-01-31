@@ -22,9 +22,8 @@
 		<h3>Location: {{location.location_building}} {{location.location_room}}</h3>
 		<h4>Time {{workshop.workshop_time}}</h4>
 		</br>
-		<h4>Attendees</h4>
-		<div class="container table-responsive section-to-print">
-			<table id="workshoptable" class="table table-striped table-hover table-sm" cellspacing="0" width="100%">
+		<div class="jumbotron" style="padding: 10px">
+			<table id="workshoptable" class="table table-striped table-hover table-sm">
 				<thead>
 					<tr>
 						<th align="left"><b></b></th>
@@ -60,22 +59,13 @@
 	</div>
 	<script>
 		function checkinAllScout() {
-			var checkedScoutIds = getCheckedScouts();
-			for (var i=0; i<checkedScoutIds.length; i++) {
-				console.log("Scout with ID " + checkedScoutIds[i] + " check into workshop with ID " + {{workshop.workshop_id}})
-			}
+			window.location.replace("/workshop_detail/{{workshop.workshop_id}}/checkin/scoutids=" + getCheckedScouts());
 		}
 		function checkoutAllScout() {
-			var checkedScoutIds = getCheckedScouts();
-			for (var i=0; i<checkedScoutIds.length; i++) {
-				console.log("Scout with ID " + checkedScoutIds[i] + " check out of workshop with ID " + {{workshop.workshop_id}})
-			}
+			window.location.replace("/workshop_detail/{{workshop.workshop_id}}/checkout/scoutids=" + getCheckedScouts());
 		}
 		function completeAllScout() {
-			var checkedScoutIds = getCheckedScouts();
-			for (var i=0; i<checkedScoutIds.length; i++) {
-				console.log("Scout with ID " + checkedScoutIds[i] + " completed workshop with ID " + {{workshop.workshop_id}})
-			}
+			window.location.replace("/workshop_detail/{{workshop.workshop_id}}/completed/scoutids=" + getCheckedScouts());
 		}
 
 		// Pass the checkbox name to the function
