@@ -150,11 +150,11 @@
 	</div>
 
 	<br>
-	
+
 	<div align="center">
 		{% if wizard.steps.prev %}
-			<button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.first }}">first step</button>
-			<button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.prev }}">prev step</button>
+			<!-- <button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.first }}">Restart</button>
+			<button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.prev }}">Back</button> -->
 		{% endif %}
 	<!-- 	{{wizard.form.captcha}} -->
 		<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
