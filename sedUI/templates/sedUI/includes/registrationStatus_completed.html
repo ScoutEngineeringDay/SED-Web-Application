@@ -46,7 +46,8 @@
       <div class="bs-wizard-info text-center non-mobile-friendly">Event Selection</div>
       {% endif %}
     </div>
-    {% if request.path == "/registration_scout/"%}
+
+    <!-- {% if request.path == "/registration_scout/"%} -->
     <div class="col-xs-2 bs-wizard-step complete"><!-- complete -->
       <div class="text-center bs-wizard-stepnum">Step 5</div>
       <div class="progress">
@@ -57,20 +58,18 @@
     </div>
 
     <div class="col-xs-2 bs-wizard-step complete"><!-- complete -->
-    
       <div class="text-center bs-wizard-stepnum">Step 6</div>
-    {% elif request.path == "/registration_volunteer/" %}
-    <div class="col-xs-2 bs-wizard-step complete"><!-- complete -->
-    
-      <div class="text-center bs-wizard-stepnum">Step 5</div>
-    {% endif %}
+    <!-- {% elif request.path == "/registration_volunteer/" %} -->
+
+        <!-- <div class="text-center bs-wizard-stepnum">Step 5</div> -->
+    <!-- {% endif %} -->
       <div class="progress">
         <div class="progress-bar"></div>
       </div>
       <a href="#" class="bs-wizard-dot"></a>
       <div class="bs-wizard-info text-center non-mobile-friendly">Confirmation</div>
     </div>
-    
+
   </div>
 </div>
 
