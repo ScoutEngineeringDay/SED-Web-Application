@@ -4,7 +4,7 @@
 <form action="/registration_scout/" onsubmit="get_action(this)" method="post" style="margin: auto"> {% csrf_token %}
   {{ wizard.management_form }}
   <div align="center">
-    <label for="InputName" style="font-size: 32px">Are all participants a U.S. Citizen?</label>
+    <label for="InputName" style="font-size: 32px">Is the Scout participating a U.S. Citizen?</label>
     <br>
     <div class="input-group">
       <label  class="radio-inline" style="font-size: 16px">
@@ -37,5 +37,5 @@
   </div>
 </form>
 {% endif %}
-  
+
 {% endblock %}
