@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 from django.core.urlresolvers import reverse_lazy
 import os
 from database_settings import DATABASES
+from email_settings import EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS 
 
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('index')
@@ -40,11 +41,6 @@ SITE_ID=1
 If using gmail, you will need to unlock captcha
 google unlock captcha
 '''
-EMAIL_HOST ='smtp.gmail.com'
-EMAIL_HOST_USER = 'scoutengineeringdaytest@gmail.com'
-EMAIL_HOST_PASSWORD = 'SEDPass123'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 
 # recaptcha
 RECAPTCHA_PUBLIC_KEY = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6'

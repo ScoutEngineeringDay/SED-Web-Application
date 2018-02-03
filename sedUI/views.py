@@ -1105,19 +1105,18 @@ def scoutlistParser(scoutlist):
 
 def workshopMassiveCheckin(request, workshop_id, scoutlist):
     scoutarray=scoutlistParser(scoutlist)
-    for scout_id in scoutarray
+    for scout_id in scoutarray:
         workshop_checkin(scout_id)
     return HttpResponseRedirect(reverse('workshop_detail/',args=(workshop_id)))
 
-
-def workshopMassiveCheckout(request, workshop_id):
+def workshopMassiveCheckout(request, workshop_id, scoutlist):
     scoutarray=scoutlistParser(scoutlist)
-    for scout_id in scoutarray
+    for scout_id in scoutarray:
         workshop_checkout(scout_id)
     return HttpResponseRedirect(reverse('workshop_detail/',args=(workshop_id)))
 
-def workshopMassiveCompleted(request, workshop_id):
+def workshopMassiveCompleted(request, workshop_id, scoutlist):
     scoutarray=scoutlistParser(scoutlist)
-    for scout_id in scoutarray
+    for scout_id in scoutarray:
         workshop_completed(scout_id)
     return HttpResponseRedirect(reverse('workshop_detail/',args=(workshop_id)))
