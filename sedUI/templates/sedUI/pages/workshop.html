@@ -56,7 +56,11 @@
 								{{workshop.location_building}} {{workshop.location_room}}
 							</td>
 							<td align="left">
-								{{workshop.workshop_open_status}}
+								{% if workshop.workshop_open_status == "OPENED" %}
+								<div class="bg-success text-white">{{workshop.workshop_open_status}}</div>
+								{% else %}
+								<div class="bg-danger text-white">{{workshop.workshop_open_status}}</div>
+								{% endif %}
 							</td>
 						</tr>
 						{% endif %}
