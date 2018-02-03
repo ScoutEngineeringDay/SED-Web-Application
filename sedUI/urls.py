@@ -37,8 +37,9 @@ urlpatterns=[
 
 	url(r'^workshops/?$', login_required(views.WorkshopView.as_view()), name='workshop'),
 	url(r'^workshop_detail/(?P<workshop_id>[a-zA-Z0-9\-._]+)/?$', login_required(views.WorkshopDetailView.as_view()), name='workshop_detail/'),
-	url(r'^workshop_detail/(?P<workshop_id>[a-zA-Z0-9\-._]+)/checkin/?$', login_required(views.workshopMassiveCheckin), name='workshop_event_checkin'),
-	url(r'^workshop_detail/(?P<workshop_id>[a-zA-Z0-9\-._]+)/checkout/?$', login_required(views.workshopMassiveCheckout), name='workshop_event_checkout'),
+	url(r'^workshop_detail/(?P<workshop_id>[a-zA-Z0-9\-._]+)/checkin/scoutids=(?P<scoutlist>.*)/?$', login_required(views.workshopMassiveCheckin), name='workshop_event_checkin'),
+	url(r'^workshop_detail/(?P<workshop_id>[a-zA-Z0-9\-._]+)/checkout/scoutids=(?P<scoutlist>.*)/?$', login_required(views.workshopMassiveCheckout), name='workshop_event_checkout'),
+	url(r'^workshop_detail/(?P<workshop_id>[a-zA-Z0-9\-._]+)/completed/scoutids=(?P<scoutlist>.*)/?$', login_required(views.workshopMassiveCompleted), name='workshop_event_completed'),
 	
 
 

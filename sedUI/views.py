@@ -18,6 +18,7 @@ from django.core.mail import send_mail, EmailMessage
 from django.core.management.utils import get_random_secret_key
 from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
+import json
 # import django_tables2 as tables
 # from django_tables2 import SingleTableView
 
@@ -210,6 +211,9 @@ def event_checkout(request, scout_id):
         return render_to_response('sedUI/pages/errorPage.html', status=404)
 
 def workshop_checkin(request, scout_id):
+    workshop_checkin(scout_id)
+
+def workshop_checkin(scout_id):
     try:
         scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
         session=getSessionByUniqueSession(scout_id, scout.scout_year)
@@ -233,6 +237,9 @@ def workshop_checkin(request, scout_id):
         return render_to_response('sedUI/pages/errorPage.html', status=404)
 
 def workshop_completed(request, scout_id):
+    workshop_completed(scout_id)
+
+def workshop_completed(scout_id):
     try:
         scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
         session=getSessionByUniqueSession(scout_id, scout.scout_year)
@@ -256,6 +263,9 @@ def workshop_completed(request, scout_id):
         return render_to_response('sedUI/pages/errorPage.html', status=404)
 
 def workshop_checkout(request, scout_id):
+    workshop_checkout(scout_id)
+
+def workshop_checkout(scout_id):
     try:
         scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
         session=getSessionByUniqueSession(scout_id, scout.scout_year)
@@ -295,6 +305,7 @@ class WorkshopView(generic.ListView):
 class WorkshopDetailView(generic.ListView):
     template_name = 'sedUI/pages/workshop_detail.html'
     context_object_name='workshop'
+    
 
     def get_queryset(self):
         return Workshop.objects.get(workshop_id=self.kwargs['workshop_id'])
@@ -1082,66 +1093,31 @@ def getMailPaymentLatest():
     except:
         return None
 
-def workshopMassiveCheckin(request, workshop_id):
+def scoutlistParser(scoutlist):
     try:
-        some_var = request.POST.getlist('scouts',[])
-        size=len(some_var)
-        for i in size:
-            scout_id=some_var[i].value
-            scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
-            session=getSessionByUniqueSession(scout_id, scout.scout_year)
-            if(session.workshop2_status=="COMPLETE" or session.workshop2_status=='INCOMPLETE'):
-                scout.scout_status='WORKSHOP2_CHECKOUT'
-                scout.save()
-                session.workshop2_checkout=datetime.datetime.now()
-                session.save()
-                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
-            elif(session.workshop1_status=="COMPLETE" or session.workshop1_status=='INCOMPLETE'):
-                scout.scout_status='WORKSHOP1_CHECKOUT'
-                scout.save()
-                session.workshop1_checkout=datetime.datetime.now()
-                session.save()
-                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
-            elif(scout.scout_status=="UNDERWAY" or scout.scout_status=='EVENT_CHECKOUT'):
-                scout.scout_status='EVENT_CHECKIN'
-                scout.save()
-                session.event_checkin=datetime.datetime.now()
-                session.save()
-                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
-            else:
-                return render_to_response('sedUI/pages/errorPage.html', status=404)
+        scout_id_array=[]
+        scout_ids=scoutlist.split(",")
+        for scout_id in scout_ids:
+            scout_id_array.append(scout_id)
+        return scout_id_array
     except:
         return render_to_response('sedUI/pages/errorPage.html', status=404)
+
+def workshopMassiveCheckin(request, workshop_id, scoutlist):
+    scoutarray=scoutlistParser(scoutlist)
+    for scout_id in scoutarray
+        workshop_checkin(scout_id)
+    return HttpResponseRedirect(reverse('workshop_detail/',args=(workshop_id)))
+
 
 def workshopMassiveCheckout(request, workshop_id):
-    try:
+    scoutarray=scoutlistParser(scoutlist)
+    for scout_id in scoutarray
+        workshop_checkout(scout_id)
+    return HttpResponseRedirect(reverse('workshop_detail/',args=(workshop_id)))
 
-        some_var = request.POST.getlist('scouts',[])
-        size=len(some_var)
-        for i in size:
-            scout_id=some_var[i].value
-            scout=getScoutByUniqueScout(scout_id, datetime.datetime.now().year)
-            session=getSessionByUniqueSession(scout_id, scout.scout_year)
-            if(session.workshop2_status=="COMPLETE" or session.workshop2_status=='INCOMPLETE'):
-                scout.scout_status='WORKSHOP2_CHECKOUT'
-                scout.save()
-                session.workshop2_checkout=datetime.datetime.now()
-                session.save()
-                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
-            elif(session.workshop1_status=="COMPLETE" or session.workshop1_status=='INCOMPLETE'):
-                scout.scout_status='WORKSHOP1_CHECKOUT'
-                scout.save()
-                session.workshop1_checkout=datetime.datetime.now()
-                session.save()
-                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
-            elif(scout.scout_status=="UNDERWAY" or scout.scout_status=='EVENT_CHECKOUT'):
-                scout.scout_status='EVENT_CHECKIN'
-                scout.save()
-                session.event_checkin=datetime.datetime.now()
-                session.save()
-                return HttpResponseRedirect(reverse('workshop_detail/', args=(workshop_id,)))
-            else:
-                return render_to_response('sedUI/pages/errorPage.html', status=404)
-    except:
-        return render_to_response('sedUI/pages/errorPage.html', status=404)
-        
+def workshopMassiveCompleted(request, workshop_id):
+    scoutarray=scoutlistParser(scoutlist)
+    for scout_id in scoutarray
+        workshop_completed(scout_id)
+    return HttpResponseRedirect(reverse('workshop_detail/',args=(workshop_id)))
