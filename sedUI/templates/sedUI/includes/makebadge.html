@@ -4,7 +4,9 @@
   <div class="container-fluid scoutbadge section-to-print" id="scoutbadge" style="position: relative">
     <!-- Medical -->
     {% if scout.scout_medical or scout.scout_allergy %}
-      <div class="badge-top-left" id="medical">*</div>
+      <div class="badge-top-left" id="medical">
+        <img src="{% static 'img/images/badge-asterisk.jpg' %}">
+      </div>
     {% endif %}
     <!-- Photo -->
     {% if scout.scout_photo == False %}

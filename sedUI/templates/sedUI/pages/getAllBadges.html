@@ -22,7 +22,9 @@
             {% if k == "scout" %}
               <!-- Medical -->
               {% if v.scout_medical or v.scout_allergy %}
-                <div class="badge-top-left" id="medical">*</div>
+                <div class="badge-top-left" id="medical">
+                  <img src="{% static 'img/images/badge-asterisk.jpg' %}">
+                </div>
               {% endif %}
               <!-- Photo -->
               {% if v.scout_photo == False %}
