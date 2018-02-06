@@ -1,4 +1,5 @@
 {% extends "sedUI/base/header.html" %} {% block content %} {% if HomePage %} {% if aboutPage %}
+{% load static %}
 <div class="container">
 	<div class="jumbotron">
 		<h1 style="text-align: center;">Scout Engineering Day</h1>
@@ -21,7 +22,7 @@
 		</div>
 
 		<div style="text-align: center">
-			<a href="courses/">Course Descriptions and Prerequisites</a>
+			<a href="{% static 'docs/SED2018_Activites.pdf' %}">Course Descriptions and Prerequisites</a>
 		</div>
 	</div>
 	{% include "sedUI/includes/img_carousel.html" %}
