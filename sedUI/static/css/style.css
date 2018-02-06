@@ -440,3 +440,13 @@ font-size: 24px;
 .scoutbadge {
     page-break-inside: avoid;
 }
+
+.btn.btn-primary[disabled] {
+    opacity: 0.2;
+}
+.btn.btn-warning[disabled] {
+    opacity: 0.2;
+}
+.btn.btn-success[disabled] {
+    opacity: 0.2;
+}

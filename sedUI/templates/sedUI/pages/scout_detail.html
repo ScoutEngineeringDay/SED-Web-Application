@@ -216,42 +216,58 @@
 
 	{% if session.payment_status == "PAID" %}
 		<div class="container" align="center">
-			<a id="scout_event_checkin" href="{% url 'scout_event_checkin/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
-			<a id="scout_event_checkout" href="{% url 'scout_event_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Check Out Of Event</i></a>
+			<button id="scout_event_checkin" onclick="checkinScout();" data-original-title="Check out this user" data-toggle="tooltip" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
+			<button id="scout_event_checkout" onclick="checkoutScout();" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Check Out Of Event</i></a>
 		</div>
 		<br>
 		<div class="container" align="center">
-			<a id="scout_workshop_checkin" href="{% url 'scout_workshop_checkin/' scout.scout_id %}" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-primary btn-action">Check Into Class</i></a>
-			<a id="scout_workshop_checkout" href="{% url 'scout_workshop_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Class Incomplete</i></a>
-			<a id="scout_workshop_completed" href="{% url 'scout_workshop_completed/' scout.scout_id %}" data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
-		</div>`
+			<button id="scout_workshop_checkin" onclick="workshopCheckinScout();" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-primary btn-action">Check Into Class</i></a>
+			<button id="scout_workshop_checkout" onclick="workshopCheckoutScout();" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Class Incomplete</i></a>
+			<button id="scout_workshop_completed" onclick="workshopCompleteScout();" data-original-title="Approve this user as completing the course" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
+		</div>
 	{% else %}
 		<h3 align="center" style="color:red;"> THIS SCOUT HAS NOT PAID FOR THE EVENT </h3>
 	{% endif %}
 
+
 	<script>
+		function checkinScout() {
+			window.location.replace("{% url 'scout_event_checkin/' scout.scout_id %}");
+		}
+		function checkoutScout() {
+			window.location.replace("{% url 'scout_event_checkout/' scout.scout_id %}");
+		}
+		function workshopCheckinScout() {
+			window.location.replace("{% url 'scout_workshop_completed/' scout.scout_id %}");
+		}
+		function workshopCheckoutScout() {
+			window.location.replace("{% url 'scout_workshop_completed/' scout.scout_id %}");
+		}
+		function workshopCompleteScout() {
+			window.location.replace("{% url 'scout_workshop_completed/' scout.scout_id %}");
+		}
 		jQuery(document).ready(function(){
 			if(document.getElementById("scout_status").innerText == "Underway" | document.getElementById("scout_status").innerText == "Checkout from Event") {
-				$('#scout_event_checkout').addClass('disabled');
-				$('#scout_workshop_checkin').addClass('disabled');
-				$('#scout_workshop_completed').addClass('disabled');
-				$('#scout_workshop_checkout').addClass('disabled');
+				$('#scout_event_checkout').prop("disabled",true);
+				$('#scout_workshop_checkin').prop("disabled",true);
+				$('#scout_workshop_completed').prop("disabled",true);
+				$('#scout_workshop_checkout').prop("disabled",true);
 			}
 			else if(document.getElementById("scout_status").innerText == "Check into Event" | document.getElementById("scout_status").innerText == "AM Workshop Checked Out") {
-				$('#scout_event_checkin').addClass('disabled');
-				$('#scout_workshop_completed').addClass('disabled');
-				$('#scout_workshop_checkout').addClass('disabled');
+				$('#scout_event_checkin').prop("disabled",true);
+				$('#scout_workshop_completed').prop("disabled",true);
+				$('#scout_workshop_checkout').prop("disabled",true);
 			}
 			else if(document.getElementById("scout_status").innerText == "AM Workshop Checked In" | document.getElementById("scout_status").innerText == "PM Workshop Checked In") {
-				$('#scout_event_checkout').addClass('disabled');
-				$('#scout_event_checkin').addClass('disabled');
-				$('#scout_workshop_checkin').addClass('disabled');
+				$('#scout_event_checkout').prop("disabled",true);
+				$('#scout_event_checkin').prop("disabled",true);
+				$('#scout_workshop_checkin').prop("disabled",true);
 			}
 			else if(document.getElementById("scout_status").innerText == "PM Workshop Checked Out") {
-				$('#scout_workshop_checkin').addClass('disabled');
-				$('#scout_workshop_completed').addClass('disabled');
-				$('#scout_workshop_checkout').addClass('disabled');
-				$('#scout_event_checkin').addClass('disabled');
+				$('#scout_workshop_checkin').prop("disabled",true);
+				$('#scout_workshop_completed').prop("disabled",true);
+				$('#scout_workshop_checkout').prop("disabled",true);
+				$('#scout_event_checkin').prop("disabled",true);
 			}
 		});
 	</script>
