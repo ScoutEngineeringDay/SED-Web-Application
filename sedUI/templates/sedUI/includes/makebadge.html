@@ -4,11 +4,13 @@
   <div class="container-fluid scoutbadge section-to-print" id="scoutbadge" style="position: relative">
     <!-- Medical -->
     {% if scout.scout_medical or scout.scout_allergy %}
-      <div class="badge-top-left" id="medical">M</div>
+      <div class="badge-top-left" id="medical">*</div>
     {% endif %}
     <!-- Photo -->
     {% if scout.scout_photo == False %}
-      <div class="badge-top-right" id="noPhoto">P</div>
+      <div class="badge-top-right" id="noPhoto">
+        <img src="{% static 'img/images/camera-icon.jpg' %}">
+      </div>
     {% endif %}
     <div class="badge-center">
       <font size="6">{{scout.scout_first_name}} {{scout.scout_last_name|slice:"1"}}</font><br/>
