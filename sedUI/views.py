@@ -1206,11 +1206,11 @@ def workshopMassiveCompleted(request, workshop_id, scoutlist):
 
 def pdf_view(request):
     fs = FileSystemStorage()
-    filename = 'Activities.pdf'
+    filename = 'sedUI/static/pdf/Activities.pdf'
     if fs.exists(filename):
         with fs.open(filename) as pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             response['Content-Disposition'] = 'attachment; filename="Activities.pdf"'
             return response
     else:
-        return HttpResponseNotFound('The requested pdf was not found in our server.')
+        return render_to_response('sedUI/pages/errorPage.html', status=404)

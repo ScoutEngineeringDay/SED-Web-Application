@@ -60,5 +60,5 @@ urlpatterns=[
     url(r'^logout/?$', auth_views.logout, {'template_name': 'sedUI/pages/logged_out.html'}, name='logout'),
 
 	## pdf
-	url(r'activitiespdf/?$', views.pdf_view, name='activitiesPDF/')
+	url(r'activitiesPDF/?$', views.pdf_view, name='activitiesPDF/')
 ]
