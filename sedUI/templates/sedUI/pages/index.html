@@ -1,40 +1,39 @@
-{% extends "sedUI/base/header.html" %}
-{% block content %}
-	{% if HomePage %}
-		{% if aboutPage %}
-		<div class="container">
-			<div class="jumbotron">
-				<h1 style="text-align: center;">Scout Engineering Day</h1>
-				<p>{{HomePage.homepage_description}} </p>
-				<p><i>Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}. Sign up for classes to get your badges!</i></p>
-				<br>
+{% extends "sedUI/base/header.html" %} {% block content %} {% if HomePage %} {% if aboutPage %}
+<div class="container">
+	<div class="jumbotron">
+		<h1 style="text-align: center;">Scout Engineering Day</h1>
+		<p>{{HomePage.homepage_description}} </p>
+		<p>
+			<i>Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}. Sign up for classes to
+				get your badges!</i>
+		</p>
+		<br>
 
-				<div style="text-align: center"><p>
-				{% if isOpen == "Opened" or user.is_authenticated  %}
-					<a class="btn btn-primary btn-lg" href="/registration_scout/" role="button">Register Scouts Now!</a>
+		<div style="text-align: center">
+			<p>
+				{% if isOpen == "Opened" or user.is_authenticated %}
+				<a class="btn btn-primary btn-lg" href="/registration_scout/" role="button">Register Scouts Now!</a>
 				{% elif isOpen == "ForcedClosed" %}
-		   			<h4 align="center">Registration is down for maintance</h4>
-				{% else %}
-					{% include "sedUI/includes/registrationClosed.html" %}
-				{% endif %}
-				</p></div>
-			</div>
-			{% include "sedUI/includes/img_carousel.html" %}
+				<h4 align="center">Registration is down for maintance</h4>
+				{% else %} {% include "sedUI/includes/registrationClosed.html" %} {% endif %}
+			</p>
+		</div>
+	</div>
+	{% include "sedUI/includes/img_carousel.html" %}
 
-			<!-- <div class="jumbotron">
+	<!-- <div class="jumbotron">
 				<h1>News and Events</h1>
 				<p>{{HomePage.homepage_news_event}}</p>
 				<p>
 					<a class="btn btn-primary btn-lg" href="/about/" role="button">Learn more</a>
 				</p>
 			</div> -->
-		</div>
-		{% else %}
-			<p> Error with AboutPage Data </p>
-		{% endif %}
-	{% else %}
-		<p> Error with HomePage Data </p>
-	{% endif %}
+</div>
+{% else %}
+<p> Error with AboutPage Data </p>
+{% endif %} {% else %}
+<p> Error with HomePage Data </p>
+{% endif %}
 <!-- <script type="text/javascript">
 	$(function(){
 	{% if alert %}
