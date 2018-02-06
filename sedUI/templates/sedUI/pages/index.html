@@ -2,6 +2,7 @@
 <div class="container">
 	<div class="jumbotron">
 		<h1 style="text-align: center;">Scout Engineering Day</h1>
+		<h3 style="text-align: center;">{{aboutpage.saveDate}}</h3>
 		<p>{{HomePage.homepage_description}} </p>
 		<p>
 			<i>Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}. Sign up for classes to
@@ -17,6 +18,10 @@
 				<h4 align="center">Registration is down for maintance</h4>
 				{% else %} {% include "sedUI/includes/registrationClosed.html" %} {% endif %}
 			</p>
+		</div>
+
+		<div style="text-align: center">
+			<a href="/activitiesPDF/">Activities and prerequisite</a>
 		</div>
 	</div>
 	{% include "sedUI/includes/img_carousel.html" %}

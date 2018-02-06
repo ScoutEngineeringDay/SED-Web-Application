@@ -19,6 +19,7 @@ from django.core.management.utils import get_random_secret_key
 from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
 import json
+from django.core.files.storage import FileSystemStorage
 # import django_tables2 as tables
 # from django_tables2 import SingleTableView
 
@@ -463,7 +464,6 @@ class BadgeView(SessionWizardView):
         else:
             return render_to_response('sedUI/pages/errorPage.html', status=404)
         try:
-
             session_data=getSessionByUniqueSession(scout_data.scout_id, scout_data.scout_year)
             course_1=getCourseBySession(session_data.workshop1_id)
             location_1=getLocationBySession(session_data.workshop1_id)
@@ -1203,3 +1203,14 @@ def workshopMassiveCompleted(request, workshop_id, scoutlist):
     for scout_id in scoutarray:
         workshop_completedW(scout_id, workshop_id)
     return HttpResponseRedirect(reverse('workshop_detail/',args=(workshop_id)))
+
+def pdf_view(request):
+    fs = FileSystemStorage()
+    filename = 'Activities.pdf'
+    if fs.exists(filename):
+        with fs.open(filename) as pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="Activities.pdf"'
+            return response
+    else:
+        return HttpResponseNotFound('The requested pdf was not found in our server.')

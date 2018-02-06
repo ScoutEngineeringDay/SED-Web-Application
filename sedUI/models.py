@@ -69,7 +69,8 @@ class Course(models.Model):
 	course_description=models.CharField(max_length=5000)
 	course_size=models.IntegerField()
 	course_duration=models.CharField(max_length=4, choices=[("HALF","HALF"),("FULL","FULL")], blank=True)
-
+	course_prereq=models.CharField(max_length=5000)
+	
 	def __str__(self):
 		return self.course_name
 

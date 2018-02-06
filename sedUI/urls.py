@@ -13,7 +13,7 @@ urlpatterns=[
 	url(r'^contactConfirmation/?$', views.ContactConfirmationView.as_view(), name='contactConfirmation'),
 	url(r'^contactConfirmation/(?P<registration_id>[a-zA-Z0-9\-._]+)/(?P<register_sui>[a-zA-Z0-9\-._]+)/?$', views.ContactConfirmationViewMember.as_view(), name='contactConfirmationMember/'),
 
-	url(r'^badge/?$', views.BadgeView.as_view([BadgeForm]), name='badge'),
+	url(r'^badge/?$', login_required(views.BadgeView.as_view([BadgeForm])), name='badge'),
 	url(r'^allbadges/?$', login_required(views.AllBadgesView.as_view()), name='allbadges'),
 
 	url(r'reports/?$', login_required(views.ReportView.as_view()), name='reports'),
@@ -58,4 +58,7 @@ urlpatterns=[
 	#might need to look into class based view for later interation
     url(r'^login/?$', auth_views.login, {'template_name': 'sedUI/pages/login.html'}, name='login'),
     url(r'^logout/?$', auth_views.logout, {'template_name': 'sedUI/pages/logged_out.html'}, name='logout'),
+
+	## pdf
+	url(r'activitiespdf/?$', views.pdf_view, name='activitiesPDF/')
 ]
