@@ -66,13 +66,6 @@ class ContactView(SessionWizardView):
             else:
                 # Generate username
                 username = generateUsername(str(form_data["contact_first_name"]), str(form_data["contact_last_name"]))
-                # check if sui is already taken
-                sui_isfree=False
-                while(sui_isfree==False):
-                    if(Register.objects.all().filter(register_sui=username).count()>0):
-                        username=username+str(randint(0,9))
-                    else:
-                        sui_isfree=True
 
                 if(form_data["message_subject"]=="MITRE Employee"):
                     register_type = "MITRE"
@@ -806,27 +799,26 @@ class RegistrationScoutWizard(SessionWizardView):
             )
             my_group.user_set.add(user)
         if(register_data["mitre_employee"]):
-            if(username==None):
-                username=generateUsername(register_data["register_first_name"], register_data["register_last_name"])
-                password=generatePassword()
-                register = Register(
-                    register_first_name = form_data["contact_first_name"],
-                    register_last_name = form_data["contact_last_name"],
-                    register_email = form_data["email_address"],
-                    register_sui = username,
-                    register_code = passcode,
-                    register_type = register_type,               
-                    registration_year = str(datetime.datetime.now().year),
-                    volunteer = register_data["volunteer_checkbox"]
-                )
-                register.save()
-                user = User.objects.create(
-                    username=register.register_sui,
-                    first_name =register.register_first_name,
-                    last_name = register.register_last_name,
-                    email=register.register_email,
-                    password=make_password(register.register_code)
-                )
+            username=generateUsername(register_data["register_first_name"], register_data["register_last_name"])
+            password=generatePassword()
+            register = Register(
+                register_first_name = form_data["contact_first_name"],
+                register_last_name = form_data["contact_last_name"],
+                register_email = form_data["email_address"],
+                register_sui = username,
+                register_code = passcode,
+                register_type = register_type,               
+                registration_year = str(datetime.datetime.now().year),
+                volunteer = register_data["volunteer_checkbox"]
+            )
+            register.save()
+            user = User.objects.create(
+                username=register.register_sui,
+                first_name =register.register_first_name,
+                last_name = register.register_last_name,
+                email=register.register_email,
+                password=make_password(register.register_code)
+            )
             my_group=Group.objects.get("mitre")
             my_group.user_set.add(user)
         
@@ -844,6 +836,13 @@ class RegistrationScoutWizard(SessionWizardView):
 def generateUsername(firstname, lastname):
     firstletter = firstname[0].lower()
     username = firstletter+lastname.lower()
+    # check if sui is already taken
+    sui_isfree=False
+    while(sui_isfree==False):
+        if(Register.objects.all().filter(register_sui=username).count()>0):
+            username=username+str(randint(0,9))
+        else:
+            sui_isfree=True
     return username
 
 def generatePassword():
