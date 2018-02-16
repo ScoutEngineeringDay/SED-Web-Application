@@ -459,10 +459,10 @@ class BadgeView(SessionWizardView):
         try:
             session_data=getSessionByUniqueSession(scout_data.scout_id, scout_data.scout_year)
             course_1=getCourseBySession(session_data.workshop1_id)
-            location_1=getLocationBySession(session_data.workshop1_id)
+            location_1=getLocationByWorkshop(session_data.workshop1_id)
             if(session_data.workshop2_id!='0' or session_data.workshop2_id!=None):
                 course_2=getCourseBySession(session_data.workshop2_id)
-                location_2=getLocationBySession(session_data.workshop2_id)
+                location_2=getLocationByWorkshop(session_data.workshop2_id)
             else:
                 course_2=None
                 location_2=None
@@ -490,26 +490,26 @@ class AllBadgesView(generic.ListView):
 
     	ctx['data']={}
         for scout in Scout.objects.all():
-           session_data=getSessionByUniqueSession(scout.scout_id, scout.scout_year)
-           location_1=getLocationBySession(session_data.workshop1_id)
-           location_2=getLocationBySession(session_data.workshop2_id)
-           workshop_1=getCourseBySession(session_data.workshop1_id)
-           workshop_2=getCourseBySession(session_data.workshop2_id)
-           try:
-             workshop_1_data=str(workshop_1.course_name)+" - "+str(location_1.location_room)
-           except:
-             workshop_1_data=" "
-           try:
-             workshop_2_data=str(workshop_2.course_name)+" - "+str(location_2.location_room)
-           except:
-             workshop_2_data=" "
-           scout_information={'scout': scout,
-           'workshop_1': workshop_1_data,
-           'workshop_2': workshop_2_data,
-           'session': session_data,
-           }
-           scoutstring=str(scout.scout_id)
-           ctx['data'].update({scoutstring:scout_information})
+            session_data=getSessionByUniqueSession(scout.scout_id, scout.scout_year)
+            location_1=getLocationByWorkshop(session_data.workshop1_id)
+            location_2=getLocationByWorkshop(session_data.workshop2_id)
+            workshop_1=getCourseBySession(session_data.workshop1_id)
+            workshop_2=getCourseBySession(session_data.workshop2_id)
+            try:
+                workshop_1_data=str(workshop_1.course_name)+" - "+str(location_1.location_room)
+            except:
+                workshop_1_data=" "
+            try:
+                workshop_2_data=str(workshop_2.course_name)+" - "+str(location_2.location_room)
+            except:
+                workshop_2_data=" "
+            scout_information={'scout': scout,
+            'workshop_1': workshop_1_data,
+            'workshop_2': workshop_2_data,
+            'session': session_data,
+            }
+            scoutstring=str(scout.scout_id)
+            ctx['data'].update({scoutstring:scout_information})
         sorted(ctx['data'].iteritems())
         return ctx
 
@@ -586,11 +586,15 @@ class RegistrationVolunteerWizard(SessionWizardView):
             email=register.register_email,
             password=make_password(register.register_code)
         )
+        s
         if(register_data["mitre_employee"]):
             my_group=Group.objects.get("mitre")
             my_group.user_set.add(user)
-        my_group=Group.objects.get("volunteer")
-        my_group.user_set.add(user)
+        
+        if(register_data["volunteer"]):
+            my_group=Group.objects.get("volunteer")
+            my_group.user_set.add(user)
+
         register.save()
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list]})
 
@@ -702,23 +706,21 @@ class RegistrationScoutWizard(SessionWizardView):
 
             WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
             session = Session(
-            scout_id=scout.scout_id,
-            payment_method=session_data["payment_method"],
-            payment_amount="40.00",
-            payment_status=payment_status_info,
-            open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "FULL"),
-            workshop1_id=getWorkshopbyCourse(workshop1_data[0], "FULL"),
-            workshop1_status="IN PROGRESS",
-            workshop2_id=None,
-            workshop2_status="IN PROGRESS",
-            confirmation_timestamp=datetime.datetime.now(),
-            session_year=str(datetime.datetime.now().year)
+                scout_id=scout.scout_id,
+                payment_method=session_data["payment_method"],
+                payment_amount="40.00",
+                payment_status=payment_status_info,
+                open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "FULL"),
+                workshop1_id=getWorkshopbyCourse(workshop1_data[0], "FULL"),
+                workshop1_status="IN PROGRESS",
+                workshop2_id=None,
+                workshop2_status="IN PROGRESS",
+                confirmation_timestamp=datetime.datetime.now(),
+                session_year=str(datetime.datetime.now().year)
             )
             session.save()
             course_1=getCourseBySession(session.workshop1_id)
             course_2=None
-            location_1=getLocationBySession(session.workshop1_id)
-            location_2=None
         else:
             WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
             #if there is a PM CLass
@@ -727,45 +729,42 @@ class RegistrationScoutWizard(SessionWizardView):
                 workshop2_data=str(workshop_data["evening_subject"]).split('-')
                 WorkshopClosedTrigger(getWorkshopbyCourse(workshop2_data[0], workshop2_data[1]), workshop2_data[1])
                 session = Session(
-                scout_id=scout.scout_id,
-                payment_method=session_data["payment_method"],
-                payment_amount="40.00",
-                payment_status=payment_status_info,
-                open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
-                workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
-                workshop2_id=getWorkshopbyCourse(workshop2_data[0], "PM"),
-                workshop1_status="IN PROGRESS",
-                workshop2_status="IN PROGRESS",
-                confirmation_timestamp=datetime.datetime.now(),
-                session_year=str(datetime.datetime.now().year)
+                    scout_id=scout.scout_id,
+                    payment_method=session_data["payment_method"],
+                    payment_amount="40.00",
+                    payment_status=payment_status_info,
+                    open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
+                    workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
+                    workshop2_id=getWorkshopbyCourse(workshop2_data[0], "PM"),
+                    workshop1_status="IN PROGRESS",
+                    workshop2_status="IN PROGRESS",
+                    confirmation_timestamp=datetime.datetime.now(),
+                    session_year=str(datetime.datetime.now().year)
                 )
                 session.save()
                 course_1=getCourseBySession(session.workshop1_id)
                 course_2=getCourseBySession(session.workshop2_id)
-                location_1=getLocationBySession(session.workshop1_id)
-                location_2=getLocationBySession(session.workshop2_id)
             # Error issue
             else:
                 workshop2_data=None
                 print("Error")
                 session = Session(
-                scout_id=scout.scout_id,
-                payment_method=session_data["payment_method"],
-                payment_amount="40.00",
-                payment_status=payment_status_info,
-                open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
-                workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
-                workshop1_status="IN PROGRESS",
-                workshop2_id=None,
-                workshop2_status="IN PROGRESS",
-                confirmation_timestamp=datetime.datetime.now(),
-                session_year=str(datetime.datetime.now().year)
+                    scout_id=scout.scout_id,
+                    payment_method=session_data["payment_method"],
+                    payment_amount="40.00",
+                    payment_status=payment_status_info,
+                    open_ceremony=getOpenCeremonybyWorkshop(workshop1_data[0], "AM"),
+                    workshop1_id=getWorkshopbyCourse(workshop1_data[0], "AM"),
+                    workshop1_status="IN PROGRESS",
+                    workshop2_id=None,
+                    workshop2_status="IN PROGRESS",
+                    confirmation_timestamp=datetime.datetime.now(),
+                    session_year=str(datetime.datetime.now().year)
                 )
                 session.save()
                 course_1=getCourseBySession(session.workshop1_id)
                 course_2=None
-                location_1=getLocationBySession(session.workshop1_id)
-                location_2=None
+
         all_models_dict ={
         	'form_data': [form.cleaned_data for form in form_list],
     		'scout': scout,
@@ -775,17 +774,18 @@ class RegistrationScoutWizard(SessionWizardView):
             'location_1': location_1,
             'location_2': location_2
         }
+
         if(register_data["volunteer_checkbox"]):
             my_group=Group.objects.get("volunteer")
             username=generateUsername(register_data["register_first_name"], register_data["register_last_name"])
             password=generatePassword()
             register = Register(
-                register_first_name = form_data["contact_first_name"],
-                register_last_name = form_data["contact_last_name"],
-                register_email = form_data["email_address"],
+                register_first_name = register_data["register_first_name"],
+                register_last_name = register_data["register_last_name"],
+                register_email = register_data["register_email"],
                 register_sui = username,
-                register_code = passcode,
-                register_type = register_type,               
+                register_code = password,
+                register_type = "volunteer",               
                 registration_year = str(datetime.datetime.now().year),
                 volunteer = register_data["volunteer_checkbox"]
             )
@@ -798,16 +798,18 @@ class RegistrationScoutWizard(SessionWizardView):
                 password=make_password(register.register_code)
             )
             my_group.user_set.add(user)
+
         if(register_data["mitre_employee"]):
+            my_group=Group.objects.get("mitre")
             username=generateUsername(register_data["register_first_name"], register_data["register_last_name"])
             password=generatePassword()
             register = Register(
-                register_first_name = form_data["contact_first_name"],
-                register_last_name = form_data["contact_last_name"],
-                register_email = form_data["email_address"],
+                register_first_name = register_data["register_first_name"],
+                register_last_name = register_data["register_last_name"],
+                register_email = register_data["register_email"],
                 register_sui = username,
-                register_code = passcode,
-                register_type = register_type,               
+                register_code = password,
+                register_type = "MITRE",               
                 registration_year = str(datetime.datetime.now().year),
                 volunteer = register_data["volunteer_checkbox"]
             )
@@ -828,9 +830,7 @@ class RegistrationScoutWizard(SessionWizardView):
     		'scout': scout,
     		'session': session,
     		'workshop_1': course_1,
-            'workshop_2': course_2,
-            'location_1': location_1,
-            'location_2': location_2
+            'workshop_2': course_2
         	})
 
 def generateUsername(firstname, lastname):
@@ -1202,14 +1202,3 @@ def workshopMassiveCompleted(request, workshop_id, scoutlist):
     for scout_id in scoutarray:
         workshop_completedW(scout_id, workshop_id)
     return HttpResponseRedirect(reverse('workshop_detail/',args=(workshop_id)))
-
-def pdf_view(request):
-    fs = FileSystemStorage()
-    filename = 'sedUI/static/pdf/Activities.pdf'
-    if fs.exists(filename):
-        with fs.open(filename) as pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="Activities.pdf"'
-            return response
-    else:
-        return render_to_response('sedUI/pages/errorPage.html', status=404)

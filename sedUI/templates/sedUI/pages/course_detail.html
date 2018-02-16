@@ -25,7 +25,7 @@
 			<font size="4"><b><u>Course Description</u></b></font>
 			<p style="font-size:18px;">{{course.course_description}}</p>
 			{% if course.course_prereq is not None %}
-				<p><font color=red><b><u>Prerequisites</u></b>: {{course.course_prereq}}</font></p>
+				<p><font color=red><b><u>Prerequisites</u></b>: {% autoescape off %}{{ course.course_prereq|linebreaksbr }} {% endautoescape %}</font></p>
 			{% endif %}
 		</div>
 	</div>

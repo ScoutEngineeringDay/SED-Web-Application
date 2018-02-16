@@ -58,7 +58,4 @@ urlpatterns=[
 	#might need to look into class based view for later interation
     url(r'^login/?$', auth_views.login, {'template_name': 'sedUI/pages/login.html'}, name='login'),
     url(r'^logout/?$', auth_views.logout, {'template_name': 'sedUI/pages/logged_out.html'}, name='logout'),
-
-	## pdf
-	url(r'activitiesPDF/?$', views.pdf_view, name='activitiesPDF/')
 ]
