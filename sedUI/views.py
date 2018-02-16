@@ -232,7 +232,7 @@ def event_checkout(request, scout_id):
 
 def workshop_checkin(request, scout_id):
     workshop_checkinI(scout_id)
-    return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,)))
+    return HttpResponseRedirect(reverse('scout_detail/', args=(scout_id,))) 
 
 def workshop_checkinI(scout_id):
     try:
@@ -249,7 +249,7 @@ def workshop_checkinI(scout_id):
             scout.save()
             session.workshop2_status='IN PROGRESS'
             session.workshop2_checkin=datetime.datetime.now()
-            session.save()   
+            session.save()  
         else:
             return render_to_response('sedUI/pages/errorPage.html', status=404)
     except:
@@ -777,13 +777,11 @@ class RegistrationScoutWizard(SessionWizardView):
     		'scout': scout,
     		'session': session,
     		'workshop_1': course_1,
-            'workshop_2': course_2,
-            'location_1': location_1,
-            'location_2': location_2
+            'workshop_2': course_2
         }
 
         if(register_data["volunteer_checkbox"]):
-            my_group=Group.objects.get("volunteer")
+            my_group=Group.objects.get(name="volunteer")
             username=generateUsername(register_data["register_first_name"], register_data["register_last_name"])
             password=generatePassword()
             register = Register(
@@ -807,7 +805,7 @@ class RegistrationScoutWizard(SessionWizardView):
             my_group.user_set.add(user)
 
         if(register_data["mitre_employee"]):
-            my_group=Group.objects.get("mitre")
+            my_group=Group.objects.get(name="mitre")
             username=generateUsername(register_data["register_first_name"], register_data["register_last_name"])
             password=generatePassword()
             register = Register(
@@ -828,7 +826,6 @@ class RegistrationScoutWizard(SessionWizardView):
                 email=register.register_email,
                 password=make_password(register.register_code)
             )
-            my_group=Group.objects.get("mitre")
             my_group.user_set.add(user)
         
         confirmation_timestamp=session.confirmation_timestamp

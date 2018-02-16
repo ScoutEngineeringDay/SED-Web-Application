@@ -1,4 +1,5 @@
-{% extends "sedUI/base/header.html" %} {% block content %}
+{% extends "sedUI/base/header.html" %} 
+{% block content %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-5  toppad  pull-right col-md-offset-3 ">
@@ -23,7 +24,13 @@
 										<td>Scout Type:</td>
 										<!-- User Type -->
 										<td id="scout_type">
-											{% if scout.scout_type == "BOY" %} Boy {% elif scout.scout_type == "GIRL" %} Girl {% else %} Other {% endif %}
+											{% if scout.scout_type == "BOY" %} 
+												Boy 
+											{% elif scout.scout_type == "GIRL" %} 
+												Girl 
+											{% else %} 
+												Other 
+											{% endif %}
 										</td>
 									</tr>
 									<tr>
@@ -35,18 +42,35 @@
 										<td>Payment:</td>
 										<!-- User Type -->
 										<td id="payment_method">
-											{% if session.payment_method == "Pay_Mail" %} Paid by Mail {% elif session.payment_method == "Pay_Online" %} Paid Online
-											{% elif session.payment_method == "Waived" %} Waived {% endif %}
+											{% if session.payment_method == "Pay_Mail" %} 
+												Paid by Mail 
+											{% elif session.payment_method == "Pay_Online" %} 
+												Paid Online
+											{% elif session.payment_method == "Waived" %} 
+												Waived 
+											{% endif %}
 										</td>
 									</tr>
 									<tr>
 										<td>Scout Status:</td>
 										<td id="scout_status">
-											{% if scout.scout_status == "UNDERWAY" %} Underway {% elif scout.scout_status == "EVENT_CHECKIN" %} Check into Event {% elif
-											scout.scout_status == "WORKSHOP1_CHECKIN" %} AM Workshop Checked In {% elif scout.scout_status == "WORKSHOP1_CHECKOUT"
-											%} AM Workshop Checked Out {% elif scout.scout_status == "WORKSHOP2_CHECKIN" %} PM Workshop Checked In {% elif
-											scout.scout_status == "WORKSHOP2_CHECKOUT" %} PM Workshop Checked Out {% elif scout.scout_status == "EVENT_CHECKOUT"
-											%} Checkout from Event {% else %} Error {% endif %}
+											{% if scout.scout_status == "UNDERWAY" %}
+												Underway 
+											{% elif scout.scout_status == "EVENT_CHECKIN" %}
+												Check into Event 
+											{% elif	scout.scout_status == "WORKSHOP1_CHECKIN" %} 
+												AM Workshop Checked In 
+											{% elif scout.scout_status == "WORKSHOP1_CHECKOUT" %} 
+												AM Workshop Checked Out 
+											{% elif scout.scout_status == "WORKSHOP2_CHECKIN" %} 
+												PM Workshop Checked In 
+											{% elif scout.scout_status == "WORKSHOP2_CHECKOUT" %} 
+												PM Workshop Checked Out 
+											{% elif scout.scout_status == "EVENT_CHECKOUT" %}
+												Checkout from Event 
+											{% else %} 
+												Error 
+											{% endif %}
 										</td>
 									</tr>
 								</tbody>
@@ -57,40 +81,55 @@
 								</thead>
 								<tbody>
 									{% if workshop1.course_duration == "FULL" %}
-									<tr>
-										<td>Full Day</td>
-										<td id="workshop1">
-											{{workshop1.course_name}}
-										</td>
-										<td>
-											{% if session.workshop1_status == "COMPLETE" and session.workshop2_status == "COMPLETE" %} Completed {% elif session.workshop1_status
-											== "IN PROGRESS" and session.workshop2_status == "IN PROGRESS" %} In Progress {% else %} Incompleted {% endif
-											%}
-										</td>
-									</tr>
+										<tr>
+											<td>Full Day</td>
+											<td id="workshop1">
+												{{workshop1.course_name}}
+											</td>
+											<td>
+												{% if session.workshop1_status == "COMPLETE" and session.workshop2_status == "COMPLETE" %}
+													Completed 
+												{% elif session.workshop1_status == "IN PROGRESS" and session.workshop2_status == "IN PROGRESS" %}
+													In Progress 
+												{% else %}
+													Incompleted
+												{% endif %}
+											</td>
+										</tr>
 									{% elif workshop1.course_duration == "HALF" %}
-									<tr>
-										<td>AM</td>
-										<td id="workshop1">
-											{{workshop1.course_name}}
-										</td>
-										<td>
-											{% if session.workshop1_status == "COMPLETE" %} Completed {% elif session.workshop1_status == "IN PROGRESS" %} In Progress
-											{% else %} Incompleted {% endif %}
-										</td>
-									</tr>
-									{% endif %} {% if session.workshop2_id != none and session.workshop2_id != 0 %}
-									<tr>
-										<td>PM</td>
-										<!-- User Phone Number -->
-										<td id="workshop2">
-											{{workshop2.course_name}}
-										</td>
-										<td>
-											{% if session.workshop2_status == "COMPLETE" %} Completed {% elif session.workshop2_status == "IN PROGRESS" %} In Progress
-											{% else %} Incompleted {% endif %}
-										</td>
-									</tr>
+										<tr>
+											<td>AM</td>
+											<td id="workshop1">
+												{{workshop1.course_name}}
+											</td>
+											<td>
+												{% if session.workshop1_status == "COMPLETE" %}
+													Completed
+												{% elif session.workshop1_status == "IN PROGRESS" %}
+													In Progress
+												{% else %}
+													Incompleted 
+												{% endif %}
+											</td>
+										</tr>
+									{% endif %} 
+									{% if session.workshop2_id != none and session.workshop2_id != 0 %}
+										<tr>
+											<td>PM</td>
+											<!-- User Phone Number -->
+											<td id="workshop2">
+												{{workshop2.course_name}}
+											</td>
+											<td>
+												{% if session.workshop2_status == "COMPLETE" %} 
+													Completed 
+												{% elif session.workshop2_status == "IN PROGRESS" %} 
+													In Progress
+												{% else %} 
+													Incompleted 
+												{% endif %}
+											</td>
+										</tr>
 									{% endif %}
 								</tbody>
 							</table>
@@ -142,29 +181,32 @@
 									</tr>
 								</tbody>
 							</table>
-							{% if request.user.is_superuser %} {% if scout.scout_medical %}
-							<table class="table table-user-information">
-								<thead>
-									<h3> Medical Conditions</h3>
-								</thead>
-								<tbody>
-									<tr>
-										<td id="scout_medical">{{scout.scout_medical}}</td>
-									</tr>
-								</tbody>
-							</table>
-							{% endif %} {% if scout.scout_allergy %}
-							<table class="table table-user-information">
-								<thead>
-									<h3> Allergies </h3>
-								</thead>
-								<tbody>
-									<tr>
-										<td id="scout_allergy">{{scout.scout_allergy}}</td>
-									</tr>
-								</tbody>
-							</table>
-							{% endif %} {% endif %}
+							{% if request.user.is_superuser %} 
+								{% if scout.scout_medical %}
+									<table class="table table-user-information">
+										<thead>
+											<h3> Medical Conditions</h3>
+										</thead>
+										<tbody>
+											<tr>
+												<td id="scout_medical">{{scout.scout_medical}}</td>
+											</tr>
+										</tbody>
+									</table>
+								{% endif %} 
+								{% if scout.scout_allergy %}
+									<table class="table table-user-information">
+										<thead>
+											<h3> Allergies </h3>
+										</thead>
+										<tbody>
+											<tr>
+												<td id="scout_allergy">{{scout.scout_allergy}}</td>
+											</tr>
+										</tbody>
+									</table>
+								{% endif %} 
+							{% endif %}
 						</div>
 					</div>
 				</div>
@@ -173,28 +215,28 @@
 	</div>
 
 	{% if session.payment_status == "PAID" %}
-	<div class="container" align="center">
-		<button id="scout_event_checkin" onclick="checkinScout();" data-original-title="Check out this user" data-toggle="tooltip"
-		 class="btn btn-lg btn-primary btn-action">Check Into Event</i>
-			</a>
-			<button id="scout_event_checkout" onclick="checkoutScout();" data-original-title="Check out this user" data-toggle="tooltip"
-			 type="button" class="btn btn-lg btn-success btn-action">Check Out Of Event</i>
+		<div class="container" align="center">
+			<button id="scout_event_checkin" onclick="checkinScout();" data-original-title="Check out this user" data-toggle="tooltip"
+			class="btn btn-lg btn-primary btn-action">Check Into Event</i>
 				</a>
-	</div>
-	<br>
-	<div class="container" align="center">
-		<button id="scout_workshop_checkin" onclick="workshopCheckinScout();" data-original-title="Check in this user" data-toggle="tooltip"
-		 type="button" class="btn btn-lg btn-primary btn-action">Check Into Class</i>
-			</a>
-			<button id="scout_workshop_checkout" onclick="workshopCheckoutScout();" data-original-title="Check out this user" data-toggle="tooltip"
-			 type="button" class="btn btn-lg btn-warning btn-action">Class Incomplete</i>
-				</a>
-				<button id="scout_workshop_completed" onclick="workshopCompleteScout();" data-original-title="Approve this user as completing the course"
-				 data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i>
+				<button id="scout_event_checkout" onclick="checkoutScout();" data-original-title="Check out this user" data-toggle="tooltip"
+				type="button" class="btn btn-lg btn-success btn-action">Check Out Of Event</i>
 					</a>
-	</div>
+		</div>
+		<br>
+		<div class="container" align="center">
+			<button id="scout_workshop_checkin" onclick="workshopCheckinScout();" data-original-title="Check in this user" data-toggle="tooltip"
+			type="button" class="btn btn-lg btn-primary btn-action">Check Into Class</i>
+				</a>
+				<button id="scout_workshop_checkout" onclick="workshopCheckoutScout();" data-original-title="Check out this user" data-toggle="tooltip"
+				type="button" class="btn btn-lg btn-warning btn-action">Class Incomplete</i>
+					</a>
+					<button id="scout_workshop_completed" onclick="workshopCompleteScout();" data-original-title="Approve this user as completing the course"
+					data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i>
+						</a>
+		</div>
 	{% else %}
-	<h3 align="center" style="color:red;"> THIS SCOUT HAS NOT PAID FOR THE EVENT </h3>
+		<h3 align="center" style="color:red;"> THIS SCOUT HAS NOT PAID FOR THE EVENT </h3>
 	{% endif %}
 
 
@@ -206,10 +248,10 @@
 			window.location.replace("{% url 'scout_event_checkout/' scout.scout_id %}");
 		}
 		function workshopCheckinScout() {
-			window.location.replace("{% url 'scout_workshop_completed/' scout.scout_id %}");
+			window.location.replace("{% url 'scout_workshop_checkin/' scout.scout_id %}");
 		}
 		function workshopCheckoutScout() {
-			window.location.replace("{% url 'scout_workshop_completed/' scout.scout_id %}");
+			window.location.replace("{% url 'scout_workshop_checkout/' scout.scout_id %}");
 		}
 		function workshopCompleteScout() {
 			window.location.replace("{% url 'scout_workshop_completed/' scout.scout_id %}");
@@ -238,4 +280,5 @@
 				$('#scout_event_checkin').prop("disabled", true);
 			}
 		});
-	</script> {% endblock %}/
+	</script> 
+	{% endblock %}
