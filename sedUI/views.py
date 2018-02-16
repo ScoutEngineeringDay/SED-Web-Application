@@ -66,42 +66,49 @@ class ContactView(SessionWizardView):
             else:
                 # Generate username
                 username = generateUsername(str(form_data["contact_first_name"]), str(form_data["contact_last_name"]))
-
+                
+                approval = False
                 if(form_data["message_subject"]=="MITRE Employee"):
                     register_type = "MITRE"
                     my_group = Group.objects.get(name='mitre')
+                    #check MITRE
+                    if(form_data["email_address"].find("@mitre.org")):
+                        approval = True
+                    
                 elif(form_data["message_subject"]=="Volunteer"):
                     register_type = "volunteer"
                     my_group = Group.objects.get(name='volunteer')
+                    approval = True
                 else:
                     register_type = "regular"
 
-                # Generate Password
-                passcode = generatePassword()
-                
-                # Create an account for them 
+                if(approval == True):
+                    # Generate Password
+                    passcode = generatePassword()
+                    
+                    # Create an account for them 
 
-                register = Register(
-                    register_first_name = form_data["contact_first_name"],
-                    register_last_name = form_data["contact_last_name"],
-                    register_email = form_data["email_address"],
-                    register_sui = username,
-                    register_code = passcode,
-                    register_type = register_type,               
-                    registration_year = str(datetime.datetime.now().year),
-                    volunteer = True
-                )
-                user = User.objects.create(
-                    username=register.register_sui,
-                    first_name =register.register_first_name,
-                    last_name = register.register_last_name,
-                    email=register.register_email,
-                    password=make_password(register.register_code)
-                )
-                my_group.user_set.add(user)
-                register.save()
-                print("send")
-                contact_send_email(form_list, username, passcode)
+                    register = Register(
+                        register_first_name = form_data["contact_first_name"],
+                        register_last_name = form_data["contact_last_name"],
+                        register_email = form_data["email_address"],
+                        register_sui = username,
+                        register_code = passcode,
+                        register_type = register_type,               
+                        registration_year = str(datetime.datetime.now().year),
+                        volunteer = True
+                    )
+                    user = User.objects.create(
+                        username=register.register_sui,
+                        first_name =register.register_first_name,
+                        last_name = register.register_last_name,
+                        email=register.register_email,
+                        password=make_password(register.register_code)
+                    )
+                    my_group.user_set.add(user)
+                    register.save()
+                    print("send")
+                    contact_send_email(form_list, username, passcode)
                 return HttpResponseRedirect(reverse('contactConfirmationMember/', args=(register.registration_id, register.register_sui)))
         else:
             return redirect(reverse('contactConfirmation'))
