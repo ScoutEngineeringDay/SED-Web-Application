@@ -9,6 +9,9 @@ Please review the License, Code of Conduct and Contributing documentation.
 The installation of this web application is done using the [ScoutEngineeringDay/SED-Deployments](https://github.com/ScoutEngineeringDay/SED-Deployments) repository, please review the instillation instructions found there.
 
 ## Contributing
+Before contributing please make sure you meet the requirements stated in the CONTRIBUTING.md file
+
+### Process to contribute as non-member of the team:
 1. Fork the project
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
