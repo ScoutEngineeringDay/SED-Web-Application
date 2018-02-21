@@ -8,6 +8,31 @@ Please review the License, Code of Conduct and Contributing documentation.
 
 The installation of this web application is done using the [ScoutEngineeringDay/SED-Deployments](https://github.com/ScoutEngineeringDay/SED-Deployments) repository, please review the instillation instructions found there.
 
+
+## Recompiling Website Code
+After making changes to the code located in `/your_location_choice/SED-Deployments/content/SED-Web-Application` you will notice that the website will not automatically update.
+
+The following steps will update the local delpyment of the website:
+1. Open command line of your choosing.
+2. Enter the folder that holds the repository: `cd /your_location_choice/SED-Deployments`
+3. SSH into the Vagrant mechine: `vagrant ssh`
+4. Enter the code source: `/ansible`
+5. Run the update script: `./SED-web-update.sh`
+
+Wait for the site to recompile and then refresh [http://localhost:8080/](http://localhost:8000/).
+
+
+## URLs:
+
+* Local host urls:
+  - [http://localhost:8080/](http://localhost:8000/): Local Website Home Page
+  - [http://localhost:8080/admin/](http://localhost:8000/admin/): Local	Admin Page
+
+* Main Test Website url:
+  - [http://www.sedteam.com/](http://www.sedteam.com/): Website Home Page
+  - [http://www.sedteam.com/admin/](http://www.sedteam.com:/admin/): Website Admin Page
+
+
 ## Contributing
 Before contributing please make sure you meet the requirements stated in the CONTRIBUTING.md file
 
