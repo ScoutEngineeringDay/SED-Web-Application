@@ -65,7 +65,7 @@ class ContactEmailForm(forms.Form):
 	contact_first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'First Name', 'maxlength': '50'}))
 	contact_last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Last Name', 'maxlength': '50'}))
 	email_address = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Email', 'size': '40', 'maxlength': '50'}))
-	CHOICES = (("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support"),("MITRE Employee", "MITRE Employee Registeration Request"), ("Volunteer","Volunteer Registeration Request"))
+	CHOICES = (("General Customer Service","General Customer Service"),("Suggestion","Suggestion"),("Product Support","Product Support"),("MITRE Employee", "MITRE Employee Registeration Request"), ("Volunteer","Volunteer Registration"))
 	message_subject = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}), choices=CHOICES)
 	message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control','placeholder': 'Message', 'maxlength': '4000'}))
 	# captcha = ReCaptchaField()
