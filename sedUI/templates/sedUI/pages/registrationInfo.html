@@ -32,6 +32,28 @@
 	});
 </script>
 
+<script>
+	function medicalChecked() {
+		var checkBox = document.getElementById("id_2-medical_issues");
+		var textBox = document.getElementById("id_2-medical_notes");
+		if (checkBox.checked == true){
+			textBox.disabled = false;
+		} else {
+			textBox.value = '';
+			textBox.disabled = true;
+		}
+	}
+	function allergyChecked() {
+		var checkBox = document.getElementById("id_2-allergy_issues");
+		var textBox = document.getElementById("id_2-allergy_notes");
+		if (checkBox.checked == true){
+			textBox.disabled = false;
+		} else {
+			textBox.value = '';
+			textBox.disabled = true;
+		}
+	}
+</script>
 <form action="/registration_scout/" method="post" style="width: 500px; margin: 0 auto"> {% csrf_token %}
 	{{ wizard.management_form }}
 	{{ wizard.form.registration_type }}
