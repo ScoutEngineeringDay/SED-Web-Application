@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 from django.core.urlresolvers import reverse_lazy
 import os
 from database_settings import DATABASES
-from email_settings import EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS 
+from email_settings import EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS, EMAIL_DEFAULT_USER
 
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('index')
