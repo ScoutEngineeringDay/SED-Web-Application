@@ -4,3 +4,4 @@
 .DS_Store
 nohup.out
 SED/database_settings.py
+SED/email_settings.py
