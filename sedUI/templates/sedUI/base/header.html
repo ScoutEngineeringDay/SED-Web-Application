@@ -10,6 +10,7 @@
 	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="{% static '/img/images/sedLogo.jpg' %}">
 	<script type="text/javascript" src="{% static '/js/jquery-2.1.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static '/js/jquery.mask.js' %}"></script>
 	<script type="text/javascript" src="{% static '/js/bootstrap.js' %}"></script>
 
 </head>
@@ -21,7 +22,7 @@
 			<div class="navbar-header">
 				<a class="navbar-brand1" href="/">
 					<img class="banner-image1" src="{% static 'img/images/sedbanner.png' %}">
-				</a> 
+				</a>
 				<a class="navbar-brand2" href="https://www.mitre.org/">
 					<img class="banner-image2" src="{% static 'img/images/Mitre.png' %}">
 				</a>
@@ -72,7 +73,7 @@
 	</div>
 	{% block content %}
 	{% endblock %}
-	
+
 </body>
 
 </html>
