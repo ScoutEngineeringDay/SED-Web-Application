@@ -664,9 +664,7 @@ class RegistrationScoutWizard(SessionWizardView):
         else:
             payment_status_info="NOT PAID"
 
-
         if(workshop1_data[1]=="FULL"):
-
             WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
             session = Session(
                 scout_id=scout.scout_id,
@@ -844,11 +842,18 @@ def confirmation_send_email(form_list, scout_id, confirmation_id):
     form_data =[form.cleaned_data for form in form_list]
     print("sending")
     #formatting data to be transmit through the message
-    scout_info = ("\n\nScout Information:\n\tScout ID: "+str(scout_id)+"\n\tScout Name: "+str(form_data[2]["first_name"])+" "+str(form_data[2]["last_name"])+"\n\tScout type: "+str(form_data[2]["affiliation"])+"\n\tUnit Number:"+str(form_data[2]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[2]["phone"])+"\n\tEmail: "+str(form_data[2]["email"]))
-    emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name:"+str(form_data[2]["emergency_first_name"])+" "+str(form_data[2]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[2]["emergency_phone"]))
-    course_info=("\n\nCourses:\tClass 1:"+str(form_data[3]["morning_subject"])+"\tClass 2:"+str(form_data[3]["evening_subject"]))
-    payment_timestamp=("\n\nPayment Method: "+str(form_data[4]["payment_method"]))
-    message = "Hello,"+scout_info+emergency_info+"\n\n"+course_info+"\n\n"+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge, go to Get Badge and enter your confirmation number: "+confirmation_id+"\n\nThank you,\n\t Scout Engineering Day Development Team"
+    scout_info = ("\n\nScout Information:\n\tScout ID: "+str(scout_id)+"\n\tScout Name: "+str(form_data[2]["first_name"])+" "+str(form_data[2]["last_name"])+"\n\tScout type: "+str(form_data[2]["affiliation"])+"\n\tUnit Number: "+str(form_data[2]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[2]["phone"])+"\n\tEmail: "+str(form_data[2]["email"]))
+    emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name: "+str(form_data[2]["emergency_first_name"])+" "+str(form_data[2]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[2]["emergency_phone"]))
+    course_info=("\n\nCourses:\n\tClass 1: "+str(form_data[3]["morning_subject"])+"\n\tClass 2: "+str(form_data[3]["evening_subject"]))
+    if(str(form_data[4]["payment_method"])=="Pay_Online"):
+        payment_timestamp=("\n\nPayment Method: Paid Online")
+    elif(str(form_data[4]["payment_method"])=="Pay_Mail"):
+        payment_timestamp=("\n\nPayment Method: Paid by Mail")
+    elif(str(form_data[4]["payment_method"])=="Waived"):
+        payment_timestamp=("\n\nPayment Method: Waived")
+    
+    
+    message = "Hello "+str(form_data[1]["register_first_name"])+" "+str(form_data[1]["register_last_name"])+","+scout_info+emergency_info+"\n\n"+course_info+"\n\n"+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge, go to Get Badge and enter your confirmation number: "+confirmation_id+"\n\nThank you,\n\t Scout Engineering Day Development Team"
 
     #Modify for Quantico
     #message = "Hello,"+scout_info+emergency_info+"\n\nIf there is any information that is mistaken please contact us.\n\nThank you,\n\t Scout Engineering Day Development Team"
