@@ -1,0 +1,24 @@
+{% block content %}
+<div align="center">
+	<form action="/registration_volunteer/" method="post" onsubmit="enable()" style="margin: auto"> {% csrf_token %}
+  	{{ wizard.management_form }}
+		<label for="InputName" style="font-size: 32px">Select your preferred three tasks.</label>
+		<div class="input-group" align="center">
+			<label id="choice1" class="radio-inline" style="font-size: 16px">Choice 1:  </label>
+			{{wizard.form.volunteer_event1}}</br>
+			<label id="choice2" class="radio-inline" style="font-size: 16px">Choice 2: </label>
+			{{wizard.form.volunteer_event2}}</br>
+			<label id="choice3" class="radio-inline" style="font-size: 16px">Choice 3: </label>
+			{{wizard.form.volunteer_event3}}</br>
+			</br>
+		</div>
+
+		<br>
+		{% if wizard.steps.prev %}
+		<button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.first }}">first step</button>
+		<button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.prev }}">prev step</button>
+		{% endif %}
+		<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
+	</form>
+</div>
+{% endblock %}

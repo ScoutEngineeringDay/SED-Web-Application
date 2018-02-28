@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 from django.core.urlresolvers import reverse_lazy
 import os
 from database_settings import DATABASES
+from email_settings import EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS, EMAIL_DEFAULT_USER
 
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('index')
@@ -31,7 +32,7 @@ SECRET_KEY = 'django.utils.crypt.get_random_string()'
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
-
+SITE_ID=1
 # AWS_ACCESS_KEY_ID = 'YOUR-ACCESS-KEY-ID'
 # AWS_SECRET_ACCESS_KEY = 'YOUR-SECRET-ACCESS-KEY'
 
@@ -40,11 +41,6 @@ ALLOWED_HOSTS = ['localhost']
 If using gmail, you will need to unlock captcha
 google unlock captcha
 '''
-EMAIL_HOST ='smtp.gmail.com'
-EMAIL_HOST_USER = 'scoutengineeringdaytest@gmail.com'
-EMAIL_HOST_PASSWORD = 'SEDPass123'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 
 # recaptcha
 RECAPTCHA_PUBLIC_KEY = '6LcYEhEUAAAAANKg008Cva7BUU-rZpTA55l_FVt6'
@@ -63,6 +59,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    # 'django_tables2',
     'sedUI'
 #    'captcha'
 ]

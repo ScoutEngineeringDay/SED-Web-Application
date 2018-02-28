@@ -1,0 +1,52 @@
+{% load staticfiles %}
+{% block content %}
+<script language="javascript" type="text/javascript">
+function openWindow(i){
+    switch(i){
+        case 0:
+            window.open("localhost:9000");
+            break;
+        case 1:
+            window.open("localhost:9001");
+            break;
+        case 2:
+            window.open("localhost:9002");
+            break;
+        case 3:
+            window.open("localhost:9003");
+            break;
+    }
+}
+</script>
+
+<footer style="background-color: #777">
+    <div class="container-fluid">
+    <!-- Need modification in CSS 
+            <a class="footer-logo" href="/">
+            <img class="banner-image1" src="{% static 'img/images/sedbanner.png' %}">
+        </a> 
+    -->
+        <div class="row">
+            <div class="col-sm-6">
+                <h5>Presentation</h5>
+                <ul>
+                    <li><a href="#" onclick="openWindow(0)">SED Kickoff</a></li>
+                    <li><a href="#" onclick="openWindow(1)">SED Training</a></li>
+                    <li><a href="#" onclick="openWindow(2)">SED Technologies</a></li>
+                    <li><a href="#" onclick="openWindow(3)">SED Overview</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <h5>Github: Scout Engineering Day</h5>
+                <ul>
+                    <li><a href="https://github.com/ScoutEngineeringDay/SED-Deployments">SED Deployments</a></li>
+                    <li><a href="https://github.com/ScoutEngineeringDay/SED-Web-Application">SED Web Application</a></li>
+                    <li><a href="https://github.com/ScoutEngineeringDay/SED-Documentations">SED Documentations</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <p class="copyright" style="text-align: center; color: white">© 2016-2018 SED</p>
+    </div>
+</footer>
+{% endblock %}

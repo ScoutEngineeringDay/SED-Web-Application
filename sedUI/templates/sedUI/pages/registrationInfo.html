@@ -1,10 +1,10 @@
 {% block content %}
 <script>
 	jQuery(document).ready(function(){
-		$("#id_1-email_confirm").focusout(function () {
-			var email_confirm = document.getElementById("id_1-email_confirm");
+		$("#id_2-email_confirm").focusout(function () {
+			var email_confirm = document.getElementById("id_2-email_confirm");
     	var message = document.getElementById('confirmMessage');
-			var email = document.getElementById("id_1-email");
+			var email = document.getElementById("id_2-email");
 			var goodColor = "#66cc66";
     	var badColor = "#ff6666";
 			var orgColor = "#ffffff";
@@ -29,11 +29,74 @@
 				message.innerHTML = "";
 			}
 		});
+
+		$("#id_2-emergency_email_confirm").focusout(function () {
+			var email_confirm = document.getElementById("id_2-emergency_email_confirm");
+    	var message = document.getElementById('confirmMessage');
+			var email = document.getElementById("id_2-emergency_email");
+			var goodColor = "#66cc66";
+    	var badColor = "#ff6666";
+			var orgColor = "#ffffff";
+
+			if (email.value != email_confirm.value) {
+				email_confirm.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Oops, Emails Do Not Match!";
+				email_confirm.setCustomValidity('Emails Must be Matching.');
+			}
+			else {
+					email_confirm.style.backgroundColor = goodColor;
+	        message.style.color = goodColor;
+	        message.innerHTML = "Emails Match!";
+					email_confirm.setCustomValidity('');
+					console.log("Wait 2 Seconds");
+					setTimeout(function(){ setViewNormal(); }, 2000);
+					console.log("2 Seconds Up");
+			}
+			function setViewNormal() {
+				email_confirm.style.backgroundColor = orgColor;
+				message.innerHTML = "";
+			}
+		});
+
+		$(function(){
+		  $("#id_2-phone").mask("(999)999-9999");
+		});
+
+		$(function(){
+		  $("#id_2-emergency_phone").mask("(999)999-9999");
+		});
 	});
 </script>
-<form action="/registration/" method="post" style="width: 500px; margin: 0 auto"> {% csrf_token %}
+
+<script>
+	function medicalChecked() {
+		var checkBox = document.getElementById("id_2-medical_issues");
+		var textBox = document.getElementById("id_2-medical_notes");
+		if (checkBox.checked == true){
+			textBox.disabled = false;
+		} else {
+			textBox.value = '';
+			textBox.disabled = true;
+		}
+	}
+	function allergyChecked() {
+		var checkBox = document.getElementById("id_2-allergy_issues");
+		var textBox = document.getElementById("id_2-allergy_notes");
+		if (checkBox.checked == true){
+			textBox.disabled = false;
+		} else {
+			textBox.value = '';
+			textBox.disabled = true;
+		}
+	}
+</script>
+<form action="/registration_scout/" method="post" style="width: 500px; margin: 0 auto"> {% csrf_token %}
 	{{ wizard.management_form }}
+	{{ wizard.form.registration_type }}
 	<div>
+		<h3 align="center">This section is for the information of the person attending the event</h3>
+		<p><font color="grey"><i>* indicates required fields</i></font></p>
 		<div class="form-group">
 			<label for="InputFirstName">Scout Information</label>
 			<div class="input-group">
@@ -67,7 +130,6 @@
 			<div class="col-lg-16">
 				{{wizard.form.phone}}
 			</div>
-			<font color="grey"><i>*Please insert Phone Number in the following format: 9999999999</i></font>
 		</div>
 
 		<div class="form-group">
@@ -103,7 +165,6 @@
 				{{wizard.form.emergency_phone}}
 				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 			</div>
-			<font color="grey"><i>*Please insert Phone Number in the following format: 9999999999</i></font>
 		</div>
 
 		<div class="form-group">
@@ -112,6 +173,13 @@
 				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 			</div>
 		</div>
+		<div class="form-group">
+			<div class="input-group">
+				{{wizard.form.emergency_email_confirm}}
+				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+			</div>
+		</div>
+
 		<div class="form-group">
 			<label for="Medical">Medical Information</label>
 			<div class="input-group">
@@ -146,11 +214,18 @@
 			</div>
 		</div>
 	</div>
+
 	<br>
+
 	<div align="center">
+		<!-- {% if wizard.steps.prev %}
+			<button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.first }}">Start Over</button>
+			<button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.prev }}">Previous</button>
+		{% endif %} -->
 	<!-- 	{{wizard.form.captcha}} -->
 		<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
 	</div>
 
 </form>
+
 {% endblock %}

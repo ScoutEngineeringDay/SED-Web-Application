@@ -9,7 +9,7 @@ DATABASES = {
         'USER': 'sed_admin',
         'PASSWORD':'sed_password',
         'MYSQL_PASSWORD':'sed_password2',
-        'HOST': '172.17.0.4', #need to change to match container
+        'HOST': '172.17.0.2', #need to change to match container
         'PORT': '3306',
     }
 }

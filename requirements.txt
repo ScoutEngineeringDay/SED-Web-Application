@@ -1,9 +1,9 @@
-boto==2.45.0
 Django==1.10.3
 django-bootstrap3==7.1.0
 django-formtools==1.0
 django-javascript-settings==1.1.2
 django-multipleformwizard==0.2.16
+django-tables2==1.18.0
 django-recaptcha==1.2.1
 django-ses==0.8.1
 gunicorn==19.6.0

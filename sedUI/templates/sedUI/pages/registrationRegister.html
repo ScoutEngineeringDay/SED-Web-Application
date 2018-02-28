@@ -1,0 +1,110 @@
+{% block content %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static '/js/bootstrap-formhelpers-phone.js' %}"></script>
+<script>
+	jQuery(document).ready(function(){
+		$("#id_1-register_email_confirm").focusout(function () {
+			var email_confirm = document.getElementById("id_1-register_email_confirm");
+    	var message = document.getElementById('confirmMessage');
+			var email = document.getElementById("id_1-register_email");
+			var goodColor = "#66cc66";
+    	var badColor = "#ff6666";
+			var orgColor = "#ffffff";
+
+			if (email.value != email_confirm.value) {
+				email_confirm.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Oops, Emails Do Not Match!";
+				email_confirm.setCustomValidity('Emails Must be Matching.');
+			}
+			else {
+					email_confirm.style.backgroundColor = goodColor;
+	        message.style.color = goodColor;
+	        message.innerHTML = "Emails Match!";
+					email_confirm.setCustomValidity('');
+					console.log("Wait 2 Seconds");
+					setTimeout(function(){ setViewNormal(); }, 2000);
+					console.log("2 Seconds Up");
+			}
+			function setViewNormal() {
+				email_confirm.style.backgroundColor = orgColor;
+				message.innerHTML = "";
+			}
+		});
+	});
+
+	$(function(){
+	  $("#id_1-register_phone").mask("(999)999-9999");
+	});
+</script>
+<form action="/registration_scout/" method="post" style="width: 500px; margin: 0 auto"> {% csrf_token %}
+	{{ wizard.management_form }}
+	<div>
+		<h3 align="center">This section is for the information of the person filling out the registration</h3>
+		<p><font color="grey"><i>* indicates required fields</i></font></p>
+    <label for="InputFirstName">Register Information</label>
+		<div class="form-group">
+			<div class="input-group">
+				{{wizard.form.register_first_name}}
+				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				{{wizard.form.register_last_name}}
+				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="InputEmail">Enter Email</label>
+			<div class="input-group">
+				{{wizard.form.register_email}}
+				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				{{wizard.form.register_email_confirm}}
+				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+			</div>
+			<span id="confirmMessage" class="confirmMessage"></span>
+		</div>
+		<div class="form-group">
+			<label for="InputEmail">Enter Phone Number</label>
+			<div class="input-group">
+				{{wizard.form.register_phone}}
+				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+			</div>
+		</div>
+		<!-- <div class="form-group">
+			<div class="input-group">
+				{{wizard.form.mitre_employee}} I am a MITRE Employee
+			</div>
+		</div>
+		{% if request.path == "/registration_scout/"%}
+		<div class="form-group">
+			<div class="input-group">
+				{{wizard.form.volunteer_checkbox}} I would like to volunteer to help with the event
+			</div>
+			<font color="red"><i>*Due to the location volunteers must be US Citizens</i></font>
+		</div>
+		{% elif request.path == "/registration_volunteer/" %}
+		<div class="form-group">
+			<div class="input-group">
+				{{wizard.form.register_is_volunteer}} Are you the register is the one volunteering?
+			</div>
+		</div>
+		{% endif %} -->
+	</div>
+	<br>
+	<div align="center">
+		{% if wizard.steps.prev %}
+			<!-- <button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.first }}">first step</button>
+			<button name="wizard_goto_step" class="btn btn-primary" type="submit" value="{{ wizard.steps.prev }}">prev step</button> -->
+		{% endif %}
+	<!-- 	{{wizard.form.captcha}} -->
+		<input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
+	</div>
+
+</form>
+{% endblock %}

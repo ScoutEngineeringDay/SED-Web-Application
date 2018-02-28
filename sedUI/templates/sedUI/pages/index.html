@@ -1,45 +1,79 @@
-{% extends "sedUI/base/header.html" %}
-{% block content %}
-	{% if HomePage %}
-		{% if aboutPage %}
-		<div class="container">
-			<div class="jumbotron">
-				<h1 style="text-align: center;">Scout Engineering Day</h1>
-				<p>{{HomePage.homepage_description}} </p>
-				<p><i>Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}. Sign up for classes to get your badges!</i></p>
-				<br>
-				<p>
-				{% if isOpen == "Opened" or request.user.is_superuser %}
-					<a class="btn btn-primary btn-lg" href="/registration/" role="button">Register Now!</a>
-				{% elif isOpen == "ForcedClosed" %}
-		   			<h4 align="center">Registration is down for maintance</h4>
-				{% else %}
-					<h4 style="color:red">Registration is Closed at the moment</h4>
-				{% endif %}
-				</p>
-			</div>
-			{% include "sedUI/includes/img_carousel.html" %}
+{% extends "sedUI/base/header.html" %} {% block content %} {% if HomePage %} {% if aboutPage %}
+{% load static %}
+<div class="container">
+	<div class="jumbotron">
+		<h1 style="text-align: center;">Scout Engineering Day</h1>
+		<h3 style="text-align: center;">{{aboutPage.saveDate}}</h3>
+		<p>{{HomePage.homepage_description}} </p>
+		<p>
+			<i>Registration opens on {{aboutPage.registrationOpenDate}} at {{aboutPage.registrationOpenTime}}. Sign up for classes to
+				get your badges!</i>
+		</p>
+		<br>
 
-			<div class="jumbotron">
+		<div style="text-align: center">
+			<p>
+				{% if isOpen == "Opened" or user.is_authenticated %}
+				<a class="btn btn-primary btn-lg" href="/registration_scout/" role="button">Register Scouts Now!</a>
+				{% elif isOpen == "ForcedClosed" %}
+				<h4 align="center">Registration is down for maintance</h4>
+				{% else %} {% include "sedUI/includes/registrationClosed.html" %} {% endif %}
+				<a id="volunteerButton" class="btn btn-primary btn-lg" role="button">Volunteer Now!</a>
+			</p>
+		</div>
+
+		<!-- Mail Info Modal -->
+	  <div class="modal fade" id="volunteerModal" role="dialog">
+	    <div class="modal-dialog">
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header btn-primary">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">Volunteer Process</h4>
+	        </div>
+	        <div class="modal-body" align="center">
+	          <p>Please use our contact page and select "Volunteer Registration" as your subject line any other information in the message box. We will respond to you with more information. </p>
+						<p>Thank you for your interest!</p>
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-primary" onclick="javascript:window.location='/contact/'" data-dismiss="modal">OK</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+
+		<div style="text-align: center">
+			<a target="_blank" href="{% static 'docs/SED2018_Activites.pdf' %}">Course Descriptions and Prerequisites</a>
+		</div>
+	</div>
+	{% include "sedUI/includes/img_carousel.html" %}
+
+	<!-- <div class="jumbotron">
 				<h1>News and Events</h1>
 				<p>{{HomePage.homepage_news_event}}</p>
-					<p>
-						<a class="btn btn-primary btn-lg" href="/about/" role="button">Learn more</a>
-					</p>
-				</div>
-			</div>
-		{% else %}
-			<p> Error with AboutPage Data </p>
-		{% endif %}
-	{% else %}
-		<p> Error with HomePage Data </p>
-	{% endif %}
-<script type="text/javascript">
+				<p>
+					<a class="btn btn-primary btn-lg" href="/about/" role="button">Learn more</a>
+				</p>
+			</div> -->
+</div>
+{% else %}
+<p> Error with AboutPage Data </p>
+{% endif %} {% else %}
+<p> Error with HomePage Data </p>
+{% endif %}
+<!-- <script type="text/javascript">
 	$(function(){
 	{% if alert %}
 		//whatever conditions and js code
 		alert('{{alert}}');
 	{% endif %}
 	});
+</script> -->
+<script>
+$(document).ready(function() {
+	$("#volunteerButton").click(function () {
+		$("#volunteerModal").modal('show');
+	});
+});
 </script>
 {% endblock %}

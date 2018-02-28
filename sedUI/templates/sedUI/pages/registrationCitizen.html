@@ -1,9 +1,10 @@
 
 {% block content %}
-<form action="/registration/" onsubmit="get_action(this)" method="post" style="margin: auto"> {% csrf_token %}
+{% if request.path == "/registration_scout/" %}
+<form action="/registration_scout/" onsubmit="get_action(this)" method="post" style="margin: auto"> {% csrf_token %}
   {{ wizard.management_form }}
   <div align="center">
-    <label for="InputName" style="font-size: 32px">Is a U.S. Citizen?</label>
+    <label for="InputName" style="font-size: 32px">Is the Scout participating a U.S. Citizen?</label>
     <br>
     <div class="input-group">
       <label  class="radio-inline" style="font-size: 16px">
@@ -17,4 +18,24 @@
     <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
   </div>
 </form>
+{% elif request.path == "/registration_volunteer/" %}
+<form action="/registration_volunteer/" onsubmit="get_action(this)" method="post" style="margin: auto"> {% csrf_token %}
+  {{ wizard.management_form }}
+  <div align="center">
+    <label for="InputName" style="font-size: 32px">Are all participants a U.S. Citizen?</label>
+    <br>
+    <div class="input-group">
+      <label  class="radio-inline" style="font-size: 16px">
+        <input id="Yes" type="radio" name="optradio">{{wizard.form.citizenship.0}}
+      </label>
+      <label  class="radio-inline" style="font-size: 16px">
+        <input id="No" type="radio" name="optradio">{{wizard.form.citizenship.1}}
+      </label>
+    </div>
+    <br>
+    <input type="submit" name="submit" id="submit" value="Next" class="btn btn-primary">
+  </div>
+</form>
+{% endif %}
+
 {% endblock %}

@@ -48,9 +48,14 @@
           <h4 class="modal-title">Mailing Information</h4>
         </div>
         <div class="modal-body" align="center">
-          <p>By selecting this option you will have to mail a check to:</p>
+          <p>Please make Check payment to:</p>
+          <p><b>SEDay</b></p>
+          <p>For:</p>
+          <p><b>$40</b></p>
+          <p>and mail the check to:</p>
+
           <p><b>{{payment.mailPayment_person}}</b></p>
-          <p>at</p>
+          <p>and mail the check to</p>
           <p><b>{{payment.mailPayment_building}} {{payment.mailPayment_street}}, {{payment.mailPayment_city}}, {{payment.mailPayment_state}}, {{payment.mailPayment_zip}}</b></p>
           <p>by</p>
           <p><b>{{payment.mailPayment_due_date}}</b>.</p>
@@ -82,11 +87,11 @@
   <script src="https://checkout.stripe.com/v2/checkout.js"></script>
   <script>
   $(document).ready(function() {
-    $("#id_3-payment_method_0").change(function () {
+    $("#id_4-payment_method_0").change(function () {
       $("#mailInModal").modal('show');
 		});
     $(':submit').on('click', function(event) {
-        if (document.getElementById("id_3-payment_method_1").checked) {
+        if (document.getElementById("id_4-payment_method_1").checked) {
           event.preventDefault();
           var $button = $(this),
           $form = $button.parents('form');
@@ -97,7 +102,7 @@
             });
             StripeCheckout.open(opts);
         }
-        if (document.getElementById("id_3-payment_method_1").checked || document.getElementById("id_3-payment_method_0").checked || document.getElementById("id_3-payment_method_2").checked) {
+        if (document.getElementById("id_4-payment_method_1").checked || document.getElementById("id_4-payment_method_0").checked || document.getElementById("id_4-payment_method_2").checked) {
           $("#loadingModal").modal('show');
         }
     });

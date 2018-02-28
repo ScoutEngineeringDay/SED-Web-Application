@@ -1,188 +1,188 @@
-{% extends "sedUI/base/header.html" %}
+{% extends "sedUI/base/header.html" %} 
 {% block content %}
-	<div class="container">
-			<div class="row">
-				<div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+<div class="container">
+	<div class="row">
+		<div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<!-- Whole Name -->
+					<h2 id="userName">{{scout.scout_first_name}} {{scout.scout_last_name}}</h3>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<!-- Whole Name -->
-							<h2  id="userName">{{scout.scout_first_name}} {{scout.scout_last_name}}</h3>
-						</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class=" col-md-9 col-lg-9 ">
-									<table class="table table-user-information">
-										<tbody>
-											<tr>
-												<td>Scout ID:</td>
-												<!-- User Type -->
-												<td id="scout_id">{{scout.scout_id}}</td>
-											</tr>
-											<tr>
-												<td>Scout Type:</td>
-												<!-- User Type -->
-												<td id="scout_type">
-												{% if scout.scout_type == "BOY" %}
-												Boy
-												{% elif scout.scout_type == "GIRL" %}
-												Girl
-												{% else %}
-												Other
-												{% endif %}
-												</td>
-											</tr>
-											<tr>
-												<td>Unit Number:</td>
-												<!-- User Type -->
-												<td id="unit_number">{{scout.unit_number}}</td>
-											</tr>
-											<tr>
-												<td>Payment:</td>
-												<!-- User Type -->
-												<td id="payment_method">
-												{% if session.payment_method == "Pay_Mail" %}
-												Paid by Mail
-												{% elif session.payment_method == "Pay_Online" %}
+				<div class="panel-body">
+					<div class="row">
+						<div class=" col-md-9 col-lg-9 ">
+							<table class="table table-user-information">
+								<tbody>
+									<tr>
+										<td>Scout ID:</td>
+										<!-- User Type -->
+										<td id="scout_id">{{scout.scout_id}}</td>
+									</tr>
+									<tr>
+										<td>Scout Type:</td>
+										<!-- User Type -->
+										<td id="scout_type">
+											{% if scout.scout_type == "BOY" %} 
+												Boy 
+											{% elif scout.scout_type == "GIRL" %} 
+												Girl 
+											{% else %} 
+												Other 
+											{% endif %}
+										</td>
+									</tr>
+									<tr>
+										<td>Unit Number:</td>
+										<!-- User Type -->
+										<td id="unit_number">{{scout.unit_number}}</td>
+									</tr>
+									<tr>
+										<td>Payment:</td>
+										<!-- User Type -->
+										<td id="payment_method">
+											{% if session.payment_method == "Pay_Mail" %} 
+												Paid by Mail 
+											{% elif session.payment_method == "Pay_Online" %} 
 												Paid Online
-												{% elif session.payment_method == "Waived" %}
-												Waived
-												{% endif %}
-												</td>
-											</tr>
-											<tr>
-												<td>Scout Status:</td>
-												<td id="scout_status">
-												{% if scout.scout_status == "UNDERWAY" %}
-												Underway
-												{% elif scout.scout_status == "EVENT_CHECKIN" %}
-												Check into Event
-												{% elif scout.scout_status == "WORKSHOP1_CHECKIN" %}
-												AM Workshop Checked In
-												{% elif scout.scout_status == "WORKSHOP1_CHECKOUT" %}
-												AM Workshop Checked Out
-												{% elif scout.scout_status == "WORKSHOP2_CHECKIN" %}
-												PM Workshop Checked In
-												{% elif scout.scout_status == "WORKSHOP2_CHECKOUT" %}
-												PM Workshop Checked Out
-												{% elif scout.scout_status == "EVENT_CHECKOUT" %}
-												Checkout from Event
-												{% else %}
-												Error
-												{% endif %}
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									<table class="table table-user-information">
-										<thead>
-											<h3> Workshops </h3>
-										</thead>
-										<tbody>
-											{% if workshop1.course_duration == "FULL" %}
-											<tr>
-												<td>Full Day</td>
-												<td id="workshop1">
-													{{workshop1.course_name}}
-												</td>
-												<td>
+											{% elif session.payment_method == "Waived" %} 
+												Waived 
+											{% endif %}
+										</td>
+									</tr>
+									<tr>
+										<td>Scout Status:</td>
+										<td id="scout_status">
+											{% if scout.scout_status == "UNDERWAY" %}
+												Underway 
+											{% elif scout.scout_status == "EVENT_CHECKIN" %}
+												Check into Event 
+											{% elif	scout.scout_status == "WORKSHOP1_CHECKIN" %} 
+												AM Workshop Checked In 
+											{% elif scout.scout_status == "WORKSHOP1_CHECKOUT" %} 
+												AM Workshop Checked Out 
+											{% elif scout.scout_status == "WORKSHOP2_CHECKIN" %} 
+												PM Workshop Checked In 
+											{% elif scout.scout_status == "WORKSHOP2_CHECKOUT" %} 
+												PM Workshop Checked Out 
+											{% elif scout.scout_status == "EVENT_CHECKOUT" %}
+												Checkout from Event 
+											{% else %} 
+												Error 
+											{% endif %}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="table table-user-information">
+								<thead>
+									<h3> Workshops </h3>
+								</thead>
+								<tbody>
+									{% if workshop1.course_duration == "FULL" %}
+										<tr>
+											<td>Full Day</td>
+											<td id="workshop1">
+												{{workshop1.course_name}}
+											</td>
+											<td>
 												{% if session.workshop1_status == "COMPLETE" and session.workshop2_status == "COMPLETE" %}
-												Completed
+													Completed 
 												{% elif session.workshop1_status == "IN PROGRESS" and session.workshop2_status == "IN PROGRESS" %}
-												In Progress
+													In Progress 
 												{% else %}
-												Incompleted
+													Incompleted
 												{% endif %}
-												</td>
-											</tr>
-											{% elif workshop1.course_duration == "HALF" %}
-											<tr>
-												<td>AM</td>
-												<td id="workshop1">
-													{{workshop1.course_name}}
-												</td>
-												<td>
+											</td>
+										</tr>
+									{% elif workshop1.course_duration == "HALF" %}
+										<tr>
+											<td>AM</td>
+											<td id="workshop1">
+												{{workshop1.course_name}}
+											</td>
+											<td>
 												{% if session.workshop1_status == "COMPLETE" %}
-												Completed
+													Completed
 												{% elif session.workshop1_status == "IN PROGRESS" %}
-												In Progress
+													In Progress
 												{% else %}
-												Incompleted
+													Incompleted 
 												{% endif %}
-												</td>
-											</tr>
-											{% endif %}
-											{% if session.workshop2_id != none and session.workshop2_id != 0 %}
-											<tr>
-												<td>PM</td>
-												<!-- User Phone Number -->
-												<td id="workshop2">
-													{{workshop2.course_name}}
-												</td>
-												<td>
-												{% if session.workshop2_status == "COMPLETE" %}
-												Completed
-												{% elif session.workshop2_status == "IN PROGRESS" %}
-												In Progress
-												{% else %}
-												Incompleted
-												{% endif %}
-												</td>
-											</tr>
-											{% endif %}
-										</tbody>
-									</table>
-									<table class="table table-user-information">
-										<thead>
-											<h3> Contact Information </h3>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Email</td>
-												<!-- User Email Format: <a href="mailto:edward.gedeon07@gmail.com">edward.gedeon07@gmail.com</a> -->
-												<td id="scout_email">
-													<a href="mailto:{{scout.scout_email}}?Subject=Scout%20Engineering%20Day" target="_top">{{scout.scout_email}}</a>
-												</td>
-											</tr>
-											<tr>
-												<td>Phone</td>
-												<!-- User Phone Number -->
-												<td id="scout_phone">
-													<a href="tel:{{scout.scout_phone}}">{{scout.scout_phone}}</a>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								<table class="table table-user-information">
-									<thead>
-										<h3> Emergency Contact </h3>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Name</td>
-											<!-- User Phone Number -->
-											<td id="emergency_name">{{scout.emergency_first_name}} {{scout.emergency_last_name}}</td>
+											</td>
 										</tr>
+									{% endif %} 
+									{% if session.workshop2_id != none and session.workshop2_id != 0 %}
+										<tr>
+											<td>PM</td>
+											<!-- User Phone Number -->
+											<td id="workshop2">
+												{{workshop2.course_name}}
+											</td>
+											<td>
+												{% if session.workshop2_status == "COMPLETE" %} 
+													Completed 
+												{% elif session.workshop2_status == "IN PROGRESS" %} 
+													In Progress
+												{% else %} 
+													Incompleted 
+												{% endif %}
+											</td>
+										</tr>
+									{% endif %}
+								</tbody>
+							</table>
+							<table class="table table-user-information">
+								<thead>
+									<h3> Contact Information </h3>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Email</td>
+										<!-- User Email Format: <a href="mailto:edward.gedeon07@gmail.com">edward.gedeon07@gmail.com</a> -->
+										<td id="scout_email">
+											<a href="mailto:{{scout.scout_email}}?Subject=Scout%20Engineering%20Day" target="_top">{{scout.scout_email}}</a>
+										</td>
+									</tr>
+									<tr>
+										<td>Phone</td>
+										<!-- User Phone Number -->
+										<td id="scout_phone">
+											<a href="tel:{{scout.scout_phone}}">{{scout.scout_phone}}</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="table table-user-information">
+								<thead>
+									<h3> Emergency Contact </h3>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Name</td>
+										<!-- User Phone Number -->
+										<td id="emergency_name">{{scout.emergency_first_name}} {{scout.emergency_last_name}}</td>
+									</tr>
 
-										<tr>
-											<td>Email</td>
-											<!-- User Email Address -->
-											<td id="emergency_email">
-												<a href="mailto:{{scout.emergency_email}}?Subject=Scout%20Engineering%20Day" target="_top">{{scout.emergency_email}}</a>
-											</td>
-										</tr>
-										<tr>
-											<td>Phone</td>
-											<!-- User Phone Number -->
-											<td id="emergency_phone">
-												<a href="tel:{scout.emergency_phone}}">{{scout.emergency_phone}}</a>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								{% if request.user.is_superuser %}
-									{% if scout.scout_medical %}
+									<tr>
+										<td>Email</td>
+										<!-- User Email Address -->
+										<td id="emergency_email">
+											<a href="mailto:{{scout.emergency_email}}?Subject=Scout%20Engineering%20Day" target="_top">{{scout.emergency_email}}</a>
+										</td>
+									</tr>
+									<tr>
+										<td>Phone</td>
+										<!-- User Phone Number -->
+										<td id="emergency_phone">
+											<a href="tel:{scout.emergency_phone}}">{{scout.emergency_phone}}</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							{% if request.user.is_superuser %} 
+								{% if scout.scout_medical %}
 									<table class="table table-user-information">
 										<thead>
 											<h3> Medical Conditions</h3>
@@ -193,8 +193,8 @@
 											</tr>
 										</tbody>
 									</table>
-									{% endif %}
-									{% if scout.scout_allergy %}
+								{% endif %} 
+								{% if scout.scout_allergy %}
 									<table class="table table-user-information">
 										<thead>
 											<h3> Allergies </h3>
@@ -205,54 +205,80 @@
 											</tr>
 										</tbody>
 									</table>
-									{% endif %}
-								{% endif %}
-							</div>
+								{% endif %} 
+							{% endif %}
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 	</div>
 
 	{% if session.payment_status == "PAID" %}
 		<div class="container" align="center">
-			<a id="scout_event_checkin" href="{% url 'scout_event_checkin/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" class="btn btn-lg btn-primary btn-action">Check Into Event</i></a>
-			<a id="scout_event_checkout" href="{% url 'scout_event_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Check Out Of Event</i></a>
+			<button id="scout_event_checkin" onclick="checkinScout();" data-original-title="Check out this user" data-toggle="tooltip"
+			class="btn btn-lg btn-primary btn-action">Check Into Event</i>
+				</a>
+				<button id="scout_event_checkout" onclick="checkoutScout();" data-original-title="Check out this user" data-toggle="tooltip"
+				type="button" class="btn btn-lg btn-success btn-action">Check Out Of Event</i>
+					</a>
 		</div>
 		<br>
 		<div class="container" align="center">
-			<a id="scout_workshop_checkin" href="{% url 'scout_workshop_checkin/' scout.scout_id %}" data-original-title="Check in this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-primary btn-action">Check Into Class</i></a>
-			<a id="scout_workshop_checkout" href="{% url 'scout_workshop_checkout/' scout.scout_id %}" data-original-title="Check out this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-warning btn-action">Class Incomplete</i></a>
-			<a id="scout_workshop_completed" href="{% url 'scout_workshop_completed/' scout.scout_id %}" data-original-title="Approve this user" data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i></a>
-		</div>`
+			<button id="scout_workshop_checkin" onclick="workshopCheckinScout();" data-original-title="Check in this user" data-toggle="tooltip"
+			type="button" class="btn btn-lg btn-primary btn-action">Check Into Class</i>
+				</a>
+				<button id="scout_workshop_checkout" onclick="workshopCheckoutScout();" data-original-title="Check out this user" data-toggle="tooltip"
+				type="button" class="btn btn-lg btn-warning btn-action">Class Incomplete</i>
+					</a>
+					<button id="scout_workshop_completed" onclick="workshopCompleteScout();" data-original-title="Approve this user as completing the course"
+					data-toggle="tooltip" type="button" class="btn btn-lg btn-success btn-action">Class Completed</i>
+						</a>
+		</div>
 	{% else %}
 		<h3 align="center" style="color:red;"> THIS SCOUT HAS NOT PAID FOR THE EVENT </h3>
 	{% endif %}
 
+
 	<script>
-		jQuery(document).ready(function(){
-			if(document.getElementById("scout_status").innerText == "Underway" | document.getElementById("scout_status").innerText == "Checkout from Event") {
-				$('#scout_event_checkout').addClass('disabled');
-				$('#scout_workshop_checkin').addClass('disabled');
-				$('#scout_workshop_completed').addClass('disabled');
-				$('#scout_workshop_checkout').addClass('disabled');
+		function checkinScout() {
+			window.location.replace("{% url 'scout_event_checkin/' scout.scout_id %}");
+		}
+		function checkoutScout() {
+			window.location.replace("{% url 'scout_event_checkout/' scout.scout_id %}");
+		}
+		function workshopCheckinScout() {
+			window.location.replace("{% url 'scout_workshop_checkin/' scout.scout_id %}");
+		}
+		function workshopCheckoutScout() {
+			window.location.replace("{% url 'scout_workshop_checkout/' scout.scout_id %}");
+		}
+		function workshopCompleteScout() {
+			window.location.replace("{% url 'scout_workshop_completed/' scout.scout_id %}");
+		}
+		jQuery(document).ready(function () {
+			if (document.getElementById("scout_status").innerText == "Underway" | document.getElementById("scout_status").innerText == "Checkout from Event") {
+				$('#scout_event_checkout').prop("disabled", true);
+				$('#scout_workshop_checkin').prop("disabled", true);
+				$('#scout_workshop_completed').prop("disabled", true);
+				$('#scout_workshop_checkout').prop("disabled", true);
 			}
-			else if(document.getElementById("scout_status").innerText == "Check into Event" | document.getElementById("scout_status").innerText == "AM Workshop Checked Out") {
-				$('#scout_event_checkin').addClass('disabled');
-				$('#scout_workshop_completed').addClass('disabled');
-				$('#scout_workshop_checkout').addClass('disabled');
+			else if (document.getElementById("scout_status").innerText == "Check into Event" | document.getElementById("scout_status").innerText == "AM Workshop Checked Out") {
+				$('#scout_event_checkin').prop("disabled", true);
+				$('#scout_workshop_completed').prop("disabled", true);
+				$('#scout_workshop_checkout').prop("disabled", true);
 			}
-			else if(document.getElementById("scout_status").innerText == "AM Workshop Checked In" | document.getElementById("scout_status").innerText == "PM Workshop Checked In") {
-				$('#scout_event_checkout').addClass('disabled');
-				$('#scout_event_checkin').addClass('disabled');
-				$('#scout_workshop_checkin').addClass('disabled');
+			else if (document.getElementById("scout_status").innerText == "AM Workshop Checked In" | document.getElementById("scout_status").innerText == "PM Workshop Checked In") {
+				$('#scout_event_checkout').prop("disabled", true);
+				$('#scout_event_checkin').prop("disabled", true);
+				$('#scout_workshop_checkin').prop("disabled", true);
 			}
-			else if(document.getElementById("scout_status").innerText == "PM Workshop Checked Out") {
-				$('#scout_workshop_checkin').addClass('disabled');
-				$('#scout_workshop_completed').addClass('disabled');
-				$('#scout_workshop_checkout').addClass('disabled');
-				$('#scout_event_checkin').addClass('disabled');
+			else if (document.getElementById("scout_status").innerText == "PM Workshop Checked Out") {
+				$('#scout_workshop_checkin').prop("disabled", true);
+				$('#scout_workshop_completed').prop("disabled", true);
+				$('#scout_workshop_checkout').prop("disabled", true);
+				$('#scout_event_checkin').prop("disabled", true);
 			}
 		});
-	</script>
-{% endblock %}/
+	</script> 
+	{% endblock %}
