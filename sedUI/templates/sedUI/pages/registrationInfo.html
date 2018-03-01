@@ -1,6 +1,9 @@
 {% block content %}
 <script>
 	jQuery(document).ready(function(){
+		document.getElementById("id_2-medical_notes").disabled = true;
+		document.getElementById("id_2-allergy_notes").disabled = true;
+
 		$("#id_2-email_confirm").focusout(function () {
 			var email_confirm = document.getElementById("id_2-email_confirm");
     	var message = document.getElementById('confirmMessage');
@@ -76,7 +79,6 @@
 		if (checkBox.checked == true){
 			textBox.disabled = false;
 		} else {
-			textBox.value = '';
 			textBox.disabled = true;
 		}
 	}
@@ -86,7 +88,6 @@
 		if (checkBox.checked == true){
 			textBox.disabled = false;
 		} else {
-			textBox.value = '';
 			textBox.disabled = true;
 		}
 	}
