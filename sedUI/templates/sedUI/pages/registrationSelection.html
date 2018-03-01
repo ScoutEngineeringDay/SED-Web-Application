@@ -28,7 +28,7 @@
 			var morningSelection = morningDropdown.options[morningDropdown.selectedIndex].text;
 
 			// if (morningSelection.endsWith("FULL")) {
-			if (morningSelection.match("FULL$")) {
+			if (morningSelection.match("All Day$")) {
 				document.getElementById("id_3-evening_subject").value = morningDropdown.value;
 				console.log("The vew value of id_3-morning_subject is " + document.getElementById("id_3-morning_subject").value);
 				console.log("The vew value of id_3-evening_subject is " + document.getElementById("id_3-evening_subject").value);
@@ -47,7 +47,7 @@
 			var eveningSelection = eveningDropdown.options[eveningDropdown.selectedIndex].text;
 
 			// if (eveningSelection.endsWith("FULL")) {
-			if (eveningSelection.match("FULL$")) {
+			if (eveningSelection.match("All Day$")) {
 				document.getElementById("id_3-morning_subject").value = eveningDropdown.value;
 				disable();
 			}
@@ -79,7 +79,7 @@
 		<br>
 		<div class="input-group" align="center">
 			<label id="am_label" class="radio-inline" style="font-size: 16px">AM Course   </label>
-			<label id="full_label" class="radio-inline" style="font-size: 16px">Full Day Course   </label>
+			<label id="full_label" class="radio-inline" style="font-size: 16px">All Day Course   </label>
 			{{wizard.form.morning_subject}}
 			<label id="pm_label" class="radio-inline" style="font-size: 16px">PM Course   </label>
 			{{wizard.form.evening_subject}}

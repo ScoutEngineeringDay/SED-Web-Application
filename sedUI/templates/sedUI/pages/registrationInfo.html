@@ -186,13 +186,12 @@
 				{{wizard.form.medical_issues}} Medical Issues or Special Needs
 			</div>
 		</div>
-		{% if wizard.form.medical_issues %}
-			<div class="form-group">
-				<div class="col-lg-16">
-				{{wizard.form.medical_notes}}
-				</div>
+	
+		<div class="form-group">
+			<div class="input-group">
+			{{wizard.form.medical_notes}}
 			</div>
-		{% endif %}
+		</div>
 
 		<div class="form-group">
 			<label for="Allergy">Allergy Information</label>
@@ -200,13 +199,12 @@
 				{{wizard.form.allergy_issues}} Notable Allergies
 			</div>
 		</div>
-		{% if wizard.form.allergy_issues %}
-			<div class="form-group">
-				<div class="col-lg-16">
-				{{wizard.form.allergy_notes}}
-				</div>
+
+		<div class="form-group">
+			<div class="input-group">
+			{{wizard.form.allergy_notes}}
 			</div>
-		{% endif %}
+		</div>
 
 		<div class="form-group">
 			<div class="input-group">
