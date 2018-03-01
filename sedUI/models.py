@@ -108,7 +108,11 @@ class Workshop(models.Model):
 
 	def __str__(self):
 		try:
-			return str(Course.objects.get(course_id=str(self.course_id)).course_name)+"-"+str(self.workshop_time)
+			if(str(self.workshop_time)=="FULL"):
+				workshop_time="All Day"
+			else:
+				workshop_time=str(self.workshop_time)
+			return str(Course.objects.get(course_id=str(self.course_id)).course_name)+"-"+workshop_time
 		except:
 			return "no course name"
 

@@ -20,7 +20,13 @@
 		<h1>Course: {{course.course_name}}</h1>
 		<h3>Instructor: {{instructor.instructor_first_name}} {{instructor.instructor_last_name}}</h3>
 		<h3>Location: {{location.location_building}} {{location.location_room}}</h3>
-		<h4>Time {{workshop.workshop_time}}</h4>
+		<h4>Time : 
+		{%if workshop.workshop_time == "FULL"%}
+			All Day
+		{%else%}	
+			{{workshop.workshop_time}}
+		{%endif%}
+		</h4>
 		</br>
 		<div class="jumbotron" style="padding: 10px">
 			<table id="workshoptable" class="table table-striped table-hover table-sm">

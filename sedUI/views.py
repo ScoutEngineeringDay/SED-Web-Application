@@ -664,7 +664,7 @@ class RegistrationScoutWizard(SessionWizardView):
         else:
             payment_status_info="NOT PAID"
 
-        if(workshop1_data[1]=="FULL"):
+        if(workshop1_data[1]=="All Day"):
             WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
             session = Session(
                 scout_id=scout.scout_id,
@@ -783,7 +783,7 @@ class RegistrationScoutWizard(SessionWizardView):
             my_group.user_set.add(user)
 
         confirmation_timestamp=session.confirmation_timestamp
-        confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
+        # confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
     		'scout': scout,
     		'session': session,
