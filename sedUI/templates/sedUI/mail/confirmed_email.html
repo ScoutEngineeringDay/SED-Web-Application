@@ -1,0 +1,114 @@
+<p style="color:black;">
+    Hello {{register_data.register_first_name}} {{register_data.register_last_name}},
+    <br><br>
+    Thank you for registering for MITRE Scout Engineering Day!
+    <br><br>
+    We are excited that your Scout is registered to attend Scout Engineering Day on {{aboutPage.saveDate}}
+    <br><br>
+    <strong>Please read the entire email.</strong>
+    The following information is provided to assist you in preparing for this event and to ensure your Scout has a rewarding and enjoyable experience.
+    <br><br>
+    <strong>Your Registration Information:</strong>
+    <br><br>
+    <strong>Scout Information:</strong>
+    <div style="margin-left: 40px;">
+        Scout ID: {{scout_id}}
+        <br>Scout Name: {{scout_data.first_name}} {{scout_data.last_name}}
+        <br>Scout type: {{scout_data.affiliation}}
+        <br>Unit Number: {{scout_data.unit_number}}
+    </div>
+    <br><br>
+    <strong>Scout Contact Information:</strong>
+    <div style="margin-left: 40px;">
+        Phone Number: {{scout_data.phone}}
+        <br>Email: {{scout_data.email}}
+    </div>
+    <br><br>
+    <strong>Emergency Contact:</strong>
+    <div style="margin-left: 40px;">
+        Emergency Name: {{scout_data.emergency_first_name}} {{scout_data.emergency_last_name}}
+        <br>Emergency Phone: {{scout_data.emergency_phone}}
+    </div>
+    <br><br>
+    <strong>Courses:</strong>
+    <div style="margin-left: 40px;">
+        {% if workshop_data.morning_subject == workshop_data.evening_subject %}
+            <br>Class 1: {{workshop_data.morning_subject}}
+        {% else %}
+            <br>Class 1: {{workshop_data.morning_subject}}
+            <br>Class 2: {{workshop_data.evening_subject}}
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <strong>Payment Method:</strong> 
+    {% if session_data.payment_method == "Pay_Online" %}
+        Paid Online
+    {% elif session_data.payment_method == "Pay_Mail" %}
+        Paid by Mail
+    {% elif session_data.payment_method == "Waived" %}
+        Waived
+    {% endif %}
+
+    <br><br>
+    If there is any information that is mistaken please contact us.
+    <br> Your confirmation number: {{confirmation_id}}
+    <br><br>
+    Information about the event follows.
+    <br><br>
+    Thank you,
+    <div style="margin-left: 40px;">
+        <br>Scout Engineering Day Team
+    </div>
+    <br><br>
+    <strong>Event Location:</strong>
+    <div style="margin-left: 40px;">
+        <br>The MITRE Corporation - Building: MITRE 1
+        <br>
+        <a href="https://www.google.com/maps/place/7525+Colshire+Dr,+McLean,+VA+22102/@38.9216319,-77.2073487,17z/data=!3m1!4b1!4m5!3m4!1s0x89b64ac8bdbe0aab:0xdfea41213d5f2d82!8m2!3d38.9216319!4d-77.20516">
+            {{aboutPage.locationMap}}
+        </a>
+        <br>
+        <a href="http://www.mitre.org/sites/default/files/pdf/mclean-campus-map.pdf ">http://www.mitre.org/sites/default/files/pdf/mclean-campus-map.pdf</a>
+    </div>
+    <br><br>
+    <strong>Parking: </strong>{{aboutPage.parkingLocation}}
+    <br><br>
+    <strong>Check-in Time:</strong>
+    <div style="margin-left: 40px;">
+        <br>7:30 am - Doors open for AM and All Day session
+        <br>12:30 pm for half-day Scouts attending during the afternoon only
+    </div>
+    <br><br>
+    <strong>Check-in Location:</strong> MITRE 1 Lobby at the rear of the building. Parents are limited to the Help Desk located near the Security Checkpoint just inside the doors.
+    <br><br>
+    <strong>Check-out Time:</strong>
+    <div style="margin-left: 40px;">
+        <br>1:30 pm for half-day Scouts attending during the morning only
+        <br>5:00 pm for all other Scouts
+    </div>
+    <br><br>
+    <strong>Check-out Location:</strong>The MITRE Corporation, building MITRE 1
+    <br><br>
+    <strong>Emergency Contact: </strong>The STEM Coordinator: 240.395.0601 or stem@ncacbsa.org
+    <br><br>
+    <strong>Notes:</strong>
+    <ul>
+        <li> Uniforms are required.</li>
+        <li> Boy Scouts should bring their scoutmaster-approved blue cards.</li>
+        <li> Scouts may not bring beverages, other than water, on campus. Bottled water will be provided at lunch.</li>
+        <li> Lunch is provided and includes a vegetarian meal option. Parents/guardians are responsible for providing lunch if there are other special dietary needs.</li>
+    </ul>
+    <br><br>
+    <strong>Procedures:</strong>
+    <br>
+    For safety and accountability purposes, we ask that all parents/guardians and Scouts adhere to the check-in and check-out procedures below.
+    <ul>
+        <li>Parents/guardians are not allowed to enter beyond the security checkpoints in MITRE or remain at the event unless they signed-up to volunteer, assist as a classroom helper, or support lunch. Please email mclewis@mitre.org if interested. Only US Citizens with photo ID can volunteer for this event due to security policies.</li>
+        <li>Please notify the Scout Check-in/out team if you need to pick up your child earlier than the scheduled check-out time or email stem@ncacbsa.org.</li>
+        <li>All Scouts must checkout with our Check-Out team before leaving MITRE. We will collect name badges and issue Event Patches during check-out.</li>
+    </ul>
+    <br><br>
+    Finally, if you want to check your registration please go to <a href="http://www.SEDay.org/contact">http://www.SEDay.org/contact</a> to contact administrators.
+    <br><br>Thank you and we look forward to a great event.
+</p>
