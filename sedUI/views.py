@@ -867,7 +867,7 @@ def confirmation_send_email(form_list, scout_id, confirmation_id):
         )
     email.send(fail_silently=False)
     #send_mail(subject, message, from, to)
-    # send_mail('Confirmation', str(form_data), settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
+    send_mail('Confirmation', str(form_data), settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
     return form_data
 
 def checkOpenDate():
