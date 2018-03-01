@@ -626,9 +626,9 @@ class RegistrationScoutWizard(SessionWizardView):
         course_1=None
         course_2=None
         register_data = self.get_cleaned_data_for_step('1')
-        scout_data=self.get_cleaned_data_for_step('2')
-        workshop_data=self.get_cleaned_data_for_step('3')
-        session_data=self.get_cleaned_data_for_step('4')
+        scout_data = self.get_cleaned_data_for_step('2')
+        workshop_data = self.get_cleaned_data_for_step('3')
+        session_data = self.get_cleaned_data_for_step('4')
 
         if(session_data["payment_method"]=="Pay_Online"):
         	stripeCall(self.request)
