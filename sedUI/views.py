@@ -14,6 +14,8 @@ from formtools.wizard.views import WizardView, SessionWizardView, CookieWizardVi
 import os, datetime, re, pytz, stripe, urlparse
 from django.conf import settings
 from django.contrib import messages
+from django.template import Context
+from django.template.loader import render_to_string, get_template
 from django.core.mail import send_mail, EmailMessage
 from django.core.management.utils import get_random_secret_key
 from django.contrib.sites.models import Site
@@ -783,7 +785,7 @@ class RegistrationScoutWizard(SessionWizardView):
             my_group.user_set.add(user)
 
         confirmation_timestamp=session.confirmation_timestamp
-        # confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
+        confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))
         return render_to_response('sedUI/pages/registrationConfirmation.html', {'form_data': [form.cleaned_data for form in form_list],
     		'scout': scout,
     		'session': session,
@@ -835,25 +837,49 @@ def stripeCall(request):
     )
 
 def confirmation_send_email(form_list, scout_id, confirmation_id):
-    message = None
-    scout_info=None
-    emergency_info=None
-    payment_timestamp=None
+    
+    # message = None
+    # scout_info=None
+    # emergency_info=None
+    # payment_timestamp=None
     form_data =[form.cleaned_data for form in form_list]
-    print("sending")
-    #formatting data to be transmit through the message
-    scout_info = ("\n\nScout Information:\n\tScout ID: "+str(scout_id)+"\n\tScout Name: "+str(form_data[2]["first_name"])+" "+str(form_data[2]["last_name"])+"\n\tScout type: "+str(form_data[2]["affiliation"])+"\n\tUnit Number: "+str(form_data[2]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[2]["phone"])+"\n\tEmail: "+str(form_data[2]["email"]))
-    emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name: "+str(form_data[2]["emergency_first_name"])+" "+str(form_data[2]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[2]["emergency_phone"]))
-    course_info=("\n\nCourses:\n\tClass 1: "+str(form_data[3]["morning_subject"])+"\n\tClass 2: "+str(form_data[3]["evening_subject"]))
-    if(str(form_data[4]["payment_method"])=="Pay_Online"):
-        payment_timestamp=("\n\nPayment Method: Paid Online")
-    elif(str(form_data[4]["payment_method"])=="Pay_Mail"):
-        payment_timestamp=("\n\nPayment Method: Paid by Mail")
-    elif(str(form_data[4]["payment_method"])=="Waived"):
-        payment_timestamp=("\n\nPayment Method: Waived")
+    aboutPage = AboutPage.objects.latest('aboutPage_id')
+    # print("sending")
+    # #formatting data to be transmit through the message
+    # intro="Thank you for registering for MITRE Scout Engineering Day!\n\nWe are excited that your Scout is registered to attend Scout Engineering Day on "+aboutPage.saveDate+".\n"+'\033[1m'+"Please read the entire email."+ '\033[0m'+"The following information is provided to assist you in preparing for this event and to ensure your Scout has a rewarding and enjoyable experience.\n\n Your Registration Information:"
+    # scout_info = ("\n\nScout Information:\n\tScout ID: "+str(scout_id)+"\n\tScout Name: "+str(form_data[2]["first_name"])+" "+str(form_data[2]["last_name"])+"\n\tScout type: "+str(form_data[2]["affiliation"])+"\n\tUnit Number: "+str(form_data[2]["unit_number"])+"\n\nScout Contact Information:\n\tPhone Number: "+str(form_data[2]["phone"])+"\n\tEmail: "+str(form_data[2]["email"]))
+    # emergency_info = ("\n\nEmergency Contact:\n\tEmergency Name: "+str(form_data[2]["emergency_first_name"])+" "+str(form_data[2]["emergency_last_name"])+"\n\tEmergency Phone: "+str(form_data[2]["emergency_phone"]))
+    # if(str(form_data[3]["morning_subject"])==str(form_data[3]["evening_subject"])):
+    #     course_info=("\n\nCourses:\n\tClass 1: "+str(form_data[3]["morning_subject"]))
+    # else:
+    #     course_info=("\n\nCourses:\n\tClass 1: "+str(form_data[3]["morning_subject"])+"\n\tClass 2: "+str(form_data[3]["evening_subject"]))
     
-    
-    message = "Hello "+str(form_data[1]["register_first_name"])+" "+str(form_data[1]["register_last_name"])+","+scout_info+emergency_info+"\n\n"+course_info+"\n\n"+payment_timestamp+"\n\nIf there is any information that is mistaken please contact us.\n To reprint Badge, go to Get Badge and enter your confirmation number: "+confirmation_id+"\n\nThank you,\n\t Scout Engineering Day Development Team"
+    # if(str(form_data[4]["payment_method"])=="Pay_Online"):
+    #     payment_timestamp=("\n\nPayment Method: Paid Online")
+    # elif(str(form_data[4]["payment_method"])=="Pay_Mail"):
+    #     payment_timestamp=("\n\nPayment Method: Paid by Mail")
+    # elif(str(form_data[4]["payment_method"])=="Waived"):
+    #     payment_timestamp=("\n\nPayment Method: Waived")
+    # outro="\n\nIf there is any information that is mistaken please contact us.\n Your confirmation number: "+ confirmation_id+"\n\nInformation about the event follows.\n\nThank you,\n\tScout Engineering Day Team"
+    # eventLocation="\n\n"+'\033[1m'+"Event Location: "+ '\033[0m'+"\tThe MITRE Corporation - Building: MITRE 1\n\t"+aboutPage.eventLocation
+    # parkingLocation="\n\n"+'\033[1m'+"Parking: \t"+ '\033[0m'+aboutPage.parkingLocation
+    # checkinInfo="\n\n"+'\033[1m'+"Check-in Time:"+ '\033[0m'+"\t7:30 am - Doors open for AM and All Day session\n\t12:30 pm for half-day Scouts attending during the afternoon only\n"+"\n"+'\033[1m'+"Check-in Location:"+ '\033[0m'+"\t MITRE 1 Lobby at the rear of the building. Parents are limited to the Help Desk located near the Security Checkpoint just inside the doors."+"\n"+'\033[1m'+"Check-out Time:"+ '\033[0m'+"\t1:30 pm for half-day Scouts attending during the morning only"+"\n\t5;00 pm for all other Scouts"+"\n"+'\033[1m'+"Check-out :ocation:"+ '\033[0m'+"\tThe MITRE Corporation, building MITRE 1"
+    # emergencyContact="\n\n"+'\033[1m'+"Emergency Contact:"+ '\033[0m'+"\tThe STEM Coordinator,\n\t 240.395.0601 or stem@ncacbsa.org"
+    # notes="\n\n"+'\033[1m'+"Notes:"+ '\033[0m'+"\n-\t Uniforms are required.\n-\t Boy Scouts should bring their scoutmaster-approved blue cards.\n-\t Scouts may not bring beverages, other than water, on campus. Bottled water will be provided at lunch.\n-\t Lunch is provided and includes a vegetarian meal option. Parents/guardians are responsible for providing lunch if there are other special dietary needs."
+    # procedures="\n\n"+'\033[1m'+"Procedures:\t"+ '\033[0m'+"For safety and accountability purposes, we ask that all parents/guardians and Scouts adhere to the check-in and check-out procedures below.\n\n\n-\tParents/guardians are not allowed to enter beyond the security checkpoints in MITRE or remain at the event unless they signed-up to volunteer, assist as a classroom helper, or support lunch. Please email mclewis@mitre.org if interested. Only US Citizens with photo ID can volunteer for this event due to security policies.\n-\tPlease notify the Scout Check-in/out team if you need to pick up your child earlier than the scheduled check-out time or email stem@ncacbsa.org.\n-\tAll Scouts must checkout with our Check-Out team before leaving MITRE. We will collect name badges and issue Event Patches during check-out.\n\nFinally, if you want to check your registration (this is for everyone: Girl Scouts, Boy Scouts, Venturers, etc.), visit: http://www.SEDay.org  >> click Lookup Registration (very top right, above the header). Login with the email you used to register and the registration number you received upon registering.\n\nThank you and we look forward to a great event."
+    # message = "Hello "+str(form_data[1]["register_first_name"])+" "+str(form_data[1]["register_last_name"])+",\n\n"+intro+scout_info+emergency_info+"\n\n"+course_info+"\n\n"+payment_timestamp+outro+eventLocation+parkingLocation+checkinInfo+emergencyContact+notes+procedures
+    ctx = {
+        'scout_id': scout_id,
+        'register_data': form_data[1],
+        'scout_data':form_data[2],
+        'workshop_data':form_data[3],
+        'session_data': form_data[4],
+        'aboutPage': aboutPage,
+        'confirmation_id': confirmation_id
+    }
+
+    message = get_template('sedUI/mail/confirmed_email.html').render(Context(ctx))
+
 
     #Modify for Quantico
     #message = "Hello,"+scout_info+emergency_info+"\n\nIf there is any information that is mistaken please contact us.\n\nThank you,\n\t Scout Engineering Day Development Team"
@@ -865,6 +891,7 @@ def confirmation_send_email(form_list, scout_id, confirmation_id):
         settings.EMAIL_DEFAULT_USER,
         [form_data[1]["register_email"]],
         )
+    email.content_subtype='html'
     email.send(fail_silently=False)
     #send_mail(subject, message, from, to)
     send_mail('Confirmation', str(form_data), settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=False)
