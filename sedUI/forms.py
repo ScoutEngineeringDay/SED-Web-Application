@@ -34,7 +34,7 @@ class RegistrationScoutForm1(forms.Form):
 	emergency_last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Contact Last Name', 'type': 'text', 'maxlength': '50'}))
 	emergency_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Contact Phone Number', 'type': 'tel', 'minlength': '10', 'maxlength': '10'}))
 	emergency_email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Email', 'type': 'email', 'maxlength': '50'}))
-	emergency_email_confirm= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Email', 'type': 'email', 'maxlength': '50'}))
+	emergency_email_confirm= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Emergency Email Confirmation', 'type': 'email', 'maxlength': '50'}))
 	medical_notes = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Medical Notes', 'maxlength': '4000'}), required=False)
 	allergy_notes = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Allergy Notes', 'maxlength': '4000'}), required=False)
 	medical_issues = forms.BooleanField(widget=forms.CheckboxInput(attrs={'onclick':'medicalChecked()'}), initial=False, required=False)
