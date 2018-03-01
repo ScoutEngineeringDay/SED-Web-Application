@@ -667,7 +667,7 @@ class RegistrationScoutWizard(SessionWizardView):
             payment_status_info="NOT PAID"
 
         if(workshop1_data[1]=="All Day"):
-            WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], workshop1_data[1]), workshop1_data[1])
+            WorkshopClosedTrigger(getWorkshopbyCourse(workshop1_data[0], "FULL"), "FULL")
             session = Session(
                 scout_id=scout.scout_id,
                 payment_method=session_data["payment_method"],
