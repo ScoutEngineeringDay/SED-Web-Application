@@ -54,4 +54,12 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    if (window.location.href.indexOf("?volunteer") > -1) {
+      console.log("vol");
+      $('#id_0-message_subject').val('Volunteer');
+    }
+  });
+</script>
     {% endblock %}
