@@ -902,12 +902,12 @@ def checkOpenDate():
     # Date must match format of (Day, Month, DayDate, Year) and date must be real or else it will states that the registration is closed.
     #
     isOpen=None
-    registration_force_closed=True
     aboutPage = AboutPage.objects.latest('aboutPage_id')
     current_datetime= str(datetime.datetime.now())
     if(aboutPage.forceClosed==True):
         print("registration closed")
-        isOpen="Closed"
+        isOpen="Opened"
+        #not reverse after open date
     else:
         if(current_datetime<aboutPage.saveDate and current_datetime>=aboutPage.registrationOpenDate):
             print("registration open")
