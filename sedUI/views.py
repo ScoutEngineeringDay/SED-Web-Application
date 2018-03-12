@@ -361,7 +361,7 @@ class WorkshopDetailView(generic.ListView):
         return ctx
 
 class ReportView(generic.TemplateView):
-    template_name = 'sedUI/pages/reportAnalysis.html'
+    template_name = 'sedUI/pages/admin/reportAnalysis.html'
     def get(self, request, *args, **kwargs):
         context = {
             'all_courses' : Course.objects.all(),
@@ -448,25 +448,26 @@ class AllBadgesView(generic.ListView):
     context_object_name = 'all_scouts'
 
     def get_queryset(self):
-        return Scout.objects.all()
+        return Session.objects.all()
 
     def get_context_data(self, **kwargs):
     	ctx=super(AllBadgesView, self).get_context_data(**kwargs)
 
     	ctx['data']={}
-        for scout in Scout.objects.all():
-            session_data=getSessionByUniqueSession(scout.scout_id, scout.scout_year)
+        for session in Session.objects.all():
+            scout=Scout.object.get(scout_id=session.scout_id, scout_year=session.session_year)
+            session_data=getSessionByUniqueSession(session.scout_id, session.session_year)
             location_1=getLocationByWorkshop(session_data.workshop1_id)
             location_2=getLocationByWorkshop(session_data.workshop2_id)
             workshop_1=getCourseBySession(session_data.workshop1_id)
             workshop_2=getCourseBySession(session_data.workshop2_id)
-            try:
+            if(workshop_1!=None):
                 workshop_1_data=str(workshop_1.course_name)+" - "+str(location_1.location_room)
-            except:
+            else:
                 workshop_1_data=" "
-            try:
+            if(workshop_2!=None):
                 workshop_2_data=str(workshop_2.course_name)+" - "+str(location_2.location_room)
-            except:
+            else:
                 workshop_2_data=" "
             scout_information={'scout': scout,
             'workshop_1': workshop_1_data,
@@ -477,6 +478,41 @@ class AllBadgesView(generic.ListView):
             ctx['data'].update({scoutstring:scout_information})
         sorted(ctx['data'].iteritems())
         return ctx
+
+# class AllBadgesView(generic.ListView):
+#     template_name = 'sedUI/pages/getAllBadges.html'
+#     context_object_name = 'all_scouts'
+
+#     def get_queryset(self):
+#         return Scout.objects.all()
+
+#     def get_context_data(self, **kwargs):
+#     	ctx=super(AllBadgesView, self).get_context_data(**kwargs)
+
+#     	ctx['data']={}
+#         for scout in Scout.objects.all():
+#             session_data=getSessionByUniqueSession(scout.scout_id, scout.scout_year)
+#             location_1=getLocationByWorkshop(session_data.workshop1_id)
+#             location_2=getLocationByWorkshop(session_data.workshop2_id)
+#             workshop_1=getCourseBySession(session_data.workshop1_id)
+#             workshop_2=getCourseBySession(session_data.workshop2_id)
+#             if(workshop_1!=None):
+#                 workshop_1_data=str(workshop_1.course_name)+" - "+str(location_1.location_room)
+#             else:
+#                 workshop_1_data=" "
+#             if(workshop_2!=None):
+#                 workshop_2_data=str(workshop_2.course_name)+" - "+str(location_2.location_room)
+#             else:
+#                 workshop_2_data=" "
+#             scout_information={'scout': scout,
+#             'workshop_1': workshop_1_data,
+#             'workshop_2': workshop_2_data,
+#             'session': session_data,
+#             }
+#             scoutstring=str(scout.scout_id)
+#             ctx['data'].update({scoutstring:scout_information})
+#         sorted(ctx['data'].iteritems())
+#         return ctx
 
 ## Registration Process
 class RegistrationIssueView(generic.TemplateView):
@@ -746,6 +782,7 @@ class RegistrationScoutWizard(SessionWizardView):
                 register_email = register_data["register_email"],
                 register_sui = username,
                 register_code = password,
+                register_phone = register_data["register_phone"],
                 register_type = "volunteer",
                 registration_year = str(datetime.datetime.now().year),
                 volunteer = register_data["volunteer_checkbox"]
@@ -770,6 +807,7 @@ class RegistrationScoutWizard(SessionWizardView):
                 register_email = register_data["register_email"],
                 register_sui = username,
                 register_code = password,
+                register_phone = register_data["register_phone"],
                 register_type = "MITRE",
                 registration_year = str(datetime.datetime.now().year),
                 volunteer = register_data["volunteer_checkbox"]
@@ -783,6 +821,24 @@ class RegistrationScoutWizard(SessionWizardView):
                 password=make_password(register.register_code)
             )
             my_group.user_set.add(user)
+
+        # NEED TO OPTMIZE
+        if(register_data["volunteer_checkbox"]==False and register_data["mitre_employee"]==False):
+            username=generateUsername(register_data["register_first_name"], register_data["register_last_name"])
+            password=generatePassword()
+            register = Register(
+                register_first_name = register_data["register_first_name"],
+                register_last_name = register_data["register_last_name"],
+                register_email = register_data["register_email"],
+                register_sui = username,
+                register_code = password,
+                register_phone = register_data["register_phone"],
+                register_type = "regular",
+                registration_year = str(datetime.datetime.now().year),
+                volunteer = register_data["volunteer_checkbox"]
+            )
+            register.save()
+
 
         confirmation_timestamp=session.confirmation_timestamp
         confirmation_send_email(form_list, scout.scout_id, str(scout.confirmation_id))

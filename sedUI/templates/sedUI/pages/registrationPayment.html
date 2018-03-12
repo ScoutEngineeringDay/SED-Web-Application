@@ -6,17 +6,20 @@
           <label for="Question" style="font-size: 32px">Select a Payment Method</label>
           <br>
           <div class="input-group" align="center">
-              <!--Convert method waived method from 1 back to 2 when re enabling the payment process
+              <!--ID setup
+                - pay online 2
+                - pay mail 1
+                - waived 0
               <label class="radio-inline" style="font-size: 16px">
                   <input type="radio" name="optradio" id="Pay_Online">{{wizard.form.payment_method.1}}
               </label>
             -->
               <label class="radio-inline" style="font-size: 16px">
-                  <input type="radio" name="optradio" id="Pay_Mail">{{wizard.form.payment_method.0}}
+                  <input type="radio" name="optradio" id="Pay_Mail">{{wizard.form.payment_method.1}}
               </label>
               {% if request.user.is_superuser %}
               <label class="radio-inline" style="font-size: 16px">
-                  <input type="radio" name="optradio" id="Waived">{{wizard.form.payment_method.1}}
+                  <input type="radio" name="optradio" id="Waived">{{wizard.form.payment_method.0}}
               </label>
               {% endif %}
           </div>
@@ -96,11 +99,11 @@
   <script src="https://checkout.stripe.com/v2/checkout.js"></script>
   <script>
   $(document).ready(function() {
-    $("#id_4-payment_method_0").change(function () {
+    $("#id_4-payment_method_1").change(function () {
       $("#mailInModal").modal('show');
 		});
     $(':submit').on('click', function(event) {
-        if (document.getElementById("id_4-payment_method_1").checked) {
+        if (document.getElementById("id_4-payment_method_2").checked) {
           event.preventDefault();
           var $button = $(this),
           $form = $button.parents('form');
@@ -111,7 +114,7 @@
             });
             StripeCheckout.open(opts);
         }
-        if (document.getElementById("id_4-payment_method_1").checked || document.getElementById("id_4-payment_method_0").checked || document.getElementById("id_4-payment_method_2").checked) {
+        if (document.getElementById("id_4-payment_method_2").checked || document.getElementById("id_4-payment_method_0").checked || document.getElementById("id_4-payment_method_1").checked) {
           $("#loadingModal").modal('show');
         }
     });

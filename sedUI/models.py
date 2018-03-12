@@ -265,6 +265,7 @@ class Register(models.Model):
 	register_email = models.CharField(max_length=50, blank=True)
 	register_sui = models.CharField(max_length=50, blank=True)
 	register_code = models.CharField(max_length=50, blank=True)
+	register_phone = models.CharField(max_length=10, blank=True)
 	register_type = models.CharField(max_length=10, choices=[("MITRE","MITRE"),("volunteer","volunteer")], blank=True)
 	registration_year = models.CharField(max_length=4)
 	volunteer = models.BooleanField(default=False)

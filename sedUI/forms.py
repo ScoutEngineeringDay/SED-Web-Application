@@ -15,7 +15,7 @@ class RegistrationForm2(forms.Form):
 	register_last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name', 'maxlength': '50'}))
 	register_email= forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email', 'type': 'email', 'maxlength': '50'}))
 	register_email_confirm = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Confirmation', 'type': 'email', 'maxlength': '50'}))
-	register_phone =phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number',  'type': 'tel', 'minlength': '10', 'maxlength': '10'}), required=False)
+	register_phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number',  'type': 'tel', 'minlength': '10', 'maxlength': '10'}), required=False)
 	mitre_employee = forms.BooleanField(initial=False, required=False)
 	volunteer_checkbox = forms.BooleanField(initial=False, required=False)
 	register_is_volunteer = forms.BooleanField(initial=True, required=False)
@@ -63,8 +63,8 @@ class RegistrationVolunteerForm2(forms.Form):
 	volunteer_event3 = forms.ModelChoiceField(queryset=Task.objects.all(), widget=forms.Select(attrs={'class': 'dropdown'}))
 
 class RegistrationPaymentForm(forms.Form):
-	#payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment"),("Waived","Waived")])
-	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Waived","Waived")])
+	#payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Waived","Waived"),("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment")])
+	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Waived","Waived"),("Pay_Mail","Mail in Check")])
 
 class ContactEmailForm(forms.Form):
 	contact_first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'First Name', 'maxlength': '50'}))
