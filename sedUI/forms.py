@@ -6,6 +6,7 @@ from captcha.fields import ReCaptchaField
 from django.core.validators import MinValueValidator
 import datetime
 
+# Registration
 class RegistrationForm1(forms.Form):
 	citizenship = forms.ChoiceField(widget=forms.RadioSelect(), choices=[('Yes', 'Yes'),('No','No')])
 
@@ -21,6 +22,7 @@ class RegistrationForm2(forms.Form):
 	# CHOICES = (("myself","I am registering myself"),("others","I am registering others"),("both","I am registering myself & others"))
 	# registration_type = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
 
+# Dedicated Scout Registration
 class RegistrationScoutForm1(forms.Form):
 	first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name', 'maxlength': '50'}))
 	last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name', 'maxlength': '50'}))
@@ -47,6 +49,7 @@ class RegistrationScoutForm2(forms.Form):
 	evening_subject = forms.ModelChoiceField(queryset=Workshop.objects.filter(((Q(workshop_time="FULL")| Q(workshop_time="PM")) & Q(workshop_open_status="OPENED") & Q(workshop_year=str(datetime.datetime.now().year)))), widget=forms.Select(attrs={'class': 'dropdown'}))
 	more_scout = forms.BooleanField(initial=False, required=False)
 
+# Dedicated Volunteer Registeration
 class RegistrationVolunteerForm1(forms.Form):
 	volunteer_first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
 	volunteer_last_name = forms.CharField(widget=forms.TextInput(attrs={'input type': 'text', 'class': 'form-control', 'id': 'last_name', 'name': 'last_name', 'placeholder': 'Last Name'}))
