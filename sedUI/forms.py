@@ -63,7 +63,8 @@ class RegistrationVolunteerForm2(forms.Form):
 	volunteer_event3 = forms.ModelChoiceField(queryset=Task.objects.all(), widget=forms.Select(attrs={'class': 'dropdown'}))
 
 class RegistrationPaymentForm(forms.Form):
-	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment"),("Waived","Waived")])
+	#payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Pay_Online","Online Payment"),("Waived","Waived")])
+	payment_method = forms.ChoiceField(widget=forms.RadioSelect(), choices=[("Pay_Mail","Mail in Check"),("Waived","Waived")])
 
 class ContactEmailForm(forms.Form):
 	contact_first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'First Name', 'maxlength': '50'}))

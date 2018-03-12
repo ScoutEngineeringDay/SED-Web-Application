@@ -6,15 +6,17 @@
           <label for="Question" style="font-size: 32px">Select a Payment Method</label>
           <br>
           <div class="input-group" align="center">
+              <!--Convert method waived method from 1 back to 2 when re enabling the payment process
               <label class="radio-inline" style="font-size: 16px">
                   <input type="radio" name="optradio" id="Pay_Online">{{wizard.form.payment_method.1}}
               </label>
+            -->
               <label class="radio-inline" style="font-size: 16px">
                   <input type="radio" name="optradio" id="Pay_Mail">{{wizard.form.payment_method.0}}
               </label>
               {% if request.user.is_superuser %}
               <label class="radio-inline" style="font-size: 16px">
-                  <input type="radio" name="optradio" id="Waived">{{wizard.form.payment_method.2}}
+                  <input type="radio" name="optradio" id="Waived">{{wizard.form.payment_method.1}}
               </label>
               {% endif %}
           </div>
