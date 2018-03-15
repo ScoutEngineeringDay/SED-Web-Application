@@ -455,7 +455,7 @@ class AllBadgesView(generic.ListView):
 
     	ctx['data']={}
         for session in Session.objects.all():
-            scout=Scout.object.get(scout_id=session.scout_id, scout_year=session.session_year)
+            scout=Scout.objects.get(scout_id=session.scout_id, scout_year=session.session_year)
             session_data=getSessionByUniqueSession(session.scout_id, session.session_year)
             location_1=getLocationByWorkshop(session_data.workshop1_id)
             location_2=getLocationByWorkshop(session_data.workshop2_id)
