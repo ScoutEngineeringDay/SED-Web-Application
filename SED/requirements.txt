@@ -1,5 +1,5 @@
 boto==2.45.0
-Django==1.10.3
+Django==1.11.29
 django-bootstrap3==7.1.0
 django-formtools==1.0
 django-javascript-settings==1.1.2
